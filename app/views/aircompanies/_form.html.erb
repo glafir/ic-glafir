@@ -1,0 +1,54 @@
+  <%= form_for(@aircompany) do |f| %>
+  <% if @aircompany.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@aircompany.errors.count, "error") %> prohibited this aircompany from being saved:</h2>
+
+      <ul>
+      <% @aircompany.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :iata_code %><br />
+    <%= f.text_field :iata_code %>
+  </div>
+  <div class="field">
+    <%= f.label :icao_code %><br />
+    <%= f.text_field :icao_code %>
+  </div>
+  <div class="field">
+    <%= f.label :awb_prefix %><br />
+    <%= f.text_field :awb_prefix %>
+  </div>
+  <div class="field">
+    <%= f.label :airline_name_eng %><br />
+    <%= f.text_field :airline_name_eng %>
+  </div>
+  <div class="field">
+    <%= f.label :airline_name_rus %><br />
+    <%= f.text_field :airline_name_rus %>
+  </div>
+  <div class="field">
+    
+    <%= f.label :Base_airport %><br />
+	<%= f.select :airport_id, Airport.where(iso_code: 'EZ').collect{|item| [item.name_rus, item.id]} %>
+  </div>
+  <div class="field">
+    <%= f.label :country %><br />
+    <%= f.text_field :country, :value => 'EZ' %>
+  </div>
+  <div class="field">
+    <%= f.label :al_start %><br />
+    <%= f.date_select :al_start, start_year: 1950, end_year: Time.now.year%>
+  </div>
+  <div class="field">
+    <%= f.label :al_finish %><br />
+    <%= f.date_select :al_finish, start_year: 1980, end_year: Time.now.year, prompt: "Пустое значение" %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

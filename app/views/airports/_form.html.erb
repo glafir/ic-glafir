@@ -1,0 +1,97 @@
+<%= form_for(@airport) do |f| %>
+  <% if @airport.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@airport.errors.count, "error") %> prohibited this airport from being saved:</h2>
+
+      <ul>
+      <% @airport.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :iata_code %><br />
+    <%= f.text_field :iata_code %>
+  </div>
+  <div class="field">
+    <%= f.label :icao_code %><br />
+    <%= f.text_field :icao_code %>
+  </div>
+  <div class="field">
+    <%= f.label :name_rus %><br />
+    <%= f.text_field :name_rus %>
+  </div>
+  <div class="field">
+    <%= f.label :name_eng %><br />
+    <%= f.text_field :name_eng %>
+  </div>
+  <div class="field">
+    <%= f.label :city_rus %><br />
+    <%= f.text_field :city_rus %>
+  </div>
+  <div class="field">
+    <%= f.label :city_eng %><br />
+    <%= f.text_field :city_eng %>
+  </div>
+  <div class="field">
+    <%= f.label :gmt_offset%><br />
+    <%= f.text_field :gmt_offset%>
+  </div>
+  <div class="field">
+    <%= f.label :iso_code %><br />
+    <%= f.text_field :iso_code%>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :runway_length %><br />
+    <%= f.text_field :runway_length %>
+  </div>
+  <div class="field">
+    <%= f.label :runway_elevation %><br />
+    <%= f.text_field :runway_elevation %>
+  </div>
+  <div class="field">
+    <%= f.label :runnway_coll %><br />
+    <%= f.text_field :runnway_coll %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div>
+  <div class="field">
+    <%= f.label :fax %><br />
+    <%= f.text_field :fax %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :website %><br />
+    <%= f.text_field :website %>
+  </div>
+  <div class="field">
+    <%= f.label :TerminalsColl %><br />
+    <%= f.text_field :TerminalsColl %>
+  </div>
+  <div class="field">
+    <%= f.label :Terminals %><br />
+    <%= f.text_field :Terminals %>
+  </div>
+  <div class="field">
+    <%= f.label :Dist_to_town %><br />
+    <%= f.text_field :Dist_to_town %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

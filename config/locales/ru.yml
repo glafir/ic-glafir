@@ -1,0 +1,33 @@
+ru:
+  views:
+    datetime:
+      prompts:
+        day: "день"
+        days: "Дней"
+        week: "неделя"
+        weeks: "недель"
+        year: "год"
+        years: "лет"
+        hour: "час"
+        hours: "часов"
+        minute: "минута"
+        minutes: "минут"
+        second: "секунда"
+        seconds: "секунд"
+    pagination:
+      previous: '&lt; Пред'
+      next: 'След &gt;'
+      truncate: '&hellip;'
+      last: 'Последняя &gt;&gt;'
+      first: '&lt;&lt; Первая'
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "%{entry_name} не найдены"
+          one: "Показано <b>%{count}</b> %{entry_name}"
+          few: "Показаны <b>%{count}</b> %{entry_name}"
+          many: "Показаны <b>%{count}</b> %{entry_name}"
+          other: "Показаны <b>все %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "<b> Показано с %{first}&nbsp; по &nbsp;%{last}</b> из <b>%{total} %{entry_name} </b> "

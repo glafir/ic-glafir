@@ -1,0 +1,22 @@
+= form_for @aphub do |f|
+  - if @aphub.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@aphub.errors.count, "error")} prohibited this aphub from being saved:"
+      %ul
+        - @aphub.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :aircompany_id
+    - if params[:aircompany_id].blank?
+      = f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s
+    - else
+      = f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]
+  .field
+    = f.label :airport_id
+    - if params[:airport_id].blank?
+      = f.select :airport_id, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]}
+    - else
+      = f.select :airport_id, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]},  :selected => params[:airport_id]
+  .actions
+    = f.submit 'Save'

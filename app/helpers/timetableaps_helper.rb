@@ -1,0 +1,2 @@
+module TimetableapsHelper
+end

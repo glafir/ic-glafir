@@ -1,0 +1,29 @@
+%p#notice= notice
+%p
+  %b Номер рейса:
+  = @timetableap_sub.Flight_Number
+%p
+  %b Откуда:
+  = @timetableap_sub.timetableap.airport.town.city_rus
+%p
+  %b Куда:
+  = @timetableap_sub.timetableap.apkey.airport.town.city_rus
+%p
+  %b Перевозчик:
+  = @timetableap_sub.aircompany.airline_name_rus
+%p
+  %b Самолёт авикомпани:
+  = @timetableap_sub.timetableap.aircompany.airline_name_rus
+  (
+  = @timetableap_sub.timetableap.aircompany.iata_code
+  = @timetableap_sub.timetableap.Flight_Number
+  )
+%p
+  %b Вылет
+  = @timetableap_sub.timetableap.TimeStart.in_time_zone.to_s(:time)
+%p
+  %b Прилёт
+  = @timetableap_sub.timetableap.TimeEnd.in_time_zone.to_s(:time)
+= link_to 'Edit', edit_timetableap_sub_path(@timetableap_sub)
+\|
+= link_to 'Back', timetableap_subs_path

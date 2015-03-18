@@ -1,0 +1,125 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Iata code:</b>
+  <%= @airport.iata_code %>
+</p>
+
+<p>
+  <b>Icao code:</b>
+  <%= @airport.icao_code %>
+</p>
+
+<p>
+  <b>Name rus:</b>
+  <%= @airport.name_rus %>
+</p>
+
+<p>
+  <b>Name eng:</b>
+  <%= @airport.name_eng %>
+</p>
+
+<p>
+  <b>City rus:</b>
+  <%= @airport.city_rus %>
+</p>
+
+<p>
+  <b>City eng:</b>
+  <%= @airport.city_eng %>
+</p>
+
+<p>
+  <b>Gmt offset:</b>
+  <%= @airport.gmt_offset %>
+</p>
+
+<p>
+  <b>Iso code:</b>
+  <%= @airport.iso_code %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @airport.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @airport.longitude %>
+</p>
+
+<p>
+  <b>Runway length:</b>
+  <%= @airport.runway_length %>
+</p>
+
+<p>
+  <b>Runway elevation:</b>
+  <%= @airport.runway_elevation %>
+</p>
+
+<p>
+  <b>Runnway coll:</b>
+  <%= @airport.runnway_coll %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @airport.phone %>
+</p>
+
+<p>
+  <b>Fax:</b>
+  <%= @airport.fax %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @airport.email %>
+</p>
+
+<p>
+  <b>Website:</b>
+  <%= link_to @airport.website, @airport.website %> ||<%= link_to "http://"+@airport.iata_code.to_s+".aero", "http://"+@airport.iata_code.to_s+".aero" %>
+
+</p>
+
+<p>
+  <b>Terminalscoll:</b>
+  <%= @airport.TerminalsColl %>
+</p>
+
+<p>
+  <b>Terminals:</b>
+  <%= @airport.Terminals %>
+</p>
+
+<p>
+  <b>Dist to town:</b>
+  <%= @airport.Dist_to_town %>
+</p>
+<br />
+<%= link_to 'Edit', edit_airport_path(@airport) %> |
+
+<%if @airport.aircompanies.blank?%>
+  <h2>Базирующиеся авиакомпании отсутствуют в аэропрте <%= @airport.name_rus%>.</h2>
+<%else%>
+  <h2>Авиакомпании, базирующиеся в аэропорту <%= @airport.name_rus%> </h2>
+  <%= render "aircompanies/aircompanies"%>
+<%end%>
+<%if @airport.aphubs.blank?%>
+  <h2>Авиакомпании-хабы отсутствуют в аэропрте <%= @airport.name_rus%>.</h2>
+<%else%>
+  <h2>Авиакомпании-хабы в аэропорту <%= @airport.name_rus%> </h2>
+ <%#= @airport.aphubs%>
+ <% @aircompanies = @aircompanies.clear %>
+ <% @aircompany = Array.new %>
+ <% @airport.aphubs.each {|x|%>
+    <% @aircompanies[@aircompanies.size] = x.aircompany %>
+  <%}%>
+  <% @aircompanies = @aircompanies %>
+  <%= render "aircompanies/aircompanies_table"%>
+<%end%>
+

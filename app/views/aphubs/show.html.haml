@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Airport:
+  = @aphub.airport_id
+%p
+  %b Aircompany:
+  = @aphub.aircompany_id
+
+= link_to 'Edit', edit_aphub_path(@aphub)
+\|
+= link_to 'Back', aphubs_path

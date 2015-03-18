@@ -1,0 +1,2 @@
+module TimetablesapFlightsHelper
+end

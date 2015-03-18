@@ -1,0 +1,19 @@
+= form_for @zones_station do |f|
+  -if @zones_station.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@zones_station.errors.count, "error")} Чтобы сохранить:"
+      %ul
+        - @zones_station.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :region_id
+    = f.number_field :region_id
+  .field
+    = f.label :code_station
+    = f.number_field :code_station
+  .field
+    = f.label :name
+    = f.text_field :name
+  .actions
+    = f.submit 'Сохранить'

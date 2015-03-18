@@ -1,0 +1,19 @@
+%h1 Listing aircraft_wake_categories
+
+%table
+  %tr
+    %th Category
+    %th
+    %th
+    %th
+
+  - @aircraft_wake_categories.each do |aircraft_wake_category|
+    %tr
+      %td= aircraft_wake_category.category
+      %td= link_to 'Show', aircraft_wake_category
+      %td= link_to 'Edit', edit_aircraft_wake_category_path(aircraft_wake_category)
+      %td= link_to 'Destroy', aircraft_wake_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Aircraft wake category', new_aircraft_wake_category_path

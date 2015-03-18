@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Timetableap:
+  = @timetablesap_flight.id
+%p
+  %b Start:
+  = @timetablesap_flight.start
+%p
+  %b End:
+  = @timetablesap_flight.end
+
+= link_to 'Редактировать', edit_timetablesap_flight_path(@timetablesap_flight)
+\|
+= link_to 'Назад', timetablesap_flights_path

@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Category:
+  = @aircraft_wake_category.category
+
+= link_to 'Edit', edit_aircraft_wake_category_path(@aircraft_wake_category)
+\|
+= link_to 'Back', aircraft_wake_categories_path

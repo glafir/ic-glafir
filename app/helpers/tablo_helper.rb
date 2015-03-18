@@ -1,0 +1,2 @@
+module TabloHelper
+end

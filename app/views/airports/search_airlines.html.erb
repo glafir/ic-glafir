@@ -1,0 +1,28 @@
+<h2>Поиск рейсов.</h2>
+
+<div>
+<h4>Внутренние рейсы.</h4>
+<%= form_for("", :url => { :action => "search" }, :method => "get") do |f| %>
+  
+<div class="field">
+    <%= f.label :"Откуда:" %><br />
+    <%= f.select :ap_start, Airport.where(iso_code: 'EZ').collect{|item| [item.name_rus, item.id]} %>
+  </div>
+  <div class="field">
+    <%= f.label :"Куда:" %><br />
+    <%= f.select :ap_end, Airport.where(iso_code: 'EZ').collect{|item| [item.name_rus, item.id]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :"Дата вылета:" %><br />
+    <%= f.date_select(:thither) %>
+  </div> 
+  <div class="field">
+    <%= f.label :"Дата возврата:" %><br />
+    <%= f.date_select(:backward ) %>
+  </div> 
+  <div class="actions">
+    <%= f.submit("Искать.") %>
+  </div>
+<% end %>
+</div>

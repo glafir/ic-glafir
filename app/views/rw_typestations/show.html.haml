@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Typestation name:
+  = @rw_typestation.typestation_name
+
+= link_to 'Редактировать', edit_rw_typestation_path(@rw_typestation)
+\|
+= link_to 'Назад', rw_typestations_path

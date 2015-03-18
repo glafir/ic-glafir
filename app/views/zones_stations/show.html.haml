@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Region:
+  = @zones_station.region_id
+%p
+  %b Code station:
+  = @zones_station.code_station
+%p
+  %b Name:
+  = @zones_station.name
+
+= link_to 'Редактировать', edit_zones_station_path(@zones_station)
+\|
+= link_to 'Назад', zones_stations_path
