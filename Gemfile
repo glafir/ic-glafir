@@ -62,3 +62,4 @@ gem 'netzke-basepack', '~> 0.9.0'
 gem 'extjs4-rails'
 gem 'compass'
 gem 'netzke-communitypack'
+gem "mobile-fu"
