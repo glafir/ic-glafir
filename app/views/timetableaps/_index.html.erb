@@ -26,8 +26,10 @@
 <% @timetableaps.each do |timetableap| %>
   <tr>
     <td><%= timetableap.aircompany.iata_code %> <%= timetableap.Flight_Number %></td>
-    <td> <%= timetableap.airport.town.city_rus %> <%#= timetableap.city_rus_start %></td>
-    <td> <%= timetableap.apkey.airport.town.city_rus %> <%#= timetableap.city_rus_end %></td>
+    <td> <%= timetableap.airport.town.city_rus %> <%#= timetableap.city_rus_start %>
+      <br />(<%= timetableap.airport.name_rus %>)</td>
+    <td> <%= timetableap.apkey.airport.town.city_rus %> <%#= timetableap.city_rus_end %>
+      <br />(<%= timetableap.apkey.airport.name_rus %>)</td>
     <td><%= timetableap.TimeStart.in_time_zone.to_s(:time) %></td>
     <td><%= timetableap.TimeEnd.in_time_zone.to_s(:time) %></td>
     <td><%= timetableap.DateOfStartNav %></td>

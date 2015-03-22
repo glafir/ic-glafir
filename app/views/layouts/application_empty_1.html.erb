@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
+<% if is_mobile_device? %>
+<%= render "layouts/m-head" %>
+<% else %>
 <%= render "layouts/head" %>
+<% end %>
 <body>
   <%= yield %>
 </body>

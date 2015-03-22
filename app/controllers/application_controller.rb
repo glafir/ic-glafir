@@ -4,6 +4,7 @@ before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
 require 'date'
 layout :layout_by_resource
+has_mobile_fu(false)
 #def store_location
 #  session[:return_to] = request.fullpath
 #end
