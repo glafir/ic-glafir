@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
-<%= render "layouts/head" %>
-<body>
-<div id="all">
-<%=render "layouts/header"%>
-<%=render "layouts/container"%>
-</div>
-</body>
+<%if is_mobile_device?%>
+  <%= render "layouts/m-head" %>
+  <body>  
+    <div id="all">
+      <%=render "layouts/m-header"%>
+      <%=render "layouts/m-container"%>
+    </div>  
+  </body>
+<% else %>
+  <%= render "layouts/head" %>
+  <body>
+    <div id="all">
+      <%=render "layouts/header"%>
+      <%=render "layouts/container"%>
+    </div>
+  </body>
+<% end %>
 </html>

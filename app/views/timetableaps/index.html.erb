@@ -2,18 +2,27 @@
 <%= form_tag timetableaps_path, :method => 'get', :id => "timetableaps_search" do %>
   <p>
     <%= label_tag :start_ap, "Откуда:" %>
-    <%#= select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:start_ap]), prompt: "All Airports", :onchange => "this.form.submit();"%>
-    <%= autocomplete_field_tag 'start_ap', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :id_element => '#start_ap' %>
+    <%if is_mobile_device?%>
+      <%= select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:start_ap]), prompt: "All Airports", :onchange => "this.form.submit();"%>
+    <% else %>
+      <%= autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :id_element => '#start_ap' %>
+      <%= hidden_field_tag :start_ap%>
+    <% end %>
     <%= label_tag :end_ap, "Куда:" %>
-    <%#= select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus),  "id", "name_rus", params[:end_ap]), prompt: "All Airports", :onchange => "this.form.submit();"%>
-    <%= autocomplete_field_tag 'end_ap', '', autocomplete_airport_name_rus_airports_path, :size => 20,  'data-auto-focus' => true, :id_element => '#end_ap' %>
+    <%if is_mobile_device?%>
+      <%= select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus),  "id", "name_rus", params[:end_ap]), prompt: "All Airports", :onchange => "this.form.submit();"%>
+    <% else %>
+      <%= autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path, :size => 20,  'data-auto-focus' => true, :id_element => '#end_ap' %>
+      <%= hidden_field_tag :end_ap%>
+    <% end %>
     <%= label_tag :aircomapny, "Авиакомпания:" %>
-    <%#= autocomplete_field_tag 'search_al', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, 'data-delimiter' => ',', :multiple => true, :id_element => '#search_al' %>
-    <%= autocomplete_field_tag 'search_a', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#search_al', :iata_code => '#iata_code'}, :minLength => 4 %>
-    <%#= select_tag "search_al", options_from_collection_for_select(Aircompany.all, :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"%>
-    <%= hidden_field_tag :search_al%>
-    <%= text_field_tag :iata_code, nil, disabled: true%>
-    <br />
+    <%if is_mobile_device?%>
+      <%= select_tag "search_al", options_from_collection_for_select(Aircompany.all, :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"%>
+    <% else %>
+      <%= autocomplete_field_tag 'search_a', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#search_al', :iata_code => '#iata_code'}, :minLength => 4 %>
+      <%= hidden_field_tag :search_al%>
+      <%= text_field_tag :iata_code, nil, disabled: true%>
+    <% end %>
     <%= submit_tag "Search", :name => nil %>
   </p>
 <%= render "timetableaps/index"%>
