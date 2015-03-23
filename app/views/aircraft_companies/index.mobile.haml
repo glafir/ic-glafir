@@ -1,0 +1,20 @@
+%h1 Listing aircraft_companies
+
+%table
+  %tr
+    %th Aircraft company
+    %th
+    %th
+    %th
+
+  - @aircraft_companies.each do |aircraft_company|
+    %tr
+      %td= aircraft_company.aircraft_company
+      %td= aircraft_company.country_id
+      %td= link_to 'Show', aircraft_company
+      %td= link_to 'Edit', edit_aircraft_company_path(aircraft_company)
+      %td= link_to 'Destroy', aircraft_company, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Aircraft company', new_aircraft_company_path

@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Aircraft model:
+  = @aircraft.aircraft_model
+%p
+  %b Aircraft company:
+  = @aircraft.aircraft_company_id
+%p
+  %b Aircraft icao code:
+  = @aircraft.aircraft_icao_code
+%p
+  %b Aircraft iata code:
+  = @aircraft.aircraft_iata_code
+%p
+  %b Aircraft seats:
+  = @aircraft.aircraft_seats
+%p
+  %b Aircraft wake category:
+  = @aircraft.aircraft_wake_category_id
+%p
+  %b Aircraft webinfo:
+  = @aircraft.aircraft_webinfo
+%p
+  %b Aircraft type:
+  = @aircraft.aircraft_type_id
+%p
+  %b Aircraft maxspeed:
+  = @aircraft.aircraft_maxspeed
+
+= link_to 'Edit', edit_aircraft_path(@aircraft)
+\|
+= link_to 'Back', aircrafts_path

@@ -1,0 +1,70 @@
+<h2>Табло вылета/Прилёта аэропорта <%= @airport.name_rus %> (г.<%= @airport.town.city_rus%>)</h2>
+    <p>Нажмите на ту кнопку: информацию хотите посмотреть?</p>  
+    <form>  
+        <input id="btn1" type="button" value="Табло вылета"> ||
+        <input id="btn2" type="button" value="Табло прилёта"> ||
+        <input id="btn3" type="button" value="Табло и вылета, и прилёта">
+    </form>  
+<div id="content"></div>
+   <script>  
+        $(document).ready(function(){  
+          
+            $('#btn1').click(function(){  
+                $.ajax({  
+                    url: "tablo/out",  
+                    cache: false,  
+                    success: function(html){  
+                        $("#content").html(html);  
+//                         setTimeout(foo, 60000);
+//                         foo();
+//                         function foo () {
+//                         $('#tda').load("# #tt", function() {
+                         $("#tt").tablesorter({
+                         widgets: ["zebra"],
+                         sortList:[[2,0]]
+                         });
+//                         });}
+
+                    }  
+                });  
+            });  
+              
+            $('#btn2').click(function(){  
+                $.ajax({  
+                    url: "tablo/in",  
+                    cache: false,  
+                    success: function(html){  
+                      $("#content").html(html);
+//                         setTimeout(foo, 60000);
+//                         foo();
+//                         function foo () {
+//                         $('#tda').load("# #tt", function() {
+                         $("#tt").tablesorter({
+                         widgets: ["zebra"],
+                         sortList:[[2,0]]
+                         });
+//                         });}
+                    }  
+                });  
+            });  
+
+            $('#btn3').click(function(){
+                $.ajax({
+                    url: "tablo",
+                    cache: false,
+                    success: function(html){
+                      $("#content").html(html);
+//                         setTimeout(foo, 60000);
+//                         foo();
+//                         function foo () {
+//                         $('#tda').load("# #tt", function() {
+                         $("#tt").tablesorter({
+                         widgets: ["zebra"],
+                         sortList:[[2,0]]
+                         });
+//                         });}
+                    }
+                });
+            });
+        });  
+    </script>  

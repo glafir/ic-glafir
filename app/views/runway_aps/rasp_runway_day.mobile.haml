@@ -1,0 +1,22 @@
+= link_to "Back", :back
+%h1 
+  =@date
+.rasp_for_day
+  %table{:border => 3}
+    %thead
+      %tr
+        %th Время
+        %th Рейсы (Занятость пполосы)
+    %tbody
+      -@arr.each do |x|
+        %tr{:bgcolor => x[3]}
+          %td
+            =x[0]
+          %td 
+            #{x[2]} 
+            -if x[1]!=nil and x[2]!=nil
+              #{link_to x[1], x[5]} :: #{x[4]}
+            -else
+              #{x[4]}
+		  
+= link_to "Back", :back

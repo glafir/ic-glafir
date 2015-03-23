@@ -1,0 +1,8 @@
+%h1 Страны мира
+%p Выьерете страну, с которой будете работать.
+
+= form_tag countries_path, :method => 'get', :remote => "true", :id => "countries_search" do
+  = text_field_tag :search, params[:search]
+  = submit_tag "Search", :name => nil
+  %div(id="countries") 
+    =render "countries"

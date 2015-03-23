@@ -1,0 +1,19 @@
+%h1 Listing flight_types
+
+%table
+  %tr
+    %th Flight type
+    %th
+    %th
+    %th
+
+  - @flight_types.each do |flight_type|
+    %tr
+      %td= flight_type.flight_type
+      %td= link_to 'Show', flight_type
+      %td= link_to 'Edit', edit_flight_type_path(flight_type)
+      %td= link_to 'Destroy', flight_type, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Flight type', new_flight_type_path

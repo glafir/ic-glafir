@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Start route:
+  = @rw_route.start_route
+%p
+  %b End route:
+  = @rw_route.end_route
+
+= link_to 'Редактировать', edit_rw_route_path(@rw_route)
+\|
+= link_to 'Назад', rw_routes_path

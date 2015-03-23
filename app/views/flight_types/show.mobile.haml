@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Flight type:
+  = @flight_type.flight_type
+
+= link_to 'Edit', edit_flight_type_path(@flight_type)
+\|
+= link_to 'Back', flight_types_path

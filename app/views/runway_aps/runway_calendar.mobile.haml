@@ -1,0 +1,8 @@
+= link_to "Back", :back
+-#%h2 Расписание полосы #{@runway_ap.runway_name}(#{@runway_ap.runway_length}м) в аэропорту "#{@runway_ap.airport.name_rus}" (г.#{@runway_ap.airport.city_rus})
+=request.fullpath
+%br
+
+=@date
+= raw calendar(:year => @date.year, :month => @date.month, :previous_year_text => (link_to "<<< -1 Year", :date => @date-1.year), :next_year_text => (link_to "+1 Year >>>", :date => @date+1.year), :week_number_link1 => "rasp?year=#{@date.year}",:week_number_link2 => "rasp?year=#{@date.year}", :calendar_title => "#{(link_to Russian::strftime(@date-2.year,'%Y'), :date => @date-2.year)} :: #{(link_to Russian::strftime(@date-1.year,'%Y'), :date => @date-1.year)} :: #{Russian::strftime(@date, '%Y')} :: #{link_to Russian::strftime(@date+1.year,"%Y"), :date => @date+1.year} :: #{link_to Russian::strftime(@date+2.year,"%Y"), :date => @date+2.year}", :previous_month_text => (link_to "-1 Month >", :date => @date-1.month),  :next_month_text => (link_to "+1 Month >", :date => @date+1.month))
+= link_to "Back", :back

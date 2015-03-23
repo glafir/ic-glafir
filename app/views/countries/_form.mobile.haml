@@ -1,0 +1,22 @@
+= form_for @country do |f|
+  - if @country.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@country.errors.count, "error")} prohibited this country from being saved:"
+      %ul
+        - @country.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :country_name
+    = f.text_field :country_name
+  .field
+    = f.label :country_iata_code
+    = f.text_field :country_iata_code
+  .field
+    = f.label :country_icao_code
+    = f.text_field :country_icao_code
+  .field
+    = f.label :country_number
+    = f.number_field :country_number
+  .actions
+    = f.submit 'Save'

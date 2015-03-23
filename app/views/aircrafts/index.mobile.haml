@@ -1,0 +1,35 @@
+%h2 Listing aircrafts
+
+%table
+  %tr
+    %th Aircraft model
+    %th aircraft company
+    %th Aircraft icao code
+    %th Aircraft iata code
+    %th Aircraft seats
+    %th Aircraft wake category
+    %th Aircraft webinfo
+    %th Aircraft type
+    %th Aircraft maxspeed
+    %th
+    %th
+    %th
+
+  - @aircrafts.each do |aircraft|
+    %tr
+      %td= aircraft.aircraft_model
+      %td= aircraft.aircraft_company_id
+      %td= aircraft.aircraft_icao_code
+      %td= aircraft.aircraft_iata_code
+      %td= aircraft.aircraft_seats
+      %td= aircraft.aircraft_wake_category_id
+      %td= aircraft.aircraft_webinfo
+      %td= aircraft.aircraft_type_id
+      %td= aircraft.aircraft_maxspeed
+      %td= link_to 'Show', aircraft
+      %td= link_to 'Edit', edit_aircraft_path(aircraft)
+      %td= link_to 'Destroy', aircraft, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Aircraft', new_aircraft_path

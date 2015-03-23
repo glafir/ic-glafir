@@ -2,16 +2,17 @@
 class ApplicationController < ActionController::Base
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
-require 'date'
-layout :layout_by_resource
-has_mobile_fu(false)
+
+#require 'date'
+#layout :layout_by_resource
 #def store_location
 #  session[:return_to] = request.fullpath
 #end
 before_filter :force_utf8_params
 #before_action :set_locale
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
+has_mobile_fu
+before_filter :set_mobile_format
  
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -40,12 +41,11 @@ rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
 def after_sign_in_path_for(resource)
   airports_path
-#  current_user
 end
 
-#def after_sign_out_path_for(resource_or_scope)
-#  request.referrer
-#end
+def after_sign_out_path_for(resource_or_scope)
+  root_to_path
+end
 
   private 
   def sort_direction
@@ -56,13 +56,24 @@ end
     render plain: "404 Not Found", status: 404
   end
 
-  protected
-  def layout_by_resource
-    if devise_controller?
-      "application_empty_1"
+def set_request_format
+  if is_mobile_device? # this method is provided by mobile_fu
+    if (devise_controller? && action_name == 'create' && request.method == ('POST'))
+      request.format = :html
     else
-      "application"
+      request.format = :mobile
     end
   end
+end
+
+
+#  protected
+#  def layout_by_resource
+#    if devise_controller?
+#      "application_empty_1"
+#    else
+#      "application"
+#    end
+#  end
 protect_from_forgery
 end

@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<%=render "aircompanies/al_logo"%>
+<%=render "aircompanies/al_info"%>
+<fieldset><legend>
+<h2>Рейсы <%= @aircompany.airline_name_rus %> (<%= @aircompany.airline_name_eng%>), выполняемые на собственных самолётах.</h2>
+</legend>
+  <%= render "timetableaps/index"%>
+</fielset>
+<fielset>
+<legend>
+<h2>Рейсы <%= @aircompany.airline_name_rus %> (<%= @aircompany.airline_name_eng%>), выполняемые на самолётах других авиакомпаний. </h2></legend>
+  <%= render "timetableap_subs/index"%>
+</fielset>
+<br />
+<%= link_to 'Edit', edit_aircompany_path(@aircompany) %>

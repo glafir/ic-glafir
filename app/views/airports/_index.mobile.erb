@@ -1,0 +1,15 @@
+<h1>Airports. </h1>
+<% if @country.blank?  
+       search_str = '/airports'
+     else search_str = "/countries/#{@country.id}/ap_show"
+   end
+%>
+<%= form_tag  search_str, :remote => true, :method => 'get',  :id => "airports_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+  <div id="airports"><%= render "airports/airports" %></div>
+<% end %>
+<%= link_to 'New Airport', new_airport_path %>
+
