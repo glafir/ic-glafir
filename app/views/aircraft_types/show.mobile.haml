@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @aircraft_type.atype
+
+= link_to 'Edit', edit_aircraft_type_path(@aircraft_type)
+\|
+= link_to 'Back', aircraft_types_path

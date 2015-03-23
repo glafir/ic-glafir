@@ -1,0 +1,7 @@
+		<div class="col2">            
+			<!-- Column 1 start -->
+				<fieldset>
+				  <legend>Меню  </legend>
+				  <% @usermenu.each do |href, value| %>
+                  <p><a href="<%= href%>"><%= value %><% end %></a></p>                    
+                 </fieldset>

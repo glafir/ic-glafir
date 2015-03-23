@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Airport:
+  = @runway_ap.airport_id
+%p
+  %b Runway length:
+  = @runway_ap.runway_length
+%p
+  %b Runway elevation:
+  = @runway_ap.runway_elevation
+%p
+  %b Runway data:
+  = @runway_ap.runway_data
+
+= link_to 'Edit', edit_runway_ap_path(@runway_ap)
+\|
+= link_to 'Back', runway_aps_path

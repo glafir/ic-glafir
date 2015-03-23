@@ -1,0 +1,11 @@
+%p#notice= notice
+
+%p
+  %b Aircraft company:
+  = @aircraft_company.aircraft_company
+  %b country_id:
+  = @aircraft_company.country_id
+
+= link_to 'Edit', edit_aircraft_company_path(@aircraft_company)
+\|
+= link_to 'Back', aircraft_companies_path

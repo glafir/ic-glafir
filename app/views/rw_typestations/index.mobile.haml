@@ -1,0 +1,23 @@
+%h1 Список rw_typestations
+
+%table
+  %tr
+    %th Typestation name
+    %th
+    %th
+    %th
+
+  - @rw_typestations.each do |rw_typestation|
+    %tr
+      %td= rw_typestation.typestation_name
+      %td= link_to 'Открыть', rw_typestation
+      %td= link_to 'Редактировать', edit_rw_typestation_path(rw_typestation)
+      %td= link_to 'Удалить', rw_typestation, :confirm => 'Вы уверены?', :method => :delete
+
+%br
+
+= link_to 'Создать Rw typestation', new_rw_typestation_path
+
+%br
+%div{ :style => 'width: 10%; margin: 0px auto;' }
+  = will_paginate(@rw_typestation, :previous_label => '&#8592;', :next_label => '&#8594;')

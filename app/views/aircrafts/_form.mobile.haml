@@ -1,0 +1,37 @@
+= form_for @aircraft do |f|
+  - if @aircraft.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@aircraft.errors.count, "error")} prohibited this aircraft from being saved:"
+      %ul
+        - @aircraft.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :aircraft_model
+    = f.text_field :aircraft_model
+  .field
+    = f.label :aircraft_company_id
+    = f.text_field :aircraft_company_id
+  .field
+    = f.label :aircraft_icao_code
+    = f.text_field :aircraft_icao_code
+  .field
+    = f.label :aircraft_iata_code
+    = f.text_field :aircraft_iata_code
+  .field
+    = f.label :aircraft_seats
+    = f.number_field :aircraft_seats
+  .field
+    = f.label :aircraft_wake_category_id
+    = f.number_field :aircraft_wake_category_id
+  .field
+    = f.label :aircraft_webinfo
+    = f.text_field :aircraft_webinfo
+  .field
+    = f.label :aircraft_type_id
+    = f.number_field :aircraft_type_id
+  .field
+    = f.label :aircraft_maxspeed
+    = f.number_field :aircraft_maxspeed
+  .actions
+    = f.submit 'Save'

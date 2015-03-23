@@ -1,0 +1,32 @@
+%table
+  %tr
+    %th Рейс ||
+    %th Прикреплён к рейсу
+    %th выполняется самолётом авиакомпании
+    %th Пункт отправления
+    %th Пункт прибытия
+    %th Время отправления
+    %th Время прибытия
+    %th
+    %th
+    %th
+
+  - @timetableap_subs.each do |timetableap_sub|
+    %tr
+      %td
+        = timetableap_sub.aircompany.iata_code
+        = timetableap_sub.Flight_Number
+      %td
+        = timetableap_sub.timetableap.aircompany.iata_code
+        = timetableap_sub.timetableap.Flight_Number
+      %td= timetableap_sub.timetableap.aircompany.airline_name_rus
+      %td= timetableap_sub.timetableap.airport.town.city_rus
+      %td= timetableap_sub.timetableap.apkey.airport.town.city_rus
+      %td= timetableap_sub.timetableap.TimeStart.in_time_zone.to_s(:time)
+      %td= timetableap_sub.timetableap.TimeEnd.in_time_zone.to_s(:time)
+      %td= link_to 'Show', timetableap_sub
+      %td= link_to 'Edit', edit_timetableap_sub_path(timetableap_sub)
+      %td= link_to 'Destroy', timetableap_sub, :method => :delete, :data => { :confirm => 'Are you sure?' }
+%br
+
+= link_to 'Добавить дополнительный рейс', new_timetableap_sub_path

@@ -1,0 +1,91 @@
+﻿%h1 Добавление регулярных рейсов.
+
+-@arr = Airport.where(iso_code: 'EZ').order("city_rus","name_rus").collect {|a| ["г."+a.city_rus+" (а/п  "+a.name_rus+")", a.id]}
+-@rnr = RunwayAp.order("airport_id,runway_length desc,runway_name").collect {|r| [r.airport.name_rus+" "+r.runway_name+" ("+r.runway_length.to_s+")", r.id]}
+-@ac = Aircraft.order("aircraft_company_id","aircraft_seats").collect {|ac| [ac.aircraft_model+" ("+ac.aircraft_seats.to_s+"чел. макс/ск "+ac.aircraft_maxspeed.to_s+"км/ч)",ac.id]}
+= form_tag("/timetablesap_flight/form/") do
+  .field
+    = label_tag "Номер рейса:"
+    = number_field_tag :Flight_Number
+  .field
+    = label_tag "Авиакомпания:"
+    = select_tag "aircompany_id", options_from_collection_for_select(Aircompany.order("Airline_name_rus"), "id", (:Airline_name_rus), :prompt => "Выбрать авикомпанию.")
+  %table
+    %tr
+      %th Вылет
+      %th Прибытие
+    %tr
+      %td
+        = label_tag "Пункт отправления:"
+        %br
+        = select_tag "way_start", options_for_select(@arr)
+      %td
+        = label_tag "Пункт прибытия:"
+        %br
+        = select_tag "way_end", options_for_select(@arr)
+    %tr
+      %td
+        = label_tag "Терминал отправления:"
+        %br
+        = text_field_tag :TermStart
+      %td
+        = label_tag "Терминал прибытия:"
+        %br
+        = text_field_tag :TermEnd
+    %tr
+      %td Взлётные полосы.
+    %tr
+      %td
+        = select_tag "runway_start", options_for_select(@rnr)
+      %td
+        = select_tag "runway_end", options_for_select(@rnr)
+    %tr
+      %td
+        = label_tag "Шлюз отправления:"
+        %br
+        = text_field_tag :GateStart
+      %td
+        = label_tag "Шлюз прибытия:"
+        %br
+        = text_field_tag :GateEnd
+  %table
+    %tr 
+      %td Начало навигации.
+    %tr
+      %td Вылет первого рейса:
+      %td
+        = select_datetime(Time.now, :prefix => 'StartNavStart')
+      %td Прибытие первого рейса:
+      %td
+        = select_datetime(Time.now, :prefix => 'StartNavEnd')
+    %tr
+      %td Коне навигации
+      %td
+        = select_date(Date.current, :prefix => 'EndNavStart')
+    %tr
+      = label_tag "Тип самолёта:"
+      %br
+      = select_tag "TypeOfPlane", options_for_select(@ac)
+  .field	  
+    = label_tag "Понедельник" 
+    = check_box_tag 'Mo' 
+  .field
+    = label_tag "Вторник" 
+    = check_box_tag 'Tu'
+  .field
+    = label_tag "Среда" 
+    = check_box_tag 'We' 
+  .field
+    = label_tag "Четверг" 
+    = check_box_tag 'Th' 
+  .field
+    = label_tag "Пятница" 
+    = check_box_tag 'Fr' 
+  .field
+    = label_tag "Суббота" 
+    = check_box_tag 'Sa' 
+  .field
+    = label_tag "Воскресенье" 
+    = check_box_tag 'Su' 	
+  .actions
+    = submit_tag "Отправить." 

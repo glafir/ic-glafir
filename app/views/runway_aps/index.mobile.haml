@@ -1,0 +1,31 @@
+%h1 Listing runway_aps
+= will_paginate @runway_aps
+%table
+  %tr
+    %th= sortable "id"
+    %th= sortable "airport_id"
+    %th Runway
+    %th= sortable "runway_length"
+    %th= sortable "runway_elevation"
+    %th Расписание полосы
+    %th
+    %th
+    %th
+
+  - @runway_aps.each do |runway_ap|
+    %tr
+      %td= runway_ap.id
+      %td  #{runway_ap.airport.name_rus} (г.#{runway_ap.airport.city_rus})
+      %td= runway_ap.runway_name
+      %td= runway_ap.runway_length
+      %td= runway_ap.runway_elevation
+      %td= link_to 'Посмотреть', '/runway_aps/'+runway_ap.id.to_s+'/calendar/', :onclick => "return hs.htmlExpand(this, { objectType: 'iframe'} )", :id => runway_ap.id.to_s
+      %td= link_to 'Show', runway_ap
+      %td= link_to 'Edit', edit_runway_ap_path(runway_ap)
+      %td= link_to 'Destroy', runway_ap, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+= page_entries_info @runway_aps
+= will_paginate @runway_aps
+
+= link_to 'New Runway ap', new_runway_ap_path

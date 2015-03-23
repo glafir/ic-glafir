@@ -1,0 +1,27 @@
+%h1 Список zones_stations
+
+%table
+  %tr
+    %th Region
+    %th Code station
+    %th Name
+    %th
+    %th
+    %th
+
+  - @zones_stations.each do |zones_station|
+    %tr
+      %td= zones_station.region_id
+      %td= zones_station.code_station
+      %td= zones_station.name
+      %td= link_to 'Открыть', zones_station
+      %td= link_to 'Редактировать', edit_zones_station_path(zones_station)
+      %td= link_to 'Удалить', zones_station, :confirm => 'Вы уверены?', :method => :delete
+
+%br
+
+= link_to 'Создать Zones station', new_zones_station_path
+
+%br
+%div{ :style => 'width: 10%; margin: 0px auto;' }
+  = will_paginate(@zones_station, :previous_label => '&#8592;', :next_label => '&#8594;')

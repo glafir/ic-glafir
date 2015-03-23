@@ -1,0 +1,25 @@
+= form_for @runway_ap do |f|
+  - if @runway_ap.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@runway_ap.errors.count, "error")} prohibited this runway_ap from being saved:"
+      %ul
+        - @runway_ap.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :airport_id
+    = f.select :airport_id,Airport.where(iso_code:'EZ').collect{|item|[item.name_rus,item.id]}
+  .field
+    = f.label :runway_name
+    = f.text_field :runway_name		
+  .field
+    = f.label :runway_length
+    = f.number_field :runway_length
+  .field
+    = f.label :runway_elevation
+    = f.number_field :runway_elevation
+  .field
+    = f.label :runway_data
+    = f.text_field :runway_data
+  .actions
+    = f.submit 'Save'

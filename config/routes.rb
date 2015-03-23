@@ -1,4 +1,6 @@
 IcApp::Application.routes.draw do
+  root :to => 'general#home'
+
   resources :aphubs
   netzke
   get 'timecor' => "general#timecor"
@@ -26,7 +28,11 @@ IcApp::Application.routes.draw do
   resources :rw_typestations
   resources :rw_routes
   resources :rw_stations
-  devise_for :users
+#  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
   devise_scope :user do
     get "sign_in", :to => "devise/sessions#new"
     get "/logout", :to => "devise/sessions#destroy"
@@ -55,7 +61,6 @@ IcApp::Application.routes.draw do
       get "admin_al"
     end
   end
-  root :to => "general#home"
   resources :airports do
     get :autocomplete_airport_name_rus, :on => :collection
     collection do

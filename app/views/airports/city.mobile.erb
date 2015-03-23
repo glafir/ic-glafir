@@ -1,0 +1,29 @@
+<h1>City: <%= params[:city_eng] %></h1>
+<%= hidden_field_tag :direction, params[:direction]%>
+<%= hidden_field_tag :sort, params[:sort]%>
+<table>
+  <tr>
+    <th>Iata code</th>
+    <th>Icao code</th>
+    <th>Name rus</th>
+    <th>City rus</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<% @airports.each do |airport| %>
+  <tr>
+    <td><%= airport.iata_code %></td>
+    <td><%= airport.icao_code %></td>
+    <td><%= link_to airport.name_rus, airport %></td>
+    <td><%= link_to airport.city_rus, :controller=>"airports", :action => "city", :city_eng => airport.city_eng%></td>
+    <td><%= link_to 'Edit', edit_airport_path(airport) %></td>
+    <td><%= link_to 'Destroy', airport, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Airport', new_airport_path %>
+<%= link_to 'Back', airports_path %>

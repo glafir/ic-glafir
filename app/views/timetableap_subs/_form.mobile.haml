@@ -1,0 +1,19 @@
+= form_for @timetableap_sub do |f|
+  - if @timetableap_sub.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@timetableap_sub.errors.count, "error")} prohibited this timetableap_sub from being saved:"
+      %ul
+        - @timetableap_sub.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Flight_Number
+    = f.number_field :Flight_Number
+  .field
+    = f.label :timetableap_id
+    = f.number_field :timetableap_id
+  .field
+    = f.label :aircompany_id
+    = f.select :aircompany_id, options_from_collection_for_select(Aircompany.order("airline_name_rus"), "id", (:airline_name_rus), :prompt => "Выбрать авикомпанию.")
+  .actions
+    = f.submit 'Save'

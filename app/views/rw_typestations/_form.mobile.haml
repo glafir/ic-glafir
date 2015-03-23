@@ -1,0 +1,13 @@
+= form_for @rw_typestation do |f|
+  -if @rw_typestation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@rw_typestation.errors.count, "error")} Чтобы сохранить:"
+      %ul
+        - @rw_typestation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :typestation_name
+    = f.text_field :typestation_name
+  .actions
+    = f.submit 'Сохранить'

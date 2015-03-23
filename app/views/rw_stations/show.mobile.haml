@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Station`s Zone:
+  = @rw_station.rw_zone
+%p
+  %b Name eng:
+  = @rw_station.name_eng
+%p
+  %b Name rus:
+  = @rw_station.name_rus
+%p
+  %b Type Of Station:
+  = @rw_station.rw_typestation_id
+%p
+  %b Route:
+  = @rw_station.rw_route_id
+
+= link_to 'Редактировать', edit_rw_station_path(@rw_station)
+\|
+= link_to 'Назад', rw_stations_path
