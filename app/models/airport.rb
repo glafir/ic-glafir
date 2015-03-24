@@ -8,8 +8,8 @@ class Airport < ActiveRecord::Base
   has_many :aphubs
   attr_accessible :Dist_to_town, :Terminals, :TerminalsColl, :city_eng, :city_rus, :email, :fax, :gmt_offset, :iata_code, :icao_code, :iso_code, :latitude, :longitude, :name_eng, :name_rus, :phone, :runnway_coll, :runway_elevation, :runway_length, :website, :town_id, :aircompanies_count
     
-  def town_name
-    town.try(:city_rus)
+  def name
+    "#{self.name_rus} (#{self.name_eng})"
   end
 
   def self.search(search)
