@@ -32,9 +32,10 @@
     <%= f.text_field :airline_name_rus %>
   </div>
   <div class="field">
-    
     <%= f.label :Base_airport %><br />
-	<%= f.select :airport_id, Airport.where(iso_code: 'EZ').collect{|item| [item.name_rus, item.id]} %>
+	<%#= f.select :airport_id, Airport.where(iso_code: 'EZ').collect{|item| [item.name_rus, item.id]} %>
+      <%= autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#aircompany_airport_id'}, :value => params[:airport_id] %>
+      <%= f.hidden_field :airport_id%>
   </div>
   <div class="field">
     <%= f.label :country %><br />
