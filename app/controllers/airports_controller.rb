@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class AirportsController < ApplicationController
 layout "without_html", :only => [:tablo]
-autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :display_value => :name
+autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :display_value => :apdata
 
 #  def autocomplete_airport
 #    iata_code = params[:iata_code]

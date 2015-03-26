@@ -3,7 +3,7 @@ IcApp::Application.routes.draw do
 
   resources :aphubs
   netzke
-  get 'timecor' => "general#timecor"
+  get '/timecor' => "general#timecor"
   resources :regions
   resources :towns
   get "/ap_to_tw" => "towns#apToTw"
