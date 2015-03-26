@@ -33,15 +33,15 @@ layout "without_html", :only => [:timenow, :chnglocale]
   end
 
   def timecor
-    @als = Timetableap.where(aircompany_id: 10006).where(way_start: 18438)
-    @als.each { |al|
-       @all = Timetableap.where(aircompany_id: 10006).find_by_Flight_Number(al.Flight_Number + 1)
-       al['neew'] = @all.Flight_Number
+#    @als = Timetableap.where(aircompany_id: 10006).where(way_start: 18438)
+#    @als.each { |al|
+#       @all = Timetableap.where(aircompany_id: 10006).find_by_Flight_Number(al.Flight_Number + 1)
+#       al['neew'] = @all.Flight_Number
 
 #      @all.way_end = 25832
 #      @all.save
 #      al.way_start = 25832
 #      al.save
-    }
-  end
+#    }
+#  end
 end
