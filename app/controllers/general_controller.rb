@@ -43,5 +43,5 @@ layout "without_html", :only => [:timenow, :chnglocale]
 #      al.way_start = 25832
 #      al.save
 #    }
-#  end
+  end
 end

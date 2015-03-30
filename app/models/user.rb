@@ -9,10 +9,12 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessor :login
   attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone
-  cattr_reader :per_page
-  @@per_page = 10
   validates :username,
     :uniqueness => {:case_sensitive => false}
+  validates :email, :presence => true, 
+                    :length => {:minimum => 3, :maximum => 70},
+                    :uniqueness => {:case_sensitive => false },
+                    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
 
     def self.find_for_database_authentication(warden_conditions)
       conditions = warden_conditions.dup

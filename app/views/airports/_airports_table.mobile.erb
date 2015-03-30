@@ -1,6 +1,5 @@
-<table class='pretty'>
+<table class='pretty tablo'>
   <tr>
-    <th><%= sortable "id"%></th>
     <th><%= sortable "iata_code"%></th>
     <th><%= sortable "icao_code"%></th>
     <th><%= sortable "name_rus"%></th>
@@ -13,7 +12,6 @@
   </tr>
 <% @airports.each do |airport| %>
   <tr>
-        <td><%= airport.id %></td>
         <td><%= airport.iata_code %></td>
         <td><%= airport.icao_code %></td>
         <td><%= link_to airport.name_rus, airport, :class => "demo1", :id => airport.id.to_s%></td>

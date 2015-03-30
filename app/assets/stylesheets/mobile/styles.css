@@ -24,6 +24,9 @@ a:hover{
   background: #234; /* Цвет фона под ссылкой */ 
   color: #F5F103; /* Цвет ссылки */ 
 }
+table{
+  width: auto;
+}
 tr:hover{
   background: #234; /* Цвет фона под ссылкой */ 
   color: #ffe; /* Цвет ссылки */

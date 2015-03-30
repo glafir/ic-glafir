@@ -2,12 +2,12 @@
 
 	<tr>
 	  <td nowrap title="<%= timetableap.aircompany.airline_name_rus%>">
-	  <%= link_to image_tag("/images/air_tm/#{timetableap.aircompany.iata_code}.png",  height: '80'), timetableap.aircompany%><br />
+	  <%= link_to image_tag("/images/air_tm/#{timetableap.aircompany.iata_code}.png",  height: '32'), timetableap.aircompany%><br />
 	  <%= link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus %>
           <%if timetableap.id < 1000000%>
-	    <%= link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap), :onclick => "return hs.htmlExpand(this, { objectType: 'iframe'} )"%>
+	    <%= link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap)%>
           <%else%>
-            <%= link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap), :onclick => "return hs.htmlExpand(this, { objectType: 'iframe'} )"%>
+            <%= link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap)%>
           <%end%>
         </td>
 	<td>

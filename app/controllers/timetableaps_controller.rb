@@ -43,9 +43,11 @@ layout "application_empty_1", :only => [:flight_state]
       if @timetableap.save
 	@timetableap = Timetableap.last
         format.html { redirect_to @timetableap, notice: 'Timetableap was successfully created.' }
+        format.mobile { redirect_to @timetableap, notice: 'Timetableap was successfully created.' }
         format.json { render json: @timetableap, status: :created, location: @timetableap }
       else
         format.html { render action: "new" }
+        format.mobile { render action: "new" }
         format.json { render json: @timetableap.errors, status: :unprocessable_entity }
       end
     end

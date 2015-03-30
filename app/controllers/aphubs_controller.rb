@@ -1,6 +1,6 @@
 class AphubsController < ApplicationController
   before_filter :set_aphub, only: [:show, :edit, :update, :destroy]
-  respond_to :html
+  respond_to :html, :mobile
 
   def index
     @aphubs = Aphub.all
