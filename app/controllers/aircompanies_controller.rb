@@ -1,12 +1,9 @@
-# -*- encoding : utf-8 -*-
 class AircompaniesController < ApplicationController
   before_filter :set_aircompany, only: [:show, :edit, :update, :destroy]
   autocomplete :aircompany, :airline_name_rus, :extra_data => [:iata_code]
-  respond_to :html, :mobile
 
   def admin_al
     render layout: "application_empty_1"
-    respond_with(@aircompany)
   end
 
   def index
@@ -22,16 +19,17 @@ class AircompaniesController < ApplicationController
   
   def new
     @aircompany = Aircompany.new
-    @airports = Airport.where(iso_code: 'EZ')
+    @airports = Airport.all
     respond_with(@aircompany)
   end
 
   def edit
-    @airports = Airport.where(iso_code: 'EZ')
+    @airports = Airport.all
   end
 
   def create
     @aircompany = Aircompany.new(params[:aircompany])
+    @aircompany.save
     respond_with(@aircompany)
   end
 

@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
-
+respond_to :html, :mobile, :json, :js
 #require 'date'
 #layout :layout_by_resource
 #def store_location

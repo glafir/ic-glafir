@@ -6,6 +6,9 @@
         });
       });
 </script>
+<% if @timetableaps.blank?%>
+<h3>Выберите хотя бы один пункт или авиакомпанию.</h3>
+<% else %>
 <table id="tt" class="tt">
 <thead>
   <tr>
@@ -53,3 +56,4 @@
 <% end %>
 </tbody>
 </table>
+<% end %>

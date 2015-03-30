@@ -3,7 +3,6 @@ class AirportsController < ApplicationController
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo]
 layout "without_html", :only => [:tablo]
 autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :display_value => :apdata
-respond_to :html, :mobile
 
 #  def autocomplete_airport
 #    iata_code = params[:iata_code]
