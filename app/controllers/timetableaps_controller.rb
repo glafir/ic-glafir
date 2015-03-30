@@ -39,31 +39,13 @@ layout "application_empty_1", :only => [:flight_state]
   # POST /timetableaps.json
   def create
     @timetableap = Timetableap.new(params[:timetableap])
-    respond_to do |format|
-      if @timetableap.save
-	@timetableap = Timetableap.last
-        format.html { redirect_to @timetableap, notice: 'Timetableap was successfully created.' }
-        format.json { render json: @timetableap, status: :created, location: @timetableap }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @timetableap.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PUT /timetableaps/1
   # PUT /timetableaps/1.json
   def update
     @timetableap = Timetableap.find(params[:id])
-    respond_to do |format|
-      if @timetableap.update_attributes(params[:timetableap])
-        format.html { redirect_to @timetableap, notice: 'Timetableap was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @timetableap.errors, status: :unprocessable_entity }
-      end
-    end
+    @timetableap.update_attributes(params[:timetableap])
   end
 
   # DELETE /timetableaps/1
@@ -71,10 +53,6 @@ layout "application_empty_1", :only => [:flight_state]
   def destroy
     @timetableap = Timetableap.find(params[:id])
     @timetableap.destroy
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.json { head :no_content }
-    end
   end
 
   def flight_state

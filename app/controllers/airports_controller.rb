@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class AirportsController < ApplicationController
+before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo]
 layout "without_html", :only => [:tablo]
 autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :display_value => :apdata
 
@@ -13,86 +14,67 @@ autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :displ
 
   def admin_ap
     render layout: "application_empty_1"
+    respond_with(@airport)
   end
 
   def index
     @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    respond_with(@airport)
   end
 
   def show
-    @airport = Airport.find(params[:id])
     @aircompanies = Aircompany.where(airport_id: params[:id]).page(params[:page]).per(params[:per_page])
+    respond_with(@airport)
   end
 
   def aptt
-    @airport = Airport.find(params[:id])
+    respond_with(@airport)
   end
 
   def city
     @airports = Airport.where(city_eng: params[:city_eng])
     @airports = @airports.paginate :page => params[:page], :order => 'name_rus'
+    respond_with(@airport)
   end
 
   def new
     @airport = Airport.new
     @apkey = Apkey.new
+    respond_with(@airport)
   end
 
   def edit
-    @airport = Airport.find(params[:id])
   end
 
   def create
     @airport = Airport.new(params[:airport])
     @apkey = Apkey.new
-    respond_to do |format|
       if @airport.save
-        format.html { redirect_to @airport, notice: 'Airport was successfully created.' }
-        format.json { render json: @airport, status: :created, location: @airport }
         @apkey.id = @airport.id
         @apkey.airport_id = @airport.id
         @apkey.save
-
-      else
-        format.html { render action: "new" }
-        format.json { render json: @airport.errors, status: :unprocessable_entity }
       end
-    end
+    respond_with(@airport)
   end
 
   def update
-    @airport = Airport.find(params[:id])
-
-    respond_to do |format|
-      if @airport.update_attributes(params[:airport])
-        format.html { redirect_to @airport, notice: 'Airport was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @airport.errors, status: :unprocessable_entity }
-      end
-    end
+    @airport.update_attributes(params[:airport])
+    respond_with(@airport)
   end
 
   def destroy
-    @airport = Airport.find(params[:id])
     @airport.destroy
-
-    respond_to do |format|
-      format.html { redirect_to airports_url }
-      format.json { head :no_content }
-    end
+    respond_with(@airport)
   end
   
   def tablo
     @wday = Time.zone.now.strftime'%w'.to_s
-    @airport = Airport.find(params[:id])
     if params[:apt] == 'out'
       @tablo = "Табло вылета"
       tbody_tablo_out
       @timetableaps = @timetableaps + @timetableap_subs
     elsif params[:apt] == 'in'
-      @tablo = "Табло Прибытия"
+      @tablo = "Табло прилёта"
       tbody_tablo_in
       @timetableaps = @timetableaps + @timetableap_subs
     else
@@ -115,6 +97,7 @@ autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :displ
 ##      @timetableaps = @timetableaps + @t.search(params[:id],arp.id,params[:search_al])
 ##     end
 ##########################################################################
+    respond_with(@airport)
   end
   
 private
@@ -144,7 +127,7 @@ private
           tt['fstatus'] = "Идёт регистрация"
           tt['bgcolor'] = "#A67C27"
         else
-          tt['fstatus'] = "Ожидается"
+          tt['fstatus'] = "Ожидается вылет"
           tt['bgcolor'] = "#1C86EE"
         end
         @timetableap_subs0.each do |tt0|
@@ -176,7 +159,7 @@ private
         tt['fstatus'] = "Прибыл"
         tt['bgcolor'] = "#32CD32"
       else
-        tt['fstatus'] = "Ожидается"
+        tt['fstatus'] = "Ожидается прибытие"
         tt['bgcolor'] = "#1C86EE"
       end
       @timetableap_subs0.each do |tt0|
@@ -193,5 +176,9 @@ private
   end
 
   def tbody_tablo 
+  end
+
+  def set_airport
+    @airport = Airport.find(params[:id])
   end
 end

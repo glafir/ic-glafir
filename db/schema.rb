@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20150315100921) do
     t.string   "airline_name_eng",                :null => false
     t.string   "airline_name_rus"
     t.integer  "airport_id",                      :null => false
-    t.string   "country"
+    t.string   "country",                         :null => false
     t.string   "ap_hubs"
     t.date     "al_start"
     t.date     "al_finish"
@@ -83,14 +83,14 @@ ActiveRecord::Schema.define(:version => 20150315100921) do
   end
 
   create_table "airports", :force => true do |t|
-    t.string   "iata_code",          :null => false
-    t.string   "icao_code",          :null => false
+    t.string   "iata_code",    :limit => 3, :null => false
+    t.string   "icao_code",    :limit => 4, :null => false
     t.string   "name_rus"
     t.string   "name_eng"
     t.string   "city_rus"
     t.string   "city_eng"
     t.string   "gmt_offset"
-    t.string   "iso_code"
+    t.string   "iso_code"     :limit => 2, :null => false
     t.string   "latitude"
     t.string   "longitude"
     t.string   "runway_length"

@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
-
+respond_to :html, :mobile, :json, :js
 #require 'date'
 #layout :layout_by_resource
 #def store_location
@@ -43,9 +43,9 @@ def after_sign_in_path_for(resource)
   airports_path
 end
 
-def after_sign_out_path_for(resource_or_scope)
-  root_to_path
-end
+#def after_sign_out_path_for(resource_or_scope)
+#  root_path
+#end
 
   private 
   def sort_direction

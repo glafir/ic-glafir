@@ -3,10 +3,10 @@
   <p>
     <%= label_tag :start_ap, "Откуда:" %>
       <%= autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#start_ap'}, :value => params[:start] %>
-      <%= hidden_field_tag :start_ap%>
+      <%= hidden_field_tag :start_ap, params[:start_ap]%>
     <%= label_tag :end_ap, "Куда:" %>
       <%= autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path, :size => 20,  'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end] %>
-      <%= hidden_field_tag :end_ap%>
+      <%= hidden_field_tag :end_ap, params[:end_ap] %>
     <%= label_tag :aircomapny, "Авиакомпания:" %>
       <%= autocomplete_field_tag 'search_a', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#search_al', :iata_code => '#iata_code'}, :minLength => 4,  :value => params[:search_a] %>
       <%= hidden_field_tag :search_al%>

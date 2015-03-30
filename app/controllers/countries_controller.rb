@@ -1,7 +1,4 @@
 class CountriesController < ApplicationController
-#layout "application1"
-  # GET /countries
-  # GET /countries.json
   def index
     @countries = Country.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page])
   end
