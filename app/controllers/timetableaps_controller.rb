@@ -4,7 +4,6 @@ class TimetableapsController < ApplicationController
 
   def index
     @timetableaps = Timetableap.search(params[:start_ap],params[:end_ap],params[:search_al]).page(params[:page]).per(params[:per_page])
-
     respond_with(@timetableaps)
   end
 
@@ -22,7 +21,6 @@ class TimetableapsController < ApplicationController
 
   def update_dateoffinishdate
     render nothing: true
-    @timetableap = Timetableap.find(params[:id])
     @timetableap.DateOfEndNav = @timetableap.DateOfEndNav + 1.year
     @timetableap.save
     respond_with(@timetableap)
@@ -71,5 +69,9 @@ class TimetableapsController < ApplicationController
 private
   def set_timetableap
     @timetableap = Timetableap.find(params[:id])
+  end
+
+  def sort_column
+    Timetableap.column_names.include?(params[:sort]) ? params[:sort] : "id"
   end
 end
