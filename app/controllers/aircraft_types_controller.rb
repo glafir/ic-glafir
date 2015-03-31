@@ -3,7 +3,7 @@ class AircraftTypesController < ApplicationController
 
   def index
     @aircraft_types = AircraftType.all
-    respond_with(@aircraft_type)
+    respond_with(@aircraft_types)
   end
 
   def show
@@ -21,11 +21,13 @@ class AircraftTypesController < ApplicationController
   def create
     @aircraft_type = AircraftType.new(params[:aircraft_type])
     @aircraft_type.save
+    flash[:notice] = "The aircraft_type was created!" if @aircraft_type.save && !request.xhr?
     respond_with(@aircraft_type)
   end
 
   def update
     @aircraft_type.update_attributes(params[:aircraft_type])
+    flash[:notice] = "The aircraft_type was updated!" if @aircraft_type.update_attributes(params[:aircraft_type]) && !request.xhr?
     respond_with(@aircraft_type)
   end
 

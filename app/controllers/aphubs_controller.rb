@@ -21,11 +21,13 @@ class AphubsController < ApplicationController
   def create
     @aphub = Aphub.new(params[:aphub])
     @aphub.save
+    flash[:notice] = "The aphub was saved!" if @aphub.save && !request.xhr?
     respond_with(@aphub)
   end
 
   def update
     @aphub.update_attributes(params[:aphub])
+    flash[:notice] = "The aphub was updated!" if @aphub.update_attributes(params[:aphub]) && !request.xhr?
     respond_with(@aphub)
   end
 

@@ -6,7 +6,7 @@
         });
       });
 </script>
-<% if @timetableaps.blank?%>
+<% if params[:start].blank? and params[:end].blank?%>
 <h3>Выберите хотя бы один пункт или авиакомпанию.</h3>
 <% else %>
 <table id="tt" class="tt">
@@ -57,3 +57,4 @@
 </tbody>
 </table>
 <% end %>
+<%= link_to 'Добавить основной авиарейс', new_timetableap_path %>

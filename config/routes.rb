@@ -28,7 +28,6 @@ IcApp::Application.routes.draw do
   resources :rw_typestations
   resources :rw_routes
   resources :rw_stations
-#  devise_for :users
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
@@ -71,6 +70,8 @@ IcApp::Application.routes.draw do
       get "tablo/:apt" => "airports#tablo"
       get "tt"
       get "aptt"
+      get "city"
+      get "city/:city_eng" => "airports#city"
     end
   end
 
@@ -84,13 +85,6 @@ IcApp::Application.routes.draw do
   get "general/help"  
   get "general/home"
   get "/general" => "general#home"
-  get "pages/home"
-  get "pages/contact"
-  get "pages/about"
-  get "airpots/city"
-  get "airpots/city/:city_eng" => "airports#city"
-  get "/tablo" => "tablo#index"
-  get "tablo/:id" => "tablo#index"
   get "insertdata" => "timetableaps#insert"
   get "chnglocale" => "general#chnglocale"
 end

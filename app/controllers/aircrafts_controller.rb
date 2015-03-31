@@ -3,7 +3,7 @@ class AircraftsController < ApplicationController
 
   def index
     @aircrafts = Aircraft.all
-    respond_with(@aircraft)
+    respond_with(@aircrafts)
   end
 
   def show
@@ -21,11 +21,13 @@ class AircraftsController < ApplicationController
   def create
     @aircraft = Aircraft.new(params[:aircraft])
     @aircraft.save
+    flash[:notice] = "The aircraft was created!" if @aircraft.save && !request.xhr?
     respond_with(@aircraft)
   end
 
   def update
     @aircraft.update_attributes(params[:aircraft])
+    flash[:notice] = "The aircraft was updated!" if @aircraft.update_attributes(params[:aircraft]) && !request.xhr?
     respond_with(@aircraft)
   end
 

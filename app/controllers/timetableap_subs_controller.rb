@@ -1,58 +1,46 @@
 class TimetableapSubsController < ApplicationController
-layout "application_empty_1", :only => [:flight_state]
+  before_filter :set_timetableap_sub, only: [:show, :edit, :update, :destroy, :flight_state]
+  layout "application_empty_1", :only => [:flight_state]
+
   def index
-    @timetableap_subs = TimetableapSub.all
+    @timetableap_subs = TimetableapSub.page(params[:page]).per(params[:per_page])
+    respond_with(@timetableap_subs)
   end
 
   def show
-    @timetableap_sub = TimetableapSub.find(params[:id])
+    respond_with(@timetableap_sub)
   end
 
   def new
     @timetableap_sub = TimetableapSub.new
+    respond_with(@timetableap_sub)
   end
 
   def edit
-    @timetableap_sub = TimetableapSub.find(params[:id])
   end
 
   def flight_state
-    @timetableap_sub = TimetableapSub.find(params[:id])
+    respond_with(@timetableap_sub)
   end
 
   def create
-    @timetableap_sub = TimetableapSub.new(params[:timetableap_sub])
-    respond_to do |format|
-      if @timetableap_sub.save
-#	@timetableap_sub = TimetableapSub.last
-        format.html { redirect_to @timetableap_sub, notice: 'Timetableap was successfully created.' }
-        format.json { render json: @timetableap_sub, status: :created, location: @timetableap_sub }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @timetableap_subs.errors, status: :unprocessable_entity }
-      end
-    end
+    @timetableap_sub.save
+    flash[:notice] = "The flight was saved!" if @timetableap_sub.save && !request.xhr?
+    respond_with(@timetableap_sub)
   end
 
   def update
-    @timetableap_sub = TimetableapSub.find(params[:id])
-    respond_to do |format|
-      if @timetableap_sub.update_attributes(params[:timetableap_sub])
-        format.html { redirect_to @timetableap_sub, notice: 'Timetableap was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @timetableap_sub.errors, status: :unprocessable_entity }
-      end
-    end
+    @timetableap_sub.update_attributes(params[:timetableap_sub])
+    flash[:notice] = "The flight was uodated!" if @timetableap_sub.update_attributes(params[:timetableap_sub]) && !request.xhr?
+    respond_with(@timetableap_sub)
   end
 
   def destroy
-    @timetableap_sub = TimetableapSub.find(params[:id])
     @timetableap_sub.destroy
-    respond_to do |format|
-      format.html { redirect_to timetableap_subs_url }
-      format.json { head :no_content }
-    end
+    respond_with(@timetableap_sub)
+  end
+
+  def set_timetableap_sub
+    @timetableap_sub = TimetableapSub.find(params[:id])
   end
 end
