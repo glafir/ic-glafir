@@ -8,11 +8,9 @@
       <%= autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path, :size => 20,  'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end] %>
       <%= hidden_field_tag :end_ap, params[:end_ap] %>
     <%= label_tag :aircomapny, "Авиакомпания:" %>
-      <%= autocomplete_field_tag 'search_a', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#search_al', :iata_code => '#iata_code'}, :minLength => 4,  :value => params[:search_a] %>
+      <%= autocomplete_field_tag 'search_a', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#search_al'}, :minLength => 4,  :value => params[:search_a] %>
       <%= hidden_field_tag :search_al%>
-      <%= text_field_tag :iata_code, nil, disabled: true%>
     <%= submit_tag "Search", :name => nil %>
   </p>
 <%= render "timetableaps/index"%>
 <%end%>
-<%= link_to 'Добавить основной авиарейс', new_timetableap_path %>

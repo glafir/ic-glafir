@@ -4,7 +4,7 @@ class AircraftCompaniesController < ApplicationController
 
   def index
     @aircraft_companies = AircraftCompany.all
-    respond_with(@aircraft_company)
+    respond_with(@aircraft_companies)
   end
 
   def show
@@ -22,11 +22,13 @@ class AircraftCompaniesController < ApplicationController
   def create
     @aircraft_company = AircraftCompany.new(params[:aircraft_company])
     @aircraft_company.save
+    flash[:notice] = "The aircraft_company was created!" if @aircraft_company.save && !request.xhr?
     respond_with(@aircraft_company)
   end
 
   def update
     @aircraft_company.update_attributes(params[:aircraft_company])
+    flash[:notice] = "The aircraft_company was updated!" if @aircraft_company.update_attributes(params[:aircraft_company]) && !request.xhr?
     respond_with(@aircraft_company)
   end
 

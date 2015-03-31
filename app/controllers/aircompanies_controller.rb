@@ -8,7 +8,7 @@ class AircompaniesController < ApplicationController
 
   def index
     @aircompanies = Aircompany.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
-    respond_with(@aircompany)
+    respond_with(@aircompanies)
   end
 
   def show
@@ -30,11 +30,13 @@ class AircompaniesController < ApplicationController
   def create
     @aircompany = Aircompany.new(params[:aircompany])
     @aircompany.save
+    flash[:notice] = "The aircompany was created!" if @aircompany.save && !request.xhr?
     respond_with(@aircompany)
   end
 
   def update
     @aircompany.update_attributes(params[:aircompany])
+    flash[:notice] = "The aircompany was updated!" if @aircompany.update_attributes(params[:aircompany]) && !request.xhr?
     respond_with(@aircompany)
   end
 
@@ -45,7 +47,7 @@ class AircompaniesController < ApplicationController
 
 private
   def sort_column
-    Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "Airline_name_rus"
+    Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "airline_name_rus"
   end
 
   def set_aircompany

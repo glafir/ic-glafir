@@ -14,7 +14,7 @@ autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :displ
 
   def admin_ap
     render layout: "application_empty_1"
-    respond_with(@airport)
+    respond_with(@airports)
   end
 
   def index
@@ -53,12 +53,14 @@ autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :displ
         @apkey.id = @airport.id
         @apkey.airport_id = @airport.id
         @apkey.save
+        flash[:notice] = "The airport was created!" if @apkey.save && !request.xhr?
       end
     respond_with(@airport)
   end
 
   def update
     @airport.update_attributes(params[:airport])
+    flash[:notice] = "The airport was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
     respond_with(@airport)
   end
 

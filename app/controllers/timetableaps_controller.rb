@@ -1,26 +1,19 @@
 class TimetableapsController < ApplicationController
-layout "application_empty_1", :only => [:flight_state]
+  layout "application_empty_1", :only => [:flight_state, :ttair_admin]
+  before_filter :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
 
-  # GET /timetableaps
-  # GET /timetableaps.json
   def index
-    @timetableaps = Timetableap.select("*,(select city_rus from airports where airports.id = timetableaps.way_end) as city_rus_end,(select city_rus from airports where airports.id = timetableaps.way_start) as city_rus_start").search(params[:start_ap],params[:end_ap],params[:search_al])
-    respond_with(@timetableap)
+    @timetableaps = Timetableap.search(params[:start_ap],params[:end_ap],params[:search_al]).page(params[:page]).per(params[:per_page])
+    respond_with(@timetableaps)
   end
 
   def ttair_admin
-    render layout: "application_empty_1"
   end
 
-  # GET /timetableaps/1
-  # GET /timetableaps/1.json
   def show
-    @timetableap = Timetableap.find(params[:id])
     respond_with(@timetableap)
   end
 
-  # GET /timetableaps/new
-  # GET /timetableaps/new.json
   def new
     @timetableap = Timetableap.new
     respond_with(@timetableap)
@@ -28,14 +21,12 @@ layout "application_empty_1", :only => [:flight_state]
 
   def update_dateoffinishdate
     render nothing: true
-    @timetableap = Timetableap.find(params[:id])
     @timetableap.DateOfEndNav = @timetableap.DateOfEndNav + 1.year
     @timetableap.save
     respond_with(@timetableap)
   end
 
   def edit
-    @timetableap = Timetableap.find(params[:id])
     respond_with(@timetableap)
   end
 
@@ -47,20 +38,17 @@ layout "application_empty_1", :only => [:flight_state]
   end
 
   def update
-    @timetableap = Timetableap.find(params[:id])
     @timetableap.update_attributes(params[:timetableap])
-    flash[:notice] = "The flight was updated!" if @timetableap.save && !request.xhr?
+    flash[:notice] = "The flight was updated!" if @timetableap.update_attributes(params[:timetableap]) && !request.xhr?
     respond_with(@timetableap, :location => timetableap_path(@timetableap))
   end
 
   def destroy
-    @timetableap = Timetableap.find(params[:id])
     @timetableap.destroy
     respond_with(@timetableap)
   end
 
   def flight_state
-    @timetableap = Timetableap.find(params[:id])
     if @timetableap.TimeEnd.hour < 14 or @timetableap.TimeStart.hour < 14
       @timetableap['timeEnd'] = @timetableap.TimeEnd.change( :year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
       @timetableap['timeStart'] = @timetableap.TimeStart.change( :year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
@@ -76,5 +64,14 @@ layout "application_empty_1", :only => [:flight_state]
     @timetableaps.each do |tt|
       tt << Time.now
     end
+  end
+
+private
+  def set_timetableap
+    @timetableap = Timetableap.find(params[:id])
+  end
+
+  def sort_column
+    Timetableap.column_names.include?(params[:sort]) ? params[:sort] : "id"
   end
 end

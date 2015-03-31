@@ -22,7 +22,7 @@
     <td><%= link_to aircompany.airline_name_eng, aircompany %></td>
     <td><%= link_to aircompany.airline_name_rus, aircompany %></td>
     <td><%= link_to aircompany.airport.name_rus, aircompany.airport %>
-    (г.<%=link_to aircompany.airport.city_rus, :controller=>"airports", :action => "city", :city_eng => aircompany.airport.city_eng%>)</td>
+    (г.<%= link_to aircompany.airport.town.city_rus, town_path(aircompany.airport.town_id) unless aircompany.airport.town.blank?%>)</td>
     <td><%= aircompany.al_start %></td>
     <td><%= aircompany.al_finish %></td>
     <td><%= link_to 'Edit', edit_aircompany_path(aircompany) %></td>
