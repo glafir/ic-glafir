@@ -6,7 +6,9 @@
         });
       });
 </script>
-<table id="tt" class="tt">
+<%= render "layouts/per_page"%>
+<%= render "timetableaps/paginate_top.html.erb"%>
+<table id="tt" class="pretty">
 <thead>
   <tr>
     <th>Flight number</th>
@@ -53,4 +55,6 @@
 <% end %>
 </tbody>
 </table>
+<%= render "timetableaps/paginate_bottom.html.erb"%>
+<%= render "layouts/per_page"%>
 <%= link_to 'Добавить основной авиарейс', new_timetableap_path %>

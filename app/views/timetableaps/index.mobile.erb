@@ -9,5 +9,5 @@
       <%= select_tag "search_al", options_from_collection_for_select(Aircompany.all, :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"%>
     <%= submit_tag "Search", :name => nil %>
   </p>
-<%= render "timetableaps/index"%>
+<div id="timetableaps"><%= render "timetableaps/timetableaps"%></div>
 <%end%>

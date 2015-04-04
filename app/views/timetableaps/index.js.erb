@@ -1,0 +1,3 @@
+$("#timetableaps").html("<%= escape_javascript(render("timetableaps")) %>");
+$('.pagination').html('<%= escape_javascript(paginate(@timetableaps, :remote => true).to_s) %>');
+

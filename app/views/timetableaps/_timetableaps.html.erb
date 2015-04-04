@@ -6,10 +6,9 @@
         });
       });
 </script>
-<% if params[:start].blank? and params[:end].blank?%>
-<h3>Выберите хотя бы один пункт или авиакомпанию.</h3>
-<% else %>
-<table id="tt" class="tt">
+<%= render "layouts/per_page"%>
+<%= render "timetableaps/paginate_top.html.erb"%>
+<table id="tt" class="tt pretty">
 <thead>
   <tr>
     <th>Flight number</th>
@@ -56,5 +55,6 @@
 <% end %>
 </tbody>
 </table>
-<% end %>
+<%= render "timetableaps/paginate_bottom.html.erb"%>
+<%= render "layouts/per_page"%>
 <%= link_to 'Добавить основной авиарейс', new_timetableap_path %>
