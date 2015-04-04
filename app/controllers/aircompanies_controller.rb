@@ -12,8 +12,8 @@ class AircompaniesController < ApplicationController
   end
 
   def show
-    @timetableaps = Timetableap.where(aircompany_id: params[:id]).order(:Flight_Number)
-    @timetableap_subs = TimetableapSub.where(aircompany_id: params[:id]).order(:Flight_Number)
+    @timetableaps = Timetableap.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:page]).per(params[:per_page])
+    @timetableap_subs = TimetableapSub.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:page]).per(params[:per_page])
     respond_with(@aircompany)
   end
   
