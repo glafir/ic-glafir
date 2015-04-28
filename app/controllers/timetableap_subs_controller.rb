@@ -3,7 +3,7 @@ class TimetableapSubsController < ApplicationController
   layout "application_empty_1", :only => [:flight_state]
 
   def index
-    @timetableap_subs = TimetableapSub.page(params[:page]).per(params[:per_page])
+    @timetableap_subs = TimetableapSub.page(params[:sub_page]).per(params[:per_page])
     respond_with(@timetableap_subs)
   end
 

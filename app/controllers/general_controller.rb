@@ -44,4 +44,16 @@ layout "without_html", :only => [:timenow, :chnglocale]
 #      al.save
 #    }
   end
+
+  def apcor
+    @c = Country.all
+    @c.each do |cc|
+      @airports = Airport.where(country_id: nil).where(iso_code: cc.country_iata_code)
+      @airports.each do |airport|
+        airport.country_id = cc.id
+        airport.save(:validate => false)
+      end
+    end
+    @airports = Airport.where(country_id: nil)
+  end
 end

@@ -8,19 +8,19 @@ class AircompaniesController < ApplicationController
 
   def index
     @aircompanies = Aircompany.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
-    respond_with(@aircompanies)
+    respond_with @aircompanies
   end
 
   def show
     @timetableaps = Timetableap.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:page]).per(params[:per_page])
-    @timetableap_subs = TimetableapSub.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:page]).per(params[:per_page])
-    respond_with(@aircompany)
+    @timetableap_subs = TimetableapSub.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:sub_page]).per(params[:per_page1])
+    respond_with @aircompany
   end
   
   def new
     @aircompany = Aircompany.new
     @airports = Airport.all
-    respond_with(@aircompany)
+    respond_with @aircompany
   end
 
   def edit
@@ -31,21 +31,22 @@ class AircompaniesController < ApplicationController
     @aircompany = Aircompany.new(params[:aircompany])
     @aircompany.save
     flash[:notice] = "The aircompany was created!" if @aircompany.save && !request.xhr?
-    respond_with(@aircompany)
+    respond_with @aircompany
   end
 
   def update
     @aircompany.update_attributes(params[:aircompany])
-    flash[:notice] = "The aircompany was updated!" if @aircompany.update_attributes(params[:aircompany]) && !request.xhr?
-    respond_with(@aircompany)
+    flash[:notice] = "The aircompany was updated!" if @aircompany.save && !request.xhr?
+    respond_with @aircompany
   end
 
   def destroy
     @aircompany.destroy
-    respond_with(@aircompany)
+    respond_with @aircompany
   end
 
 private
+
   def sort_column
     Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "airline_name_rus"
   end

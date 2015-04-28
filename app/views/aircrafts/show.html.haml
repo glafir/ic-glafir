@@ -5,7 +5,7 @@
   = @aircraft.aircraft_model
 %p
   %b Aircraft company:
-  = @aircraft.aircraft_company_id
+  = @aircraft.aircraft_company.aircraft_company
 %p
   %b Aircraft icao code:
   = @aircraft.aircraft_icao_code
@@ -17,13 +17,13 @@
   = @aircraft.aircraft_seats
 %p
   %b Aircraft wake category:
-  = @aircraft.aircraft_wake_category_id
+  = @aircraft.aircraft_wake_category.category
 %p
   %b Aircraft webinfo:
   = @aircraft.aircraft_webinfo
 %p
   %b Aircraft type:
-  = @aircraft.aircraft_type_id
+  = @aircraft.aircraft_type.atype
 %p
   %b Aircraft maxspeed:
   = @aircraft.aircraft_maxspeed

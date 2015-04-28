@@ -10,8 +10,8 @@
     = f.label :aircraft_model
     = f.text_field :aircraft_model
   .field
-    = f.label :aircraft_company_id
-    = f.text_field :aircraft_company_id
+    = f.label :aircraft_company
+    = f.select :aircraft_company_id, AircraftCompany.all.collect{|item| [item.aircraft_company,item.id]}
   .field
     = f.label :aircraft_icao_code
     = f.text_field :aircraft_icao_code
@@ -22,14 +22,14 @@
     = f.label :aircraft_seats
     = f.number_field :aircraft_seats
   .field
-    = f.label :aircraft_wake_category_id
-    = f.number_field :aircraft_wake_category_id
+    = f.label :aircraft_wake_category
+    = f.select :aircraft_wake_category_id, AircraftWakeCategory.all.collect{|item| [item.category,item.id]}
   .field
     = f.label :aircraft_webinfo
     = f.text_field :aircraft_webinfo
   .field
     = f.label :aircraft_type_id
-    = f.number_field :aircraft_type_id
+    = f.select :aircraft_type_id, AircraftType.all.collect{|item|[item.atype,item.id]}
   .field
     = f.label :aircraft_maxspeed
     = f.number_field :aircraft_maxspeed

@@ -2,7 +2,7 @@
 class AirportsController < ApplicationController
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo]
 layout "without_html", :only => [:tablo]
-autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :display_value => :apdata
+autocomplete :airport, :name_rus, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
 
 #  def autocomplete_airport
 #    iata_code = params[:iata_code]
@@ -14,7 +14,6 @@ autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :displ
 
   def admin_ap
     render layout: "application_empty_1"
-    respond_with(@airports)
   end
 
   def index
@@ -100,6 +99,14 @@ autocomplete :airport, :name_rus, :extra_data => [:name_eng, :iata_code], :displ
 ##     end
 ##########################################################################
     respond_with(@airport)
+  end
+
+  def ap_dist
+    @ap1 = Airport.find(params[:start_ap])
+    @ap2 = Airport.find(params[:end_ap])
+    @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+    @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
+    @dist = @p1.distance_to(@p2)
   end
   
 private

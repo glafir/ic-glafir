@@ -1,8 +1,8 @@
 <h1>Airlines of ES</h1>
 <p><%= @aircompanies.count%> aircompanies</p>
-<%= form_tag aircompanies_path, :method => 'get',:remote => "true", :id => "aircompanies_search" do %>
+<%= form_tag aircompanies_path, :method => 'get', :id => "aircompanies_search" do %>
   <p>
-    <%= text_field_tag :search, params[:search] %>
+    <%= text_field_tag :search, params[:search], autofocus: true  %>
     <%= submit_tag "Search", :name => nil %>
   </p>
   <div id="aircompanies"><%= render 'aircompanies' %></div>

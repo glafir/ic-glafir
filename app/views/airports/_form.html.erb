@@ -36,12 +36,21 @@
     <%= f.text_field :city_eng %>
   </div>
   <div class="field">
+    <%= f.label :town_id%><br />
+    <%= autocomplete_field_tag 'town', '', autocomplete_town_accent_city_towns_path, :size => 30, 'data-auto-focus' => true, :update_elements => {:id => '#airport_town_id'}, :value => params[:town] %>
+    <%= f.hidden_field :town_id%>
+  </div>
+  <div class="field">
     <%= f.label :gmt_offset%><br />
     <%= f.text_field :gmt_offset%>
   </div>
   <div class="field">
     <%= f.label :iso_code %><br />
     <%= f.text_field :iso_code%>
+  </div>
+  <div class="field">
+    <%= f.label :country_id %><br />
+    <%= f.select :country_id, Country.all.collect{|item| [item.country_name, item.id]} %>
   </div>
   <div class="field">
     <%= f.label :latitude %><br />

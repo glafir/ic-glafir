@@ -6,7 +6,7 @@
 %>
 <%= form_tag  search_str, :remote => true, :method => 'get',  :id => "airports_search" do %>
   <p>
-    <%= text_field_tag :search, params[:search] %>
+    <%= text_field_tag :search, params[:search], autofocus: true  %>
     <%= submit_tag "Search", :name => nil %>
   </p>
   <div id="airports"><%= render "airports/airports" %></div>
