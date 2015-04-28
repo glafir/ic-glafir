@@ -33,7 +33,7 @@ $(document).ready(function () {
   <div class="field">
     <%= f.label :Flight_Number %><br />
     <%if params[:Flight_Number].blank? %>
-    <%= f.number_field :Flight_Number %>
+    <%= f.number_field :Flight_Number, autofocus: true  %>
     <% else %>
     <%= f.number_field :Flight_Number, :value => ((params[:Flight_Number]).to_i + 1).to_s %>
   <% end %>

@@ -7,7 +7,7 @@
       });
 </script>
 <%= render "layouts/per_page"%>
-<%= render "timetableaps/paginate_top.html.erb"%>
+<%= render "timetableaps/paginate_top"%>
 <table id="tt" class="pretty">
 <thead>
   <tr>
@@ -55,6 +55,6 @@
 <% end %>
 </tbody>
 </table>
-<%= render "timetableaps/paginate_bottom.html.erb"%>
+<%= render "timetableaps/paginate_bottom"%>
 <%= render "layouts/per_page"%>
 <%= link_to 'Добавить основной авиарейс', new_timetableap_path %>

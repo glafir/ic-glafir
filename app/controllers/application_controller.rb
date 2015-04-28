@@ -11,7 +11,7 @@ respond_to :html, :mobile, :json, :js
 before_filter :force_utf8_params
 #before_action :set_locale
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-has_mobile_fu
+has_mobile_fu(true)
 before_filter :set_mobile_format
  
   def set_locale

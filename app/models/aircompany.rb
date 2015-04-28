@@ -1,10 +1,11 @@
 class Aircompany < ActiveRecord::Base
   belongs_to :airport
+  belongs_to :country
   has_many :timetableaps, dependent: :destroy
   has_many :timetableap_subs, dependent: :destroy
   has_many :timetableap_flights, dependent: :destroy
   has_many :aphubs, dependent: :destroy
-  attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :country, :iata_code, :icao_code, :al_start, :al_finish
+  attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id
   validates  :iata_code, presence: true, length: { is: 2 }
   validates  :icao_code, presence: true, length: { is: 3 }
   validates  :airline_name_eng, presence: true, length: { minimum: 2 }

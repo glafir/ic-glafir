@@ -18,13 +18,13 @@
   - @aircrafts.each do |aircraft|
     %tr
       %td= aircraft.aircraft_model
-      %td= aircraft.aircraft_company_id
+      %td= aircraft.aircraft_company.aircraft_company
       %td= aircraft.aircraft_icao_code
       %td= aircraft.aircraft_iata_code
       %td= aircraft.aircraft_seats
-      %td= aircraft.aircraft_wake_category_id
+      %td= aircraft.aircraft_wake_category.category
       %td= aircraft.aircraft_webinfo
-      %td= aircraft.aircraft_type_id
+      %td= aircraft.aircraft_type.atype
       %td= aircraft.aircraft_maxspeed
       %td= link_to 'Show', aircraft
       %td= link_to 'Edit', edit_aircraft_path(aircraft)
