@@ -1,8 +1,10 @@
 class Town < ActiveRecord::Base
   has_many :airports, inverse_of: :town
-  cattr_reader :per_page
-  @@per_page = 50
   attr_accessible :accent_city, :city, :country, :latitude, :longitude, :region, :city_rus
+
+  def twdata
+    "#{accent_city} (#{country})"
+  end
 
   def self.search(search)
     if search

@@ -1,6 +1,7 @@
-<div class="apple_pagination" id="digg_pagination">
-    <%= paginate @countries%>
-  </div>
+<div class="apple_pagination" id="apple_pagination">
+    <%= paginate @countries, remote: true%>
     <div class="page_info">
       <%= page_entries_info @countries %>
     </div>
+  </div>
+

@@ -1,0 +1,15 @@
+%h2 Country #{@country.country_name}
+%p
+  %b Country Name:
+  = @country.country_name
+%p
+  %b ISO A2 (IATA code):
+  = @country.country_iata_code
+%p
+  %b ISO A3 (ICAO code):
+  = @country.country_icao_code
+%p
+  %b Number:
+  = @country.country_number
+
+= render "airports/index"

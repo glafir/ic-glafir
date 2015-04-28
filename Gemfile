@@ -63,3 +63,4 @@ gem 'extjs4-rails'
 gem 'compass'
 gem 'netzke-communitypack'
 gem "mobile-fu"
+gem 'responders'

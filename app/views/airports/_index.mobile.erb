@@ -4,7 +4,7 @@
      else search_str = "/countries/#{@country.id}/ap_show"
    end
 %>
-<%= form_tag  search_str, :remote => true, :method => 'get',  :id => "airports_search" do %>
+<%= form_tag  search_str, :method => 'get',  :id => "airports_search" do %>
   <p>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search", :name => nil %>

@@ -4,8 +4,16 @@ IcApp::Application.routes.draw do
   resources :aphubs
   netzke
   get '/timecor' => "general#timecor"
+  get '/apcor' => "general#apcor"
   resources :regions
-  resources :towns
+  resources :towns do
+    get :autocomplete_town_accent_city, :on => :collection
+    collection do
+      get "admin_tw"
+      get "tw_dist"
+    end
+  end
+
   get "/ap_to_tw" => "towns#apToTw"
   resources :flight_types
   resources :aircraft_companies
@@ -64,6 +72,7 @@ IcApp::Application.routes.draw do
     get :autocomplete_airport_name_rus, :on => :collection
     collection do
       get "admin_ap"
+      get "ap_dist"
     end
     member do
       get "tablo" => "airports#tablo"

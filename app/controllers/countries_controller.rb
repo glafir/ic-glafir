@@ -1,5 +1,6 @@
 class CountriesController < ApplicationController
   before_filter :set_country, only: [:show, :ap_show, :tw_show, :edit, :update, :destroy]
+  before_filter :set_airports, only: [:ap_show, :show]
 
   def index
     @countries = Country.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page])
@@ -7,7 +8,7 @@ class CountriesController < ApplicationController
   end
 
   def ap_show
-    @airports = Airport.where(iso_code: @country.country_iata_code).search_c(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:per_page])
+#    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:per_page])
     respond_with(@country)
   end
 
@@ -16,6 +17,10 @@ class CountriesController < ApplicationController
     respond_with(@country)
   end
 
+  def show
+#    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    respond_with(@country)
+  end
 
   def new
     @country = Country.new
@@ -58,5 +63,9 @@ private
 
   def set_country
     @country = Country.find(params[:id])
+  end
+
+  def set_airports
+    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:per_page])
   end
 end

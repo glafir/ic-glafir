@@ -1,0 +1,8 @@
+= form_tag ap_dist_airports_path, :method => 'get', :id => "timetableaps_search" do
+  = label_tag :start_ap, "Откуда:"
+  = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:start_ap]), prompt: "All Airports"
+  = label_tag :end_ap, "Куда:"
+  = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:end_ap]), prompt: "All Airports"
+  = submit_tag "Измерить расстояние.", :name => nil
+  .ap_dist_airports_path
+    = render "ap_dist_result"
