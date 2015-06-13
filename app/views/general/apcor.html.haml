@@ -1,13 +1,10 @@
 Done!
-= @airports.count
+= @towns.count
 
-- @airports.each do |aa|
-
+- @towns.each do |aa|
   = aa.id
   ||
-  = aa.iata_code
+  = aa.city
   ||
-  = aa.name_eng
-  ||
-  = aa.iso_code
+  = aa.country
   %br

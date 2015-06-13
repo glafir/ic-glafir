@@ -1,23 +1,4 @@
 <div id="new_tt">
-<script type="text/javascript">
-$(document).ready(function () {
-  $("#new_timetableap").validate({
-    focusInvalid: false,
-    focusCleanup: true,
-    rules: {
-      "timetableap[Flight_Number]": {required: true, maxlength: 4, number: true},
-      "timetableap[DateOfStartNav]": {required: true, maxlength: 10},
-      "timetableap[DateOfEndNav]": {required: true, maxlength: 10 }
-    },
-    messages: {
-        "timetableap[Flight_Number]": "Введите номер рейса",
-        "timetableap[DateOfStartNav]": "Введите дату начала навигации",
-        "timetableap[DateOfEndNav]": "Введите дату конца навигации"
-      }
-    });
-  });
-</script>
-
 <%= form_for(@timetableap) do |f| %>
   <% if @timetableap.errors.any? %>
     <div id="error_explanation">
@@ -80,8 +61,12 @@ $(document).ready(function () {
     <%= f.text_field :GateEnd %>
   </div>
   <div class="field">
-    <%= f.label :TypeOfPlane %><br />
-    <%= f.text_field :TypeOfPlane %>
+    <%= f.label :aircraft_id %><br />
+    <%if params[:aircraft_id].blank? %>
+      <%= f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model %>
+    <%else%>
+      <%= f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, :selected => params[:aircraft_id]%>
+    <%end%>
   </div>
   <div class="field">
     <%= f.label :TimeStart %><br />

@@ -1,4 +1,4 @@
-= form_for @aircraft do |f|
+= form_for @aircraft, validate: true do |f|
   - if @aircraft.errors.any?
     #error_explanation
       %h2= "#{pluralize(@aircraft.errors.count, "error")} prohibited this aircraft from being saved:"

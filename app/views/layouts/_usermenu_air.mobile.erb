@@ -8,10 +8,9 @@
 <li><%= link_to "Аэропорты мира", airports_path%></li>
 <li><%= link_to "Авиакомпании мира"%></li>
 <li><%= link_to "Самолёты", aircrafts_path%></li>
-<br>
 <hr>
-<li><%= link_to "Города ЕШ", controller: "countries", action: "tw_show", id: 528%></li>
-<li><%= link_to "Аэропорты ЕШ", controller: "countries", action: "ap_show", id: 528%></li>
+<li><%= link_to "Города ЕШ", controller: "/countries", action: "tw_show", id: 528%></li>
+<li><%= link_to "Аэропорты ЕШ", controller: "/countries", action: "ap_show", id: 528%></li>
 <li><%= link_to "Авиакомпании ЕШ", aircompanies_path%></li>
 <li><%= link_to "Поиск рейсов в ЕШ", timetableaps_path%></li>
 <br>

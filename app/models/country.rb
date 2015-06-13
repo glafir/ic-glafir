@@ -1,4 +1,5 @@
 class Country < ActiveRecord::Base
+include ActiveModel::Validations
 has_many :airports
 has_many :towns
 has_many :aircompanies
@@ -8,7 +9,7 @@ has_many :aircompanies
     if search
       where('country_name LIKE ? or country_iata_code LIKE ?', "%#{search}%", "%#{search}%")
     else
-      scoped
+      all
     end
   end
 end

@@ -30,3 +30,22 @@ $(function (){
 //    return false;
 //  });
 });
+
+
+//$(document).ready(function () {
+//  $("#new_timetableap").validate({
+//    focusInvalid: false,
+//    focusCleanup: true,
+//    rules: {
+//      "timetableap[Flight_Number]": {required: true, maxlength: 4, number: true},
+//      "timetableap[DateOfStartNav]": {required: true, maxlength: 10},
+//      "timetableap[DateOfEndNav]": {required: true, maxlength: 10 }
+//    },
+//    messages: {
+//        "timetableap[Flight_Number]": "Введите номер рейса",
+//        "timetableap[DateOfStartNav]": "Введите дату начала навигации",
+//        "timetableap[DateOfEndNav]": "Введите дату конца навигации"
+//      }
+//    });
+//  });
+

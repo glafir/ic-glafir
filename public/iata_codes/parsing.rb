@@ -14,11 +14,11 @@ sdoc = @doc.css('table')[4].css('tr')
 i=0
 fdoc.each {|f| 
   i+=1
-  File.open('iata_airlines.txt', 'a'){ |file| file.puts ';'+f.css('td')[0].text.to_s+';'+f.css('td')[1].text.to_s+';'+f.css('td')[2].text.to_s+';'+f.css('td')[3].text.to_s+';'+f.css('td')[4].text.to_s+';'+f.css('td')[5].text.to_s+';'+f.css('td')[6].text.to_s+';'+f.css('td')[7].text.to_s+';'} if i>1
+  File.open('iata_airlines.txt', 'a'){ |file| file.puts '\"\";"'+f.css('td')[0].text.to_s+'";"'+f.css('td')[1].text.to_s+'";"'+f.css('td')[2].text.to_s+'";"'+f.css('td')[3].text.to_s+'";"";"'+f.css('td')[4].text.to_s+';'+f.css('td')[5].text.to_s+'";"'+f.css('td')[6].text.to_s+'";"'+f.css('td')[7].text.to_s+'";""'} if i>1
 }
 k=0
 sdoc.each {|f|
   k+=1
-  File.open('iata_airlines.txt', 'a'){ |file| file.puts ';'+f.css('td')[0].text.to_s+';'+f.css('td')[1].text.to_s+';'+f.css('td')[2].text.to_s+';'+f.css('td')[3].text.to_s+';'+f.css('td')[4].text.to_s+';'+f.css('td')[5].text.to_s+';'+f.css('td')[6].text.to_s+';'+f.css('td')[7].text.to_s+';'} if k>1
+  File.open('iata_airlines.txt', 'a'){ |file| file.puts '\"\";"'+f.css('td')[0].text.to_s+'";"'+f.css('td')[1].text.to_s+'";"'+f.css('td')[2].text.to_s+'";"'+f.css('td')[3].text.to_s+'";"";"'+f.css('td')[4].text.to_s+';'+f.css('td')[5].text.to_s+'";"'+f.css('td')[6].text.to_s+'";"'+f.css('td')[7].text.to_s+'";""'} if k>1
 }
 

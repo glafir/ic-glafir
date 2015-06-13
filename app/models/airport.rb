@@ -1,4 +1,6 @@
 class Airport < ActiveRecord::Base
+include ActiveModel::Validations
+  paginates_per 30
   has_one :apkey, dependent: :destroy
   has_many :aircompanies, dependent: :destroy
   belongs_to :town
@@ -6,12 +8,18 @@ class Airport < ActiveRecord::Base
   has_many :timetableaps, dependent: :destroy
   belongs_to :country
   has_many :aphubs
-  attr_accessible :Dist_to_town, :Terminals, :TerminalsColl, :city_eng, :city_rus, :email, :fax, :gmt_offset, :iata_code, :icao_code, :iso_code, :latitude, :longitude, :name_eng, :name_rus, :phone, :runnway_coll, :runway_elevation, :runway_length, :website, :town_id, :aircompanies_count, :country_id
+  attr_accessible :Dist_to_town, :Terminals, :TerminalsColl, :city_eng, :city_rus, :email, :fax, :gmt_offset, :iata_code, :icao_code, :iso_code, :latitude, :longitude, :name_eng, :name_rus, :phone, :runnway_coll, :runway_elevation, :runway_length, :website, :town_id, :aircompanies_count, :country_id, :time_zone
+  attr_accessor :name, :city_name
   validates  :iata_code, presence: true, length: { is: 3 }, uniqueness: true
   validates  :icao_code, presence: true, length: { is: 4 }
   validates  :name_eng, presence: true, length: { minimum: 2 }
   validates  :name_rus, presence: true, length: { minimum: 2 }
   validates  :iso_code, presence: true, length: { is: 2 }
+  validates  :country_id, presence: true, numericality: { only_integer: true }
+
+#  def name end
+
+#  def city_name end
 
   def apdata
     "#{name_rus}, #{iata_code}, г.#{city_rus} (city_eng)"
@@ -21,7 +29,7 @@ class Airport < ActiveRecord::Base
     if search
       where('name_rus LIKE ? or name_eng LIKE ? or city_rus LIKE ? or city_eng LIKE ? or ICAO_code LIKE ? or IATA_code LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
     else
-      scoped
+      all
     end
   end
 end

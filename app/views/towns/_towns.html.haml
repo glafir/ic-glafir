@@ -3,7 +3,6 @@
   %tr
     %th
       =sortable "country"
-
     %th
       =sortable "city"
     %th
@@ -22,7 +21,7 @@
 
   - @towns.each do |town|
     %tr
-      %td= town.country
+      %td= town.country.country_name
       %td= town.city
       %td= town.accent_city
       %td= town.city_rus

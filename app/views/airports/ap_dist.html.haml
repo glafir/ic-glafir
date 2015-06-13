@@ -1,12 +1,17 @@
-= form_tag ap_dist_airports_path, :method => 'get', :id => "timetableaps_search" do
+%h2 Расчёт расстояния и врмени полёта между аэропортами
+= form_tag ap_dist_airports_path, :method => 'get', :id => "ap_dist" do
   %p
     = label_tag :start_ap, "Откуда:"
-    = autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#start_ap'}, :value => params[:start]
+    = autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, 'data-auto-focus' => true, :update_elements => {:id => '#start_ap'}, :value => params[:start]
     = hidden_field_tag :start_ap, params[:start_ap]
   %p
     = label_tag :end_ap, "Куда:"
-    = autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path, :size => 20,  'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end]
+    = autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end]
     = hidden_field_tag :end_ap, params[:end_ap]
+  %p
+    = label_tag :aircraft, "Самолёт:"
+    = autocomplete_field_tag 'aircraft', '', autocomplete_aircraft_aircraft_model_aircrafts_path, 'data-auto-focus' => true, :update_elements => {:id => '#aircraft_id'}, :value => params[:aircraft]
+    = hidden_field_tag :aircraft_id
   = submit_tag "Измерить расстояние.", :name => nil
   .ap_dist_airports_path
     = render "ap_dist_result"

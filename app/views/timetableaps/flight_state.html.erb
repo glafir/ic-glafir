@@ -12,10 +12,10 @@
 <table>
 <tr>
   <td><b>Отправление:</b></td>
-  <td><%= @timetableap.airport.town.city_rus %> (<%= @timetableap.airport.name_rus  %>) </td><td><%= @timetableap.timeStart.in_time_zone %></td>
+  <td><%= @timetableap.airport.town.city_rus %> (<%= @timetableap.airport.name_rus  %>) </td><td><%= @timetableap.timeStart.in_time_zone(@timetableap.airport.time_zone) %></td>
 </tr><tr>
   <td><b>Прибытие::</b></td>
-  <td><%= @timetableap.apkey.airport.town.city_rus  %> (<%= @timetableap.apkey.airport.name_rus  %>) </td><td><%= @timetableap.timeEnd.in_time_zone %></td>
+  <td><%= @timetableap.apkey.airport.town.city_rus  %> (<%= @timetableap.apkey.airport.name_rus  %>) </td><td><%= @timetableap.timeEnd.in_time_zone(@timetableap.apkey.airport.time_zone) %></td>
 </tr>
 </table>
 <p>
@@ -31,7 +31,7 @@
 
 <p>
   <b>Type of plane:</b>
-  <%= @timetableap.TypeOfPlane %>
+   <%#= @timetableap.aircraft.aircraft_company.aircraft_company %> (<%#= @timetableap.aircraft.aircraft_model %>)
 </p>
 
 <p>

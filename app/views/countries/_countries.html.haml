@@ -10,12 +10,14 @@
     %th= sortable "country_number"
     %th
     %th
+    %th
   - @countries.each do |country|
     %tr
-      %td= link_to country.country_name, "/countries/#{country.id}/ap_show"
+      %td= link_to country.country_name, country
       %td= country.country_iata_code
       %td= country.country_icao_code
       %td= country.country_number
-      %td= link_to 'Show', country
+      %td= link_to 'Airports', controller: "countries", action: "ap_show", id: country.id
+      %td= link_to 'Towns', controller: "countries", action: "tw_show", id: country.id
       %td= link_to 'Edit', edit_country_path(country)
 = render "countries_paginate_bottom"

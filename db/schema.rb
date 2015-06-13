@@ -9,294 +9,314 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150315100921) do
+ActiveRecord::Schema.define(version: 20150610145537) do
 
-  create_table "admins", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
+  create_table "admins", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",          limit: 4,   default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
-  add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
-  add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
+  add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
+  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
-  create_table "aircompanies", :force => true do |t|
-    t.string   "iata_code",          :limit => 2, :null => false
-    t.string   "icao_code",          :limit => 3, :null => false
-    t.string   "awb_prefix",         :limit => 3
-    t.string   "airline_name_eng",                :null => false
-    t.string   "airline_name_rus"
-    t.integer  "airport_id",                      :null => false
-    t.integer  "country_id",                      :null => false
-    t.string   "ap_hubs"
-    t.date     "al_start"
-    t.date     "al_finish"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.integer  "timetableaps_count"
+  create_table "aircompanies", force: :cascade do |t|
+    t.string   "iata_code",          limit: 2,               null: false
+    t.string   "icao_code",          limit: 3,               null: false
+    t.string   "awb_prefix",         limit: 3
+    t.string   "airline_name_eng",   limit: 255,             null: false
+    t.string   "airline_name_rus",   limit: 255
+    t.integer  "airport_id",         limit: 4,   default: 0
+    t.integer  "country_id",         limit: 4
+    t.integer  "al_start",           limit: 4
+    t.integer  "al_finish",          limit: 4
+    t.string   "comment",            limit: 50
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.integer  "timetableaps_count", limit: 4
   end
 
-  add_index "aircompanies", ["airport_id"], :name => "Base_airport"
+  add_index "aircompanies", ["airport_id"], name: "Base_airport", using: :btree
+  add_index "aircompanies", ["country_id"], name: "country_id", using: :btree
+  add_index "aircompanies", ["iata_code"], name: "iata_code", using: :btree
 
-  create_table "aircraft_companies", :force => true do |t|
-    t.string   "aircraft_company", :null => false
-    t.integer  "country_id",       :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+  create_table "aircraft_companies", force: :cascade do |t|
+    t.string   "aircraft_company", limit: 255, null: false
+    t.integer  "country_id",       limit: 4,   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  create_table "aircraft_types", :force => true do |t|
-    t.string   "atype"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "aircraft_types", force: :cascade do |t|
+    t.string   "atype",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "aircraft_wake_categories", :force => true do |t|
-    t.string   "category"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "aircraft_wake_categories", force: :cascade do |t|
+    t.string   "category",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "aircrafts", :force => true do |t|
-    t.string   "aircraft_model"
-    t.string   "aircraft_icao_code"
-    t.string   "aircraft_iata_code"
-    t.integer  "aircraft_seats"
-    t.integer  "aircraft_wake_category_id"
-    t.string   "aircraft_webinfo"
-    t.integer  "aircraft_type_id"
-    t.integer  "aircraft_maxspeed"
-    t.integer  "aircraft_company_id"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+  create_table "aircrafts", force: :cascade do |t|
+    t.string   "aircraft_model",            limit: 255
+    t.string   "aircraft_icao_code",        limit: 255
+    t.string   "aircraft_iata_code",        limit: 255
+    t.integer  "aircraft_seats",            limit: 4
+    t.integer  "aircraft_wake_category_id", limit: 4
+    t.string   "aircraft_webinfo",          limit: 255
+    t.integer  "aircraft_type_id",          limit: 4
+    t.integer  "aircraft_maxspeed",         limit: 4
+    t.integer  "aircraft_company_id",       limit: 4
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
-  create_table "airports", :force => true do |t|
-    t.string   "iata_code",    :limit => 3, :null => false
-    t.string   "icao_code",    :limit => 4, :null => false
-    t.string   "name_rus"
-    t.string   "name_eng"
-    t.string   "city_rus"
-    t.string   "city_eng"
-    t.string   "gmt_offset"
-    t.string   "iso_code"     :limit => 2, :null => false
-    t.string   "latitude"
-    t.string   "longitude"
-    t.string   "runway_length"
-    t.string   "runway_elevation"
-    t.integer  "timetableaps_count"
-    t.string   "runnway_coll"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "email"
-    t.string   "website"
-    t.string   "TerminalsColl"
-    t.string   "Terminals"
-    t.string   "Dist_to_town"
-    t.integer  "town_id"
-    t.integer  "country_id"
-    t.integer  "aircompanies_count"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+  create_table "airports", force: :cascade do |t|
+    t.string   "iata_code",          limit: 3,   null: false
+    t.string   "icao_code",          limit: 4,   null: false
+    t.string   "name_rus",           limit: 255
+    t.string   "name_eng",           limit: 255
+    t.string   "city_rus",           limit: 255
+    t.string   "city_eng",           limit: 255
+    t.string   "gmt_offset",         limit: 255
+    t.string   "iso_code",           limit: 2
+    t.string   "latitude",           limit: 255
+    t.string   "longitude",          limit: 255
+    t.string   "runway_length",      limit: 255
+    t.string   "runway_elevation",   limit: 255
+    t.integer  "timetableaps_count", limit: 4
+    t.string   "runnway_coll",       limit: 255
+    t.string   "phone",              limit: 255
+    t.string   "fax",                limit: 255
+    t.string   "email",              limit: 255
+    t.string   "website",            limit: 255
+    t.string   "TerminalsColl",      limit: 255
+    t.string   "Terminals",          limit: 255
+    t.string   "Dist_to_town",       limit: 255
+    t.string   "time_zone",          limit: 255
+    t.integer  "town_id",            limit: 4
+    t.integer  "country_id",         limit: 4
+    t.integer  "aircompanies_count", limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
-  add_index "airports", ["iata_code"], :name => "iata_code", :unique => true
+  add_index "airports", ["iata_code"], name: "iata_code", unique: true, using: :btree
 
-  create_table "aphubs", :force => true do |t|
-    t.integer  "airport_id",    :null => false
-    t.integer  "aircompany_id", :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "aphubs", force: :cascade do |t|
+    t.integer  "airport_id",    limit: 4, null: false
+    t.integer  "aircompany_id", limit: 4, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  create_table "apkeys", :force => true do |t|
-    t.integer  "airport_id",         :null => false
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.integer  "timetableaps_count"
+  add_index "aphubs", ["aircompany_id"], name: "aircompany_id", using: :btree
+  add_index "aphubs", ["airport_id"], name: "airport_id", using: :btree
+
+  create_table "apkeys", force: :cascade do |t|
+    t.integer  "airport_id",         limit: 4, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "timetableaps_count", limit: 4
   end
 
-  create_table "ckeditor_assets", :force => true do |t|
-    t.string   "data_file_name",                  :null => false
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.integer  "assetable_id"
-    t.string   "assetable_type",    :limit => 30
-    t.string   "type",              :limit => 30
-    t.integer  "width"
-    t.integer  "height"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string   "data_file_name",    limit: 255, null: false
+    t.string   "data_content_type", limit: 255
+    t.integer  "data_file_size",    limit: 4
+    t.integer  "assetable_id",      limit: 4
+    t.string   "assetable_type",    limit: 30
+    t.string   "type",              limit: 30
+    t.integer  "width",             limit: 4
+    t.integer  "height",            limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
-  create_table "countries", :force => true do |t|
-    t.string   "country_name"
-    t.string   "country_iata_code"
-    t.string   "country_icao_code"
-    t.integer  "country_number"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+  create_table "countries", force: :cascade do |t|
+    t.string   "country_name",      limit: 255
+    t.string   "country_iata_code", limit: 255
+    t.string   "country_icao_code", limit: 255
+    t.integer  "country_number",    limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
-  create_table "flight_types", :force => true do |t|
-    t.string   "flight_type"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "flight_types", force: :cascade do |t|
+    t.string   "flight_type", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  create_table "regions", :force => true do |t|
-    t.string   "name_rus"
-    t.string   "name_eng"
-    t.integer  "country_id"
-    t.float    "area"
-    t.integer  "population"
-    t.integer  "capitalcity_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+  create_table "regions", force: :cascade do |t|
+    t.string   "name_rus",       limit: 255
+    t.string   "name_eng",       limit: 255
+    t.integer  "country_id",     limit: 4
+    t.float    "area",           limit: 24
+    t.integer  "population",     limit: 4
+    t.integer  "capitalcity_id", limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  create_table "runway_aps", :force => true do |t|
-    t.integer  "airport_id"
-    t.string   "runway_name",      :limit => 5
-    t.integer  "runway_elevation"
-    t.string   "runway_data"
-    t.datetime "created_at",                    :null => false
-    t.integer  "runway_length"
-    t.datetime "updated_at",                    :null => false
+  create_table "runway_aps", force: :cascade do |t|
+    t.integer  "airport_id",       limit: 4
+    t.string   "runway_name",      limit: 5
+    t.integer  "runway_elevation", limit: 4
+    t.string   "runway_data",      limit: 255
+    t.datetime "created_at",                   null: false
+    t.integer  "runway_length",    limit: 4
+    t.datetime "updated_at",                   null: false
   end
 
-  create_table "rw_routes", :force => true do |t|
-    t.integer  "start_route"
-    t.integer  "end_route"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "rw_routes", force: :cascade do |t|
+    t.integer  "start_route", limit: 4
+    t.integer  "end_route",   limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  create_table "rw_stations", :force => true do |t|
-    t.string   "rw_zone",           :limit => 4, :default => "0000", :null => false
-    t.string   "name_eng",                                           :null => false
-    t.string   "name_rus",                                           :null => false
-    t.integer  "rw_typestation_id",              :default => 5,      :null => false
-    t.integer  "rw_route_id"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+  create_table "rw_stations", force: :cascade do |t|
+    t.string   "rw_zone",           limit: 4,   default: "0000", null: false
+    t.string   "name_eng",          limit: 255,                  null: false
+    t.string   "name_rus",          limit: 255,                  null: false
+    t.integer  "rw_typestation_id", limit: 4,   default: 5,      null: false
+    t.integer  "rw_route_id",       limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
-  create_table "rw_typestations", :force => true do |t|
-    t.string   "typestation_name", :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+  create_table "rw_typestations", force: :cascade do |t|
+    t.string   "typestation_name", limit: 255, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  create_table "timetableap_subs", :force => true do |t|
-    t.integer  "Flight_Number",  :default => 0, :null => false
-    t.integer  "timetableap_id",                :null => false
-    t.integer  "aircompany_id",                 :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+  create_table "timetableap_subs", force: :cascade do |t|
+    t.integer  "Flight_Number",  limit: 4, default: 0, null: false
+    t.integer  "timetableap_id", limit: 4,             null: false
+    t.integer  "aircompany_id",  limit: 4,             null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
-  create_table "timetableaps", :force => true do |t|
-    t.integer  "Flight_Number",  :null => false
-    t.integer  "aircompany_id",  :null => false
-    t.integer  "way_start",      :null => false
-    t.integer  "way_end",        :null => false
-    t.string   "TermStart"
-    t.string   "GateStart"
-    t.string   "TermEnd"
-    t.string   "GateEnd"
-    t.string   "TypeOfPlane"
-    t.time     "TimeStart",      :null => false
-    t.time     "TimeEnd",        :null => false
-    t.date     "DateOfStartNav", :null => false
-    t.date     "DateOfEndNav",   :null => false
-    t.integer  "s1",             :null => false
-    t.integer  "s2",             :null => false
-    t.integer  "s3",             :null => false
-    t.integer  "s4",             :null => false
-    t.integer  "s5",             :null => false
-    t.integer  "s6",             :null => false
-    t.integer  "s0",             :null => false
-    t.integer  "e1",             :null => false
-    t.integer  "e2",             :null => false
-    t.integer  "e3",             :null => false
-    t.integer  "e4",             :null => false
-    t.integer  "e5",             :null => false
-    t.integer  "e6",             :null => false
-    t.integer  "e0",             :null => false
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+  create_table "timetableaps", force: :cascade do |t|
+    t.integer  "Flight_Number",  limit: 4,   null: false
+    t.integer  "aircompany_id",  limit: 4,   null: false
+    t.integer  "way_start",      limit: 4,   null: false
+    t.integer  "way_end",        limit: 4,   null: false
+    t.string   "TermStart",      limit: 255
+    t.string   "GateStart",      limit: 255
+    t.string   "TermEnd",        limit: 255
+    t.string   "GateEnd",        limit: 255
+    t.integer  "aircraft_id",    limit: 4
+    t.time     "TimeStart",                  null: false
+    t.time     "TimeEnd",                    null: false
+    t.date     "DateOfStartNav",             null: false
+    t.date     "DateOfEndNav",               null: false
+    t.integer  "s1",             limit: 4,   null: false
+    t.integer  "s2",             limit: 4,   null: false
+    t.integer  "s3",             limit: 4,   null: false
+    t.integer  "s4",             limit: 4,   null: false
+    t.integer  "s5",             limit: 4,   null: false
+    t.integer  "s6",             limit: 4,   null: false
+    t.integer  "s0",             limit: 4,   null: false
+    t.integer  "e1",             limit: 4,   null: false
+    t.integer  "e2",             limit: 4,   null: false
+    t.integer  "e3",             limit: 4,   null: false
+    t.integer  "e4",             limit: 4,   null: false
+    t.integer  "e5",             limit: 4,   null: false
+    t.integer  "e6",             limit: 4,   null: false
+    t.integer  "e0",             limit: 4,   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  create_table "timetablesap_flights", :force => true do |t|
-    t.integer  "Flight_Number",                :default => 0, :null => false
-    t.integer  "aircompany_id",                               :null => false
-    t.integer  "way_start",                                   :null => false
-    t.integer  "runway_start",                                :null => false
-    t.integer  "way_end",                                     :null => false
-    t.integer  "runway_end",                                  :null => false
-    t.string   "TermStart",      :limit => 50
-    t.string   "TermEnd",        :limit => 50
-    t.string   "GateStart",      :limit => 50
-    t.string   "GateEnd",        :limit => 50
-    t.string   "TypeOfPlane",    :limit => 50
-    t.datetime "start",                                       :null => false
-    t.datetime "end",                                         :null => false
-    t.datetime "created_at",                                  :null => false
-    t.integer  "flight_type_id",                              :null => false
-    t.datetime "updated_at",                                  :null => false
+  add_index "timetableaps", ["aircompany_id"], name: "aircompany_id", using: :btree
+  add_index "timetableaps", ["aircraft_id"], name: "aircraft_id", using: :btree
+  add_index "timetableaps", ["way_end"], name: "way_end", using: :btree
+  add_index "timetableaps", ["way_start"], name: "way_start", using: :btree
+
+  create_table "timetablesap_flights", force: :cascade do |t|
+    t.integer  "Flight_Number",  limit: 4,  default: 0, null: false
+    t.integer  "aircompany_id",  limit: 4,              null: false
+    t.integer  "way_start",      limit: 4,              null: false
+    t.integer  "runway_start",   limit: 4,              null: false
+    t.integer  "way_end",        limit: 4,              null: false
+    t.integer  "runway_end",     limit: 4,              null: false
+    t.string   "TermStart",      limit: 50
+    t.string   "TermEnd",        limit: 50
+    t.string   "GateStart",      limit: 50
+    t.string   "GateEnd",        limit: 50
+    t.string   "TypeOfPlane",    limit: 50
+    t.datetime "start",                                 null: false
+    t.datetime "end",                                   null: false
+    t.datetime "created_at",                            null: false
+    t.integer  "flight_type_id", limit: 4,              null: false
+    t.datetime "updated_at",                            null: false
   end
 
-  create_table "towns", :force => true do |t|
-    t.string   "country",     :limit => 3, :default => "", :null => false
-    t.string   "city",                     :default => "", :null => false
-    t.string   "accent_city",              :default => "", :null => false
-    t.string   "city_rus",                 :default => ""
-    t.string   "region",      :limit => 3, :default => "", :null => false
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+  create_table "towns", force: :cascade do |t|
+    t.string   "country_iso", limit: 3,   default: "", null: false
+    t.integer  "country_id",  limit: 4
+    t.string   "city",        limit: 255, default: "", null: false
+    t.string   "accent_city", limit: 255, default: "", null: false
+    t.string   "city_rus",    limit: 255, default: ""
+    t.string   "region",      limit: 3,   default: "", null: false
+    t.float    "latitude",    limit: 24
+    t.float    "longitude",   limit: 24
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
-  add_index "towns", ["accent_city"], :name => "accent_city"
-  add_index "towns", ["city"], :name => "city"
-  add_index "towns", ["city_rus"], :name => "city_rus"
-  add_index "towns", ["country"], :name => "country"
+  add_index "towns", ["accent_city"], name: "accent_city", using: :btree
+  add_index "towns", ["city"], name: "city", using: :btree
+  add_index "towns", ["city_rus"], name: "city_rus", using: :btree
+  add_index "towns", ["country_id"], name: "country_id", using: :btree
+  add_index "towns", ["country_iso"], name: "country", using: :btree
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
+  create_table "user_themes", force: :cascade do |t|
+    t.string   "theme",      limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "username"
-    t.string   "time_zone"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "username",                               null => false
+    t.string   "time_zone",                              null => false
+    t.integer  "town_id",                                null => false
+    t.integer  "user_theme_id",                          null => false
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

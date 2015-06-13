@@ -1,5 +1,13 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
+protect_from_forgery
+
+require 'sunriseset'
+require 'tzinfo'
+require 'tzinfo/data'
+require 'i18n_timezones'
+
+#require 'suncalc'
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
 respond_to :html, :mobile, :json, :js
@@ -13,7 +21,37 @@ before_filter :force_utf8_params
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 has_mobile_fu(true)
 before_filter :set_mobile_format
+before_filter :set_timezone 
+ActiveSupport::TimeZone::MAPPING["Ezhinsk"] = "Asia/Ezhinsk"
+ActiveSupport::TimeZone::MAPPING["Norok"] = "Asia/Ezhinsk"
+ActiveSupport::TimeZone::MAPPING["Arisha"] = "Asia/Ezhinsk"
+ActiveSupport::TimeZone::MAPPING["Alexandra"] = "Asia/Ezhinsk"
+ActiveSupport::TimeZone::MAPPING["Novonezhino"] = "Asia/Ezhinsk"
+ActiveSupport::TimeZone::MAPPING["Magadan"] = "Asia/Magadan"
+ActiveSupport::TimeZone::MAPPING["Sakhalin"] = "Asia/Sakhalin"
+ActiveSupport::TimeZone::MAPPING["Kamchatka"] = "Asia/Kamchatka"
+ActiveSupport::TimeZone::MAPPING["Anadyr"] = "Asia/Anadyr"
+
+def set_timezone
+#    Time.zone = ActiveSupport::TimeZone.new("Ezhinsk")
+    tz = current_user ? current_user.time_zone : nil
+    Time.zone = tz || ActiveSupport::TimeZone["Ezhinsk"]
+end  
  
+def validator(object)
+  object.valid?
+  model = object.class.name.underscore.to_sym
+  field = params[model].first[0]
+  @errors = object.errors[field]
+
+  if @errors.empty?
+    @errors = true
+  else
+    name = t("activerecord.attributes.#{model}.#{field}")
+    @errors.map! { |e| "#{name} #{e}<br />" }
+  end
+end
+
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
@@ -75,5 +113,4 @@ end
 #      "application"
 #    end
 #  end
-protect_from_forgery
 end

@@ -1,11 +1,50 @@
 <h2><%=@tablo %></h2>
+
+<%= form_tag "/airports/#{@airport.id}/tablo_out/",:remote => 'true', :method => 'get', :id => "timetableaps_search"  do %> 
+<div id="tablo_form">
+  <%= select_tag "start_time", options_for_select((Time.now.in_time_zone(@airport.time_zone).beginning_of_day.to_i..(Time.now.in_time_zone(@airport.time_zone).end_of_day).to_i).step(1.hour).collect {|x| [Time.at(x).to_s(:time), Time.at(x).utc] } ,params[:start_time]), :onchange => "this.form.submit();"%>
+  <%= select_tag "end_time", options_for_select(((Time.now.in_time_zone(@airport.time_zone).beginning_of_day+1.hour).to_i..(Time.now.in_time_zone(@airport.time_zone).beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.at(x).to_s(:time), Time.at(x).utc] } ,params[:end_time]), :onchange => "this.form.submit();"%>
+</div>
+<% end %>
+
+<script>
+$(document).ready(function(){
+  var max = $('#start_time').val();
+  var min = $('#end_time').val();
+  var rangeSlider = $('#slider')
+    .slider({
+      min: 1,
+      max: 24,
+      step: 1,
+      values: [1, 24],
+      value: $("#start_time").selectedIndex + 1,
+      range: true,
+      animate: true,
+      slide: function(e,ui) {
+        $('#start_time')[0].selectedIndex = ui.value - 1;
+        $('#end_time')[0].selectedIndex = ui.value - 1;
+       $(this)
+          .find('#start_time option:selected').val(ui.values[0]).text();
+        $(this)
+          .find('#end_time option:selected').val(ui.values[1]).text();
+      },
+      stop: function(event, ui) {
+         $.get("#", { start_time: $("#start_time").val(), end_time: $("#end_time").val()} );
+         }
+    })
+ // .before('<h3>Drag the slider to filter by price:</h3>');
+
+  $('#tablo_form').after(rangeSlider);
+});
+</script>
+
 <div id="tda">
 <table id="tt" class="tablesorter">
 <thead>
   <tr>
     <th>Рейс</th>
     <th>Направление</th>
-    <th>Время</th>
+    <th><p>Время местное</p><p>(Время Ежинское)</p></th>
     <th>Статус</th>
   </tr>
 </thead>

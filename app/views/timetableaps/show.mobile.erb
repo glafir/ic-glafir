@@ -15,7 +15,7 @@
 <%= hidden_field_tag 'TermEnd', @timetableap.TermEnd%>
 <%= hidden_field_tag 'GateStart', @timetableap.GateStart%>
 <%= hidden_field_tag 'GateEnd', @timetableap.GateEnd%>
-<%= hidden_field_tag 'TypeOfPlane', @timetableap.TypeOfPlane%>
+<%= hidden_field_tag 'aircraft_id', @timetableap.aircraft_id%>
 <%= hidden_field_tag 'TimeStart', @timetableap.TimeStart%>
 <%= hidden_field_tag 'TimeEnd', @timetableap.TimeEnd%>
 <%= hidden_field_tag 'DateOfStartNav', @timetableap.DateOfStartNav%>
@@ -78,7 +78,7 @@
 
 <p>
   <b>Typeofplane:</b>
-  <%= @timetableap.TypeOfPlane %>
+  <%= @timetableap.aircraft.aircraft_model %>
 </p>
 
 <p>

@@ -1,8 +1,8 @@
 IcApp::Application.routes.draw do
-  root :to => 'general#home'
-
-  resources :aphubs
   netzke
+  resources :user_themes
+  root :to => 'general#home'
+  resources :aphubs
   get '/timecor' => "general#timecor"
   get '/apcor' => "general#apcor"
   resources :regions
@@ -19,11 +19,18 @@ IcApp::Application.routes.draw do
   resources :aircraft_companies
   resources :aircraft_wake_categories
   resources :aircraft_types
-  resources :aircrafts
+  resources :aircrafts do
+    get :autocomplete_aircraft_aircraft_model, :on => :collection
+    collection do
+    end
+  end
   resources :countries do
     member do
       get 'ap_show'
       get 'tw_show'
+      get 'al_show'
+    end
+    collection do
     end
   end
   resources :runway_aps
@@ -36,8 +43,9 @@ IcApp::Application.routes.draw do
   resources :rw_typestations
   resources :rw_routes
   resources :rw_stations
-  devise_for :users, controllers: {
-    sessions: 'users/sessions'
+  devise_for :users, :controllers => {
+    :sessions => 'users/sessions',
+    :registrations => "users/registrations"
   }
 
   devise_scope :user do
