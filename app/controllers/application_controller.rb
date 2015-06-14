@@ -10,7 +10,7 @@ require 'i18n_timezones'
 #require 'suncalc'
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
-respond_to :html, :mobile, :json, :js
+
 #require 'date'
 #layout :layout_by_resource
 #def store_location
@@ -19,7 +19,9 @@ respond_to :html, :mobile, :json, :js
 before_filter :force_utf8_params
 #before_action :set_locale
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-has_mobile_fu(true)
+has_mobile_fu
+#before_filter :force_mobile_format
+respond_to :json, :html, :js, :mobile
 before_filter :set_mobile_format
 before_filter :set_timezone 
 ActiveSupport::TimeZone::MAPPING["Ezhinsk"] = "Asia/Ezhinsk"

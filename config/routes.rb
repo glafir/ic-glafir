@@ -44,7 +44,7 @@ IcApp::Application.routes.draw do
   resources :rw_routes
   resources :rw_stations
   devise_for :users, :controllers => {
-    :sessions => 'users/sessions',
+#    :sessions => 'users/sessions',
     :registrations => "users/registrations"
   }
 
