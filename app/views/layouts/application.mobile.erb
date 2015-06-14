@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <%= render "layouts/head" %>
+  <%= render "layouts/head.mobile" %>
   <body>
     <div id="all">
     <% if user_signed_in? %>
-      <%=render "layouts/header"%>
-      <%=render "layouts/container"%>
+      <%=render "layouts/header.mobile"%>
+      <%=render "layouts/container.mobile"%>
     <%else%>
       <%= yield %>
     <%end%>

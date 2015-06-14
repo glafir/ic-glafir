@@ -1,4 +1,6 @@
 class Aircompany < ActiveRecord::Base
+include ActiveModel::Validations
+  paginates_per 10
   belongs_to :airport
   belongs_to :country
   has_many :timetableaps, dependent: :destroy
@@ -11,14 +13,14 @@ class Aircompany < ActiveRecord::Base
   validates  :airline_name_eng, presence: true, length: { minimum: 2 }
   validates  :airline_name_rus, presence: true, length: { minimum: 2 }
   validates  :airport_id, presence: true, numericality: { only_integer: true }
-  validates  :country, presence: true, length: { is: 2 }
+  validates  :country_id, presence: true, numericality: { only_integer: true }
   validates  :al_start, presence: true
 
   def self.search(search)
     if search
       where('airline_name_rus LIKE ? or airline_name_eng LIKE ? or icao_code LIKE ? or iata_code LIKE ?',"%#{search}%","%#{search}%","%#{search}%","%#{search}%")
     else
-      scoped
+      all
     end
   end
 

@@ -12,7 +12,7 @@
         </td>
 	<td>
 	  <%= timetableap.twrus %><br /><div id="aprus"> (<%= timetableap.aprus %>)</div></td>
-	<td nowrap> <%= timetableap.timeIN.in_time_zone.to_s(:time)%></td>
+	<td nowrap> <%= timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)%></td>
         <td bgcolor="<%= timetableap.bgcolor%>"><%= timetableap.fstatus%></td>
   </tr>
 <% end %>

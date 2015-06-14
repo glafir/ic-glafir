@@ -1,4 +1,4 @@
-  <%= form_for(@aircompany) do |f| %>
+  <%= form_for @aircompany, validate: true do |f| %>
   <% if @aircompany.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@aircompany.errors.count, "error") %> prohibited this aircompany from being saved:</h2>
@@ -12,41 +12,41 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :iata_code %><br />
+    <%= f.label :iata_code %>
     <%= f.text_field :iata_code, autofocus: true  %>
   </div>
   <div class="field">
-    <%= f.label :icao_code %><br />
+    <%= f.label :icao_code %>
     <%= f.text_field :icao_code %>
   </div>
   <div class="field">
-    <%= f.label :awb_prefix %><br />
+    <%= f.label :awb_prefix %>
     <%= f.text_field :awb_prefix %>
   </div>
   <div class="field">
-    <%= f.label :airline_name_eng %><br />
+    <%= f.label :airline_name_eng %>
     <%= f.text_field :airline_name_eng %>
   </div>
   <div class="field">
-    <%= f.label :airline_name_rus %><br />
+    <%= f.label :airline_name_rus %>
     <%= f.text_field :airline_name_rus %>
   </div>
   <div class="field">
-    <%= f.label :Base_airport %><br />
+    <%= f.label :Base_airport %>
       <%= autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#aircompany_airport_id'}, :value => params[:airport_id] %>
       <%= f.hidden_field :airport_id%>
   </div>
   <div class="field">
-    <%= f.label :country_id %><br />
+    <%= f.label :country_id %>
     <%= f.select :country_id, Country.all.collect{|item| [item.country_name, item.id]} %>
   </div>
   <div class="field">
-    <%= f.label :al_start %><br />
-    <%= f.date_select :al_start, start_year: 1950, end_year: Time.now.year%>
+    <%= f.label :al_start %>
+    <%= select_year Date.today, start_year: 1950, end_year:  Time.now.year, :field_name => :al_start, :prefix => :aircompany%>
   </div>
   <div class="field">
-    <%= f.label :al_finish %><br />
-    <%= f.date_select :al_finish, start_year: 1980, end_year: Time.now.year, prompt: "Пустое значение" %>
+    <%= f.label :al_finish %>
+    <%= select_year Date.today, start_year: 1980, end_year: Time.now.year,:field_name => :al_finish, prompt: "Пустое значение", :prefix => :aircompany %>
   </div>
   <div class="actions">
     <%= f.submit %>

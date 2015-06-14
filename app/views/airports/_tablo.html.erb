@@ -1,18 +1,22 @@
      <%@timetableaps.each do |timetableap|%>
-
-	<tr>
-	  <td nowrap title="<%= timetableap.aircompany.airline_name_rus%>">
-	  <%= link_to image_tag("/images/air_tm/#{timetableap.aircompany.iata_code}.png",  height: '80'), timetableap.aircompany%><br />
-	  <%= link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus %>
+	<tr class="tablo">
+	  <td id="flight_info" title="<%= timetableap.aircompany.airline_name_rus%>">
+	  <p><%= link_to image_tag("/images/air_tm/#{timetableap.aircompany.iata_code}.png",  width: '80'), timetableap.aircompany%></p><p>
+	  <%= link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus %>
           <%if timetableap.id < 1000000%>
-	    <%= link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap), :onclick => "return hs.htmlExpand(this, { objectType: 'iframe'} )"%>
+	    <%= link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap), :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"%>
           <%else%>
-            <%= link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap), :onclick => "return hs.htmlExpand(this, { objectType: 'iframe'} )"%>
-          <%end%>
+            <%= link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap), onclick: "return hs.htmlExpand(this, { outlineType: 'rounded-white', wrapperClassName: 'draggable-header', objectType: 'ajax' } )", class: "highslide"%>
+          <%end%></p>
         </td>
-	<td>
-	  <%= timetableap.twrus %><br /><div id="aprus"> (<%= timetableap.aprus %>)</div></td>
-	<td nowrap> <%= timetableap.timeIN.in_time_zone.to_s(:time)%></td>
-        <td bgcolor="<%= timetableap.bgcolor%>"><%= timetableap.fstatus%></td>
+	<td width="330px">
+	  <div id="twrus"><%= timetableap.twrus %></div>
+          <div id="aprus"> (<i>аэропорт:</i> <%= timetableap.aprus %>)</div><div id="tt_al_info"><p>
+  Перевозчик: &#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195; <%= link_to timetableap.airline, timetableap.aircompany %></p>
+  <p>
+  Выполняется самолётом: &#8195; <strong><%= link_to timetableap.al_plane, timetableap.plane_al%></strong></p>
+</div></td>
+	<td id="tt_time"> <p><%= timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)%></p><p><em>(<%= timetableap.timeIN.in_time_zone("Ezhinsk").to_s(:time)%>)</em</p></td>
+        <td class="tt_status" bgcolor="<%= timetableap.bgcolor%>"><%= timetableap.fstatus%></td>
   </tr>
 <% end %>

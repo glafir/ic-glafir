@@ -15,8 +15,19 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :time_zone %><br />
+  <div><%= f.label :time_zone %>
   <%= f.time_zone_select :time_zone%></div>
+
+  <div class="field">
+    <%= f.label :town_id%>
+    <%= autocomplete_field_tag 'town', '', autocomplete_town_accent_city_towns_path, :size => 30, 'data-auto-focus' => true, :update_elements => {:id => '#airport_town_id'}, :value => params[:town] %>
+    <%= f.hidden_field :town_id%>
+  </div>
+
+  <div>
+    <%= f.label :user_theme %>
+    <%= f.select :user_theme_id, UserTheme.all.collect{|item| [item.theme, item.id]}%>
+  </div>
 
   <div><%= f.submit "Sign up" %></div>
 <% end %>

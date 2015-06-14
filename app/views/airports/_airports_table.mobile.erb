@@ -16,7 +16,7 @@
         <td><%= airport.icao_code %></td>
         <td><%= link_to airport.name_rus, airport, :class => "demo1", :id => airport.id.to_s%></td>
         <td><%= link_to airport.town.city_rus, town_path(airport.town_id) unless airport.town.blank?%>
-        <%#= link_to airport.city_rus, :controller=>"airports", :action => "city", :city_eng => airport.city_eng if airport.town.blank?%></td>
+        <%#= link_to airport.city_rus, :controller=>"/airports", :action => "city", :city_eng => airport.city_eng if airport.town.blank?%></td>
         <td><%= airport.iso_code %></td>
         <td nowrap><a href="/airports/<%= airport.id%>/aptt" >вылет/прилёт</a>
         <td><%= link_to 'Edit', edit_airport_path(airport) %></td>

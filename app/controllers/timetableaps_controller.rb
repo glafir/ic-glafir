@@ -7,6 +7,14 @@ class TimetableapsController < ApplicationController
     respond_with(@timetableaps)
   end
 
+  def validate
+    timetableaps = Timetableaps.new(timetableaps_params)
+    validator(timetableaps)
+    respond_to do |format|
+      format.json { render json: @errors }
+    end
+  end
+
   def ttair_admin
   end
 
@@ -72,6 +80,6 @@ private
   end
 
   def sort_column
-    Timetableap.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    Timetableap.column_names.include?(params[:sort]) ? params[:sort] : "Flight_Number"
   end
 end

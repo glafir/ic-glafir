@@ -17,3 +17,18 @@ $(function() {
 $(function (){
         $('#article_published_on').datepicker();
 });
+$(document).ready(function () {
+  $("#ap_dist").validate({
+    focusInvalid: false,
+    focusCleanup: true,
+    rules: {
+      "start": {required: true, minlength: 3},
+      "end": {required: true, minlength: 3},
+    },
+    messages: {
+        "start": "Введите аэропорт отправления",
+        "end": "Введите аэропорт назначения",
+      }
+    });
+  });
+

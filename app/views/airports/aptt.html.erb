@@ -1,4 +1,8 @@
 <h2>Табло вылета/Прилёта аэропорта <%= @airport.name_rus %> (г.<%= @airport.town.city_rus%>)</h2>
+<p>
+Местное время: <%= DateTime.current.in_time_zone(@airport.time_zone)%>
+</p>
+
     <p>Нажмите на ту кнопку: информацию хотите посмотреть?</p>  
     <form>  
         <input id="btn1" type="button" value="Табло вылета"> ||

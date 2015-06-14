@@ -1,6 +1,6 @@
 class TownsController < ApplicationController
   before_filter :set_town, only: [:show, :edit, :update, :destroy]
-  autocomplete :town, :accent_city, :display_value => :twdata, :extra_data => [:city, :accent_city, :country]
+  autocomplete :town, :accent_city, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
 
   def admin_tw
     render layout: "application_empty_1"
@@ -62,7 +62,7 @@ class TownsController < ApplicationController
 
 private
   def sort_column
-    Town.column_names.include?(params[:sort]) ? params[:sort] : "country"
+    Town.column_names.include?(params[:sort]) ? params[:sort] : "country_id"
   end
 
   def set_town

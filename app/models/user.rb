@@ -1,5 +1,7 @@
-# encoding: UTF-8
 class User < ActiveRecord::Base
+include ActiveModel::Validations
+  belongs_to :user_theme
+  belongs_to :town
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -8,13 +10,13 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessor :login
-  attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone
+  attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone, :town_id, :user_theme_id
   validates :username,
     :uniqueness => {:case_sensitive => false}
   validates :email, :presence => true, 
                     :length => {:minimum => 3, :maximum => 70},
                     :uniqueness => {:case_sensitive => false },
-                    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
+                    :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
 
     def self.find_for_database_authentication(warden_conditions)
       conditions = warden_conditions.dup

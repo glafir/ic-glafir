@@ -2,7 +2,7 @@
         $(document).ready(function(){
           $("#tt").tablesorter({
             widgets: ["zebra"],
-            sortList:[[3,0]]
+            sortList:[[2,0]]
         });
       });
 </script>
@@ -13,8 +13,8 @@
   <tr>
     <th>Flight number</th>
     <th>Way start</th>
-    <th>Way end</th>
     <th>Timestart</th>
+    <th>Way end</th>
     <th>Timeend</th>
     <th>Dateofstartnav</th>
     <th>Dateofendnav</th>
@@ -28,12 +28,12 @@
 <% @timetableaps.each do |timetableap| %>
   <tr>
     <td><%= timetableap.aircompany.iata_code %> <%= timetableap.Flight_Number %></td>
-    <td> <%= timetableap.airport.town.city_rus %> <%#= timetableap.city_rus_start %>
+    <td> <%= timetableap.airport.town.city_rus %>
       <br />(<%= timetableap.airport.name_rus %>)</td>
-    <td> <%= timetableap.apkey.airport.town.city_rus %> <%#= timetableap.city_rus_end %>
+    <td><%= timetableap.TimeStart.in_time_zone(timetableap.airport.time_zone).to_s(:time) %></td>
+    <td> <%= timetableap.apkey.airport.town.city_rus %>
       <br />(<%= timetableap.apkey.airport.name_rus %>)</td>
-    <td><%= timetableap.TimeStart.in_time_zone.to_s(:time) %></td>
-    <td><%= timetableap.TimeEnd.in_time_zone.to_s(:time) %></td>
+    <td><%= timetableap.TimeEnd.in_time_zone(timetableap.apkey.airport.time_zone).to_s(:time) %></td>
     <td><%= timetableap.DateOfStartNav %></td>
     <% if timetableap.DateOfEndNav <= Date.current
           bgcolor = "#550C1A"

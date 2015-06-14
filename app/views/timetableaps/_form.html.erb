@@ -1,24 +1,5 @@
 <div id="new_tt">
-<script type="text/javascript">
-$(document).ready(function () {
-  $("#new_timetableap").validate({
-    focusInvalid: false,
-    focusCleanup: true,
-    rules: {
-      "timetableap[Flight_Number]": {required: true, maxlength: 4, number: true},
-      "timetableap[DateOfStartNav]": {required: true, maxlength: 10},
-      "timetableap[DateOfEndNav]": {required: true, maxlength: 10 }
-    },
-    messages: {
-        "timetableap[Flight_Number]": "Введите номер рейса",
-        "timetableap[DateOfStartNav]": "Введите дату начала навигации",
-        "timetableap[DateOfEndNav]": "Введите дату конца навигации"
-      }
-    });
-  });
-</script>
-
-<%= form_for(@timetableap) do |f| %>
+<%= form_for @timetableap, validate: true do |f| %>
   <% if @timetableap.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@timetableap.errors.count, "error") %> prohibited this timetableap from being saved:</h2>
@@ -31,7 +12,7 @@ $(document).ready(function () {
   <% end %>
 
   <div class="field">
-    <%= f.label :Flight_Number %><br />
+    <%= f.label :Flight_Number %>
     <%if params[:Flight_Number].blank? %>
     <%= f.number_field :Flight_Number, autofocus: true  %>
     <% else %>
@@ -39,16 +20,15 @@ $(document).ready(function () {
   <% end %>
   </div>
   <div class="field">
-    <%= f.label :aircompany_airline_name_rus %><br />
+    <%= f.label :aircompany_airline_name_rus %>
     <%if params[:aircompany_id].blank? %>
-    <%#= f.text_field :aircompany_airline_name_rus, data: {autocomplete_source: aircompanies_path}  %>
     <%= f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s %>
   <% else %>
     <%= f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]%>
   <% end %>
   </div>
   <div class="field">
-    <%= f.label :way_start %><br />
+    <%= f.label :way_start %>
     <%if params[:way_start].blank? %>
       <%= f.select :way_start, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]} %>
     <%else%>
@@ -56,7 +36,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label :way_end %><br />
+    <%= f.label :way_end %>
        <%if params[:way_end].blank? %>
        <%= f.select :way_end, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]} %>
     <%else%>
@@ -64,35 +44,39 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label :TermStart %><br />
+    <%= f.label :TermStart %>
     <%= f.text_field :TermStart %>
   </div>
   <div class="field">
-    <%= f.label :GateStart %><br />
+    <%= f.label :GateStart %>
     <%= f.text_field :GateStart %>
   </div>
   <div class="field">
-    <%= f.label :TermEnd %><br />
+    <%= f.label :TermEnd %>
     <%= f.text_field :TermEnd %>
   </div>
   <div class="field">
-    <%= f.label :GateEnd %><br />
+    <%= f.label :GateEnd %>
     <%= f.text_field :GateEnd %>
   </div>
   <div class="field">
-    <%= f.label :TypeOfPlane %><br />
-    <%= f.text_field :TypeOfPlane %>
+    <%= f.label :aircraft_id %>
+    <%if params[:aircraft_id].blank? %>
+      <%= f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model %>
+    <%else%>
+      <%= f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, :selected => params[:aircraft_id]%>
+    <%end%>
   </div>
   <div class="field">
-    <%= f.label :TimeStart %><br />
+    <%= f.label :TimeStart %>
     <%= f.time_select :TimeStart, {minute_step: 5} %>
   </div>
   <div class="field">
-    <%= f.label :TimeEnd %><br />
+    <%= f.label :TimeEnd %>
     <%= f.time_select :TimeEnd, {minute_step: 5} %>
   </div>
   <div class="field">
-    <%= f.label :DateOfStartNav %><br />
+    <%= f.label :DateOfStartNav %>
     <%if params[:DateOfStartNav].blank? %>
       <%= f.text_field :DateOfStartNav, size: 8 %>
     <%else%>
@@ -100,7 +84,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label :DateOfEndNav %><br />
+    <%= f.label :DateOfEndNav %>
     <%if params[:DateOfEndNav].blank? %>
       <%= f.text_field :DateOfEndNav, size: 8 %>
     <%else%>
@@ -108,7 +92,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "Mon" %><br />
+    <%= f.label "Mon" %>
     <%if params[:s1] != "1" %>
       <%= f.check_box(:s1,{},1,0) %>
     <%else%>
@@ -121,7 +105,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "Tue" %><br />
+    <%= f.label "Tue" %>
     <%if params[:s2] != "1" %>
       <%= f.check_box(:s2,{},1,0) %>
     <%else%>
@@ -134,7 +118,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "Wen" %><br />
+    <%= f.label "Wen" %>
     <%if params[:s3] != "1" %>
       <%= f.check_box(:s3,{},1,0) %>
     <%else%>
@@ -147,7 +131,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "The" %><br />
+    <%= f.label "The" %>
     <%if params[:s4] != "1" %>
       <%= f.check_box(:s4,{},1,0) %>
     <%else%>
@@ -160,7 +144,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "Fri" %><br />
+    <%= f.label "Fri" %>
     <%if params[:s5] != "1" %>
       <%= f.check_box(:s5,{},1,0) %>
     <%else%>
@@ -173,7 +157,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "Sat" %><br />
+    <%= f.label "Sat" %>
     <%if params[:s6] != "1" %>
       <%= f.check_box(:s6,{},1,0) %>
     <%else%>
@@ -186,7 +170,7 @@ $(document).ready(function () {
     <%end%>
   </div>
   <div class="field">
-    <%= f.label "Sun" %><br />
+    <%= f.label "Sun" %>
     <%if params[:s0] != "1" %>
       <%= f.check_box(:s0,{},1,0) %>
     <%else%>
@@ -201,5 +185,18 @@ $(document).ready(function () {
   <div class="actions">
     <%= f.submit %>
   </div>
+  <script>
+    
+    var elems = Array.prototype.slice.call(document.querySelectorAll("input[type=checkbox]"));
+    elems.forEach(function(elem) {
+    var switchery = new Switchery(elem,{
+//	  color: '#00a1d2',
+//	  jackColor: '#22c3f3',
+//        secondaryColor: '#505050',
+//	  jackSecondaryColor: '#606060'
+	});
+});
+
+    </script> 
 <% end %>
 </div>

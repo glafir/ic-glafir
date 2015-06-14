@@ -1,5 +1,9 @@
+-#- per_page = per_sub_page
+= render "layouts/per_page"
 .apple_pagination{id: "apple_pagination"}
-  = paginate @timetableap_subs, :param_name => :sub_page
+  .page_info
+    = page_entries_info @timetableap_subs
+  = paginate @timetableap_subs, :param_name => :sub_page, :default_per_page => 5
 %table
   %tr
     %th Рейс ||

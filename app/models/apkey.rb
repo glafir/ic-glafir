@@ -1,4 +1,5 @@
 class Apkey < ActiveRecord::Base
+include ActiveModel::Validations
   belongs_to :airport
   has_many :timeiableaps
   attr_accessible :airport_id

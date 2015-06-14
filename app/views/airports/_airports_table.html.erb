@@ -15,14 +15,14 @@
         <td><%= airport.iata_code %></td>
         <td><%= airport.icao_code %></td>
       <% if  airport.name_rus.blank?
-           airport['name'] = airport.name_eng
+           airport.name = airport.name_eng
          else
-           airport['name'] = airport.name_rus
+           airport.name = airport.name_rus
          end%>
       <% if  airport.city_rus.blank?
-           airport['city_name'] = airport.city_eng
+           airport.city_name = airport.city_eng
          else
-           airport['city_name'] = airport.city_rus
+           airport.city_name = airport.city_rus
          end%>
       <% if  airport.town.blank?
            city = airport.city_name
@@ -33,9 +33,9 @@
              city = airport.town.city_rus
            end
          end%>
-        <td><%= link_to airport.name, airport, :class => "demo1", :id => airport.id.to_s%></td>
+        <td><%= link_to airport.name, airport%></td>
         <td><%= link_to city, town_path(airport.town_id) unless airport.town.blank?%>
-        <%#= link_to airport.city_rus, :controller=>"airports", :action => "city", :city_eng => airport.city_eng if airport.town.blank?%></td>
+        <%#= link_to airport.city_rus, :controller=>"/airports", :action => "city", :city_eng => airport.city_eng if airport.town.blank?%></td>
         <td><%= airport.country.country_iata_code %></td>
         <td nowrap><a href="/airports/<%= airport.id%>/aptt" >вылет/прилёт</a>
         <td><%= link_to 'Edit', edit_airport_path(airport) %></td>

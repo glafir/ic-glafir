@@ -1,5 +1,6 @@
 class AircraftsController < ApplicationController
   before_filter :set_aircraft, only: [:show, :edit, :update, :destroy]
+  autocomplete :aircraft, :aircraft_model
 
   def index
     @aircrafts = Aircraft.all

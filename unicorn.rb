@@ -3,7 +3,7 @@ working_directory "/home/glafir/RoR/ic-glafir/"
 
 preload_app true
 
-timeout 180
+timeout 36000
 
 listen "/home/glafir/RoR/ic-glafir/tmp/sockets/unicorn.sock", :backlog => 128
 
