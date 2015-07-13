@@ -4,12 +4,14 @@ class TimetableapsController < ApplicationController
 
   def index
     @timetableaps = Timetableap.search(params[:start_ap],params[:end_ap],params[:search_al]).page(params[:page]).per(params[:per_page])
+    authorize @timetableaps
     respond_with(@timetableaps)
   end
 
   def validate
     timetableaps = Timetableaps.new(timetableaps_params)
     validator(timetableaps)
+    authorize @timetableap
     respond_to do |format|
       format.json { render json: @errors }
     end
@@ -19,11 +21,13 @@ class TimetableapsController < ApplicationController
   end
 
   def show
+    authorize @timetableap
     respond_with(@timetableap)
   end
 
   def new
     @timetableap = Timetableap.new
+    authorize @timetableap
     respond_with(@timetableap)
   end
 
@@ -31,10 +35,14 @@ class TimetableapsController < ApplicationController
     render nothing: true
     @timetableap.DateOfEndNav = @timetableap.DateOfEndNav + 1.year
     @timetableap.save
+    flash[:notice] = "701; The flight ID=#{@timetableap.id} was prolong to #{@timetableap.DateOfEndNav}!" if @timetableap.save && !request.xhr?
+    flash_message_add
+    authorize @timetableap
     respond_with(@timetableap)
   end
 
   def edit
+    authorize @timetableap
     respond_with(@timetableap)
   end
 
@@ -42,28 +50,32 @@ class TimetableapsController < ApplicationController
     @timetableap = Timetableap.new(params[:timetableap])
     @timetableap.save
     flash[:notice] = "The flight was saved!" if @timetableap.save && !request.xhr?
+    authorize @timetableap
     respond_with(@timetableap, :location => timetableap_path(@timetableap))
   end
 
   def update
     @timetableap.update_attributes(params[:timetableap])
     flash[:notice] = "The flight was updated!" if @timetableap.update_attributes(params[:timetableap]) && !request.xhr?
+    authorize @timetableap
     respond_with(@timetableap, :location => timetableap_path(@timetableap))
   end
 
   def destroy
     @timetableap.destroy
+    authorize @timetableap
     respond_with(@timetableap)
   end
 
   def flight_state
     if @timetableap.TimeEnd.hour < 14 or @timetableap.TimeStart.hour < 14
-      @timetableap['timeEnd'] = @timetableap.TimeEnd.change( :year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
-      @timetableap['timeStart'] = @timetableap.TimeStart.change( :year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+      @timetableap.timeEnd = @timetableap.TimeEnd.change( :year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+      @timetableap.timeStart = @timetableap.TimeStart.change( :year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
     else
-      @timetableap['timeEnd'] = @timetableap.TimeEnd.change( :year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
-      @timetableap['timeStart'] = @timetableap.TimeStart.change( :year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+      @timetableap.timeEnd = @timetableap.TimeEnd.change( :year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+      @timetableap.timeStart = @timetableap.TimeStart.change( :year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
     end
+    authorize @timetableap
     respond_with(@timetableap)
   end
 

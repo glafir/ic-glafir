@@ -3,12 +3,15 @@
   <%= render "layouts/head" %>
   <body>
     <div id="all">
-    <% if user_signed_in? %>
-      <%=render "layouts/header"%>
-      <%=render "layouts/container"%>
-    <%else%>
-      <%= yield %>
-    <%end%>
+      <p><%= flash[:alert]%></p>
+      <p><%= flash[:notice]%></p>
+      <% if user_signed_in? %>
+        <%=render "layouts/header"%>
+        <%=render "layouts/middle"%>
+      <%else%>
+        <%= yield %>
+      <%end%>
     </div>
+    <%=render "layouts/footer"%>
   </body>
 </html>

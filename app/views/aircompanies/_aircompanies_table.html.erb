@@ -27,8 +27,12 @@
     <td></td>
     <td><%= aircompany.al_start %></td>
     <td><%= aircompany.al_finish %></td>
-    <td><%= link_to 'Edit', edit_aircompany_path(aircompany) %></td>
-    <td><%= link_to 'Destroy', aircompany, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% if policy(aircompany).update? %>
+      <td><%= link_to 'Edit', edit_aircompany_path(aircompany) %></td>
+    <%end%>
+    <% if policy(aircompany).destroy? %>
+      <td><%= link_to 'Destroy', aircompany, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <%end%>
   </tr>
 <% end %>
 </table>

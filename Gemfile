@@ -4,6 +4,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'turbolinks'
+gem 'turbolinks-redirect'
 gem 'jbuilder', '~> 2.0'
 
 gem 'protected_attributes'
@@ -14,11 +15,15 @@ gem 'jquery-ui-rails'
 gem "jquery-easing-rails"
 gem 'jquery-validation-rails'
 gem "jquery-form-rails"
+gem "jquery-turbolinks"
 gem "momentjs-rails"
 gem 'rails-jquery-autocomplete'
 gem 'mysql2'
 gem 'bcrypt-ruby'
 gem 'devise'
+gem 'devise-encryptable'
+gem 'warden'
+gem 'devise_traceable'
 gem 'i18n'
 gem 'devise-i18n'
 gem 'rails-i18n'
@@ -28,7 +33,7 @@ gem 'haml-rails'
 gem 'mousetrap-rails'
 #gem 'erb2haml'
 gem 'stamp'
-gem 'cancan'
+#gem 'cancan'
 #gem 'fullcalendar-rails'
 gem "unicorn"
 #gem "sunriseset"
@@ -50,4 +55,17 @@ gem 'tzinfo'
 gem 'tzinfo-data'
 gem 'jquery-ui-themes'
 gem 'html5_validators'
+gem 'pundit'
+gem 'dalli'
+group :development do
+  gem 'better_errors'
+  gem 'quiet_assets'
+  gem 'rails_layout'
+  gem 'spring-commands-rspec'
+  gem "binding_of_caller"
+end
 
+gem 'gritter_notices'
+gem 'activerecord-session_store'
+
+gem 'rails-erd'

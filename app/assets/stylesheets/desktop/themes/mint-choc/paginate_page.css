@@ -85,6 +85,19 @@
       color: #262E09;
       background: #97AB55;
       padding: 0.1em 0.25em; }
+    .apple_pagination a:hover#pages, .apple_pagination a:focus#pages {
+      font-style: normal;
+      font-weight: bold;
+      background-color: #a30;
+      display: inline-block;
+      width: 1.3em;
+      height: 1.3em;
+      line-height:1.2;
+      -moz-border-radius: 1em;
+      -webkit-border-radius: 1em;
+      border-radius: 1em;
+      text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px; }
+
 
 .flickr_pagination {
   text-align: center;

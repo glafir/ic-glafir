@@ -1,12 +1,14 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
-protect_from_forgery
+include Pundit
+protect_from_forgery with: :exception
+skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 
 require 'sunriseset'
 require 'tzinfo'
 require 'tzinfo/data'
 require 'i18n_timezones'
-
+require 'devise_traceable'
 #require 'suncalc'
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
@@ -17,12 +19,12 @@ helper_method :sort_column, :sort_direction
 #  session[:return_to] = request.fullpath
 #end
 before_filter :force_utf8_params
+before_filter  :set_p3p
 #before_action :set_locale
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+before_filter :set_mobile_format
 has_mobile_fu
 #before_filter :force_mobile_format
-respond_to :json, :html, :js, :mobile
-before_filter :set_mobile_format
 before_filter :set_timezone 
 ActiveSupport::TimeZone::MAPPING["Ezhinsk"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Norok"] = "Asia/Ezhinsk"
@@ -33,9 +35,15 @@ ActiveSupport::TimeZone::MAPPING["Magadan"] = "Asia/Magadan"
 ActiveSupport::TimeZone::MAPPING["Sakhalin"] = "Asia/Sakhalin"
 ActiveSupport::TimeZone::MAPPING["Kamchatka"] = "Asia/Kamchatka"
 ActiveSupport::TimeZone::MAPPING["Anadyr"] = "Asia/Anadyr"
+respond_to :html, :js, :json, :mobile
+after_action :verify_authorized, :except => [:error_404, :error_403, :autocomplete_airport_name_rus, :autocomplete_aircompany_airline_name_rus, :autocomplete_town_accent_city]
+rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+def role?(role)
+  return !!self.roles.find_by_name(role.to_s.camelize)
+end
 
 def set_timezone
-#    Time.zone = ActiveSupport::TimeZone.new("Ezhinsk")
     tz = current_user ? current_user.time_zone : nil
     Time.zone = tz || ActiveSupport::TimeZone["Ezhinsk"]
 end  
@@ -64,28 +72,33 @@ end
 
   def force_utf8_params
   traverse = lambda do |object, block|
-        if object.kind_of?(Hash)
-          object.each_value { |o| traverse.call(o, block) }
-        elsif object.kind_of?(Array)
-          object.each { |o| traverse.call(o, block) }
-        else
-          block.call(object)
-        end
-      object
+    if object.kind_of?(Hash)
+      object.each_value { |o| traverse.call(o, block) }
+    elsif object.kind_of?(Array)
+      object.each { |o| traverse.call(o, block) }
+    else
+      block.call(object)
     end
-    force_encoding = lambda do |o|
-      o.force_encoding(Encoding::UTF_8) if o.respond_to?(:force_encoding)
-    end
+    object
+  end
+  force_encoding = lambda do |o|
+    o.force_encoding(Encoding::UTF_8) if o.respond_to?(:force_encoding)
+  end
   traverse.call(params, force_encoding)
   end
 
-def after_sign_in_path_for(resource)
-  airports_path
-end
+  def after_sign_in_path_for(resource)
+    flash_message_add
+    request.referrer || user_path and return
+  end
 
-#def after_sign_out_path_for(resource_or_scope)
-#  root_path
-#end
+#  def after_sign_out_path_for(resource_or_scope)
+#    new_user_session_path
+#  end
+
+  def set_p3p
+    response.headers["P3P"]='CP="CAO PSA OUR"'
+  end 
 
   private 
   def sort_direction
@@ -96,23 +109,42 @@ end
     render plain: "404 Not Found", status: 404
   end
 
-def set_request_format
-  if is_mobile_device? # this method is provided by mobile_fu
-    if (devise_controller? && action_name == 'create' && request.method == ('POST'))
-      request.format = :html
-    else
-      request.format = :mobile
+  def set_mobile_format
+    if is_mobile_device? # this method is provided by mobile_fu
+      is_device?("iPhone") ? request.format = :html : super
+      if (devise_controller? && action_name == 'create' && request.method == ('POST'))
+        request.format = :html
+      else
+        request.format = :mobile
+      end
     end
   end
-end
 
+  protected
 
-#  protected
-#  def layout_by_resource
-#    if devise_controller?
-#      "application_empty_1"
-#    else
-#      "application"
-#    end
-#  end
+  def user_not_authorized
+    flash[:notice] = "403; Данное действие тебе не разрешено."
+    flash_message_add
+    redirect_to (request.referrer || error403_path), data: { no_turbolink: true }
+  end
+
+  def flash_message_add
+    @flash_message = FlashMessage.new
+    current_user.nil? ? @flash_message.user_id = 0 : @flash_message.user_id =  current_user.id
+    @flash_message.request_url = request.original_url
+    @flash_message.request_ip = request.ip
+    @flash_message.request_method = request.request_method
+    request.referrer.nil? ? @flash_message.request_referrer = request.original_url : @flash_message.request_referrer = request.referrer
+    @flash_message.useragent = request.env['HTTP_USER_AGENT']
+    @flash_message.message = flash[:notice]
+    @flash_message.save
+  end
+
+  def layout_by_resource
+    if devise_controller?
+      "application_empty_1"
+    else
+      "application"
+    end
+  end
 end

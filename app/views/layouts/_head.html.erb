@@ -3,12 +3,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <% if user_signed_in? %>
-    <%= load_netzke theme: "aria"%>
+    <%#= load_netzke theme: "aria"%>
     <%= stylesheet_link_tag    "desktop/themes/"+current_user.user_theme.theme+"/application", :media => "all" %>
   <%else%>
     <%= stylesheet_link_tag    "desktop/untheme/application", :media => "all" %>
   <%end%>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "desktop/application" %>
   <script type="text/javascript">
     hs.graphicsDir = '/images/highslide/';
     hs.outlineType = 'rounded-black';

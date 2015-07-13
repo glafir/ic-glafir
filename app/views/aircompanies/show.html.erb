@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
-
-<%=render "aircompanies/al_logo"%>
-<%=render "aircompanies/al_info"%>
+<div id="al_info" class="al_info">
+  <%=render "aircompanies/al_logo"%>
+  <%=render "aircompanies/al_info"%>
+</div>
+<div class="al_tt" id="al_tt">
 <fieldset><legend>
 <h2>Рейсы <%= @aircompany.airline_name_rus %> (<%= @aircompany.airline_name_eng%>), выполняемые на собственных самолётах.</h2>
 </legend>
@@ -14,3 +16,4 @@
 </fielset>
 <br />
 <%= link_to 'Edit', edit_aircompany_path(@aircompany) %>
+</div>

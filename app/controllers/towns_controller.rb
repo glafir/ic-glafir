@@ -9,6 +9,7 @@ class TownsController < ApplicationController
   def index
     @towns = Town.search(params[:search]).order(sort_column + " " + sort_direction)
     @towns = @towns.page(params[:page]).per(params[:per_page])
+    authorize Town
     respond_with(@towns)
   end
 
@@ -20,44 +21,54 @@ class TownsController < ApplicationController
       @apkey.airport_id = airport.id if apkey.airport_id.blank?
       @apkey.save
     end
+  authorize Airport
   end
 
   def show
     @airports = Airport.where(town_id: @town.id)
     @airports = @airports.page(params[:page]).per(params[:per_page])
+    authorize @town
     respond_with(@town)
   end
 
   def new
     @town = Town.new
+    authorize @town
     respond_with(@town)
   end
 
   def edit
+    authorize @town
   end
 
   def create
     @town = Town.new(params[:town])
     @town.save
+    authorize @town
     respond_with(@town)
   end
 
   def update
     @town.update_attributes(params[:town])
+    authorize @town
     respond_with(@town)
   end
 
   def destroy
     @town.destroy
+    authorize @town
     respond_with(@town)
   end
 
   def tw_dist
-    @ap1 = Town.find(params[:start_ap])
-    @ap2 = Town.find(params[:end_ap])
-    @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-    @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
-    @dist = @p1.distance_to(@p2)
+    @ap1 = Town.find(params[:start_ap]) if params[:start_ap] != nil
+    @ap2 = Town.find(params[:end_ap]) if params[:end_ap] != nil
+    if @ap1 != nil || @ap2 != nil
+      @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+      @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
+      @dist = @p1.distance_to(@p2)
+    end
+    authorize Town
   end
 
 private

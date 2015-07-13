@@ -1,29 +1,30 @@
 class UsersController < ApplicationController
-#class UsersController < Devise::RegistrationsController
-  before_filter :authenticate_user!
-
+  before_filter :set_user, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
   def index
     @users = User.all
+    authorize User
   end
 
   def show
-    @user = User.find(params[:id])
+    authorize @user
   end
 
   def new
     @user = User.new
+    authorize @user
   end
 
   # GET /specialists/1/edit
   def edit
-    @user = User.find(params[:id])
+    authorize @user
   end
 
   # POST /specialists
   # POST /specialists.json
   def create
     @user = User.new(user_params)
-
+    authorize @user
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -36,25 +37,20 @@ class UsersController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    authorize @user
+    if @user.update_attributes(secure_params)
+      redirect_to users_path, :notice => "User updated."
+    else
+      redirect_to users_path, :alert => "Unable to update user."
     end
   end
 
 
-
-  def delete
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to "/users/", notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  def destroy
+    user = User.find(params[:id])
+    authorize user
+    user.destroy
+    redirect_to users_path, :notice => "User deleted."
   end
 
   # my custom fields are :name,
@@ -64,7 +60,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    def users_params
-      params.require(:users).permit(:email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :created_at, :updated_at, :username, :time_zone, :town_id, :user_theme_id)
+    def user_params
+      params.require(:user).permit(:email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :created_at, :updated_at, :username, :time_zone, :town_id, :user_theme_id, :role)
     end
 end

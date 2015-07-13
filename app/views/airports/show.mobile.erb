@@ -112,7 +112,7 @@
   <h2>Базирующиеся авиакомпании отсутствуют в аэропрте <%= @airport.name_rus%>.</h2>
 <%else%>
   <h2>Авиакомпании, базирующиеся в аэропорту <%= @airport.name_rus%> </h2>
-  <%= render "aircompanies/aircompanies"%>
+  <%= render "aircompanies/aircompanies.mobile"%>
 <%end%>
 <%if @airport.aphubs.blank?%>
   <h2>Авиакомпании-хабы отсутствуют в аэропрте <%= @airport.name_rus%>.</h2>
@@ -125,6 +125,6 @@
     <% @aircompanies[@aircompanies.size] = x.aircompany %>
   <%}%>
   <% @aircompanies = @aircompanies %>
-  <%= render "aircompanies/aircompanies_table"%>
+  <%= render "aircompanies/aircompanies_table.mobile"%>
 <%end%>
 

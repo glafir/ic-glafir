@@ -47,10 +47,18 @@
     %>
     <td bgcolor=<%= bgcolor%>>
     <%= timetableap.DateOfEndNav %></td>
-    <td><%= link_to 'Продлить рейс на 1 год', update_dateoffinishdate_timetableap_path(timetableap), remote: true%></td>
-    <td><%= link_to 'Редактировать', edit_timetableap_path(timetableap) %></td>
-    <td><%= link_to 'Удвлить', timetableap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <td><%= link_to "добавить доп рейс к id=#{timetableap.id}", new_timetableap_sub_path(timetableap.id)%></td>
+    <% if policy(timetableap).update_dateoffinishdate? %>
+      <td><%= link_to 'Продлить рейс на 1 год', update_dateoffinishdate_timetableap_path(timetableap), remote: true%></td>
+    <% end %>
+    <% if policy(timetableap).edit? %>
+      <td><%= link_to 'Редактировать', edit_timetableap_path(timetableap) %></td>
+    <% end %>
+    <% if policy(timetableap).destroy? %>
+      <td><%= link_to 'Удвлить', timetableap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+    <% if policy(timetableap.timetableap_subs).new? %>
+      <td><%= link_to "добавить доп рейс к id=#{timetableap.id}", new_timetableap_sub_path(timetableap.id)%></td>
+    <% end %>
   </tr>
 <% end %>
 </tbody>

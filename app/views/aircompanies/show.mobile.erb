@@ -5,12 +5,12 @@
 <fieldset><legend>
 <h2>Рейсы <%= @aircompany.airline_name_rus %> (<%= @aircompany.airline_name_eng%>), выполняемые на собственных самолётах.</h2>
 </legend>
-  <div id="timetableaps"><%= render "timetableaps/timetableaps"%></div>
+  <div id="timetableaps"><%= render "timetableaps/timetableaps.mobile"%></div>
 </fielset>
 <fielset>
 <legend>
 <h2>Рейсы <%= @aircompany.airline_name_rus %> (<%= @aircompany.airline_name_eng%>), выполняемые на самолётах других авиакомпаний. </h2></legend>
-  <div id="timetableap_subs"><%= render "timetableap_subs/index"%></div>
+  <div id="timetableap_subs"><%= render "timetableap_subs/index.mobile"%></div>
 </fielset>
 <br />
 <%= link_to 'Edit', edit_aircompany_path(@aircompany) %>

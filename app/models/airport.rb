@@ -32,4 +32,6 @@ include ActiveModel::Validations
       all
     end
   end
+
+
 end

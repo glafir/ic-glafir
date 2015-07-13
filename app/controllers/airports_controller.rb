@@ -5,50 +5,61 @@ layout "without_html", :only => [:tablo]
 # layout "application_empty_1", :only => [:tablo]
 autocomplete :airport, :name_rus, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
 
-#  def autocomplete_airport
+#  def autocomplete_airport_name_rus
 #    iata_code = params[:iata_code]
 #    town_id = params[:town_id]
 #    name_rus = params[:name_rus]
 #    airports = Airport.where('name_rus LIKE ? OR iata_code LIKE ?', brand_id, country, "%#{term}%").order(:name).all
 #    render :json => airports.map { |airport| {:id => airport.id, :label => airport.name_eng, :value => airport.name_rus} }
+#    authorize Airport
+#
+#    render :nothing => true
 #   end
 
   def admin_ap
     render layout: "application_empty_1"
+    authorize :airport
   end
 
   def index
     @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
-    respond_with(@airport)
+    authorize Airport
+    respond_with(@airports)
   end
 
   def show
     @aircompanies = Aircompany.where(airport_id: params[:id]).page(params[:page]).per(params[:per_page])
+    authorize @airport
     respond_with(@airport)
   end
 
   def aptt
+    authorize @airport
     respond_with(@airport)
   end
 
   def city
     @airports = Airport.where(city_eng: params[:city_eng])
     @airports = @airports.paginate :page => params[:page], :order => 'name_rus'
+    authorize Airport
     respond_with(@airport)
   end
 
   def new
     @airport = Airport.new
     @apkey = Apkey.new
+    authorize @airport
     respond_with(@airport)
   end
 
   def edit
+     authorize @airport
   end
 
   def create
     @airport = Airport.new(params[:airport])
     @apkey = Apkey.new
+    authorize @airport
       if @airport.save
         @apkey.id = @airport.id
         @apkey.airport_id = @airport.id
@@ -61,11 +72,13 @@ autocomplete :airport, :name_rus, :extra_data => [:city_rus, :city_eng, :iata_co
   def update
     @airport.update_attributes(params[:airport])
     flash[:notice] = "The airport was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
+    authorize @airport
     respond_with(@airport)
   end
 
   def destroy
     @airport.destroy
+    authorize @airport
     respond_with(@airport)
   end
   
@@ -101,15 +114,19 @@ autocomplete :airport, :name_rus, :extra_data => [:city_rus, :city_eng, :iata_co
 ##     end
 ##########################################################################
 #    render layout: "application_empty_1"
+    authorize @airport
     respond_with(@airport)
 	end
 
   def ap_dist
-    @ap1 = Airport.find(params[:start_ap])
-    @ap2 = Airport.find(params[:end_ap])
-    @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-    @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
-    @dist = @p1.distance_to(@p2)
+    @ap1 = Airport.find(params[:start_ap]) if params[:start_ap] != nil
+    @ap2 = Airport.find(params[:end_ap]) if params[:end_ap] != nil
+    if @ap1 != nil || @ap2 != nil
+      @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+      @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
+      @dist = @p1.distance_to(@p2)
+    end
+  authorize :airport
   end
   
 private

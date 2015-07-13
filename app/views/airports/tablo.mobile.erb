@@ -1,16 +1,22 @@
+  <style type="text/css">
+   TABLE {
+    table-layout: fixed; /* Ячейки фиксированной ширины */
+   }
+  </style>
+
 <h2><%=@tablo %></h2>
 <div id="tda">
-<table id="tt" class="tablesorter">
+<table id="tt" class="tablesorter" width="160">
 <thead>
   <tr>
-    <th>Рейс</th>
-    <th>Направление</th>
-    <th>Время</th>
-    <th>Статус</th>
+    <th width="10">Рейс</th>
+    <th width="120">Направление</th>
+    <th width="10">Время</th>
+    <th width="20">Статус</th>
   </tr>
 </thead>
 <tbody>
-  <%=render "airports/tablo"%>
+  <%=render "airports/tablo.mobile"%>
 <tbody>
 </table>
 </div>

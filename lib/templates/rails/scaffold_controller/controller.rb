@@ -9,22 +9,26 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>
   def index
     @<%= plural_table_name %> = <%= orm_class.all(class_name) %>.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    authorize <%= orm_class.all(class_name) %>
     respond_with @<%= plural_table_name %>
   end
 
   # GET <%= route_url %>/1
   def show
+    authorize @<%= singular_table_name %>
     respond_with @<%= singular_table_name %>
   end
 
   # GET <%= route_url %>/new
   def new
     @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
+    authorize @<%= singular_table_name %>
     respond_with @<%= singular_table_name %>
   end
 
   # GET <%= route_url %>/1/edit
   def edit
+    authorize @<%= singular_table_name %>
   end
 
   # POST <%= route_url %>
@@ -32,6 +36,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
     @<%= orm_instance.save %>
     flash[:notice] =  'The <%= singular_table_name %> was successfully saved!' if @<%= orm_instance.save %> && !request.xhr?
+    authorize @<%= singular_table_name %>
     respond_with @<%= singular_table_name %>
   end
 
@@ -39,12 +44,14 @@ class <%= controller_class_name %>Controller < ApplicationController
   def update
     @<%= orm_instance.update("#{singular_table_name}_params") %>
     flash[:notice] =  'The <%= singular_table_name %> was successfully updated!' if @<%= orm_instance.update("#{singular_table_name}_params") %> && !request.xhr?
+    authorize @<%= singular_table_name %>
     respond_with @<%= singular_table_name %>
   end
 
   # DELETE <%= route_url %>/1
   def destroy
     @<%= orm_instance.destroy %>
+    authorize @<%= singular_table_name %>
     redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully destroyed.'" %>
     respond_with @<%= singular_table_name %>
   end

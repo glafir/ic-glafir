@@ -1,0 +1,6 @@
+<div class="apple_pagination" id="apple_pagination">
+    <div class="page_info">
+      <%= page_entries_info @user_tracings%>
+    </div>
+    <%= paginate @user_tracings, :remote => true %>
+  </div>

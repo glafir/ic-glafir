@@ -4,9 +4,9 @@
 <li><%= link_to "Авиакомпании мира", aircompanies_path%></li>
 <li><%= link_to "Самолёты", aircrafts_path%></li>
 <hr>
-<li><%= link_to "Города ЕШ",  controller: "/countries", action: "tw_show", id: 528%></li>
+<li><%= link_to "Города ЕШ", controller: "/countries", action: "tw_show", id: 528%></li>
 <li><%= link_to "Аэропорты ЕШ", controller: "/countries", action: "ap_show", id: 528%></li>
-<li><%= link_to "Авиакомпании ЕШ", controller: "/countries", action: "al_show", id: 528%></li>
+<li><%= link_to "Авиакомпании ЕШ", aircompanies_path%></li>
 <li><%= link_to "Поиск рейсов в ЕШ", timetableaps_path%></li>
 <hr>
 <li><%= link_to "Расстояния между а/п", ap_dist_airports_path%></li>
@@ -19,4 +19,9 @@
 <li><%= link_to "Авиакомпании", admin_al_aircompanies_path %></li>
 <li><%= link_to "Аэропорты", admin_ap_airports_path %></li>
 <li><%= link_to "Авиарейсы", ttair_admin_timetableaps_path %></li>
+<hr>
+<li><%= link_to 'Users', users_path %></li>
+<li><%= link_to 'Logs', flash_messages_path %></li>
+<li><%= link_to 'User Signes Logs', user_tracings_path %></li>
+<hr>
 
