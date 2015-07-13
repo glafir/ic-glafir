@@ -1,7 +1,7 @@
 = hidden_field_tag :direction, params[:direction]
 = hidden_field_tag :sort, params[:sort]
 
-= render "countries_paginate_top"
+= render "countries_paginate_top.mobile"
 %table.pretty
   %tr
     %th= sortable "country_name"
@@ -19,5 +19,6 @@
       %td= country.country_number
       %td= link_to 'Airports', controller: "countries", action: "ap_show", id: country.id
       %td= link_to 'Towns', controller: "countries", action: "tw_show", id: country.id
-      %td= link_to 'Edit', edit_country_path(country)
-= render "countries_paginate_bottom"
+      -if policy(country).edit?
+        %td= link_to 'Edit', edit_country_path(country)
+= render "countries_paginate_bottom.mobile"

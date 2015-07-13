@@ -11,39 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610145537) do
-
-  create_table "admins", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-  end
-
-  add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
-  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+ActiveRecord::Schema.define(version: 20150713104515) do
 
   create_table "aircompanies", force: :cascade do |t|
-    t.string   "iata_code",          limit: 2,               null: false
-    t.string   "icao_code",          limit: 3,               null: false
+    t.string   "iata_code",          limit: 2,   null: false
+    t.string   "icao_code",          limit: 3,   null: false
     t.string   "awb_prefix",         limit: 3
-    t.string   "airline_name_eng",   limit: 255,             null: false
+    t.string   "airline_name_eng",   limit: 255, null: false
     t.string   "airline_name_rus",   limit: 255
-    t.integer  "airport_id",         limit: 4,   default: 0
+    t.integer  "airport_id",         limit: 4,   null: false
     t.integer  "country_id",         limit: 4
-    t.integer  "al_start",           limit: 4
-    t.integer  "al_finish",          limit: 4
-    t.string   "comment",            limit: 50
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.date     "al_start"
+    t.date     "al_finish"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "timetableaps_count", limit: 4
   end
 
@@ -106,8 +87,8 @@ ActiveRecord::Schema.define(version: 20150610145537) do
     t.string   "TerminalsColl",      limit: 255
     t.string   "Terminals",          limit: 255
     t.string   "Dist_to_town",       limit: 255
-    t.string   "time_zone",          limit: 255
     t.integer  "town_id",            limit: 4
+    t.string   "time_zone",          limit: 50
     t.integer  "country_id",         limit: 4
     t.integer  "aircompanies_count", limit: 4
     t.datetime "created_at",                     null: false
@@ -133,22 +114,6 @@ ActiveRecord::Schema.define(version: 20150610145537) do
     t.integer  "timetableaps_count", limit: 4
   end
 
-  create_table "ckeditor_assets", force: :cascade do |t|
-    t.string   "data_file_name",    limit: 255, null: false
-    t.string   "data_content_type", limit: 255
-    t.integer  "data_file_size",    limit: 4
-    t.integer  "assetable_id",      limit: 4
-    t.string   "assetable_type",    limit: 30
-    t.string   "type",              limit: 30
-    t.integer  "width",             limit: 4
-    t.integer  "height",            limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
-
   create_table "countries", force: :cascade do |t|
     t.string   "country_name",      limit: 255
     t.string   "country_iata_code", limit: 255
@@ -156,6 +121,18 @@ ActiveRecord::Schema.define(version: 20150610145537) do
     t.integer  "country_number",    limit: 4
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "flash_messages", force: :cascade do |t|
+    t.integer  "user_id",          limit: 4,   null: false
+    t.string   "message",          limit: 255, null: false
+    t.string   "request_url",      limit: 255, null: false
+    t.string   "request_ip",       limit: 15,  null: false
+    t.string   "request_method",   limit: 4,   null: false
+    t.string   "request_referrer", limit: 500, null: false
+    t.string   "useragent",        limit: 500, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "flight_types", force: :cascade do |t|
@@ -173,6 +150,17 @@ ActiveRecord::Schema.define(version: 20150610145537) do
     t.integer  "capitalcity_id", limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "role_id", limit: 4
+    t.integer "user_id", limit: 4
   end
 
   create_table "runway_aps", force: :cascade do |t|
@@ -207,6 +195,16 @@ ActiveRecord::Schema.define(version: 20150610145537) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", limit: 255,   null: false
+    t.text     "data",       limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "timetableap_subs", force: :cascade do |t|
     t.integer  "Flight_Number",  limit: 4, default: 0, null: false
@@ -293,9 +291,20 @@ ActiveRecord::Schema.define(version: 20150610145537) do
 
   create_table "user_themes", force: :cascade do |t|
     t.string   "theme",      limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  create_table "user_tracings", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4,     null: false
+    t.string   "ip_address",  limit: 15
+    t.text     "useragent",   limit: 65535
+    t.datetime "sign_in_at",                null: false
+    t.datetime "sign_out_at",               null: false
+  end
+
+  add_index "user_tracings", ["ip_address"], name: "ip_address", using: :btree
+  add_index "user_tracings", ["user_id"], name: "index_user_tracings_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -310,13 +319,17 @@ ActiveRecord::Schema.define(version: 20150610145537) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "username",                               null => false
-    t.string   "time_zone",                              null => false
-    t.integer  "town_id",                                null => false
-    t.integer  "user_theme_id",                          null => false
+    t.string   "username",               limit: 255,              null: false
+    t.string   "time_zone",              limit: 255,              null: false
+    t.integer  "town_id",                limit: 4,                null: false
+    t.integer  "user_theme_id",          limit: 4,   default: 1,  null: false
+    t.integer  "role",                   limit: 4,   default: 1,  null: false
+    t.datetime "last_seen"
+    t.string   "password_salt",          limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end

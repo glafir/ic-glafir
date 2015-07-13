@@ -1,7 +1,12 @@
 IcApp::Application.routes.draw do
-  netzke
+  netzke "/netzke", controller: :admin
+#  get "user_tracings" => "user_themes#index", :as => "user_tracings_path"
+  resources :user_tracings
+  resources :flash_messages
+  get "errors/error_404", :as => "error404"
+  get "errors/error_403", :as => "error403"
+  resources :roles
   resources :user_themes
-  root :to => 'general#home'
   resources :aphubs
   get '/timecor' => "general#timecor"
   get '/apcor' => "general#apcor"
@@ -44,15 +49,17 @@ IcApp::Application.routes.draw do
   resources :rw_routes
   resources :rw_stations
   devise_for :users, :controllers => {
-#    :sessions => 'users/sessions',
+    :sessions => 'users/sessions',
     :registrations => "users/registrations"
   }
 
   devise_scope :user do
-    get "sign_in", :to => "devise/sessions#new"
-    get "/logout", :to => "devise/sessions#destroy"
-    delete "/logout", :to => "devise/sessions#destroy"
+    root :to => 'users/sessions#new'
+    get "sign_in", :to => "users/sessions#new"
+    get "users/sign_out", :to => "users/sessions#destroy"
+    delete "users/sign_out", :to => "users/sessions#destroy"
   end
+  resources :users
   resources :zones_stations
   resources :regions
   resources :timetableaps do
@@ -104,4 +111,5 @@ IcApp::Application.routes.draw do
   get "/general" => "general#home"
   get "insertdata" => "timetableaps#insert"
   get "chnglocale" => "general#chnglocale"
+#  get "/*other" => redirect("/errors/error_404")
 end

@@ -1,0 +1,11 @@
+/*
+ *= require_self
+ *= require mousetrap
+ *= require jquery-ui/accordion
+ *= require jquery-ui/autocomplete
+ *= require jquery-ui/datepicker
+ *= require jquery-ui/selectmenu
+ *= require jquery-ui/swanky-purse
+ *= require jquery-ui/slider
+ *= require_tree .
+ */

@@ -19,8 +19,12 @@
         <%#= link_to airport.city_rus, :controller=>"/airports", :action => "city", :city_eng => airport.city_eng if airport.town.blank?%></td>
         <td><%= airport.iso_code %></td>
         <td nowrap><a href="/airports/<%= airport.id%>/aptt" >вылет/прилёт</a>
+        <% if policy(airport).edit? %>
         <td><%= link_to 'Edit', edit_airport_path(airport) %></td>
+        <%end%>
+        <% if policy(airport).destroy? %>
         <td><%= link_to 'Destroy', airport, method: :delete, data: { confirm: "Вы уверены, что хотите удалить аэропорт "+airport.name_rus+" в городе "+ airport.city_rus} %></td>
+        <%end%>
   </tr>
 <% end %>
 </table>

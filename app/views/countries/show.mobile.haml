@@ -1,3 +1,6 @@
+-if policy(@country).edit?
+  = link_to 'Edit', edit_country_path(@country), :class => 'jqbutton'
+
 %h2 Country #{@country.country_name}
 %p
   %b Country Name:
@@ -13,4 +16,7 @@
   = @country.country_number
 
 = render "airports/index"
+= render "towns/index"
 
+-if policy(@country).edit?
+  = link_to 'Edit', edit_country_path(@country), :class => 'jqbutton'

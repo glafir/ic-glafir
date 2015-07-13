@@ -1,5 +1,6 @@
 class Timetableap < ActiveRecord::Base
 include ActiveModel::Validations
+  has_many :timetableap_subs
   belongs_to :aircompany
   belongs_to :aircraft
   belongs_to :airport, foreign_key: "way_start"
@@ -7,14 +8,14 @@ include ActiveModel::Validations
   belongs_to :apkey,  foreign_key: "way_end"
   has_many :timetableapSub, dependent: :destroy
   attr_accessible :aircompany_id, :DateOfEndNav, :DateOfStartNav, :Flight_Number, :GateEnd, :GateStart, :TermEnd, :TermStart, :TimeEnd, :TimeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start
-  attr_accessor :twrus, :aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2
+  attr_accessor :twrus, :aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2, :timeEnd, :timeStart
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }
   validates  :way_start, presence: true, numericality: { only_integer: true }
   validates  :way_end, presence: true, numericality: { only_integer: true }
   validates  :DateOfEndNav, presence: true
   validates  :DateOfStartNav, presence: true
   validates  :Flight_Number, presence: true, numericality: { only_integer: true },
-                  length: { in: 1..4 }
+                    length: { maximum: 9999 }
 #                  uniqueness: { scope: :aircompany_id, message: "should happen once per year" }
 
   def self.search(start_ap,end_ap,search_al)

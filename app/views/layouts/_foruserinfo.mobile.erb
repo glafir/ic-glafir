@@ -1,1 +1,56 @@
-<%= render "layouts/foruserinfo.html.erb"%>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+//  setInterval("jQuery('#timeA').load('# span#timeB');",1000);
+  $("#accordion").accordion({
+	    autoHeight: true,
+//	    active: 0,
+	    collapsible: true,
+	    animate: 1000,
+	    icons: { "header": "ui-icon-circle-plus", "activeHeader": "ui-icon-circle-arrow-s" }
+  });
+});
+       function show()
+        {
+            $.ajax({
+                url: "/general/timenow",
+                cache: false,
+                success: function(html){
+                    $("#dtime").html(html);
+                }
+            });
+        }
+
+//        $(document).ready(function(){
+//            show();
+//            setInterval('show()',1000);
+//        });
+
+</script>
+<div id="accordion">
+        <%=render "layouts/usermenu.mobile"%>
+	<h3>Сегодня:</h3>
+		<fieldset><span id="timeA"><span id="timeB">Ваше время: <p id="dtime"></p> </span></span>
+		<p>Дата: <%= Time.zone.now.stamp("1 january 2000") %></p>
+		<p>День недели:  <%= Time.zone.now.to_s(:short) %></p>
+	</fieldset>
+	<h3>Астрономические данные (Настройки профиля)</h3>
+	<fieldset>
+	<p>Восзод солнца:<br />
+	  <%= sr = SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).sunrise.to_s(:time)%></p>
+	<p>Восход, земные сумерки:<br />
+	  <%= SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).civilTwilightStart.to_s(:time)%></p>
+	<p>Восход, астро. сумерки:<br />
+	  <%#= SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).astroTwilightStart.to_s(:time)%></p>
+	<p>Закат Солнца: <br />
+	  <%= ss = SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).sunset.to_s(:time)%></p>
+	<p>Закат, земные сумерки:<br />
+	  <%= SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).civilTwilightEnd.to_s(:time)%></p>
+	<p>Закат, астро. сумерки:<br />
+	  <%#= SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).astroTwilightEnd.to_s(:time)%> </p>
+        <p>Солнечный полдень:<br />
+	  <%= SunRiseSet.new(DateTime.current, current_user.town.latitude,current_user.town.longitude).solNoon.to_s(:time)%></p>
+	<p>Долгота дня: <br />
+	  <%= Time.diff(Time.parse(sr), Time.parse(ss), '%H %N')[:diff]%></p>
+</fieldset>
+</div>
+

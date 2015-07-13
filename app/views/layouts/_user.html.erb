@@ -2,8 +2,8 @@
 <fieldset> 
  <legend>Панель для пользователя <%= current_user.username %> </legend>
   <li>
-   <%= current_user.username %>(<%= current_user.email %> |
-   <%= link_to 'Изменить данные', edit_user_registration_path %> |
+   <%= current_user.username %>(<%= current_user.email %>
+   <p><%= link_to 'Изменить свой профиль', edit_user_registration_path, :class => "jqbutton" %></p>
   </li>
   <li>
     Твоя временная зона:  <%= current_user.time_zone %>
@@ -18,7 +18,13 @@
     Твой язык: <%= I18n.locale = params[:locale] || I18n.default_locale%> (<%=link_to 'сменить', chnglocale_path, :onclick => "return hs.htmlExpand(this, { objectType: 'ajax'} )"%>)
   </li>
   <li>
-    <%= link_to 'Выйти', '/logout/', :method => :delete %>
+    Вы зашли с адреса: <b><%= current_user.current_sign_in_ip%></b>
+  </li>
+  <li>
+    Ваш предыдущий заход <p><b><%= current_user.last_sign_in_at%></b></p> с адреса <p><b><%= current_user.last_sign_in_ip%></b></p>
+  </li>
+  <li>
+    <%= link_to 'Выйти', destroy_user_session_path, :method => :delete, :class => "jqbutton" %>
   </li>
 </fieldset>
 

@@ -10,11 +10,13 @@
 }
 body{
   width: auto;
+  max-width: 480px;
   font-family:Tahoma;
   font-weight:bold;
   background-color:#000;
   color:#FFF;
   float: none;
+  -webkit-appearance: none;
 }
 a{
   color: #ffffaa; /* Цвет ссылок */
@@ -57,7 +59,7 @@ fieldset{
   border: 2px solid gray;
 }
 p{
-  margin: 5px;
+  margin: 1px;
 }
 
 #all {
@@ -78,11 +80,13 @@ p{
 	text-align: center;
 	padding:1px;
 	z-index:100;
+        max-width: 480px;
 	width: auto;
 	float: none;
 }
 #menu {
         width: auto;
+        max-width: 480px;
 	float: none;
 }
 .foot {
@@ -91,6 +95,7 @@ p{
         text-align: center;
         font: bold 20px Arial, Helvetica, sans-serif;
 	width: auto;
+        max-width: 480px;
 	float: none;
 }
 

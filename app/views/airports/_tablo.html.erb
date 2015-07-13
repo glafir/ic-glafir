@@ -4,9 +4,9 @@
 	  <p><%= link_to image_tag("/images/air_tm/#{timetableap.aircompany.iata_code}.png",  width: '80'), timetableap.aircompany%></p><p>
 	  <%= link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus %>
           <%if timetableap.id < 1000000%>
-	    <%= link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap), :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"%>
+	    <%= link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"%>
           <%else%>
-            <%= link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap), onclick: "return hs.htmlExpand(this, { outlineType: 'rounded-white', wrapperClassName: 'draggable-header', objectType: 'ajax' } )", class: "highslide"%>
+            <%= link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap), data: { no_turbolink: true }, onclick: "return hs.htmlExpand(this, { outlineType: 'rounded-white', wrapperClassName: 'draggable-header', objectType: 'ajax' } )", class: "highslide"%>
           <%end%></p>
         </td>
 	<td width="330px">

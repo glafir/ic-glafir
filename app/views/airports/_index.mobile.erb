@@ -9,7 +9,9 @@
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search", :name => nil %>
   </p>
-  <div id="airports"><%= render "airports/airports" %></div>
+  <div id="airports"><%= render "airports/airports.mobile" %></div>
 <% end %>
-<%= link_to 'New Airport', new_airport_path %>
+<% if policy(@airports).new? %>
+<%= link_to 'New Airport', new_airport_path, class: "jqbutton" %>
+<%end%>
 

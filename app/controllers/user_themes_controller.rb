@@ -1,8 +1,6 @@
 class UserThemesController < ApplicationController
   before_filter :set_user_theme, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
-
   def index
     @user_themes = UserTheme.all
     respond_with(@user_themes)

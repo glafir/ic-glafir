@@ -1,4 +1,6 @@
 #!/bin/sh
 
 cd /home/glafir/RoR/ic-glafir/
+#unicorn -c /home/glafir/RoR/ic-glafir/unicorn.rb -E production -D
 unicorn -c /home/glafir/RoR/ic-glafir/unicorn.rb -D
+

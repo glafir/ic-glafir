@@ -6,8 +6,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'cbf8fcd0adc8ffcada91b62ca8666d4a3709433d9c5f50b4e67d16f839c12c4784519d541656734d7230d7425554911635584e4d5747fe506154fb8b371a6fed'
-
+  config.secret_key = 'cbf8fcd0adc8ffcada91b62ca8666d4a3709433d9c5f50b4e67d16f839c12c4784519d541656734d7230d7425554911635584e4d5747fe506154fb8b371a6fed' if Rails.env == 'production'
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -152,10 +151,10 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  # config.timeout_in = 30.minutes
+  #config.timeout_in = 30.minutes
 
   # If true, expires auth token on session timeout.
-  # config.expire_auth_token_on_timeout = false
+  config.expire_auth_token_on_timeout = true
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
@@ -205,7 +204,7 @@ Devise.setup do |config|
   # REST_AUTH_SITE_KEY to pepper).
   #
   # Require the `devise-encryptable` gem when using anything other than bcrypt
-  # config.encryptor = :sha512
+  config.encryptor = :sha512
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
@@ -233,8 +232,8 @@ Devise.setup do |config|
   # config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  config.sign_out_via = :delete
-
+  #config.sign_out_via = :delete
+   config.sign_out_via = :get
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.

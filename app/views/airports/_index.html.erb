@@ -11,6 +11,6 @@
   </p>
   <div id="airports"><%= render "airports/airports" %></div>
 <% end %>
-
-<%= link_to 'New Airport', new_airport_path %>
-
+<% if policy(@airports).new? %>
+<%= link_to 'New Airport', new_airport_path, class: "jqbutton" %>
+<%end%>
