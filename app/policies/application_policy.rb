@@ -7,33 +7,41 @@ class ApplicationPolicy < Struct.new(:user, :record)
     @record = record
   end
 
+  def readers
+    @user.admin? or @user.user? or @user.vip?
+  end
+
+  def writers
+    @user.admin? or @user.vip?
+  end
+
   def index?
-    @user.admin? or @user.user?
+    readers
   end
 
   def show?
     scope.where(:id => record.id).exists?
-    @user.admin? or @user.user?
+    readers
   end
 
   def create?
-    @user.admin?
+    writers
   end
 
   def new?
-    create?
+    writers
   end
 
   def update?
-    create?
+    writers
   end
 
   def edit?
-    update?
+    writers
   end
 
   def destroy?
-    create?
+    writers
   end
 
   def scope

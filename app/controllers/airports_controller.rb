@@ -2,8 +2,8 @@
 class AirportsController < ApplicationController
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo]
 layout "without_html", :only => [:tablo]
-# layout "application_empty_1", :only => [:tablo]
 autocomplete :airport, :name_rus, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
+before_filter :check_permissions, only: :autocomplete_airport_name_rus
 
 #  def autocomplete_airport_name_rus
 #    iata_code = params[:iata_code]
@@ -220,5 +220,10 @@ private
 
   def set_airport
     @airport = Airport.find(params[:id])
+  end
+  protected
+
+  def check_permissions
+    authorize :airport
   end
 end

@@ -1,6 +1,7 @@
 class TownsController < ApplicationController
   before_filter :set_town, only: [:show, :edit, :update, :destroy]
   autocomplete :town, :accent_city, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
+  before_filter :check_permissions, only: :autocomplete_town_accent_city
 
   def admin_tw
     render layout: "application_empty_1"
@@ -78,5 +79,11 @@ private
 
   def set_town
     @town = Town.find(params[:id])
+  end
+
+  protected
+
+  def check_permissions
+    authorize :town
   end
 end

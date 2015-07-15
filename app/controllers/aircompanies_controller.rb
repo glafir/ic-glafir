@@ -1,10 +1,13 @@
 class AircompaniesController < ApplicationController
   before_filter :set_aircompany, only: [:show, :edit, :update, :destroy]
   autocomplete :aircompany, :airline_name_rus, :extra_data => [:iata_code]
-
+  before_filter :check_permissions, :only => [:admin_al, :autocomplete_aircompany_airline_name_rus]
   def admin_al
-    authorize Aircompany
     render layout: "application_empty_1"
+#    respond_to do |format|
+#      format.html { render template: 'aircompanies/admin_al' }
+#      format.js { render template: 'aircompanies/admin_al', layout: "application_empty_1" }
+#    end
   end
 
   def index
@@ -61,5 +64,11 @@ private
 
   def set_aircompany
     @aircompany = Aircompany.find(params[:id])
+  end
+
+  protected
+
+  def check_permissions
+    authorize :aircompany
   end
 end
