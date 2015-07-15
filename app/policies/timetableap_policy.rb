@@ -4,10 +4,10 @@ class TimetableapPolicy < ApplicationPolicy
   end
 
   def flight_state?
-    @user.admin? or @user.user?
+    readers
   end
 
   def update_dateoffinishdate?
-    @user.admin?
+    writers
   end
 end

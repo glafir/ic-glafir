@@ -58,5 +58,17 @@ module IcApp
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before 0, "Rack::Cors", :debug => true, :logger => (-> { Rails.logger }) do
+      allow do
+        origins '*'
+
+        resource '/netzke/*',
+          :headers => :any,
+          :methods => [:get, :post, :delete, :put, :options, :head],
+          :credentials => true,
+          :max_age => 0
+      end
+    end
   end
 end

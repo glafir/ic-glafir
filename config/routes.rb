@@ -1,6 +1,6 @@
 IcApp::Application.routes.draw do
+  resources :flash_message_states
   netzke "/netzke", controller: :admin
-#  get "user_tracings" => "user_themes#index", :as => "user_tracings_path"
   resources :user_tracings
   resources :flash_messages
   get "errors/error_404", :as => "error404"

@@ -69,3 +69,4 @@ gem 'gritter_notices'
 gem 'activerecord-session_store'
 
 gem 'rails-erd'
+gem 'rack-cors', :require => 'rack/cors'

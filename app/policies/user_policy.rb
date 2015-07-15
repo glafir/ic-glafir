@@ -8,7 +8,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    @user.admin? or @record == @user
+    @user.admin? or @user == @user
   end
 
   def new?
@@ -19,13 +19,16 @@ class UserPolicy < ApplicationPolicy
     @user.admin?
   end
 
+  def edit?
+    @user.admin? or @user == @user
+  end
+
   def update?
-    @user.admin?
+    @user.admin? or @user == @user
   end
 
   def destroy?
     return false if @user == @user
     @user.admin?
   end
-
 end

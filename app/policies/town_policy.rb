@@ -4,6 +4,10 @@ class TownPolicy < ApplicationPolicy
   end
 
   def tw_dist?
-    @user.admin? or @user.user?
+    readers
+  end
+
+  def autocomplete_town_accent_city?
+    readers
   end
 end

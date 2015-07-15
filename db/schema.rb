@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713104515) do
+ActiveRecord::Schema.define(version: 20150714064712) do
 
   create_table "aircompanies", force: :cascade do |t|
     t.string   "iata_code",          limit: 2,   null: false
@@ -123,16 +123,23 @@ ActiveRecord::Schema.define(version: 20150713104515) do
     t.datetime "updated_at",                    null: false
   end
 
+  create_table "flash_message_states", force: :cascade do |t|
+    t.string   "state",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "flash_messages", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4,   null: false
-    t.string   "message",          limit: 255, null: false
-    t.string   "request_url",      limit: 255, null: false
-    t.string   "request_ip",       limit: 15,  null: false
-    t.string   "request_method",   limit: 4,   null: false
-    t.string   "request_referrer", limit: 500, null: false
-    t.string   "useragent",        limit: 500, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "user_id",                limit: 4,   null: false
+    t.string   "message",                limit: 255, null: false
+    t.string   "request_url",            limit: 255, null: false
+    t.string   "request_ip",             limit: 15,  null: false
+    t.string   "request_method",         limit: 4,   null: false
+    t.string   "request_referrer",       limit: 500, null: false
+    t.string   "useragent",              limit: 500, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "flash_message_state_id", limit: 4
   end
 
   create_table "flight_types", force: :cascade do |t|

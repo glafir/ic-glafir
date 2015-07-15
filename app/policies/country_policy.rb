@@ -1,22 +1,22 @@
 class CountryPolicy < ApplicationPolicy
   def index?
-    @user.admin? or @user.user?
+    readers
   end
 
   def show?
-    @user.admin? or @user.user?
+    readers
   end
 
   def ap_show?
-    @user.admin? or @user.user?
+    readers
   end
 
   def tw_show?
-    @user.admin? or @user.user?
+    readers
   end
 
   def al_show?
-    @user.admin? or @user.user?
+    readers
   end
 
   def edit?

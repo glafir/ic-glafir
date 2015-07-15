@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
 include Pundit
-protect_from_forgery with: :exception
+protect_from_forgery with: :exception, unless: -> { request.format.json? }
 skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
-
+skip_before_action :verify_authenticity_token, if: :json_request?
 require 'sunriseset'
 require 'tzinfo'
 require 'tzinfo/data'
@@ -36,7 +36,7 @@ ActiveSupport::TimeZone::MAPPING["Sakhalin"] = "Asia/Sakhalin"
 ActiveSupport::TimeZone::MAPPING["Kamchatka"] = "Asia/Kamchatka"
 ActiveSupport::TimeZone::MAPPING["Anadyr"] = "Asia/Anadyr"
 respond_to :html, :js, :json, :mobile
-after_action :verify_authorized, :except => [:error_404, :error_403, :autocomplete_airport_name_rus, :autocomplete_aircompany_airline_name_rus, :autocomplete_town_accent_city]
+after_action :verify_authorized, :except => [:error_404, :error_403]
 rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 def role?(role)
@@ -88,6 +88,8 @@ end
   end
 
   def after_sign_in_path_for(resource)
+    @flash = flash[:notice]
+    @flash_message_state_id = 100
     flash_message_add
     request.referrer || user_path and return
   end
@@ -106,7 +108,7 @@ end
   end
 
   def record_not_found
-    render plain: "404 Not Found", status: 404
+    render "errors/error_404", status: 404
   end
 
   def set_mobile_format
@@ -123,7 +125,9 @@ end
   protected
 
   def user_not_authorized
-    flash[:notice] = "403; Данное действие тебе не разрешено."
+    flash[:notice] = "Данное действие тебе не разрешено."
+    @flash = flash[:notice]
+    @flash_message_state_id = 403
     flash_message_add
     redirect_to (request.referrer || error403_path), data: { no_turbolink: true }
   end
@@ -136,7 +140,8 @@ end
     @flash_message.request_method = request.request_method
     request.referrer.nil? ? @flash_message.request_referrer = request.original_url : @flash_message.request_referrer = request.referrer
     @flash_message.useragent = request.env['HTTP_USER_AGENT']
-    @flash_message.message = flash[:notice]
+    @flash_message.message = @flash
+    @flash_message.flash_message_state_id = @flash_message_state_id
     @flash_message.save
   end
 
@@ -146,5 +151,9 @@ end
     else
       "application"
     end
+  end
+
+  def json_request?
+    request.format.json?
   end
 end

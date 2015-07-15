@@ -7,8 +7,12 @@ class UserRegistrationPolicy < ApplicationPolicy
     @user.admin?
   end
 
+  def edit?
+    @user.admin? or @user == @user
+  end
+
   def update?
-    @user.admin?
+    @user.admin? or @user == @user
   end
 
   def sign_up?
