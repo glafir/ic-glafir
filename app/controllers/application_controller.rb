@@ -4,6 +4,7 @@ include Pundit
 protect_from_forgery with: :exception, unless: -> { request.format.json? }
 skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 skip_before_action :verify_authenticity_token, if: :json_request?
+after_action :logging, only: [:create, :update, :destroy]
 require 'sunriseset'
 require 'tzinfo'
 require 'tzinfo/data'
@@ -61,6 +62,18 @@ def validator(object)
     @errors.map! { |e| "#{name} #{e}<br />" }
   end
 end
+
+#  def create
+#    @flash_message_state_id = 401
+#  end
+
+#  def update
+#    @flash_message_state_id = 402
+#  end
+
+#  def destroy
+#    @flash_message_state_id = 405
+#  end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -122,6 +135,11 @@ end
     end
   end
 
+  def logging
+    @flash = flash[:notice]
+    flash_message_add
+  end
+
   protected
 
   def user_not_authorized
@@ -129,7 +147,7 @@ end
     @flash = flash[:notice]
     @flash_message_state_id = 403
     flash_message_add
-    redirect_to (request.referrer || error403_path), data: { no_turbolink: true }
+    redirect_to (request.referrer || error403_path), data: { no_turbolink: true } and return
   end
 
   def flash_message_add

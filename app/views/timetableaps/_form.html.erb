@@ -19,29 +19,32 @@
     <%= f.number_field :Flight_Number, :value => ((params[:Flight_Number]).to_i + 1).to_s %>
   <% end %>
   </div>
+  <% if current_user.alclient? %>
+    <%= f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s%>
   <div class="field">
-    <%= f.label :aircompany_airline_name_rus %>
-    <%if params[:aircompany_id].blank? %>
-    <%= f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s %>
-  <% else %>
-    <%= f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]%>
-  <% end %>
+    <%= f.label "aircompany" %>
+    <%= text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true %>
   </div>
+  <% else %>
+  <div class="field">
+    <%= f.label "aircompany" %>
+    <%if params[:aircompany_id].blank? %>
+      <%= f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s %>
+    <% else %>
+     <%= f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]%>
+    <% end %>
+  </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :way_start %>
-    <%if params[:way_start].blank? %>
-      <%= f.select :way_start, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]} %>
-    <%else%>
-      <%= f.select :way_start, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]},  :selected => params[:way_end] %>
-    <%end%>
+      <%= autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start]%>
+      <%= f.hidden_field :way_start, value: params[:way_end]%>
   </div>
   <div class="field">
     <%= f.label :way_end %>
-       <%if params[:way_end].blank? %>
-       <%= f.select :way_end, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]} %>
-    <%else%>
-      <%= f.select :way_end, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]},  :selected => params[:way_start] %>
-    <%end%>
+    <%= autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_end'}, :value => params[:end]%>
+      <%= f.hidden_field :way_end, value: params[:way_start]%>
   </div>
   <div class="field">
     <%= f.label :TermStart %>

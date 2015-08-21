@@ -15,5 +15,7 @@
   <div id="timetableap_subs"><%= render "timetableap_subs/index"%></div>
 </fielset>
 <br />
-<%= link_to 'Edit', edit_aircompany_path(@aircompany) %>
+<% if policy(@aircompany).edit? %>
+  <%= link_to 'Edit', edit_aircompany_path(@aircompany), class: "jqbutton" %>
+<%end%>
 </div>

@@ -1,16 +1,18 @@
-<div class="container">
-  <div class="row">
     <h3>Users</h3>
     <div class="column">
       <table class="table">
-        <tbody>
-          <% @users.each do |user| %>
-            <tr>
-              <%= render user %>
-            </tr>
-          <% end %>
-        </tbody>
+	    <thead><tr>
+                  <th>User Avatar</th>
+		  <th>User Login</th>
+		  <th>User Email</th>
+		  <th>Created At</th>
+		  <th>Last LogIn At</th>
+		  <th>User Role</th>
+		  <th></th>
+		</tr></thead>
+              <%= render "users/user" %>
       </table>
     </div>
-  </div>
-</div>
+<% if policy(@users).new? %>
+  <%=link_to "Add new user", new_user_path, class: "jqbutton"%>
+<%end%>

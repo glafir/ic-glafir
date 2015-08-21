@@ -1,34 +1,40 @@
 class UserPolicy < ApplicationPolicy
-  def admin
-    user.admin?
-  end
-
   def index?
-    @user.admin?
+    # return false unless @user.admin?
+    admin || @user.vip?
   end
 
   def show?
-    @user.admin? or @user == @user
+    return false unless @user.admin? || @record.id == @user.id || @user.vip?
+    admin
+    @record.id != 0
   end
 
   def new?
-    @user.admin?
+    return false unless @user.admin?
+    admin
   end
 
   def create?
-    @user.admin?
+    return false unless @user.admin?
+    admin
   end
 
   def edit?
-    @user.admin? or @user == @user
+    return false unless @user.admin?
+    admin
+    @record.id != 0
   end
 
   def update?
-    @user.admin? or @user == @user
+    return false unless @user.admin?
+    admin
+    @record.id != 0
   end
 
   def destroy?
-    return false if @user == @user
-    @user.admin?
+    return false unless @user.admin?
+    admin
+    @record.id != 0
   end
 end

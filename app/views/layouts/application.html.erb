@@ -5,12 +5,13 @@
   </head>
   <body>
     <div id="all">
-      <p><%= flash[:alert]%></p>
-      <p><%= flash[:notice]%></p>
+	<%#= render "layouts/flash"%>
       <% if user_signed_in? %>
         <%=render "layouts/header"%>
         <%=render "layouts/middle"%>
       <%else%>
+      <p><%= flash[:alert]%></p>
+      <p><%= flash[:notice]%></p>
         <%= yield %>
       <%end%>
     </div>

@@ -1,6 +1,6 @@
 class TownPolicy < ApplicationPolicy
   def admin_tw?
-    @user.admin?
+    admin
   end
 
   def tw_dist?

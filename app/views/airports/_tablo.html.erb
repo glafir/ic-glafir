@@ -11,7 +11,7 @@
         </td>
 	<td width="330px">
 	  <div id="twrus"><%= timetableap.twrus %></div>
-          <div id="aprus"> (<i>аэропорт:</i> <%= timetableap.aprus %>)</div><div id="tt_al_info"><p>
+          <div id="aprus"> (<i>аэропорт:</i> <%= link_to timetableap.aprus, timetableap.apkey.airport %>)</div><div id="tt_al_info"><p>
   Перевозчик: &#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195; <%= link_to timetableap.airline, timetableap.aircompany %></p>
   <p>
   Выполняется самолётом: &#8195; <strong><%= link_to timetableap.al_plane, timetableap.plane_al%></strong></p>

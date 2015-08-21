@@ -1,14 +1,16 @@
 class TownsController < ApplicationController
   before_filter :set_town, only: [:show, :edit, :update, :destroy]
-  autocomplete :town, :accent_city, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
   before_filter :check_permissions, only: :autocomplete_town_accent_city
+  before_filter :load_parent, except: :autocomplete_town_accent_city
+
+  autocomplete :town, :accent_city, :limit => 50, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
 
   def admin_tw
     render layout: "application_empty_1"
   end
 
   def index
-    @towns = Town.search(params[:search]).order(sort_column + " " + sort_direction)
+    @towns = @country.towns.search(params[:search]).order(sort_column + " " + sort_direction)
     @towns = @towns.page(params[:page]).per(params[:per_page])
     authorize Town
     respond_with(@towns)
@@ -45,20 +47,24 @@ class TownsController < ApplicationController
   def create
     @town = Town.new(params[:town])
     @town.save
+    flash[:notice] = "The town  #{@town.id} was created!" if @town.save && !request.xhr?
+    @flash_message_state_id = 401
     authorize @town
-    respond_with(@town)
+    respond_with @country
   end
 
   def update
     @town.update_attributes(params[:town])
+    flash[:notice] = "The town  #{@town.id} was updated!" if @town.update_attributes(params[:airport]) && !request.xhr?
+    @flash_message_state_id = 402
     authorize @town
-    respond_with(@town)
+    respond_with @country
   end
 
   def destroy
     @town.destroy
     authorize @town
-    respond_with(@town)
+    respond_with @country
   end
 
   def tw_dist
@@ -78,7 +84,12 @@ private
   end
 
   def set_town
-    @town = Town.find(params[:id])
+    @country = Country.find(params[:country_id])
+    @town = @country.towns.find(params[:id])
+  end
+
+  def load_parent
+    @country = Country.find(params[:country_id])
   end
 
   protected

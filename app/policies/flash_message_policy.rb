@@ -17,7 +17,7 @@ class Scope
   end
 
   def show?
-    @user.admin? or @record.user_id == @user.id
+    admin or @record.user_id == @user.id
   end
 
   def create?

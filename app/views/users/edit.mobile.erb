@@ -1,0 +1,14 @@
+<h2>Edit user <%= @user.username%></h2>
+<div class="field-form">
+  <div class="field-form-section"> <div class="round-image-250">
+    <%= image_tag @user.avatar.url(:big)  %></div>
+  </div>
+  <div class="field-form-section">
+    <%= render 'form' %>
+    <%= link_to 'Show', @user, class: "jqbutton" %> |
+    <%= link_to 'Back', :back, class: "jqbutton" %>
+</div>
+</div>
+
+
+

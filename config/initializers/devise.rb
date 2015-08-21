@@ -6,7 +6,8 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = 'cbf8fcd0adc8ffcada91b62ca8666d4a3709433d9c5f50b4e67d16f839c12c4784519d541656734d7230d7425554911635584e4d5747fe506154fb8b371a6fed' if Rails.env == 'production'
+  # config.secret_key = '<%= SecureRandom.hex(64) %>'
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -98,7 +99,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '034844697d8849097cdf27cba66aa5489d91b6cbff0d4870f3032d4c4d694e2ebb0b14211454902fb9f4c5adb7a20533a85f7ab4a166a36ac13ba41f54312032'
+  # config.pepper = '<%= SecureRandom.hex(64) %>'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -127,7 +128,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -151,10 +152,7 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  #config.timeout_in = 30.minutes
-
-  # If true, expires auth token on session timeout.
-  config.expire_auth_token_on_timeout = true
+  config.timeout_in = 60.minutes
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
@@ -233,7 +231,8 @@ Devise.setup do |config|
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   #config.sign_out_via = :delete
-   config.sign_out_via = :get
+  config.sign_out_via = :get
+
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.

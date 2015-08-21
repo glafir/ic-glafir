@@ -1,0 +1,18 @@
+input[type=text], input[type=password], input[type=email], input[type=number] {
+  color: #bbb;
+  text-shadow: 1px 1px 1px black;
+  background: #4C643A;
+  -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus {
+  color: #000;
+  background: #BBED98;
+}
+
+.lt-ie9 input[type=text], .lt-ie9 input[type=password] {
+  background: #282828;
+}
+.lt-ie9 .about {
+  background: #313131;
+}

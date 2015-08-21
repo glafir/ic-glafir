@@ -3,7 +3,7 @@ class FlashMessagesController < ApplicationController
 
   # GET /flash_messages
   def index
-    @flash_messages = FlashMessage.all.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    @flash_messages = FlashMessage.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
     authorize FlashMessage
     respond_with @flash_messages
   end

@@ -10,8 +10,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:username, :email, :time_zone, :town_id, :user_theme_id, :role)
-    devise_parameter_sanitizer.for(:account_update).push(:username, :email, :time_zone, :town_id, :user_theme_id, :role)
+    devise_parameter_sanitizer.for(:sign_up).push(:username, :email, :time_zone, :town_id, :user_theme_id)
+    devise_parameter_sanitizer.for(:account_update).push(:username, :email, :time_zone, :town_id, :user_theme_id, :avatar)
   end
 
   def after_update_path_for(resource)

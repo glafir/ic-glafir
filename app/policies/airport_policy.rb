@@ -8,7 +8,7 @@ class AirportPolicy < ApplicationPolicy
   end
 
   def admin_ap?
-    @user.admin?
+    admin
   end
 
   def aptt?

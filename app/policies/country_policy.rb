@@ -20,17 +20,15 @@ class CountryPolicy < ApplicationPolicy
   end
 
   def edit?
-    @user.admin?
+    admin
   end
 
 
   def update?
-    @user.admin?
+    admin
   end
 
   def destroy?
-    return false if @user == @user
-    @user.admin?
+    admin
   end
-
 end

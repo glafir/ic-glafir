@@ -2,9 +2,13 @@
 <fieldset> 
  <legend>Панель для пользователя <%= current_user.username %> </legend>
   <li>
-   <%= current_user.username %>(<%= current_user.email %>
-   <p><%= link_to 'Изменить свой профиль', edit_user_registration_path, :class => "jqbutton" %></p>
+   <%= link_to current_user.username, current_user %>(<%= current_user.email %>) - <%= current_user.role %>
   </li>
+  <%if current_user.alclient?%>
+  <li>
+    Ты представитель авиакомпании <b><%= link_to current_user.aircompany.airline_name_rus, current_user.aircompany%>(а/п <%=link_to current_user.aircompany.airport.name_rus, current_user.aircompany.airport%>, г.<%= current_user.aircompany.airport.town.city_rus%>)</b>
+  </li>
+  <%end%>
   <li>
     Твоя временная зона:  <%= current_user.time_zone %>
   </li>
@@ -21,8 +25,9 @@
     Вы зашли с адреса: <b><%= current_user.current_sign_in_ip%></b>
   </li>
   <li>
-    Ваш предыдущий заход <p><b><%= current_user.last_sign_in_at%></b></p> с адреса <p><b><%= current_user.last_sign_in_ip%></b></p>
+    Ваш предыдущий заход <p><b><%= current_user.last_sign_in_at.to_s(:short)%></b></p> с адреса <p><b><%= current_user.last_sign_in_ip%></b></p>
   </li>
+  <li><p><%= link_to 'Изменить свой профиль', edit_user_registration_path, :class => "jqbutton" %></p></li>
   <li>
     <%= link_to 'Выйти', destroy_user_session_path, :method => :delete, :class => "jqbutton" %>
   </li>

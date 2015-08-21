@@ -1,7 +1,7 @@
 class Timetableap < ActiveRecord::Base
 include ActiveModel::Validations
   has_many :timetableap_subs
-  belongs_to :aircompany
+  belongs_to :aircompany, inverse_of: :timetableaps, :counter_cache => true
   belongs_to :aircraft
   belongs_to :airport, foreign_key: "way_start"
 #  belongs_to :airport, class_name: "Apkey", foreign_key: "way_end"

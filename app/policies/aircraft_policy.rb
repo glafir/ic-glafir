@@ -1,0 +1,3 @@
+class AircraftPolicy < ApplicationPolicy
+
+end

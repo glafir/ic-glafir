@@ -5,14 +5,14 @@
   </head>
   <body>
     <div id="all">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <% if user_signed_in? %>
       <%=render "layouts/header.mobile"%>
       <%=render "layouts/left.mobile"%>
       <%=render "layouts/container.mobile"%>
       <%=render "layouts/footer.mobile"%>
     <%else%>
+      <p><%= flash[:alert]%></p>
+      <p><%= flash[:notice]%></p>
       <%= yield %>
     <%end%>
     </div>
