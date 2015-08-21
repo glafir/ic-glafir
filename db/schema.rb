@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714064712) do
+ActiveRecord::Schema.define(version: 20150723210851) do
 
   create_table "aircompanies", force: :cascade do |t|
     t.string   "iata_code",          limit: 2,   null: false
@@ -130,15 +130,15 @@ ActiveRecord::Schema.define(version: 20150714064712) do
   end
 
   create_table "flash_messages", force: :cascade do |t|
-    t.integer  "user_id",                limit: 4,   null: false
-    t.string   "message",                limit: 255, null: false
-    t.string   "request_url",            limit: 255, null: false
-    t.string   "request_ip",             limit: 15,  null: false
-    t.string   "request_method",         limit: 4,   null: false
-    t.string   "request_referrer",       limit: 500, null: false
-    t.string   "useragent",              limit: 500, null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.integer  "user_id",                limit: 4,    null: false
+    t.string   "message",                limit: 255,  null: false
+    t.string   "request_url",            limit: 255,  null: false
+    t.string   "request_ip",             limit: 15,   null: false
+    t.string   "request_method",         limit: 6,    null: false
+    t.string   "request_referrer",       limit: 1000, null: false
+    t.string   "useragent",              limit: 1000, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "flash_message_state_id", limit: 4
   end
 
@@ -331,8 +331,13 @@ ActiveRecord::Schema.define(version: 20150714064712) do
     t.integer  "town_id",                limit: 4,                null: false
     t.integer  "user_theme_id",          limit: 4,   default: 1,  null: false
     t.integer  "role",                   limit: 4,   default: 1,  null: false
+    t.integer  "aircompany_id",          limit: 4,   default: 1
     t.datetime "last_seen"
     t.string   "password_salt",          limit: 255
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

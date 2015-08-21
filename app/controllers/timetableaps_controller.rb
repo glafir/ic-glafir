@@ -35,7 +35,7 @@ class TimetableapsController < ApplicationController
     render nothing: true
     @timetableap.DateOfEndNav = @timetableap.DateOfEndNav + 1.year
     @timetableap.save
-    flash[:notice] = "701; The flight ID=#{@timetableap.id} was prolong to #{@timetableap.DateOfEndNav}!" if @timetableap.save && !request.xhr?
+    flash[:notice] = "The flight ID=#{@timetableap.id} was prolong to #{@timetableap.DateOfEndNav}!" if @timetableap.save && !request.xhr?
     flash_message_add
     authorize @timetableap
     respond_with(@timetableap)
@@ -49,20 +49,25 @@ class TimetableapsController < ApplicationController
   def create
     @timetableap = Timetableap.new(params[:timetableap])
     @timetableap.save
-    flash[:notice] = "The flight was saved!" if @timetableap.save && !request.xhr?
+    flash[:notice] = "The flight #{@timetableap.id} was saved!" if @timetableap.save && !request.xhr?
+    @flash_message_state_id = 401
+    @flash = flash[:notice]
     authorize @timetableap
-    respond_with(@timetableap, :location => timetableap_path(@timetableap))
+    respond_with(@timetableap)
   end
 
   def update
     @timetableap.update_attributes(params[:timetableap])
-    flash[:notice] = "The flight was updated!" if @timetableap.update_attributes(params[:timetableap]) && !request.xhr?
+    flash[:notice] = "The flight #{@timetableap.id} was updated!" if @timetableap.update_attributes(params[:timetableap]) && !request.xhr?
+    @flash_message_state_id = 402
+    @flash = flash[:notice]
     authorize @timetableap
-    respond_with(@timetableap, :location => timetableap_path(@timetableap))
+    respond_with(@timetableap)
   end
 
   def destroy
     @timetableap.destroy
+    @flash_message_state_id = 405
     authorize @timetableap
     respond_with(@timetableap)
   end

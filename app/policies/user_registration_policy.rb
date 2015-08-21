@@ -1,27 +1,25 @@
 class UserRegistrationPolicy < ApplicationPolicy
   def new?
-    @user.admin?
+    admin
   end
 
   def create?
-    @user.admin?
+    admin
   end
 
   def edit?
-    @user.admin? or @user == @user
+    admin or @user == @user
   end
 
   def update?
-    @user.admin? or @user == @user
+    admin or @user == @user
   end
 
   def sign_up?
-    @user.admin?
+    admin
   end
 
-  def destroy?
-    return false if @user == @user
-    @user.admin?
+  def account_update?
+    @user == @user
   end
-
 end

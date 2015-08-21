@@ -1,6 +1,6 @@
 class UserTracingPolicy < ApplicationPolicy
   def show?
-    @user.admin? or @record.user_id == @user.id
+    admin or @record.user_id == @user.id
   end
 
   def edit?

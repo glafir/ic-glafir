@@ -7,26 +7,18 @@ class AdminPolicy < ApplicationPolicy
 #  end
 
   def index?
-    @user.admin?
-#    authorize @user, :admin
-#    true
+    admin
   end
 
   def ext?
-    @user.admin?
-#    authorize @user, :admin
-#    true
+    admin
   end
 
   def direct?
-    @user.admin?
-#    authorize @user, :admin
-#    true
+    admin
   end
 
   def dispatcher?
-    @user.admin?
-#    authorize @user, :admin
-#    true
+    admin
   end
 end

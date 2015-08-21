@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
-gem 'rails', '4.2.1'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'rails', '4.2.3'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
-gem 'jbuilder', '~> 2.0'
+group :assets do
+  gem 'sass-rails', '~> 5.0.1'
+  gem 'coffee-rails', '~> 4.1.0'
+  gem 'uglifier', '>= 2.7.1'
+#  gem 'compass-rails','~> 2.0.4'
+end
 
 gem 'protected_attributes'
 
@@ -70,3 +72,5 @@ gem 'activerecord-session_store'
 
 gem 'rails-erd'
 gem 'rack-cors', :require => 'rack/cors'
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+gem 'nested_scaffold'

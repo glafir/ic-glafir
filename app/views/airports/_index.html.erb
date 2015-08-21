@@ -1,4 +1,5 @@
 <h1>Airports. </h1>
+<%= render "airports/per_page"%>
 <% if @country.blank?  
        search_str = '/airports'
      else search_str = "/countries/#{@country.id}/ap_show"
@@ -11,6 +12,7 @@
   </p>
   <div id="airports"><%= render "airports/airports" %></div>
 <% end %>
+<%= render "airports/per_page"%>
 <% if policy(@airports).new? %>
 <%= link_to 'New Airport', new_airport_path, class: "jqbutton" %>
 <%end%>

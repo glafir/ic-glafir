@@ -1,6 +1,6 @@
 class TimetableapPolicy < ApplicationPolicy
   def ttair_admin?
-    @user.admin?
+    admin
   end
 
   def flight_state?
@@ -8,6 +8,22 @@ class TimetableapPolicy < ApplicationPolicy
   end
 
   def update_dateoffinishdate?
-    writers
+    writers or @user.aircompany_id == @record.aircompany_id
+  end
+
+  def new?
+    writers or @user.alclient?
+  end
+
+  def create?
+    writers or @user.aircompany_id == @record.aircompany_id
+  end
+
+  def update?
+    writers or @user.aircompany_id == @record.aircompany_id
+  end
+
+  def edit?
+    writers or @user.aircompany_id == @record.aircompany_id
   end
 end

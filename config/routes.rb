@@ -11,7 +11,7 @@ IcApp::Application.routes.draw do
   get '/timecor' => "general#timecor"
   get '/apcor' => "general#apcor"
   resources :regions
-  resources :towns do
+  resources :towns, :except => [:index, :destroy, :edit, :show, :create, :new, :update] do
     get :autocomplete_town_accent_city, :on => :collection
     collection do
       get "admin_tw"
@@ -30,6 +30,8 @@ IcApp::Application.routes.draw do
     end
   end
   resources :countries do
+    resources :towns do
+    end
     member do
       get 'ap_show'
       get 'tw_show'
@@ -38,6 +40,7 @@ IcApp::Application.routes.draw do
     collection do
     end
   end
+
   resources :runway_aps
   get "/runway_aps/:id/calendar/" => "runway_aps#runway_calendar"
   get "/runway_aps/:id/:date" => "runway_aps#rasp_runway_day"

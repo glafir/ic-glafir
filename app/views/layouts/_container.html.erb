@@ -1,5 +1,7 @@
 <div id="container" class="container">
   <main class="content">
+    <p><%= flash[:alert]%></p>
+    <p><%= flash[:notice]%></p>
     <%= yield %>
   </main>
 </div>

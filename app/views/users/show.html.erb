@@ -1,4 +1,26 @@
-<h3>User</h3>
-<p>Name: <%= @user.login if @user.login %></p>
-<p>Email: <%= @user.email if @user.email %></p>
-<p>Email: <%= @user.role if @user.role %></p>
+<h3>User <%= @user.username %> (<%= @user.email %>) </h3>
+<div class="field-form">
+  <div class="field-form-section">
+    <div class="round-image-250">
+      <%= image_tag @user.avatar(:big)  %>
+    </div>
+  </div>
+  <div class="field-form-section">
+    <p><b>Имя: </b><%= @user.username %></p>
+    <p><b>Email: </b><%= @user.email %></p>
+    <p><b>Time_zone: </b><%= @user.time_zone %> <%= ActiveSupport::TimeZone.new(@user.time_zone).formatted_offset%></p>
+    <p><b>Town: </b><%= @user.town.accent_city %></p>
+    <p><b>Статус: </b><%= @user.role%> <%= link_to @user.aircompany.airline_name_rus, @user.aircompany unless @user.aircompany_id == 1%></p>
+    <p><b>Текущий адрес: </b><%= @user.current_sign_in_ip %></p>
+    <p><b>Адрес предыдущего захода: </b><%= @user.last_sign_in_ip%></p>
+    <p><b>Время предыдущего захода: </b><%= @user.last_sign_in_at %></p>
+
+    <% if policy(@user).index? %>
+      <%=link_to "Все пользователи", users_path, class: "jqbutton"%>
+    <%end%>
+  ||
+    <% if policy(@user).edit? %>
+      <%=link_to "Редактировать пользователя", edit_user_path(@user), class: "jqbutton"%>
+    <%end%>
+</div>
+

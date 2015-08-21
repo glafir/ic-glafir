@@ -1,6 +1,6 @@
-class User < ActiveRecord::Base
+class User <  ActiveRecord::Base
 include ActiveModel::Validations
-  enum role: [:user, :vip, :admin]
+  enum role: [:unknown, :user, :vip, :admin, :alclient, :apclient]
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
@@ -8,6 +8,7 @@ include ActiveModel::Validations
   end
 
 #  has_and_belongs_to_many :roles
+  belongs_to :aircompany
   has_many :flash_messages
   has_many :user_tracings
   belongs_to :user_theme
@@ -29,13 +30,15 @@ include ActiveModel::Validations
 
   # Setup accessible (or protected) attributes for your model
   attr_accessor :login
-  attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone, :town_id, :user_theme_id, :role
+  attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id
   validates :username,
     :uniqueness => {:case_sensitive => false}
   validates :email, :presence => true, 
                     :length => {:minimum => 3, :maximum => 70},
                     :uniqueness => {:case_sensitive => false },
                     :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
+  has_attached_file :avatar, :styles => { :big => "600x600>", :medium_400 => "400x400>", :medium_300 => "300x300>", :small => "200x200>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def set_default_role
     self.role ||= :user

@@ -25,6 +25,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     authorize @user
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -38,7 +42,7 @@ class UsersController < ApplicationController
 
   def update
     authorize @user
-    if @user.update_attributes(secure_params)
+    if @user.update_attributes(user_params)
       redirect_to users_path, :notice => "User updated."
     else
       redirect_to users_path, :alert => "Unable to update user."
@@ -55,12 +59,12 @@ class UsersController < ApplicationController
 
   # my custom fields are :name,
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def user_params
-      params.require(:user).permit(:email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :created_at, :updated_at, :username, :time_zone, :town_id, :user_theme_id, :role)
-    end
+  def user_params
+    params.require(:user).permit(:email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id)
+  end
 end

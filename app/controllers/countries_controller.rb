@@ -83,13 +83,13 @@ private
   end
 
   def set_airports
-    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:ap_limit])
   end
   def set_towns
-    @towns = @country.towns.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    @towns = @country.towns.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:tw_limit])
   end
 
   def set_airlines
-    @aircompanies = @country.aircompanies.search(params[:search]).order(sort_column_al + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    @aircompanies = @country.aircompanies.search(params[:search]).order(sort_column_al + " " + sort_direction).page(params[:page]).per(params[:al_limit])
   end
 end

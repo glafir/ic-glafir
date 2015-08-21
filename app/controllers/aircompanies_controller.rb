@@ -4,10 +4,6 @@ class AircompaniesController < ApplicationController
   before_filter :check_permissions, :only => [:admin_al, :autocomplete_aircompany_airline_name_rus]
   def admin_al
     render layout: "application_empty_1"
-#    respond_to do |format|
-#      format.html { render template: 'aircompanies/admin_al' }
-#      format.js { render template: 'aircompanies/admin_al', layout: "application_empty_1" }
-#    end
   end
 
   def index
@@ -38,14 +34,14 @@ class AircompaniesController < ApplicationController
   def create
     @aircompany = Aircompany.new(params[:aircompany])
     @aircompany.save
-    flash[:notice] = "The aircompany was created!" if @aircompany.save && !request.xhr?
+    flash[:notice] = "The aircompany #{@aircompany.id} was created!" if @aircompany.save && !request.xhr?
     authorize @aircompany
     respond_with @aircompany
   end
 
   def update
     @aircompany.update_attributes(params[:aircompany])
-    flash[:notice] = "The aircompany was updated!" if @aircompany.save && !request.xhr?
+    flash[:notice] = "The aircompany #{@aircompany.id} was updated!" if @aircompany.save && !request.xhr?
     authorize @aircompany
     respond_with @aircompany
   end

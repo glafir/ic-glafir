@@ -1,9 +1,10 @@
 class Aircompany < ActiveRecord::Base
 include ActiveModel::Validations
   paginates_per 10
+  has_many :users
   belongs_to :airport
   belongs_to :country
-  has_many :timetableaps, dependent: :destroy
+  has_many :timetableaps, dependent: :destroy, inverse_of: :aircompany
   has_many :timetableap_subs, dependent: :destroy
   has_many :timetableap_flights, dependent: :destroy
   has_many :aphubs, dependent: :destroy

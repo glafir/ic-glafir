@@ -98,4 +98,15 @@ p{
         max-width: 480px;
 	float: none;
 }
-
+.round-image-50 {
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    text-align: center;
+    img { width: 100% }
+}

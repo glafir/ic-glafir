@@ -7,12 +7,23 @@ class ApplicationPolicy < Struct.new(:user, :record)
     @record = record
   end
 
+  def admin
+    return false unless @user.admin?
+    @user.admin?
+  end
+
   def readers
-    @user.admin? or @user.user? or @user.vip?
+    return false if @user.unknown?
+    @user.admin? or @user.user? or @user.vip? or @user.alclient? or @user.apclient?
   end
 
   def writers
+    return false if @user.unknown?
     @user.admin? or @user.vip?
+  end
+
+  def unknown
+    return false if @user.unknown?
   end
 
   def index?

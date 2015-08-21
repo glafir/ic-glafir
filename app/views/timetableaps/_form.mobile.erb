@@ -19,15 +19,23 @@
     <%= f.number_field :Flight_Number, :value => ((params[:Flight_Number]).to_i + 1).to_s %>
   <% end %>
   </div>
+ <% if current_user.alclient? %>
+    <%= f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s%>
+  <div class="field">
+    <%= f.label "aircompany" %>
+    <%= text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true %>
+  </div>
+  <% else %>
   <div class="field">
     <%= f.label :aircompany_airline_name_rus %><br />
     <%if params[:aircompany_id].blank? %>
-    <%#= f.text_field :aircompany_airline_name_rus, data: {autocomplete_source: aircompanies_path}  %>
-    <%= f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s %>
+    <%= f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s %>
   <% else %>
-    <%= f.collection_select :aircompany_id, Aircompany.order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]%>
+    <%= f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]%>
   <% end %>
   </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :way_start %><br />
     <%if params[:way_start].blank? %>

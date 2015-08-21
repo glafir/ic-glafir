@@ -2,7 +2,7 @@
 class AirportsController < ApplicationController
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo]
 layout "without_html", :only => [:tablo]
-autocomplete :airport, :name_rus, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
+autocomplete :airport, :name_rus, :limit => 50, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
 before_filter :check_permissions, only: :autocomplete_airport_name_rus
 
 #  def autocomplete_airport_name_rus
@@ -22,7 +22,7 @@ before_filter :check_permissions, only: :autocomplete_airport_name_rus
   end
 
   def index
-    @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:ap_limit])
     authorize Airport
     respond_with(@airports)
   end
@@ -64,14 +64,14 @@ before_filter :check_permissions, only: :autocomplete_airport_name_rus
         @apkey.id = @airport.id
         @apkey.airport_id = @airport.id
         @apkey.save
-        flash[:notice] = "The airport was created!" if @apkey.save && !request.xhr?
+        flash[:notice] = "The airport #{@airport.id} was created!" if @apkey.save && !request.xhr?
       end
     respond_with(@airport)
   end
 
   def update
     @airport.update_attributes(params[:airport])
-    flash[:notice] = "The airport was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
+    flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
     authorize @airport
     respond_with(@airport)
   end
@@ -146,16 +146,19 @@ private
         end
         tt.aprus = tt.apkey.airport.name_rus
         tt.twrus = tt.apkey.airport.town.city_rus
-	tt.airline = tt.aircompany.airline_name_rus
-	tt.al_plane = tt.aircompany.airline_name_rus
+        tt.airline = tt.aircompany.airline_name_rus
+        tt.al_plane = tt.aircompany.airline_name_rus
         tt.plane_al = tt.aircompany
         if tt.timeIN < Time.zone.now.utc
           tt.fstatus = "Вылетел"
           tt.bgcolor = "#32CD32"
-        elsif tt.timeIN < Time.zone.now.utc+40.minute and tt.timeIN > Time.zone.now.utc
+        elsif tt.timeIN < Time.zone.now.utc+10.minute and tt.timeIN > Time.zone.now.utc
+          tt.fstatus = "Выход закрыт"
+          tt.bgcolor = "#9c0a0a"
+        elsif tt.timeIN < Time.zone.now.utc+60.minute and tt.timeIN > Time.zone.now.utc+10.minute
           tt.fstatus = "Посадка"
           tt.bgcolor = "#F7110D"
-        elsif tt.timeIN < Time.zone.now.utc+2.hour and tt.timeIN > Time.zone.now.utc+40.minute
+        elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+60.minute
           tt.fstatus = "Идёт регистрация"
           tt.bgcolor = "#A67C27"
         else
@@ -166,11 +169,12 @@ private
           tt0.ap2 = tt0.timetableap.apkey
           tt0.timeIN = tt.timeIN
           tt0.aprus = tt0.timetableap.apkey.airport.name_rus
+          tt0.apkey = tt0.timetableap.apkey
           tt0.twrus = tt0.timetableap.apkey.airport.town.city_rus
           tt0.fstatus = tt.fstatus
           tt0.bgcolor = tt.bgcolor
-	  tt0.airline = tt0.aircompany.airline_name_rus
-	  tt0.al_plane = tt.al_plane
+          tt0.airline = tt0.aircompany.airline_name_rus
+          tt0.al_plane = tt.al_plane
           tt0.plane_al = tt0.timetableap.aircompany
         end
       @timetableap_subs = @timetableap_subs + @timetableap_subs0
@@ -207,6 +211,7 @@ private
         tt0.twrus = tt0.timetableap.airport.town.city_rus
         tt0.fstatus = tt.fstatus
         tt0.bgcolor = tt.bgcolor
+        tt0.apkey = tt0.timetableap.apkey
         tt0.airline = tt0.aircompany.airline_name_rus
         tt0.al_plane = tt.al_plane
         tt0.plane_al = tt0.timetableap.aircompany

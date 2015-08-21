@@ -11,7 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require mousetrap
 //= require jquery-tablesorter
@@ -35,6 +34,4 @@
 //= require autocomplete-rails
 //= require_tree
 //= require_self
-//= require turbolinks.redirect
-//= require turbolinks
 
