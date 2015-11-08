@@ -10,8 +10,8 @@
 
   - @aphubs.each do |aphub|
     %tr
-      %td= aphub.airport_id
-      %td= aphub.aircompany_id
+      %td= aphub.airport.name_rus
+      %td= aphub.aircompany.airline_name_rus
       %td= link_to 'Show', aphub
       %td= link_to 'Edit', edit_aphub_path(aphub)
       %td= link_to 'Destroy', aphub, :method => :delete, :data => { :confirm => 'Are you sure?' }

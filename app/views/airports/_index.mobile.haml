@@ -1,0 +1,9 @@
+%h1 Airports.
+= render "layouts/per_page"
+= form_tag  "#", :method => 'get',  :id => "airports_search" do
+  %p
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search", :name => nil
+  #airports= render "airports/airports.mobile"
+- if policy(@airports).new?
+  = link_to 'New Airport', new_airport_path, class: "jqbutton"

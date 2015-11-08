@@ -1,0 +1,12 @@
+- @timetableaps.each do |timetableap|
+  %tr
+    %td
+      = link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus
+      %br
+      - if timetableap.id < 1000000
+        = link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap)
+      - else
+        = link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap)
+    %td= link_to timetableap.twrus, timetableap.ap
+    %td= timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
+    %td{:bgcolor => "#{timetableap.bgcolor}"}= timetableap.fstatus

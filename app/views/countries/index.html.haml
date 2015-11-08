@@ -1,6 +1,8 @@
 %h1 Страны мира
 %p Выьерете страну, с которой будете работать.
 
+= render "layouts/per_page"
+
 = form_tag countries_path, :method => 'get', :remote => "true", :id => "countries_search" do
   = text_field_tag :search, params[:search], autofocus: true 
   = submit_tag "Search", :name => nil

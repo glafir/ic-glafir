@@ -1,0 +1,36 @@
+= form_for @user, validate: true do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :avatar
+    = f.file_field :avatar
+  .field
+    = f.label :username
+    = f.text_field :username
+  .field
+    = f.label :email
+    = f.text_field :email
+  %div
+    = f.label :password
+    = f.password_field :password
+  %div
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+  %div
+    = f.label :time_zone
+    = f.time_zone_select :time_zone
+  .field
+  %div
+    = f.label :user_theme
+    = f.select :user_theme_id, UserTheme.order(:theme).collect{|item| [item.theme, item.id]}
+  .field
+    = f.label :role
+    = f.select(:role, User.roles.keys.map {|role| [role.titleize,role]})
+  .actions
+    = f.submit

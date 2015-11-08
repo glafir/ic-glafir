@@ -1,5 +1,5 @@
-= paginate @towns
-%table
+= paginate @towns, :remote => true
+%table.table-striped.table-hover.table-condensed
   %tr
     %th
       =sortable "country"
@@ -30,4 +30,4 @@
 -#        = link_to 'Edit', edit_town_path(town) if policy(town).edit?
         = link_to 'Destroy', town, :method => :delete, :data => { :confirm => 'Are you sure?' } if policy(town).destroy?
 
-= paginate @towns
+= paginate @towns, :remote => true

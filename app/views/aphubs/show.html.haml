@@ -2,10 +2,10 @@
 
 %p
   %b Airport:
-  = @aphub.airport_id
+  = @aphub.airport.name_rus
 %p
   %b Aircompany:
-  = @aphub.aircompany_id
+  = @aphub.aircompany.airline_name_rus
 
 = link_to 'Edit', edit_aphub_path(@aphub)
 \|

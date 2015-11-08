@@ -3,6 +3,10 @@ class TimetableapPolicy < ApplicationPolicy
     admin
   end
 
+  def search_tt?
+    readers
+  end
+
   def flight_state?
     readers
   end

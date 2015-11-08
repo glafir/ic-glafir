@@ -1,0 +1,3 @@
+class StationPolicy < ApplicationPolicy
+
+end

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+#  force_ssl
+  before_filter :set_country
   before_filter :set_user, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
   def index
@@ -15,13 +17,10 @@ class UsersController < ApplicationController
     authorize @user
   end
 
-  # GET /specialists/1/edit
   def edit
     authorize @user
   end
 
-  # POST /specialists
-  # POST /specialists.json
   def create
     @user = User.new(user_params)
     authorize @user
@@ -29,42 +28,41 @@ class UsersController < ApplicationController
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to current_user, :notice => "User #{@user.username} was successfully created."
+    else
+      render :new, :notice => "User can`t creat."
     end
   end
 
   def update
     authorize @user
     if @user.update_attributes(user_params)
-      redirect_to users_path, :notice => "User updated."
+      redirect_to @user, :notice => "User #{@user.username} updated."
     else
-      redirect_to users_path, :alert => "Unable to update user."
+      render :edit, :notice => "Unable to update user #{@user.username}."
     end
   end
 
-
   def destroy
     user = User.find(params[:id])
+    @user_d = user.username
     authorize user
     user.destroy
-    redirect_to users_path, :notice => "User deleted."
+    redirect_to users_path, :notice => "User #{@user_d} deleted."
   end
 
-  # my custom fields are :name,
   private
-  # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
   end
 
+  def set_country
+    @country = current_user.country
+    country_id = @country.id
+  end
+
   def user_params
-    params.require(:user).permit(:email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id)
+    params.require(:user).permit(:email, :password, :password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id, :country_id)
   end
 end

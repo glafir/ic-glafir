@@ -1,5 +1,6 @@
 class Aircompany < ActiveRecord::Base
 include ActiveModel::Validations
+mount_uploader :avatar, AvatarUploader
   paginates_per 10
   has_many :users
   belongs_to :airport
@@ -8,14 +9,18 @@ include ActiveModel::Validations
   has_many :timetableap_subs, dependent: :destroy
   has_many :timetableap_flights, dependent: :destroy
   has_many :aphubs, dependent: :destroy
-  attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id
-  validates  :iata_code, presence: true, length: { is: 2 }
-  validates  :icao_code, presence: true, length: { is: 3 }
-  validates  :airline_name_eng, presence: true, length: { minimum: 2 }
-  validates  :airline_name_rus, presence: true, length: { minimum: 2 }
-  validates  :airport_id, presence: true, numericality: { only_integer: true }
-  validates  :country_id, presence: true, numericality: { only_integer: true }
-  validates  :al_start, presence: true
+  has_many :childs, class_name: "Aircompany",
+                          foreign_key: "manager_id"
+  belongs_to :manager, class_name: "Aircompany"
+  attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id, :manager_id, :avatar, :avatar_cache
+
+  validates :iata_code, presence: true, length: { is: 2 }
+  validates :icao_code, presence: true, length: { is: 3 }
+  validates :airline_name_eng, presence: true, length: { minimum: 2 }
+  validates :airline_name_rus, presence: true, length: { minimum: 2 }
+  validates :airport_id, presence: true, numericality: { only_integer: true }
+  validates :country_id, presence: true, numericality: { only_integer: true }
+  validates :al_start, presence: true
 
   def self.search(search)
     if search

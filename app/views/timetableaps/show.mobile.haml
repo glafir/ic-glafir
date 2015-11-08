@@ -1,0 +1,122 @@
+:javascript
+  //$(document).ready(function(){
+  //   $("#new_timetableap").ajaxForm(function() {
+  //     $("#new_tt").load("#");
+  //   });
+  //});
+%p#notice= notice
+= form_tag "/timetableaps/new", :method => 'get' do
+  = hidden_field_tag 'Flight_Number', @timetableap.Flight_Number
+  = hidden_field_tag 'aircompany_id', @timetableap.aircompany_id
+  = hidden_field_tag 'way_start', @timetableap.way_start
+  = hidden_field_tag 'way_end', @timetableap.way_end
+  = hidden_field_tag 'TermStart', @timetableap.TermStart
+  = hidden_field_tag 'TermEnd', @timetableap.TermEnd
+  = hidden_field_tag 'GateStart', @timetableap.GateStart
+  = hidden_field_tag 'GateEnd', @timetableap.GateEnd
+  = hidden_field_tag 'aircraft_id', @timetableap.aircraft_id
+  = hidden_field_tag 'TimeStart', @timetableap.TimeStart
+  = hidden_field_tag 'TimeEnd', @timetableap.TimeEnd
+  = hidden_field_tag 'DateOfStartNav', @timetableap.DateOfStartNav
+  = hidden_field_tag 'DateOfEndNav', @timetableap.DateOfEndNav
+  = hidden_field_tag 'aircraft_id', @timetableap.aircraft_id
+  = hidden_field_tag 's0', @timetableap.s0
+  = hidden_field_tag 'e0', @timetableap.e0
+  = hidden_field_tag 's1', @timetableap.s1
+  = hidden_field_tag 'e1', @timetableap.e1
+  = hidden_field_tag 's2', @timetableap.s2
+  = hidden_field_tag 'e2', @timetableap.e2
+  = hidden_field_tag 's3', @timetableap.s3
+  = hidden_field_tag 'e3', @timetableap.e3
+  = hidden_field_tag 's4', @timetableap.s4
+  = hidden_field_tag 'e4', @timetableap.e4
+  = hidden_field_tag 's5', @timetableap.s5
+  = hidden_field_tag 'e5', @timetableap.e5
+  = hidden_field_tag 's6', @timetableap.s6
+  = hidden_field_tag 'e6', @timetableap.e6
+  = submit_tag 'Добавить обратный рейс.'
+%p
+  %b Flight number:
+  = @timetableap.Flight_Number
+%p
+  %b Aircompany:
+  = @timetableap.aircompany.airline_name_rus
+  (#{@timetableap.aircompany.airline_name_rus}, базовый аэропорт #{@timetableap.aircompany.airport.name_rus})
+%p
+  %b Way start:
+  = @timetableap.way_start
+%p
+  %b Way end:
+  = @timetableap.way_end
+%p
+  %b Termstart:
+  = @timetableap.TermStart
+%p
+  %b Gatestart:
+  = @timetableap.GateStart
+%p
+  %b Termend:
+  = @timetableap.TermEnd
+%p
+  %b Gateend:
+  = @timetableap.GateEnd
+%p
+  %b Typeofplane:
+  = @timetableap.aircraft.aircraft_model
+%p
+  %b Timestart:
+  = @timetableap.TimeStart
+%p
+  %b Timeend:
+  = @timetableap.TimeEnd
+%p
+  %b Dateofstartnav:
+  = @timetableap.DateOfStartNav
+%p
+  %b Dateofendnav:
+  = @timetableap.DateOfEndNav
+%p
+  %b S1:
+  = @timetableap.s1
+%p
+  %b S2:
+  = @timetableap.s2
+%p
+  %b S3:
+  = @timetableap.s3
+%p
+  %b S4:
+  = @timetableap.s4
+%p
+  %b S5:
+  = @timetableap.s5
+%p
+  %b S6:
+  = @timetableap.s6
+%p
+  %b S0:
+  = @timetableap.s0
+%p
+  %b E1:
+  = @timetableap.e1
+%p
+  %b E2:
+  = @timetableap.e2
+%p
+  %b E3:
+  = @timetableap.e3
+%p
+  %b E4:
+  = @timetableap.e4
+%p
+  %b E5:
+  = @timetableap.e5
+%p
+  %b E6:
+  = @timetableap.e6
+%p
+  %b E0:
+  = @timetableap.e0
+= link_to 'Edit', edit_timetableap_path(@timetableap)
+|
+= link_to 'Back', timetableaps_path

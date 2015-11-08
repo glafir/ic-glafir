@@ -3,33 +3,40 @@ class RunwayApsController < ApplicationController
 
   def index
     @runway_aps = RunwayAp.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    authorize RunwayAp
     respond_with(@runway_aps)
   end
 
   def show
+    authorize @runway_ap
     respond_with(@runway_ap)
   end
 
   def new
     @runway_ap = RunwayAp.new
+    authorize @runway_ap
     respond_with(@runway_ap)
   end
 
   def edit
+    authorize @runway_ap
   end
 
   def create
     @runway_ap = RunwayAp.new(params[:runway_ap])
+    authorize @runway_ap
     @runway_ap.save
     respond_with(@runway_ap)
   end
 
   def update
+    authorize @runway_ap
     @runway_ap.update_attributes(params[:runway_ap])
     respond_with(@runway_ap)
   end
 
   def destroy
+    authorize @runway_ap
     @runway_ap.destroy
     respond_with(@runway_ap)
   end

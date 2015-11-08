@@ -1,0 +1,43 @@
+= form_for @user, validate: true do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label "Изменить avatar"
+    = f.file_field :avatar, :class => "jqbutton"
+  .field
+    = f.label :username
+    = f.text_field :username
+  .field
+    = f.label :email
+    = f.text_field :email
+  %div
+    = f.label :password
+    = f.password_field :password
+  %div
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+  %div
+    = f.label :time_zone
+    = f.time_zone_select :time_zone
+  .field
+    = f.label :town_id
+    = autocomplete_field_tag 'town', '', autocomplete_town_accent_city_towns_path, :size => 30, 'data-auto-focus' => true, :update_elements => {:id => '#user_town_id'}, :value => params[:town]
+    = f.hidden_field :town_id
+  %div
+    = f.label :user_theme
+    = f.select :user_theme_id, UserTheme.order(:theme).collect{|item| [item.theme, item.id]}
+  .field
+    = f.label :role
+    = f.select(:role, User.roles.keys.map {|role| [role.titleize,role]})
+  .field
+    - if @user.alclient?
+      = f.label "Aircompany"
+      = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s
+  .actions
+    = f.submit

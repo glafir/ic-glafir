@@ -1,0 +1,20 @@
+!!! 5
+%html(lang="en")
+  = render "layouts/head.html"
+  %body
+    .container
+      - if user_signed_in?
+        = render "layouts/menu_top_secure.html"
+        .row
+          .col-lg-15.col-md-18
+            = bootstrap_flash
+            = yield
+      -else
+        .row
+          .col-lg-15.col-md-18
+            = bootstrap_flash
+            = yield
+      %footer#footer.footer
+        .row
+          .col-lg-15.col-md-18
+            = render "layouts/footer.html"

@@ -1,0 +1,46 @@
+= form_for @aircompany, validate: true do |f|
+  - if @aircompany.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@aircompany.errors.count, "error")
+        prohibited this aircompany from being saved:
+      %ul
+        - @aircompany.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    %label My Avatar
+    = f.file_field :avatar
+    = f.hidden_field :avatar_cache
+  .field
+    = f.label :iata_code
+    = f.text_field :iata_code, autofocus: true
+  .field
+    = f.label :icao_code
+    = f.text_field :icao_code
+  .field
+    = f.label :awb_prefix
+    = f.text_field :awb_prefix
+  .field
+    = f.label :airline_name_eng
+    = f.text_field :airline_name_eng
+  .field
+    = f.label :airline_name_rus
+    = f.text_field :airline_name_rus
+  .field
+    = f.label :Base_airport
+    = autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#aircompany_airport_id'}, :value => params[:airport_id]
+    = f.hidden_field :airport_id
+  .field
+    = f.label :country_id
+    = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}
+  .field
+    = f.label :al_start
+    = f.select :al_start, 1930..Time.now.year
+  .field
+    = f.label :al_finish
+    = f.select :al_finish, 1960..Time.now.year, :include_blank => "а/к работает"
+  .field
+    = f.label :manager_id
+    = f.collection_select :manager_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :include_blank => "Недочерняя компания"
+  .actions
+    = f.submit

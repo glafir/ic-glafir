@@ -14,6 +14,6 @@
     = f.number_field :timetableap_id
   .field
     = f.label :aircompany_id
-    = f.select :aircompany_id, options_from_collection_for_select(Aircompany.order("airline_name_rus"), "id", (:airline_name_rus), :prompt => "Выбрать авикомпанию.")
+    = f.select :aircompany_id, Aircompany.order(:airline_name_rus).collect{|item| [item.airline_name_rus, item.id]}
   .actions
     = f.submit 'Save'

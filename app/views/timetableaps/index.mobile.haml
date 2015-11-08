@@ -1,0 +1,12 @@
+%h1 Поиск авиарейсов
+= render "layouts/per_page"
+= form_tag timetableaps_path, :method => 'get', :id => "timetableaps_search" do
+  %p
+    = label_tag :start_ap, "Откуда:"
+    = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:start_ap]), prompt: "All Airports", :onchange => "this.form.submit();"
+    = label_tag :end_ap, "Куда:"
+    = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus),  "id", "name_rus", params[:end_ap]), prompt: "All Airports", :onchange => "this.form.submit();"
+    = label_tag :aircomapny, "Авиакомпания:"
+    = select_tag "search_al", options_from_collection_for_select(Aircompany.all, :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"
+    = submit_tag "Search", :name => nil
+  #timetableaps= render "timetableaps/timetableaps"

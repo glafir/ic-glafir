@@ -15,7 +15,7 @@ include ActiveModel::Validations
 
   def self.search(search)
     if search
-      where('country LIKE ? OR city LIKE ? OR accent_city LIKE ? OR region = ?', "%#{search}%", "%#{search}%", "%#{search}%",  "#{search}")
+      where('city LIKE ? OR accent_city LIKE ? OR region = ?', "%#{search}%", "%#{search}%", "%#{search}%")
     else
       all
     end

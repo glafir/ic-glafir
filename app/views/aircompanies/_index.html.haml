@@ -1,0 +1,10 @@
+%h1 Airlines of ES
+= form_tag aircompanies_path, :method => 'get', :id => "aircompanies_search", :remote => true do
+  %p
+    = text_field_tag :search, params[:search], autofocus: true
+    = submit_tag "Search", :name => nil
+    = render "layouts/per_page"
+  #aircompanies= render 'aircompanies/aircompanies'
+- if policy(@aircompanies).new?
+  = render "layouts/per_page"
+  = link_to 'New Aircompany', new_aircompany_path, class: "jqbutton"

@@ -1,0 +1,25 @@
+.field-form
+  .field-form-section
+    = render "airports/show"
+  .field-form-section
+    = render "airports/info"
+- if @airport.aircompanies.blank?
+  %h2
+    Базирующиеся авиакомпании отсутствуют в аэропрте #{@airport.name_rus}.
+- else
+  %h2
+    Авиакомпании, базирующиеся в аэропорту #{@airport.name_rus}
+  = render "aircompanies/aircompanies.mobile"
+- if @airport.aphubs.blank?
+  %h2
+    Авиакомпании-хабы отсутствуют в аэропрте #{@airport.name_rus}.
+- else
+  %h2
+    Авиакомпании-хабы в аэропорту #{@airport.name_rus}
+  - @aircompanies = @aircompanies.clear
+  - @aircompany = Array.new
+  - @airport.aphubs.each {|x|
+  - @aircompanies[@aircompanies.size] = x.aircompany
+  - }
+  - @aircompanies = @aircompanies
+  = render "aircompanies/aircompanies_table.mobile"

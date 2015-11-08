@@ -1,13 +1,19 @@
 source 'https://rubygems.org'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.4'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
-group :assets do
-  gem 'sass-rails', '~> 5.0.1'
-  gem 'coffee-rails', '~> 4.1.0'
-  gem 'uglifier', '>= 2.7.1'
-#  gem 'compass-rails','~> 2.0.4'
-end
+gem 'sass-rails', '~> 5.0.1'
+gem 'coffee-rails', '~> 4.1.0'
+gem 'uglifier', '>= 2.7.1'
+#gem 'compass-rails','~> 2.0.4'
+#gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
+gem 'bootstrap-sass-extras'
+gem "bootstrap_flash_messages"
+gem 'kaminari-bootstrap'
+gem 'rails_bootstrap_navbar'
+gem 'bootswatch-rails'
+gem 'bootstrap-select-rails'
 
 gem 'protected_attributes'
 
@@ -18,9 +24,10 @@ gem "jquery-easing-rails"
 gem 'jquery-validation-rails'
 gem "jquery-form-rails"
 gem "jquery-turbolinks"
+gem "jquery-tmpl-rails"
 gem "momentjs-rails"
 gem 'rails-jquery-autocomplete'
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
 gem 'bcrypt-ruby'
 gem 'devise'
 gem 'devise-encryptable'
@@ -59,13 +66,11 @@ gem 'jquery-ui-themes'
 gem 'html5_validators'
 gem 'pundit'
 gem 'dalli'
-group :development do
-  gem 'better_errors'
-  gem 'quiet_assets'
-  gem 'rails_layout'
-  gem 'spring-commands-rspec'
-  gem "binding_of_caller"
-end
+gem 'better_errors'
+gem 'quiet_assets'
+gem 'rails_layout'
+gem 'spring-commands-rspec'
+gem "binding_of_caller"
 
 gem 'gritter_notices'
 gem 'activerecord-session_store'
@@ -74,3 +79,6 @@ gem 'rails-erd'
 gem 'rack-cors', :require => 'rack/cors'
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'nested_scaffold'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'translit'

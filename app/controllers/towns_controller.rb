@@ -1,7 +1,7 @@
 class TownsController < ApplicationController
   before_filter :set_town, only: [:show, :edit, :update, :destroy]
   before_filter :check_permissions, only: :autocomplete_town_accent_city
-  before_filter :load_parent, except: :autocomplete_town_accent_city
+#  before_filter :load_parent
 
   autocomplete :town, :accent_city, :limit => 50, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
 
@@ -10,13 +10,18 @@ class TownsController < ApplicationController
   end
 
   def index
-    @towns = @country.towns.search(params[:search]).order(sort_column + " " + sort_direction)
-    @towns = @towns.page(params[:page]).per(params[:per_page])
+#    if params[:country_id].nil?
+      @towns = Town.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
+#    else
+#      @country = Country.find(params[:country_id])
+#      @towns = @country.towns.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
+#    end
     authorize Town
     respond_with(@towns)
   end
 
   def apToTw
+  authorize Airport
     @airports = Airport.all
     @airports.each do |airport|
       @apkey = Apkey.new
@@ -24,7 +29,6 @@ class TownsController < ApplicationController
       @apkey.airport_id = airport.id if apkey.airport_id.blank?
       @apkey.save
     end
-  authorize Airport
   end
 
   def show
@@ -84,12 +88,11 @@ private
   end
 
   def set_town
-    @country = Country.find(params[:country_id])
-    @town = @country.towns.find(params[:id])
+    @town = Town.find(params[:id])
   end
 
   def load_parent
-    @country = Country.find(params[:country_id])
+    @country = Country.find(params[:country_id]) ? current_user.country : nil
   end
 
   protected

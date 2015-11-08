@@ -4,7 +4,7 @@ include Pundit
 protect_from_forgery with: :exception, unless: -> { request.format.json? }
 skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 skip_before_action :verify_authenticity_token, if: :json_request?
-after_action :logging, only: [:create, :update, :destroy]
+#after_action :logging, only: [:create, :update, :destroy]
 require 'sunriseset'
 require 'tzinfo'
 require 'tzinfo/data'
@@ -27,6 +27,7 @@ before_filter :set_mobile_format
 has_mobile_fu
 #before_filter :force_mobile_format
 before_filter :set_timezone 
+before_filter :set_country
 ActiveSupport::TimeZone::MAPPING["Ezhinsk"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Norok"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Arisha"] = "Asia/Ezhinsk"
@@ -48,6 +49,11 @@ def set_timezone
     tz = current_user ? current_user.time_zone : nil
     Time.zone = tz || ActiveSupport::TimeZone["Ezhinsk"]
 end  
+
+def set_country
+  @countr = current_user ? current_user.country : nil
+  @country = @countr || Country.find(508)
+end
  
 def validator(object)
   object.valid?
@@ -104,12 +110,12 @@ end
     @flash = flash[:notice]
     @flash_message_state_id = 100
     flash_message_add
-    request.referrer || user_path and return
+    request.referrer || user_path(current_user) and return
   end
 
-#  def after_sign_out_path_for(resource_or_scope)
-#    new_user_session_path
-#  end
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
+  end
 
   def set_p3p
     response.headers["P3P"]='CP="CAO PSA OUR"'
@@ -125,8 +131,9 @@ end
   end
 
   def set_mobile_format
-    if is_mobile_device? # this method is provided by mobile_fu
-      is_device?("iPhone") ? request.format = :html : super
+    if is_mobile_device?
+#      render layout: "layouts/application.mobile"
+#      is_device?("iPhone") ? request.format = :html : super
       if (devise_controller? && action_name == 'create' && request.method == ('POST'))
         request.format = :html
       else
@@ -158,7 +165,7 @@ end
     @flash_message.request_method = request.request_method
     request.referrer.nil? ? @flash_message.request_referrer = request.original_url : @flash_message.request_referrer = request.referrer
     @flash_message.useragent = request.env['HTTP_USER_AGENT']
-    @flash_message.message = @flash
+    @flash_message.message = @flash || "empty"
     @flash_message.flash_message_state_id = @flash_message_state_id
     @flash_message.save
   end

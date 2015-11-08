@@ -1,6 +1,6 @@
 #user_tracings
   = render "user_tracings/paginate_top"
-  %table{:width => '80%'}
+  %table.table-striped.table-hover.table-condensed
     %tr
       %th{:width => '15%'}= sortable "user_id"
       %th= sortable "sign_in_at"
