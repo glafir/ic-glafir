@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %b Name rus:
+  = @station.name_rus
+%p
+  %b Name eng:
+  = @station.name_eng
+%p
+  %b Zone station:
+  = @station.station_zone_id
+%p
+  %b Type station:
+  = @station.station_type_id
+
+
+= link_to 'Edit', edit_station_path(@station)
+\|
+= link_to 'Back', stations_path

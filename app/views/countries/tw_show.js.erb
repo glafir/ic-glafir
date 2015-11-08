@@ -1,0 +1,2 @@
+$("#towns").html("<%= escape_javascript(render("towns/towns")) %>");
+$('.pagination').html('<%= escape_javascript(paginate(@towns, :remote => true).to_s) %>');

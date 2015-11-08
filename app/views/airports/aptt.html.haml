@@ -1,0 +1,73 @@
+%h3
+  Табло вылета/Прилёта аэропорта #{link_to @airport.name_rus, @airport} (г.#{@airport.town.city_rus})
+%p
+  Местное время: #{DateTime.current.in_time_zone(@airport.time_zone)}
+%p Нажмите на ту кнопку: информацию хотите посмотреть?
+%form
+  %input#btn1{:type => "button", :value => "Табло вылета"}/
+  ||
+  %input#btn2{:type => "button", :value => "Табло прилёта"}/
+  ||
+  %input#btn3{:type => "button", :value => "Табло и вылета, и прилёта"}/
+#content
+:javascript
+  $(document).ready(function(){  
+            
+              $('#btn1').click(function(){  
+                  $.ajax({  
+                      url: "tablo/out",  
+                      cache: false,  
+                      success: function(html){  
+                          $("#content").html(html);  
+  //                         setTimeout(foo, 60000);
+  //                         foo();
+  //                         function foo () {
+  //                         $('#tda').load("# #tt", function() {
+                           $("#tt").tablesorter({
+                           widgets: ["zebra"],
+                           sortList:[[1,0]]
+                           });
+  //                         });}
+  
+                      }  
+                  });  
+              });  
+                
+              $('#btn2').click(function(){  
+                  $.ajax({  
+                      url: "tablo/in",  
+                      cache: false,  
+                      success: function(html){  
+                        $("#content").html(html);
+  //                         setTimeout(foo, 60000);
+  //                         foo();
+  //                         function foo () {
+  //                         $('#tda').load("# #tt", function() {
+                           $("#tt").tablesorter({
+                           widgets: ["zebra"],
+                           sortList:[[1,0]]
+                           });
+  //                         });}
+                      }  
+                  });  
+              });  
+  
+              $('#btn3').click(function(){
+                  $.ajax({
+                      url: "tablo",
+                      cache: false,
+                      success: function(html){
+                        $("#content").html(html);
+  //                         setTimeout(foo, 60000);
+  //                         foo();
+  //                         function foo () {
+  //                         $('#tda').load("# #tt", function() {
+                           $("#tt").tablesorter({
+                           widgets: ["zebra"],
+                           sortList:[[1,0]]
+                           });
+  //                         });}
+                      }
+                  });
+              });
+          });

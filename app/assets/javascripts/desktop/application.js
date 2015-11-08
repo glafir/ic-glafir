@@ -11,27 +11,17 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
-//= require mousetrap
 //= require jquery-tablesorter
 //= require jquery.validate
 //= require jquery.validate.additional-methods
-//= require jquery.form
-//= require jquery-ui/core
-//= require jquery-ui/widget
-//= require jquery-ui/mouse
-//= require jquery-ui/position
-//= require jquery-ui/sortable
-//= require jquery-ui/accordion
-//= require jquery-ui/accordion
+//= require mousetrap
 //= require jquery-ui/autocomplete
-//= require jquery-ui/datepicker
-//= require jquery-ui/datepicker-ru
-//= require jquery-ui/button
-//= require jquery-ui/slider
-//= require jquery-ui/selectmenu
-//= require moment
 //= require autocomplete-rails
-//= require_tree
+//= require bootstrap-sprockets
+//= require bootstrap
+//= require_tree ./templates
+//= require_tree .
 //= require_self
 

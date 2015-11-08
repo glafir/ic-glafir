@@ -1,5 +1,5 @@
-%h1 Listing towns
-= form_tag towns_path, :method => 'get',  :id => "towns_search" do
+%h1 Listing towns #{'of '+@country.country_name if params[:country_id] != nil?}
+= form_tag '#', :method => 'get',  :id => "towns_search" do
   %p
     = text_field_tag :search, params[:search]
     = submit_tag "Search", :name => nil

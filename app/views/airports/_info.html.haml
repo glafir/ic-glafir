@@ -1,0 +1,27 @@
+%p
+  %b Местное время:
+  = DateTime.current.in_time_zone(@airport.time_zone)
+%p
+  %b Восход:
+  = sr = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunrise.in_time_zone(@airport.time_zone).to_s(:time)
+%p
+  %b Закат:
+  = ss = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunset.in_time_zone(@airport.time_zone).to_s(:time)
+%p
+  %b Астрономический полдень:
+  = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).solNoon.in_time_zone(@airport.time_zone).to_s(:time)
+%p
+  %b Долгота дня:
+  = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff]
+%p
+  %b Расстояние до Ежинска а/п Ежово-1:
+  - @ap1 = Airport.find(25832)
+  - @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+  - @p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
+  - @dist = @p1.distance_to(@p2)
+  - @fbear = @p2.bearing_to(@p1)
+  = @dist
+  km
+%b Азимут Ежинска а/п Ежово-1:
+%p
+  = @fbear

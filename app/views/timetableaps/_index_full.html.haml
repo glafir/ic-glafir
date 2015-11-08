@@ -1,0 +1,68 @@
+%script{:text => "javascript"}
+  :cdata
+    $(document).ready(function(){
+    $("#tt").tablesorter({
+    widgets: ["zebra"],
+    sortList:[[9,0]]
+    });
+    });
+= render "timetableaps/paginate_top.html.erb"
+%table.table-striped.table-hover.table-condensed#tt.t
+  %thead
+    %tr
+      %th Flight number
+      %th Way start
+      %th Way end
+      %th Timestart
+      %th Timeend
+      %th Dateofstartnav
+      %th Dateofendnav
+      %th S1
+      %th S2
+      %th S3
+      %th S4
+      %th S5
+      %th S6
+      %th S0
+      %th E1
+      %th E2
+      %th E3
+      %th E4
+      %th E5
+      %th E6
+      %th E0
+      %th
+      %th
+      %th
+      %th
+  %tbody
+    - @timetableaps.each do |timetableap|
+      %tr
+        %td= timetableap.Flight_Number
+        %td
+          = timetableap.airport.town.city_rus
+        %td
+          = timetableap.apkey.airport.town.city_rus
+        %td= timetableap.TimeStart.in_time_zone.to_s(:time)
+        %td= timetableap.TimeEnd.in_time_zone.to_s(:time)
+        %td= timetableap.DateOfStartNav
+        %td= timetableap.DateOfEndNav
+        %td= timetableap.s1
+        %td= timetableap.s2
+        %td= timetableap.s3
+        %td= timetableap.s4
+        %td= timetableap.s5
+        %td= timetableap.s6
+        %td= timetableap.s0
+        %td= timetableap.e1
+        %td= timetableap.e2
+        %td= timetableap.e3
+        %td= timetableap.e4
+        %td= timetableap.e5
+        %td= timetableap.e6
+        %td= timetableap.e0
+        %td= link_to 'Show', timetableap
+        %td= link_to 'Edit', edit_timetableap_path(timetableap)
+        %td= link_to 'Destroy', timetableap, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'добавить доп рейс др а/к', edit_timetableap_sub_path
+= render "timetableaps/paginate_bottom.html.erb"

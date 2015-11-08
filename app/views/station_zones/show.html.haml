@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Zone:
+  = @station_zone.zone
+
+= link_to 'Edit', edit_station_zone_path(@station_zone)
+\|
+= link_to 'Back', station_zones_path

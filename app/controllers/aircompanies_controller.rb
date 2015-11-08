@@ -7,7 +7,7 @@ class AircompaniesController < ApplicationController
   end
 
   def index
-    @aircompanies = Aircompany.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
+    @aircompanies = Aircompany.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
     authorize Aircompany
     respond_with @aircompanies
   end

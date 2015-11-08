@@ -1,0 +1,19 @@
+%h1
+  Авиакомпания #{@aircompany.airline_name_rus}
+- if @aircompany.manager_id != nil
+  %h3
+    (является дочерней авиакомпанией #{link_to @aircompany.manager.airline_name_rus, @aircompany.manager}.)
+= render "aircompanies/al_logo"
+= render "aircompanies/al_info"
+%fieldset
+  %legend
+    %h2
+      Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
+  #timetableaps= render "timetableaps/timetableaps.mobile"
+  %fielset
+    %legend
+      %h2
+        Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
+    #timetableap_subs= render "timetableap_subs/index.mobile"
+  %br/
+  = link_to 'Edit', edit_aircompany_path(@aircompany)

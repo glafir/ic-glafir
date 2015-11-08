@@ -29,6 +29,7 @@ class TimetableapSubsController < ApplicationController
   end
 
   def create
+    @timetableap_sub = TimetableapSub.new(params[:timetableap_sub])
     @timetableap_sub.save
     flash[:notice] = "The flight was saved!" if @timetableap_sub.save && !request.xhr?
     authorize @timetableap_sub

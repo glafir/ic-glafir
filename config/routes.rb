@@ -1,6 +1,10 @@
 IcApp::Application.routes.draw do
+  resources :station_zones
+  resources :stations
+  resources :station_types
   resources :flash_message_states
   netzke "/netzke", controller: :admin
+  get '/search_tt' => "timetableaps#search_tt", :as => "search_tt"
   resources :user_tracings
   resources :flash_messages
   get "errors/error_404", :as => "error404"
@@ -11,7 +15,7 @@ IcApp::Application.routes.draw do
   get '/timecor' => "general#timecor"
   get '/apcor' => "general#apcor"
   resources :regions
-  resources :towns, :except => [:index, :destroy, :edit, :show, :create, :new, :update] do
+  resources :towns do
     get :autocomplete_town_accent_city, :on => :collection
     collection do
       get "admin_tw"
@@ -31,9 +35,12 @@ IcApp::Application.routes.draw do
   end
   resources :countries do
     resources :towns do
+      get :autocomplete_town_accent_city, :on => :collection
     end
     member do
       get 'ap_show'
+      get 'ap_show_ajax'
+      post 'ap_show_ajax'
       get 'tw_show'
       get 'al_show'
     end
@@ -55,14 +62,15 @@ IcApp::Application.routes.draw do
     :sessions => 'users/sessions',
     :registrations => "users/registrations"
   }
-
   devise_scope :user do
-    root :to => 'users/sessions#new'
     get "sign_in", :to => "users/sessions#new"
     get "users/sign_out", :to => "users/sessions#destroy"
     delete "users/sign_out", :to => "users/sessions#destroy"
+    root "users/sessions#new"
   end
-  resources :users
+  scope "/admin" do
+    resources :users
+  end
   resources :zones_stations
   resources :regions
   resources :timetableaps do

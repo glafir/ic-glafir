@@ -1,0 +1,22 @@
+- @timetableaps.each do |timetableap|
+  %tr.tablo
+    %td
+      %p#twrus
+        = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus
+        - if timetableap.id < 1000000
+          = link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+        - else
+          = link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap), data: { no_turbolink: true }, onclick: "return hs.htmlExpand(this, { outlineType: 'rounded-white', wrapperClassName: 'draggable-header', objectType: 'ajax' } )", class: "highslide"
+        #{timetableap.s_twrus} - #{timetableap.f_twrus}
+        #aprus (#{link_to timetableap.s_aprus, timetableap.s_ap}) - (#{link_to timetableap.f_aprus, timetableap.f_ap})
+      #tt_al_info
+        Перевозчик: 
+        %strong= link_to timetableap.airline, timetableap.aircompany
+        %br
+        Выполняется самолётом:
+        %strong= link_to timetableap.al_plane, timetableap.plane_al
+    %td#tt_time
+      = timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
+      %br
+      %em (#{timetableap.timeIN.in_time_zone("Ezhinsk").to_s(:time)})
+    %td.tt_status{:bgcolor => "#{timetableap.bgcolor}"}= timetableap.fstatus

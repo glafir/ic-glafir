@@ -3,9 +3,21 @@ class TimetableapsController < ApplicationController
   before_filter :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
 
   def index
-    @timetableaps = Timetableap.search(params[:start_ap],params[:end_ap],params[:search_al]).page(params[:page]).per(params[:per_page])
+    @timetableaps = Timetableap.search(params[:start_ap],params[:end_ap],params[:search_al]).page(params[:page]).per(params[:limit])
     authorize @timetableaps
     respond_with(@timetableaps)
+  end
+
+  def search_tt
+    if params[:start_ap].nil? && params[:end_ap].nil?
+      @timetableaps = Timetableap.page(params[:page]).per(params[:limit])
+      render action: 'search_tt'
+    else
+      @timetableaps = Timetableap.where(:way_start => Airport.select(:id).where(:town_id => (params[:start_ap]))).where(:way_end => Airport.select(:id).where(:town_id => (params[:end_ap]))).page(params[:page]).per(params[:limit])
+      @airports1 = Airport.where(town_id: params[:start_ap]).order(:name_rus)
+      @airports2 = Airport.where(town_id: params[:end_ap]).order(:name_rus)
+    end
+    authorize :timetableap
   end
 
   def validate
@@ -82,13 +94,6 @@ class TimetableapsController < ApplicationController
     end
     authorize @timetableap
     respond_with(@timetableap)
-  end
-
-  def insert
-    @timetableaps = Timetableap.all
-    @timetableaps.each do |tt|
-      tt << Time.now
-    end
   end
 
 private

@@ -1,0 +1,13 @@
+- #latitude = 54.63333333333333333333333333333333333333
+- #longitude = 39.7
+- #vc1 = SunRiseSet.now(latitude,longitude)
+- #vc2 = SunRiseSet.new(DateTime.now.in_time_zone('Etc/GMT__m__4'), latitude,longitude)
+= Time.zone.now
+%br/
+= DateTime.now.in_time_zone
+%br/
+%br/
+%br/
+:javascript
+  var times = SunCalc.getTimes(new Date(), 54.6333333333333333333333333, 39.7);
+  alert("Время рассвета: " + times.sunrise.getHours() + ':' + times.sunrise.getMinutes()+"\n"+"Время заката: "+ times.sunset.getHours() + ':' + times.sunset.getMinutes());

@@ -1,0 +1,63 @@
+:javascript
+  $(document).ready(function(){
+    $("#tt").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[2,0]]
+     });
+  });
+= render "timetableaps/paginate_top"
+%table#tt.tt.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Flight number
+      %th Way start
+      %th Timestart
+      %th Way end
+      %th Timeend
+      %th Dateofstartnav
+      %th Dateofendnav
+      %th
+      %th
+      %th
+      %th
+  %tbody
+    - @timetableaps.each do |timetableap|
+      %tr
+        %td
+          = timetableap.aircompany.iata_code
+          = timetableap.Flight_Number
+        %td
+          = timetableap.airport.town.city_rus
+          = succeed "(" do
+            %br/
+          = link_to timetableap.airport.name_rus, timetableap.airport
+          )
+        %td= timetableap.TimeStart.in_time_zone(timetableap.airport.time_zone).to_s(:time)
+        %td
+          = timetableap.apkey.airport.town.city_rus
+          = succeed "(" do
+            %br/
+          = link_to timetableap.apkey.airport.name_rus, timetableap.apkey.airport
+          )
+        %td= timetableap.TimeEnd.in_time_zone(timetableap.apkey.airport.time_zone).to_s(:time)
+        %td= timetableap.DateOfStartNav
+        - if timetableap.DateOfEndNav <= Date.current
+          - bgcolor = "#550C1A"
+        - elsif timetableap.DateOfEndNav > Date.current + 2.month and timetableap.DateOfEndNav < Date.current + 4.month
+          - bgcolor = "#547C1A"
+        - elsif timetableap.DateOfEndNav > Date.current + 1.month and timetableap.DateOfEndNav < Date.current + 2.month
+          - bgcolor = "#544C1A"
+        - elsif timetableap.DateOfEndNav >  Date.current and timetableap.DateOfEndNav < Date.current + 1.month
+          - bgcolor = "#541C1A"
+        %td{:bgcolor => bgcolor}
+          #{timetableap.DateOfEndNav}
+        - if policy(timetableap).update_dateoffinishdate?
+          %td= link_to 'Продлить рейс на 1 год', update_dateoffinishdate_timetableap_path(timetableap), remote: true
+        - if policy(timetableap).edit?
+          %td= link_to 'Редактировать', edit_timetableap_path(timetableap)
+        - if policy(timetableap).destroy?
+          %td= link_to 'Удвлить', timetableap, method: :delete, data: { confirm: 'Are you sure?' }
+        - if policy(timetableap.timetableap_subs).new?
+          %td= link_to "добавить доп рейс к id=#{timetableap.id}", new_timetableap_sub_path(timetableap.id)
+= render "timetableaps/paginate_bottom"
+= link_to 'Добавить основной авиарейс', new_timetableap_path

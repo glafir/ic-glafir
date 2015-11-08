@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Typename:
+  = @station_type.typename
+
+= link_to 'Edit', edit_station_type_path(@station_type)
+\|
+= link_to 'Back', station_types_path

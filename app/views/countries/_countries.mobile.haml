@@ -2,7 +2,7 @@
 = hidden_field_tag :sort, params[:sort]
 
 = render "countries_paginate_top.mobile"
-%table.pretty
+%table.table-striped.table-hover.table-condensed
   %tr
     %th= sortable "country_name"
     %th= sortable "country_iata_code"

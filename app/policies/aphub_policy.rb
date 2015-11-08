@@ -1,0 +1,3 @@
+class AphubPolicy < ApplicationPolicy
+
+end

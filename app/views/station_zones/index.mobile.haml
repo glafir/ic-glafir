@@ -1,0 +1,21 @@
+%h1 Listing station_zones
+
+%table
+  %thead
+    %tr
+      %th Zone
+      %th
+      %th
+      %th
+
+  %tbody
+    - @station_zones.each do |station_zone|
+      %tr
+        %td= station_zone.zone
+        %td= link_to 'Show', station_zone
+        %td= link_to 'Edit', edit_station_zone_path(station_zone)
+        %td= link_to 'Destroy', station_zone, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Station zone', new_station_zone_path

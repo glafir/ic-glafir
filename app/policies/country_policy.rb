@@ -11,6 +11,10 @@ class CountryPolicy < ApplicationPolicy
     readers
   end
 
+  def ap_show_ajax?
+    readers
+  end
+
   def tw_show?
     readers
   end

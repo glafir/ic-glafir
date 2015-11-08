@@ -47,7 +47,7 @@
     overflow: hidden; }
 
 .apple_pagination {
-  background: #010101;
+  background: #000;
   border: 1px solid #79a;
   text-align: center;
   padding: 1em;
@@ -55,24 +55,52 @@
   .apple_pagination a, .apple_pagination span {
     padding: 0.2em 0.3em; }
   .apple_pagination .disabled {
-    color: #aaaaaa; }
+    color: #fff; }
   .apple_pagination .current {
+    color: #000;
     font-style: normal;
     font-weight: bold;
-    background-color: #999;
+    background-color: #ddd;
     display: inline-block;
-    width: 1.4em;
-    height: 1.4em;
-    line-height: 1.5;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.4;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
     border-radius: 1em;
     text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px; }
   .apple_pagination a {
     text-decoration: none;
-    color: #eff; }
+    color: #aaa; }
     .apple_pagination a:hover, .apple_pagination a:focus {
-      text-decoration: underline; }
+      text-decoration: underline;
+      color: #fff; }
+    .apple_pagination a:hover#pages, .apple_pagination a:focus#pages {
+      color: #000;
+      font-style: normal;
+      font-weight: bold;
+      background-color: #aaa;
+      display: inline-block;
+      width: 1.3em;
+      height: 1.3em;
+      line-height:1.2;
+      -moz-border-radius: 1em;
+      -webkit-border-radius: 1em;
+      border-radius: 1em;
+      text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px; }
+
+
+    .apple_pagination .page_info {
+    background: #000;
+    color: #fff;
+    padding: 0.4em 0.6em;
+    width: 22em;
+    margin-bottom: 0.3em;
+    text-align: center; }
+    .apple_pagination .page_info b {
+      color: #ddd;
+      background: #111;
+      padding: 0.1em 0.25em; }
 
 .flickr_pagination {
   text-align: center;

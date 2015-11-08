@@ -9,8 +9,8 @@
 
 }
 body{
-  width: auto;
-  max-width: 480px;
+  width: 980 !important;
+  max-width: 980px;
   font-family:Tahoma;
   font-weight:bold;
   background-color:#000;
@@ -25,9 +25,6 @@ a{
 a:hover{
   background: #234; /* Цвет фона под ссылкой */ 
   color: #F5F103; /* Цвет ссылки */ 
-}
-table{
-  width: auto;
 }
 tr:hover{
   background: #234; /* Цвет фона под ссылкой */ 
@@ -80,13 +77,13 @@ p{
 	text-align: center;
 	padding:1px;
 	z-index:100;
-        max-width: 480px;
+        max-width: 980px;
 	width: auto;
 	float: none;
 }
 #menu {
         width: auto;
-        max-width: 480px;
+        max-width: 980px;
 	float: none;
 }
 .foot {
@@ -95,18 +92,11 @@ p{
         text-align: center;
         font: bold 20px Arial, Helvetica, sans-serif;
 	width: auto;
-        max-width: 480px;
+        max-width: 980px;
 	float: none;
 }
-.round-image-50 {
-    background-color: white;
-    border: 1px solid #d9d9d9;
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    height: 100px;
-    width: 100px;
-    overflow: hidden;
-    text-align: center;
-    img { width: 100% }
+.container-fluid .container{
+        width: 980px;
+        max-width: 980px;
 }
+

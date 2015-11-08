@@ -1,0 +1,35 @@
+#al_info_section.al_info_section
+  %p
+    %b Iata code:
+    = @aircompany.iata_code
+  %p
+    %b Icao code:
+    = @aircompany.icao_code
+  %p
+    %b Awb prefix:
+    = @aircompany.awb_prefix
+  %p
+    %b Airline name eng:
+    = @aircompany.airline_name_eng
+  %p
+    %b Airline name rus:
+    = @aircompany.airline_name_rus
+  %p
+    %b Base airport:
+    = @aircompany.airport.name_rus
+    (г.#{@aircompany.airport.city_rus})
+  %p
+    %b Country:
+    = @aircompany.country.country_name
+  %p
+    %b hubs:
+    - @aircompany.aphubs.each {|x|
+    = link_to x.airport.name_rus, x.airport
+    - }
+    = link_to "Add hub", new_aphub_path
+  %p
+    %b Start:
+    = @aircompany.al_start
+  %p
+    %b Finish:
+    = @aircompany.al_finish

@@ -1,18 +1,31 @@
 class CountriesController < ApplicationController
-  before_filter :set_country, only: [:show, :ap_show, :al_show, :tw_show, :edit, :update, :destroy]
-  before_filter :set_airports, only: [:ap_show, :show]
+  before_filter :set_country, only: [:show, :ap_show, :ap_show_ajax, :al_show, :tw_show, :edit, :update, :destroy]
+  before_filter :set_airports, only: [:ap_show, :ap_show_ajax, :show]
   before_filter :set_towns, only: [:tw_show, :show]
   before_filter :set_airlines, only: [:al_show, :show]
 
   def index
-    @countries = Country.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page])
+    @countries = Country.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
     authorize Country
     respond_with(@countries)
   end
 
   def ap_show
-    respond_with(@country)
     authorize @country
+    params[:page] = 1.to_i if params[:page].nil?
+    params[:page] = params[:page].to_i + 1.to_i
+    respond_with(@country)
+  end
+
+  def ap_show_ajax
+    authorize @country
+    result = {}
+    result["airports"] = @airports
+    
+    if (params[:page].to_i + 1) * ((params[:limit]).nil? ? 30 : params[:limit]) < @airports.size
+      result['page'] = params[:page].to_i + 1
+    end
+    render json: result
   end
 
   def tw_show
@@ -83,13 +96,18 @@ private
   end
 
   def set_airports
-    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:ap_limit])
+    @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).order(:name_rus).order(:name_eng).page(params[:page]).per(params[:limit])
   end
+
   def set_towns
-    @towns = @country.towns.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:tw_limit])
+    @towns = @country.towns.search(params[:search]).order(sort_column_a + " " + sort_direction).page(params[:page]).per(params[:limit])
+    params[:page] = 1.to_i if params[:page].nil?
+    params[:page] = params[:page].to_i + 1.to_i
   end
 
   def set_airlines
-    @aircompanies = @country.aircompanies.search(params[:search]).order(sort_column_al + " " + sort_direction).page(params[:page]).per(params[:al_limit])
+    @aircompanies = @country.aircompanies.search(params[:search]).order(sort_column_al + " " + sort_direction).page(params[:page]).per(params[:limit])
+    params[:page] = 1.to_i if params[:page].nil?
+    params[:page] = params[:page].to_i + 1.to_i
   end
 end

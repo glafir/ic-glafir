@@ -1,5 +1,3 @@
-%p#notice= notice
-= render 'towns/index.mobile'
-
+= render template: 'towns/index.mobile'
 = link_to 'Edit country', edit_country_path(@country) 
 = link_to 'Back to all countries', countries_path+"?search=&utf8=✓"

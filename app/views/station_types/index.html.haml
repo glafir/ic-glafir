@@ -1,0 +1,21 @@
+%h1 Listing station_types
+
+%table
+  %thead
+    %tr
+      %th Typename
+      %th
+      %th
+      %th
+
+  %tbody
+    - @station_types.each do |station_type|
+      %tr
+        %td= station_type.typename
+        %td= link_to 'Show', station_type
+        %td= link_to 'Edit', edit_station_type_path(station_type)
+        %td= link_to 'Destroy', station_type, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Station type', new_station_type_path

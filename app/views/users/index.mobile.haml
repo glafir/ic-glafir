@@ -1,0 +1,27 @@
+%h3 Users
+.table-responsive
+  %table.table-striped.table-hover
+    %thead
+      %tr
+        %th User Avatar
+        %th User Login
+        %th User Role
+        %th
+    %tbody
+      - @users.each do |user|
+        %tr
+          - unless user.unknown?
+            %td
+              .round-image-50
+                = image_tag(user.avatar.url(:thumb_50), :class => 'img-circle')
+            %td
+              = link_to user.username, user
+            %td
+              = user.role
+            %td
+              - if policy(user).edit?
+                = link_to "Edit", edit_user_path(user) unless user.unknown?
+              - if policy(user).destroy?
+                = link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user || user.unknown?
+- if policy(@users).new?
+  = link_to "Add new user", new_user_path, class: "jqbutton"

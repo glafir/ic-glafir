@@ -1,0 +1,15 @@
+%h3.center-block Users
+.table-responsive
+  %table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th User Avatar
+        %th User Login
+        %th User Email
+        %th Created At
+        %th Last LogIn At
+        %th User Role
+        %th
+    = render "users/user"
+- if policy(@users).new?
+  = link_to "Add new user", new_user_path, class: "jqbutton"

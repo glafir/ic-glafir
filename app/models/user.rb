@@ -1,5 +1,6 @@
 class User <  ActiveRecord::Base
 include ActiveModel::Validations
+mount_uploader :avatar, AvatarUploader
   enum role: [:unknown, :user, :vip, :admin, :alclient, :apclient]
   after_initialize :set_default_role, :if => :new_record?
 
@@ -13,6 +14,7 @@ include ActiveModel::Validations
   has_many :user_tracings
   belongs_to :user_theme
   belongs_to :town
+  belongs_to :country
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -37,8 +39,8 @@ include ActiveModel::Validations
                     :length => {:minimum => 3, :maximum => 70},
                     :uniqueness => {:case_sensitive => false },
                     :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
-  has_attached_file :avatar, :styles => { :big => "600x600>", :medium_400 => "400x400>", :medium_300 => "300x300>", :small => "200x200>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+#  has_attached_file :avatar, :styles => { :big => "600x600>", :medium_400 => "400x400>", :medium_300 => "300x300>", :small => "200x200>", :thumb => "100x100>" }, :thumb_50 => "50x50>", :default_url => "/images/:style/missing.png"
+#  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def set_default_role
     self.role ||= :user

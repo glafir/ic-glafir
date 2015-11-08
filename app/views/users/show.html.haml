@@ -1,0 +1,38 @@
+%h3.center-block
+  User #{@user.username} (#{@user.email})
+.field-form
+  .field-form-section
+    .round-image-250
+      = image_tag @user.avatar.size_400, :class => 'img-circle'
+  .field-form-section
+    %p
+      %b Имя:
+      = @user.username
+    %p
+      %b Email:
+      = @user.email
+    %p
+      %b Time_zone:
+      = @user.time_zone
+      = ActiveSupport::TimeZone.new(@user.time_zone).formatted_offset
+    %p
+      %b Town:
+      = @user.town.accent_city
+    %p
+      %b Статус:
+      = @user.role
+      = link_to @user.aircompany.airline_name_rus, @user.aircompany unless @user.aircompany_id == 1
+    %p
+      %b Текущий адрес:
+      = @user.current_sign_in_ip
+    %p
+      %b Адрес предыдущего захода:
+      = @user.last_sign_in_ip
+    %p
+      %b Время предыдущего захода:
+      = @user.last_sign_in_at
+    - if policy(@user).index?
+      = link_to "Все пользователи", users_path, class: "jqbutton"
+    ||
+    - if policy(@user).edit?
+      = link_to "Редактировать пользователя", edit_user_path(@user), class: "jqbutton"
