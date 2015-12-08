@@ -1,3 +1,5 @@
 %p
-  = link_to 'Вылет/прилёт', "/airports/#{@airport.id}/aptt"
-
+  %a{:href => "/airports/#{@airport.id}/tablo/out", :class => 'btn btn-primary'} вылет
+  %a{:href => "/airports/#{@airport.id}/tablo/in", :class => 'btn btn-primary'} прилёт
+  %a{:href => "/airports/#{@airport.id}/tablo", :class => 'btn btn-primary'} Общее
+  = link_to "Загруженность аэропорта", apload_airport_path(@airport), :class => 'btn btn-primary'

@@ -1,0 +1,15 @@
+%table.table
+  - 0.step(23, 01) do |h|
+    %tr
+      %td(style = 'color: yellow')=h
+      - 0.step(55,05) do |m|
+        %td
+          #{h}:#{m}
+          - @timetableaps.each do |tt|
+            - if tt.timeIN.in_time_zone(@airport.time_zone).hour == h && tt.timeIN.min == m
+              .aptt(style = 'background-color: #570E03')
+                #{tt.aircompany.iata_code} #{tt.Flight_Number}   #{tt.apkey.airport.city_rus}
+                %br
+            - else
+              .aptt(style = 'background-color: #070E03, height: 80px')
+

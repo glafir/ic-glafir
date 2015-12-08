@@ -20,6 +20,7 @@ mount_uploader :avatar, AvatarUploader
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
          :registerable,
+         :password_history,
          :traceable,
          :timeoutable,
 #         :lastseenable,

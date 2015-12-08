@@ -29,12 +29,16 @@ gem "momentjs-rails"
 gem 'rails-jquery-autocomplete'
 gem 'mysql2', '~> 0.3.20'
 gem 'bcrypt-ruby'
+
 gem 'devise'
 gem 'devise-encryptable'
 gem 'warden'
 gem 'devise_traceable'
-gem 'i18n'
 gem 'devise-i18n'
+gem 'devise_hacker_tracker'
+gem 'devise_password_history'
+
+gem 'i18n'
 gem 'rails-i18n'
 gem 'russian'
 gem 'haml-rails'
@@ -45,7 +49,7 @@ gem 'stamp'
 #gem 'cancan'
 #gem 'fullcalendar-rails'
 gem "unicorn"
-#gem "sunriseset"
+gem "sunriseset"
 gem 'jquery-tablesorter'
 gem "duration"
 gem "time_diff"
@@ -82,3 +86,5 @@ gem 'nested_scaffold'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'translit'
+
+gem 'sun_time'

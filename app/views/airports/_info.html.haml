@@ -1,18 +1,22 @@
+- sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f)
 %p
   %b Местное время:
   = DateTime.current.in_time_zone(@airport.time_zone)
 %p
   %b Восход:
-  = sr = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunrise.in_time_zone(@airport.time_zone).to_s(:time)
+  = sr = sun_time.sunrise.in_time_zone(@airport.time_zone).to_s(:time) if sun_time.sunrise != nil
+  -#= sr = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunrise.in_time_zone(@airport.time_zone).to_s(:time)
 %p
   %b Закат:
-  = ss = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunset.in_time_zone(@airport.time_zone).to_s(:time)
+  = ss = sun_time.sunset.in_time_zone(@airport.time_zone).to_s(:time) if sun_time.sunset != nil
+  -#= ss = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunset.in_time_zone(@airport.time_zone).to_s(:time)
 %p
   %b Астрономический полдень:
-  = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).solNoon.in_time_zone(@airport.time_zone).to_s(:time)
+  -#= SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).solNoon.in_time_zone(@airport.time_zone).to_s(:time)
 %p
   %b Долгота дня:
-  = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff]
+  - if sr != nil && ss != nil
+    = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff]
 %p
   %b Расстояние до Ежинска а/п Ежово-1:
   - @ap1 = Airport.find(25832)

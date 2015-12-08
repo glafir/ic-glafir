@@ -1,3 +1,4 @@
+= Time.zone.now
 %h4= @tablo
 .tablo_buttron
   %a{:href => "/airports/#{@airport.id}/tablo/out", :class => 'btn btn-primary'} вылет
@@ -7,8 +8,21 @@
   #tablo_form.form
     = label_tag :aircomapny, "Авиакомпания:"
     = select_tag "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"
-    = select_tag "start_time", options_for_select((Time.now.in_time_zone(@airport.time_zone).beginning_of_day.to_i..(Time.now.in_time_zone(@airport.time_zone).end_of_day).to_i).step(1.hour).collect {|x| [Time.at(x).to_s(:time), Time.at(x).utc] } ,params[:start_time]), :onchange => "this.form.submit();"
-    = select_tag "end_time", options_for_select(((Time.now.in_time_zone(@airport.time_zone).beginning_of_day+1.hour).to_i..(Time.now.in_time_zone(@airport.time_zone).beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.at(x).to_s(:time), Time.at(x).utc] } ,params[:end_time]), :onchange => "this.form.submit();"
+    = select_tag "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:start_time]), :onchange => "this.form.submit();"
+    = select_tag "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:end_time]), :onchange => "this.form.submit();"
+#tda.table-responsive
+  %table#tt.tablesorter.table.table-striped.table-hover
+    %thead
+      %tr
+        %th Направление
+        %th
+          %p Время местное
+          %p (Время Ежинское)
+        %th Статус
+    %tbody
+      = render "airports/tablo"
+    %tbody
+
 :javascript
   $(document).ready(function(){
     var max = $('#start_time').val();
@@ -50,16 +64,3 @@
       });
     });}
   });
-
-#tda.table-responsive
-  %table#tt.tablesorter.table.table-striped.table-hover.table-condensed
-    %thead
-      %tr
-        %th Направление
-        %th
-          %p Время местное
-          %p (Время Ежинское)
-        %th Статус
-    %tbody
-      = render "airports/tablo"
-    %tbody
