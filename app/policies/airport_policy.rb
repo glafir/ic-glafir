@@ -3,6 +3,10 @@ class AirportPolicy < ApplicationPolicy
     readers
   end
 
+  def apload?
+    readers
+  end
+
   def ap_dist?
     readers
   end

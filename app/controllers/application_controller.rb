@@ -5,7 +5,6 @@ protect_from_forgery with: :exception, unless: -> { request.format.json? }
 skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 skip_before_action :verify_authenticity_token, if: :json_request?
 #after_action :logging, only: [:create, :update, :destroy]
-require 'sunriseset'
 require 'tzinfo'
 require 'tzinfo/data'
 require 'i18n_timezones'
@@ -23,7 +22,7 @@ before_filter :force_utf8_params
 before_filter  :set_p3p
 #before_action :set_locale
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-before_filter :set_mobile_format
+#before_filter :set_mobile_format
 has_mobile_fu
 #before_filter :force_mobile_format
 before_filter :set_timezone 
@@ -107,10 +106,11 @@ end
   end
 
   def after_sign_in_path_for(resource)
-    @flash = flash[:notice]
-    @flash_message_state_id = 100
-    flash_message_add
-    request.referrer || user_path(current_user) and return
+   @flash = flash[:notice]
+   @flash_message_state_id = 100
+   flash_message_add
+#    request.referrer || user_path(current_user) and return
+    current_user
   end
 
   def after_sign_out_path_for(resource_or_scope)
@@ -133,7 +133,7 @@ end
   def set_mobile_format
     if is_mobile_device?
 #      render layout: "layouts/application.mobile"
-#      is_device?("iPhone") ? request.format = :html : super
+      is_device?("iphone") ? request.format = :html : super
       if (devise_controller? && action_name == 'create' && request.method == ('POST'))
         request.format = :html
       else

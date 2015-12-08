@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class AirportsController < ApplicationController
-before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo]
+before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
 #layout "without_html", :only => [:tablo]
 autocomplete :airport, :name_rus, :limit => 50, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
 before_filter :check_permissions, only: :autocomplete_airport_name_rus
@@ -15,6 +15,19 @@ before_filter :check_permissions, only: :autocomplete_airport_name_rus
 #
 #    render :nothing => true
 #   end
+  def apload
+    authorize @airport
+    Time.zone = @airport.time_zone
+    @wday = Time.zone.now.strftime'%w'.to_s
+    @timetableaps = Timetableap.where(way_start: @airport.id).where("s#{@wday} = ?",1)
+    @timetableaps.each do |tt|
+      if tt.TimeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
+        tt.timeIN = tt.TimeStart.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+      else
+        tt.timeIN = tt.TimeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+      end
+    end
+  end
 
   def admin_ap
     render layout: "application_empty_1"
@@ -86,11 +99,11 @@ before_filter :check_permissions, only: :autocomplete_airport_name_rus
     Time.zone = @airport.time_zone
     @wday = Time.zone.now.strftime'%w'.to_s
     if params[:apt] == 'out'
-      @tablo = "Табло вылета"
+      @tablo = "Табло вылета на сегодня #{Time.zone.now.to_s(:short)}"
       tbody_tablo_out
       @timetableaps = @timetableaps + @timetableap_subs
     elsif params[:apt] == 'in'
-      @tablo = "Табло прилёта"
+      @tablo = "Табло прилёта на сегодня #{Time.zone.now.to_s(:short)}"
       tbody_tablo_in
       @timetableaps = @timetableaps + @timetableap_subs
     else

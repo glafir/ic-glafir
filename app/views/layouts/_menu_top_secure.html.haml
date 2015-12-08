@@ -17,6 +17,7 @@
           = navbar_item "Аэропорты", airports_path
           = navbar_item "Авиакомпании", aircompanies_path
           = navbar_item "Рейсы", timetableaps_path
+          = navbar_item "ВПП аэропортов", runway_aps_path
           = navbar_dropdown_divider
           = navbar_item "Добавить страну", new_country_path
           = navbar_item "Добавить город", new_town_path
@@ -28,6 +29,7 @@
           %li= link_to "Аэропорты", controller: "/countries", action: "ap_show", id: 528
           %li= link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528
           = navbar_item "Рейсы", timetableaps_path
+          = navbar_item "ВПП аэропортов", runway_aps_path
           = navbar_dropdown_divider
           = navbar_item "Добавить город", new_town_path
           = navbar_item "Добавить аэропорт", new_airport_path

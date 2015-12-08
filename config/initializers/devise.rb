@@ -101,6 +101,19 @@ Devise.setup do |config|
   # Setup a pepper to generate the encrypted password.
   # config.pepper = '<%= SecureRandom.hex(64) %>'
 
+ # ==> Configuration for :hacker_tracker
+  # Amount of time an IP address stays blocked for
+  # config.ip_block_time = 5.minutes
+  #
+  # Total number of failed sign in attempts allowed per IP address before being blocked
+  # config.maximum_attempts_per_ip = 5
+  #
+  # Total number accounts a single IP address is allowed to attempt before being blocked
+  # config.maximum_accounts_attempted = 3
+  #
+  # The name of the table storing the failed sign in attempts
+  config.sign_in_failures_table_name = 'sign_in_failures'
+
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
   # confirming their account. For instance, if set to 2.days, the user will be
@@ -260,4 +273,15 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+
+  # ==> Password History
+  # How many old passwords to keep and validate against
+  config.password_history_count = 8
+
+  # Toggles behavior for Deny/Allow old passwords
+  config.deny_old_passwords = true
+
+  # Repeatedly forces a new password based on this age
+  # config.password_age = 90.days
+
 end
