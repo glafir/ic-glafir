@@ -1,3 +1,5 @@
+%h2= @title
+= render "airports/tablo_links"
 %table.table
   - 0.step(23, 01) do |h|
     %tr
@@ -7,7 +9,7 @@
           #{h}:#{m}
           - @timetableaps.each do |tt|
             - if tt.timeIN.in_time_zone(@airport.time_zone).hour == h && tt.timeIN.min == m
-              .aptt(style = 'background-color: #570E03')
+              .aptt(style = 'background-color: #{tt.bgcolor_apload}')
                 #{tt.aircompany.iata_code} #{tt.Flight_Number}   #{tt.apkey.airport.city_rus}
                 %br
             - else

@@ -107,7 +107,8 @@ IcApp::Application.routes.draw do
       get "aptt"
       get "city"
       get "city/:city_eng" => "airports#city"
-      get "apload"
+      get "apload" => "airports#apload"
+      get "apload/:apload" => "airports#apload"
     end
   end
 

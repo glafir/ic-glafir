@@ -1,9 +1,6 @@
 = Time.zone.now
 %h4= @tablo
-.tablo_buttron
-  %a{:href => "/airports/#{@airport.id}/tablo/out", :class => 'btn btn-primary'} вылет
-  %a{:href => "/airports/#{@airport.id}/tablo/in", :class => 'btn btn-primary'} прилёт
-  %a{:href => "/airports/#{@airport.id}/tablo", :class => 'btn btn-primary'} Общее
+= render "airports/tablo_links"
 = form_tag "#",:remote => 'true', :method => 'get', :id => "timetableaps_search"  do
   #tablo_form.form
     = label_tag :aircomapny, "Авиакомпания:"
