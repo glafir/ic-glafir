@@ -1,0 +1,9 @@
+.tablo_buttron
+  %a{:href => "/airports/#{@airport.id}/tablo/out/", :class => 'btn btn-primary'} вылет
+  %a{:href => "/airports/#{@airport.id}/tablo/in/", :class => 'btn btn-primary'} прилёт
+  %a{:href => "/airports/#{@airport.id}/tablo/", :class => 'btn btn-primary'} Общее
+  %br
+  = link_to "Загруженность аэропорта Вылет", "/airports/#{@airport.id}/apload/out/", :class => 'btn btn-primary'
+  = link_to "Загруженность аэропорта Прибытие", "/airports/#{@airport.id}/apload/in/", :class => 'btn btn-primary'
+  = link_to "Загруженность аэропорта Общая", "/airports/#{@airport.id}/apload/", :class => 'btn btn-primary'
+

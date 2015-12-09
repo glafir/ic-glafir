@@ -9,7 +9,7 @@ include ActiveModel::Validations
   belongs_to :apkey,  foreign_key: "way_end"
   has_many :timetableapSub, dependent: :destroy
   attr_accessible :aircompany_id, :DateOfEndNav, :DateOfStartNav, :Flight_Number, :GateEnd, :GateStart, :TermEnd, :TermStart, :TimeEnd, :TimeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start
-  attr_accessor :twrus, :aprus, :f_twrus, :f_aprus, :s_twrus, :s_aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2, :timeEnd, :timeStart, :ap, :s_ap, :f_ap
+  attr_accessor :twrus, :aprus, :f_twrus, :f_aprus, :s_twrus, :s_aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2, :timeEnd, :timeStart, :ap, :s_ap, :f_ap, :bgcolor_apload
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }
   validates  :way_start, presence: true, numericality: { only_integer: true }
   validates  :way_end, presence: true, numericality: { only_integer: true }
