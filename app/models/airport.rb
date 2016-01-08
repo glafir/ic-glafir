@@ -25,8 +25,8 @@ include ActiveModel::Validations
     "#{name_rus}, #{iata_code}, г.#{city_rus} (city_eng)"
   end
 
-  def self.search(search)
-    if search
+  def self.search(ap)
+    if ap && ap != ""
       where('name_rus LIKE ? or name_eng LIKE ? or city_rus LIKE ? or city_eng LIKE ? or ICAO_code LIKE ? or IATA_code LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
     else
       all

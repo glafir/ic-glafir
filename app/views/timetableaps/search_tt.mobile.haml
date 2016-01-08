@@ -16,6 +16,7 @@
         = a.name_rus
   = submit_tag "Search", :name => nil
 -if params[:start_ap] != nil && params[:end_ap] =! nil
+  = render "airports/ap_dist_result"
   #timetableaps
     = render "timetableaps/timetableaps"
 

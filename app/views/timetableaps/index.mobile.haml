@@ -4,9 +4,21 @@
   %p
     = label_tag :start_ap, "Откуда:"
     = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:start_ap]), prompt: "All Airports", :onchange => "this.form.submit();"
+  %p
     = label_tag :end_ap, "Куда:"
     = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus),  "id", "name_rus", params[:end_ap]), prompt: "All Airports", :onchange => "this.form.submit();"
+  %p
     = label_tag :aircomapny, "Авиакомпания:"
     = select_tag "search_al", options_from_collection_for_select(Aircompany.all, :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"
+  %p
+    = label_tag :date, "По дате окончания:"
+    = select_date(@fc_start, :prefix => 'fc_start')
+    = select_date(@fc_end, :prefix => 'fc_end')
+  %p
+    = label_tag :aircomapny, "По номеру рейса:"
+    = number_field_tag :flight_number,  params[:flight_number]
+  %p
     = submit_tag "Search", :name => nil
+    = render "layouts/per_page"
+
   #timetableaps= render "timetableaps/timetableaps"

@@ -16,8 +16,8 @@
     = @aircompany.airline_name_rus
   %p
     %b Base airport:
-    = @aircompany.airport.name_rus
-    (г.#{@aircompany.airport.city_rus})
+    = link_to @aircompany.airport.name_rus, @aircompany.airport
+    (г.#{link_to @aircompany.airport.city_rus, @aircompany.airport.town})
   %p
     %b Country:
     = @aircompany.country.country_name
@@ -26,6 +26,7 @@
     - @aircompany.aphubs.each {|x|
     = link_to x.airport.name_rus, x.airport
     - }
+    ||
     = link_to "Add hub", new_aphub_path
   %p
     %b Start:

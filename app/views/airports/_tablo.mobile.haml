@@ -7,6 +7,7 @@
         = link_to timetableap.Flight_Number, flight_state_timetableap_path(timetableap)
       - else
         = link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap)
-    %td= link_to timetableap.twrus, timetableap.ap
+    %td
+      = link_to timetableap.twrus, timetableap.ap
+      .tt_status(style = 'background-color: #{timetableap.bgcolor}')= timetableap.fstatus
     %td= timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
-    %td{:bgcolor => "#{timetableap.bgcolor}"}= timetableap.fstatus

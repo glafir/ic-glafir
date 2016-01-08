@@ -42,8 +42,10 @@ class RunwayApsController < ApplicationController
   end
 
   def runway_calendar
+    authorize @runway_ap
     @date = params[:date] ? Date.parse(params[:date]) : redirect_to("/runway_aps/#{params[:id]}/calendar?date=#{Date.today}")
-    respond_with(@runway_ap)
+#    @date = params[:date] ? Date.parse(params[:date]) : Date.current
+#    respond_with(@runway_ap)
   end
   
   def rasp_runway_day

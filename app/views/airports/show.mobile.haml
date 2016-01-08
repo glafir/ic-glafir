@@ -1,3 +1,4 @@
+%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, @airport.town})
 .field-form
   .field-form-section
     = render "airports/tablo_links"
@@ -10,6 +11,7 @@
   %h2
     Авиакомпании, базирующиеся в аэропорту #{@airport.name_rus}
   = render "aircompanies/aircompanies.mobile"
+  = link_to "Добавить авиакомпанию в #{@airport.name_rus}", new_aircompany_path, class: "btn btn-primary"
 - if @airport.aphubs.blank?
   %h2
     Авиакомпании-хабы отсутствуют в аэропрте #{@airport.name_rus}.
@@ -23,3 +25,5 @@
   - }
   - @aircompanies = @aircompanies
   = render "aircompanies/aircompanies_table.mobile"
+  = link_to "Добавить авиакомпанию-хаб в #{@airport.name_rus}", new_aircompany_path, class: "btn btn-primary"
+

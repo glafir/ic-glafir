@@ -81,10 +81,11 @@ gem 'activerecord-session_store'
 
 gem 'rails-erd'
 gem 'rack-cors', :require => 'rack/cors'
-gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+#gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'nested_scaffold'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'translit'
 
 gem 'sun_time'
+gem 'suncalc'

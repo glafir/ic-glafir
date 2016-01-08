@@ -12,6 +12,14 @@
     = label_tag :aircomapny, "Авиакомпания:"
     = autocomplete_field_tag 'search_a', '', autocomplete_aircompany_airline_name_rus_aircompanies_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#search_al'}, :minLength => 4,  :value => params[:search_a]
     = hidden_field_tag :search_al
+  %p
+    = label_tag :date, "По дате окончания:"
+    = select_date(@fc_start, :prefix => 'fc_start')
+    = select_date(@fc_end, :prefix => 'fc_end')
+  %p
+    = label_tag :aircomapny, "По номеру рейса:"
+    = number_field_tag :flight_number,  params[:flight_number]
+  %p
     = submit_tag "Search", :name => nil
-  = render "layouts/per_page"
+    = render "layouts/per_page"
   #timetableaps= render "timetableaps/timetableaps"

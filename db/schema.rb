@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20151202131547) do
   add_index "aircompanies", ["airport_id"], name: "Base_airport", using: :btree
   add_index "aircompanies", ["country_id"], name: "country_id", using: :btree
   add_index "aircompanies", ["iata_code"], name: "iata_code", using: :btree
+  add_index "aircompanies", ["icao_code"], name: "icao_code", using: :btree
+  add_index "aircompanies", ["id"], name: "id", unique: true, using: :btree
   add_index "aircompanies", ["manager_id"], name: "manager_id", using: :btree
 
   create_table "aircraft_companies", force: :cascade do |t|
@@ -279,8 +281,9 @@ ActiveRecord::Schema.define(version: 20151202131547) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "timetableaps", ["aircompany_id"], name: "aircompany_id", using: :btree
+  add_index "timetableaps", ["Flight_Number", "aircompany_id"], name: "Flight_Number_aircompany_id", unique: true, using: :btree
   add_index "timetableaps", ["aircraft_id"], name: "aircraft_id", using: :btree
+  add_index "timetableaps", ["id"], name: "id", unique: true, using: :btree
   add_index "timetableaps", ["way_end"], name: "way_end", using: :btree
   add_index "timetableaps", ["way_start"], name: "way_start", using: :btree
 

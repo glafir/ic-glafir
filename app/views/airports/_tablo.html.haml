@@ -15,6 +15,7 @@
         %br
         Выполняется самолётом:
         %strong= link_to timetableap.al_plane, timetableap.plane_al
+        .tt_status{:bgcolor => "#{timetableap.bgcolor}"}= timetableap.fstatus
     %td#tt_time
       = timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
       %br
