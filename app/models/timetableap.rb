@@ -19,9 +19,42 @@ include ActiveModel::Validations
                     length: { maximum: 9999 },
                   uniqueness: { scope: :aircompany_id, message: "should happen once per year" }
 
-  def self.search(start_ap,end_ap,search_al)
-    if search_al
-      where('way_start LIKE ? and way_end LIKE ? and aircompany_id LIKE ?', "%#{start_ap}%",  "%#{end_ap}%",  "%#{search_al}%")
+  def self.search_start_ap(start_ap)
+    if start_ap && start_ap != ""
+      where('way_start = ?', "#{start_ap}")
+    else
+      all
+    end
+  end
+
+  def self.search_end_ap(end_ap)
+    if end_ap && end_ap != ""
+      where('way_end = ?', "#{end_ap}")
+    else
+      all
+    end
+  end
+
+
+  def self.search_al(al)
+    if al && al != ""
+      where('aircompany_id = ?', "#{al}")
+    else
+      all
+    end
+  end
+
+  def self.search_date(fc_start,fc_end)
+    if fc_start || fc_end
+      where('DateOfEndNav BETWEEN ? and ?', "#{fc_start}", "#{fc_end}")
+    else
+      all
+    end
+  end
+
+  def self.search_fn(fnum)
+    if fnum && fnum != ""
+      where('Flight_Number = ?', "#{fnum}")
     else
       all
     end

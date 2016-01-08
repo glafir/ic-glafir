@@ -165,7 +165,11 @@ private
     @timetableap_subs = Array.new
     @timetableaps = Timetableap.where(way_start: @airport.id).where("s#{@wday} = ?",1)
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
-    @timetableaps = @timetableaps.search(params[:id],params[:end_ap],params[:search_al])
+    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_end)))
+    if  params[:search_tw] and params[:search_tw] != ""
+      @timetableaps = @timetableaps.where(:way_end => Airport.select(:id).where(:town_id => params[:search_tw]))
+    end
+    @timetableaps = @timetableaps.search_al(params[:search_al])
     @timetableaps.each do |tt|
       @timetableap_subs0 = TimetableapSub.where(timetableap_id: tt.id)
       if tt.TimeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
@@ -226,9 +230,13 @@ private
 
   def tbody_tablo_in
     @timetableap_subs = Array.new
-    @timetableaps = Timetableap.where(way_end: params[:id]).where("e#{@wday} = ?",1)
+    @timetableaps = Timetableap.where(way_end: @airport.id).where("e#{@wday} = ?",1)
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
-    @timetableaps = @timetableaps.search(params[:start_ap],params[:id],params[:search_al])
+    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_start)))
+    if params[:search_tw] and params[:search_tw] != ""
+      @timetableaps = @timetableaps.where(:way_start => Airport.select(:id).where(:town_id => params[:search_tw]))
+    end
+    @timetableaps = @timetableaps.search_al(params[:search_al])
     @timetableaps.each do |tt|
       @timetableap_subs0 = TimetableapSub.where(timetableap_id: tt.id)
       if tt.TimeEnd.hour < 24 - (Time.zone.now.utc_offset / 3600)

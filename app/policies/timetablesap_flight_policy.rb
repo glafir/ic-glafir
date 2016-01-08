@@ -1,0 +1,2 @@
+class TimetablesapFlightsPolicy < ApplicationPolicy
+end

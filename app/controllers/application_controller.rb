@@ -5,6 +5,7 @@ protect_from_forgery with: :exception, unless: -> { request.format.json? }
 skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 skip_before_action :verify_authenticity_token, if: :json_request?
 #after_action :logging, only: [:create, :update, :destroy]
+require "calendar_helper.rb"
 require 'tzinfo'
 require 'tzinfo/data'
 require 'i18n_timezones'

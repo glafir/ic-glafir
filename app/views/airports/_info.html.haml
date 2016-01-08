@@ -1,5 +1,11 @@
 - sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f)
 %p
+  %b Координаты:
+  #{@airport.latitude} #{@airport.longitude}
+%p
+  %b Ближайший город:
+  #{link_to @airport.town.city_rus, @airport.town if @airport.town.city_rus?} (г. #{link_to @airport.town.accent_city, @airport.town})
+%p
   %b Местное время:
   = DateTime.current.in_time_zone(@airport.time_zone)
 %p

@@ -3,12 +3,22 @@ class TimetableapsController < ApplicationController
   before_filter :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
 
   def index
-    @timetableaps = Timetableap.search(params[:start_ap],params[:end_ap],params[:search_al]).page(params[:page]).per(params[:limit])
+    params[:fc_start] == nil ? @fc_start = Date.current : @fc_start = Date.civil(params[:fc_start][:year].to_i, params[:fc_start][:month].to_i,params[:fc_start][:day].to_i)
+    params[:fc_end] == nil ? @fc_end = Date.current : @fc_end = Date.civil(params[:fc_end][:year].to_i, params[:fc_end][:month].to_i,params[:fc_end][:day].to_i)
+    @timetableaps = Timetableap.search_start_ap(params[:start_ap]).search_end_ap(params[:end_ap]).search_al(params[:search_al]).search_date(@fc_start,@fc_end).search_fn(params[:flight_number]).page(params[:page]).per(params[:limit])
     authorize @timetableaps
     respond_with(@timetableaps)
   end
 
   def search_tt
+    @ap1 = Town.find(params[:start_ap]).airports.first if params[:start_ap] != nil
+    @ap2 = Town.find(params[:end_ap]).airports.first if params[:end_ap] != nil
+    if @ap1 != nil || @ap2 != nil
+      @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+      @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
+      @dist = @p1.distance_to(@p2)
+      @sbear = @p1.bearing_to(@p2)
+    end
     if params[:start_ap].nil? && params[:end_ap].nil?
       @timetableaps = Timetableap.page(params[:page]).per(params[:limit])
       render action: 'search_tt'
@@ -50,7 +60,7 @@ class TimetableapsController < ApplicationController
     flash[:notice] = "The flight ID=#{@timetableap.id} was prolong to #{@timetableap.DateOfEndNav}!" if @timetableap.save && !request.xhr?
     flash_message_add
     authorize @timetableap
-    respond_with(@timetableap)
+#    respond_with(@timetableap)
   end
 
   def edit

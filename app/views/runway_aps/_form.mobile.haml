@@ -8,7 +8,7 @@
 
   .field
     = f.label :airport_id
-    = f.select :airport_id,Airport.where(iso_code:'EZ').collect{|item|[item.name_rus,item.id]}
+    = f.select :airport_id,Airport.where(iso_code:'EZ').order('name_rus').collect{|item|[item.name_rus,item.id]}
   .field
     = f.label :runway_name
     = f.text_field :runway_name		

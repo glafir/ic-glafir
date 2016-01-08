@@ -3,20 +3,20 @@
 - if @aircompany.manager_id != nil
   %h3
     (является дочерней авиакомпанией #{link_to @aircompany.manager.airline_name_rus, @aircompany.manager}.)
-#al_info.al_info
-  = render "aircompanies/al_logo"
-  = render "aircompanies/al_info"
-#al_tt.al_tt
-  %fieldset
-    %legend
-      %h2
-        Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
-    #timetableaps= render "timetableaps/timetableaps"
-    %fielset
+.row
+  .col-lg-4.col-md-5.col-sm-6
+    = render "aircompanies/al_logo"
+  .col-lg-4.col-md-5.col-sm-6
+    = render "aircompanies/al_info"
+.row  
+  .col-lg-7.col-md-7
+    %fieldset
       %legend
-        %h2
-          Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
-      #timetableap_subs= render "timetableap_subs/index"
-    %br/
-    - if policy(@aircompany).edit?
-      = link_to 'Edit', edit_aircompany_path(@aircompany), class: "jqbutton"
+        %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
+      #timetableaps= render "timetableaps/timetableaps"
+      %fielset
+        %legend
+          %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
+        #timetableap_subs= render "timetableap_subs/index"
+      - if policy(@aircompany).edit?
+        = link_to 'Edit', edit_aircompany_path(@aircompany), class: "jqbutton"

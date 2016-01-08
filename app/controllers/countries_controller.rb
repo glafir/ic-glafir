@@ -88,7 +88,7 @@ private
   end
 
   def sort_column_al
-    Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "airport_id"
+    Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "airline_name_rus"
   end
 
   def set_country

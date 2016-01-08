@@ -1,30 +1,34 @@
 ﻿# encoding: UTF-8
 class TimetablesapFlightsController < ApplicationController
 # GET /timetablesap_flights
-def index
-@timetablesap_flights = TimetablesapFlight.paginate :page => params[:page], :order => 'id'
+  def index
+    @timetablesap_flights = TimetablesapFlight.paginate :page => params[:page], :order => 'id'
+    authorize @timetablesap_flights
   end
 
   # GET /timetablesap_flights/1
   def show
     @timetablesap_flight = TimetablesapFlight.find(params[:id])
-end
+    authorize @timetablesap_flight
+  end
 
 # GET /timetablesap_flights/new
 def new
-@timetablesap_flight = TimetablesapFlight.new
+  @timetablesap_flight = TimetablesapFlight.new
+   authorize @timetablesap_flight 
 end
 
 # GET /timetablesap_flights/1/edit
-def edit
-@timetablesap_flight = TimetablesapFlight.find(params[:id])
-end
+  def edit
+    @timetablesap_flight = TimetablesapFlight.find(params[:id])
+    authorize @timetablesap_flight 
+  end
 
 # POST /timetablesap_flights
 def create
 
 @timetablesap_flight = TimetablesapFlight.new(params[:timetablesap_flight])
-
+   authorize @timetablesap_flight 
 if @timetablesap_flight.save
 redirect_to({:action => 'index'}, {:notice => 'Timetablesap flight добавлен'})
     else
@@ -35,11 +39,11 @@ end
   # PUT /timetablesap_flights/1
 
 
-def update
+  def update
     @timetablesap_flight = TimetablesapFlight.find(params[:id])
-
-if @timetablesap_flight.update_attributes(params[:timetablesap_flight])
-redirect_to(@timetablesap_flight, :notice => 'Изменения внесены')
+    authorize @timetablesap_flight 
+    if @timetablesap_flight.update_attributes(params[:timetablesap_flight])
+      redirect_to(@timetablesap_flight, :notice => 'Изменения внесены')
     else
       render :action, '"edit"'
     end
@@ -48,16 +52,18 @@ redirect_to(@timetablesap_flight, :notice => 'Изменения внесены'
   # DELETE /timetablesap_flights/1
   def destroy
     @timetablesap_flight = TimetablesapFlight.find(params[:id])
-@timetablesap_flight.destroy
-
-redirect_to (timetablesap_flights_url)
+    authorize @timetablesap_flight
+    @timetablesap_flight.destroy
+    redirect_to (timetablesap_flights_url)
   end
 
   def form
+    authorize :timetablesap_flight
     @arr = Array.new
   end
   
   def form_enter
+    authorize :timetablesap_flight
   @startnavstart = DateTime.new(params[:StartNavStart][:year].to_i,params[:StartNavStart][:month].to_i,params[:StartNavStart][:day].to_i,params[:StartNavStart][:hour].to_i,params[:StartNavStart][:minute].to_i)
   @startnavend = DateTime.new(params[:StartNavEnd][:year].to_i,params[:StartNavEnd][:month].to_i,params[:StartNavEnd][:day].to_i,params[:StartNavEnd][:hour].to_i,params[:StartNavEnd][:minute].to_i)
   @endnavstart = DateTime.new(params[:EndNavStart][:year].to_i,params[:EndNavStart][:month].to_i,params[:EndNavStart][:day].to_i)
