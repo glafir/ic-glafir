@@ -1,0 +1,24 @@
+- model_class = AirporSizeState
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing airpor_size_states
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @airpor_size_states.each do |airpor_size_state|
+      %tr
+        %td= airpor_size_state.name
+        %td= link_to 'Show', airpor_size_state
+        %td= link_to 'Edit', edit_airpor_size_state_path(airpor_size_state)
+        %td= link_to 'Destroy', airpor_size_state, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_airpor_size_state_path, :class => 'btn btn-primary'
+

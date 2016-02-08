@@ -1,5 +1,10 @@
 class Town < ActiveRecord::Base
 include ActiveModel::Validations
+acts_as_mappable :default_units => :kms,
+                   :default_formula => :flat,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :latitude,
+                   :lng_column_name => :longitude
   paginates_per 30
   has_many :users
   belongs_to :country
@@ -19,5 +24,9 @@ include ActiveModel::Validations
     else
       all
     end
+  end
+
+  def self.town_with_ap
+    where(:id => Airport.select("town_id").where.not(town_id: nil))
   end
 end

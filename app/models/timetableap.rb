@@ -35,6 +35,38 @@ include ActiveModel::Validations
     end
   end
 
+  def self.search_endtw(tw)
+    if tw && tw != ""
+      where(:way_end => Airport.select(:id).where("town_id = ?", "#{tw}"))
+    else
+      all
+    end
+  end
+
+  def self.search_starttw(tw)
+    if tw && tw != ""
+      where(:way_start => Airport.select(:id).where("town_id = ?", "#{tw}"))
+    else
+      all
+    end
+  end
+
+  def self.search_endcountry(con)
+    if con && con != ""
+      where(:way_end => Airport.select(:id).where("country_id = ?", "#{con}"))
+    else
+      all
+    end
+  end
+
+  def self.search_startcountry(con)
+    if con && con != ""
+      where(:way_start => Airport.select(:id).where("country_id = ?", "#{con}"))
+    else
+      all
+    end
+  end
+
 
   def self.search_al(al)
     if al && al != ""

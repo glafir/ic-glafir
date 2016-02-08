@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202131547) do
+ActiveRecord::Schema.define(version: 20160124184713) do
 
   create_table "aircompanies", force: :cascade do |t|
     t.string   "iata_code",          limit: 2,               null: false
@@ -70,34 +70,56 @@ ActiveRecord::Schema.define(version: 20151202131547) do
     t.datetime "updated_at",                            null: false
   end
 
+  create_table "airpor_size_states", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "airport_air_traffics", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "klass",      limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "airport_states", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "airports", force: :cascade do |t|
-    t.string   "iata_code",          limit: 3,   null: false
-    t.string   "icao_code",          limit: 4,   null: false
-    t.string   "name_rus",           limit: 255
-    t.string   "name_eng",           limit: 255
-    t.string   "city_rus",           limit: 255
-    t.string   "city_eng",           limit: 255
-    t.string   "gmt_offset",         limit: 255
-    t.string   "iso_code",           limit: 2
-    t.string   "latitude",           limit: 255
-    t.string   "longitude",          limit: 255
-    t.string   "runway_length",      limit: 255
-    t.string   "runway_elevation",   limit: 255
-    t.integer  "timetableaps_count", limit: 4
-    t.string   "runnway_coll",       limit: 255
-    t.string   "phone",              limit: 255
-    t.string   "fax",                limit: 255
-    t.string   "email",              limit: 255
-    t.string   "website",            limit: 255
-    t.string   "TerminalsColl",      limit: 255
-    t.string   "Terminals",          limit: 255
-    t.string   "Dist_to_town",       limit: 255
-    t.integer  "town_id",            limit: 4
-    t.string   "time_zone",          limit: 50
-    t.integer  "country_id",         limit: 4
-    t.integer  "aircompanies_count", limit: 4
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.string   "iata_code",              limit: 3,   null: false
+    t.string   "icao_code",              limit: 4,   null: false
+    t.string   "name_rus",               limit: 255
+    t.string   "name_eng",               limit: 255
+    t.string   "city_rus",               limit: 255
+    t.string   "city_eng",               limit: 255
+    t.string   "gmt_offset",             limit: 255
+    t.string   "iso_code",               limit: 2
+    t.string   "latitude",               limit: 255
+    t.string   "longitude",              limit: 255
+    t.string   "runway_length",          limit: 255
+    t.string   "runway_elevation",       limit: 255
+    t.integer  "timetableaps_count",     limit: 4
+    t.string   "runnway_coll",           limit: 255
+    t.string   "phone",                  limit: 255
+    t.string   "fax",                    limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "website",                limit: 255
+    t.string   "TerminalsColl",          limit: 255
+    t.string   "Terminals",              limit: 255
+    t.string   "Dist_to_town",           limit: 255
+    t.integer  "town_id",                limit: 4
+    t.integer  "airport_air_traffic_id", limit: 4
+    t.integer  "weather_state",          limit: 4
+    t.integer  "airport_state_id",       limit: 4
+    t.string   "time_zone",              limit: 50
+    t.integer  "country_id",             limit: 4
+    t.integer  "aircompanies_count",     limit: 4
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "airports", ["iata_code"], name: "iata_code", unique: true, using: :btree

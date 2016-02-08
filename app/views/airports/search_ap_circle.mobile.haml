@@ -1,0 +1,69 @@
+= Time.now.in_time_zone("UTC")
+= form_tag '#', :method => 'get' do
+  = label_tag :airport1, "Выбрать город 1:"
+  = select_tag :d_ap1, options_from_collection_for_select(Town.where(country_id: 528).town_with_ap.order(:city_rus), "id", "city_rus", params[:d_ap1]), prompt: "All Town"
+  %br
+  = label_tag :radius, "Выбрать город 2:"
+  = select_tag :d_ap2, options_from_collection_for_select(Town.where(country_id: 528).town_with_ap.order(:city_rus), "id", "city_rus", params[:d_ap2]), prompt: "All Town"
+  %br
+  = submit_tag "Search", :name => nil
+-if params[:d_ap1] != '' && params[:d_ap1] &&  params[:d_ap2] != '' && params[:d_ap2]
+  - @airport1 = Town.find(params[:d_ap1]).airports.first
+  - @airport2 = Town.find(params[:d_ap2]).airports.first
+  = dist = @airport2.distance_from(@airport1, :units=>:kms)
+  %br
+  - @airports1_r300 = Town.where(country_id: 528).town_with_ap.within(300, :origin => @airport1)
+  - @airports2_r300 = Town.where(country_id: 528).town_with_ap.within(300, :origin => @airport2)
+  - @airports1 = Town.where(country_id: 528).town_with_ap.within(dist, :origin => @airport1)
+  - @airports2 = Town.where(country_id: 528).town_with_ap.within(dist, :origin => @airport2)
+  - @airports = @airports1 & @airports2 + @airports1_r300 + @airports2_r300
+  - @airports.each do |a|
+    - @tt1 = Timetableap.search_starttw(params[:d_ap1]).search_endtw(a.id)
+    - @tt2 = Timetableap.search_endtw(params[:d_ap2]).search_starttw(a.id)
+    - unless @tt1.blank? or @tt2.blank?
+      %h5 Транзит через город #{a.city_rus} (#{a.accent_city})
+    - @tt1.each do |tt1|
+      - @tt2.each do |tt2|
+        #{tt1.aircompany.iata_code} #{tt1.Flight_Number}
+        #{@airport1.city_rus} (#{tt1.airport.name_rus}) - #{a.city_rus} (#{tt1.apkey.airport.name_rus})  || 
+        #{tt1.TimeStart.in_time_zone(tt1.airport.time_zone).to_s(:time)} - #{tt1.TimeEnd.in_time_zone(tt1.apkey.airport.time_zone).to_s(:time)} ||
+        - tt1.TimeStart = tt1.TimeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - tt1.TimeEnd = tt1.TimeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - tt2.TimeStart = tt2.TimeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - tt2.TimeEnd = tt2.TimeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - if tt1.TimeStart > tt2.TimeStart
+          - tt2.TimeStart = tt2.TimeStart + 24.hour
+          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
+        - if tt2.TimeStart - tt1.TimeEnd > 24.hour
+          - tt2.TimeStart = tt2.TimeStart - 24.hour
+          - tt2.TimeEnd = tt2.TimeEnd - 24.hour
+        - if tt1.TimeStart < tt1.TimeEnd
+          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+        - else
+          - tt1.TimeEnd = tt1.TimeEnd + 24.hour
+          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+        %br
+        Время для транзита: 
+        - if tt2.TimeStart > tt1.TimeEnd
+          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+        - else
+          - tt2.TimeStart = tt2.TimeStart + 24.hour
+          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
+          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+        %br
+        #{tt2.aircompany.iata_code} #{tt2.Flight_Number}
+        #{a.city_rus} (#{tt2.airport.name_rus}) - #{@airport2.city_rus} (#{tt2.apkey.airport.name_rus})  #{tt2.TimeStart.in_time_zone(tt2.airport.time_zone).to_s(:time)} - #{tt2.TimeEnd.in_time_zone(tt2.apkey.airport.time_zone).to_s(:time)} || 
+        - if tt2.TimeStart < tt2.TimeEnd
+          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+        - else
+          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
+          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+        %br
+        %b Общее время в пути:
+        - if tt1.TimeStart < tt2.TimeEnd
+          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+        - else
+          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
+          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+
+        %hr

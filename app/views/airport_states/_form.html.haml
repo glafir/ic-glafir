@@ -1,0 +1,16 @@
+= form_for @airport_state,  :html => { :class => 'form form-horizontal' } do |f|
+  - if @airport_state.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@airport_state.errors.count, "error")} prohibited this airport_state from being saved:"
+      %ul
+        - @airport_state.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, class: "form-control", required: true
+  = f.submit nil, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), airport_states_path, :class => 'btn btn-default'
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

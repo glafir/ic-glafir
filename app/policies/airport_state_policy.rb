@@ -1,0 +1,3 @@
+class AirportStatePolicy < ApplicationPolicy
+
+end

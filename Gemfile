@@ -89,3 +89,6 @@ gem 'translit'
 
 gem 'sun_time'
 gem 'suncalc'
+gem 'bootstrap-glyphicons'
+gem 'geokit'
+gem 'geokit-rails'

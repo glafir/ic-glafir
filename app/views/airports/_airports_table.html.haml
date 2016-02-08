@@ -6,6 +6,7 @@
     %th= sortable "city_rus"
     %th= sortable "latitude"
     %th= sortable "longitude"
+    %th Dist to town
     %th= sortable "iso_code"
     %th Runway
     %th Расписание и табло.
@@ -34,8 +35,16 @@
       %td= airport.icao_code
       %td= link_to airport.name, airport
       %td= link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?
-      %td= airport.latitude
-      %td= airport.longitude
+      %td
+        = airport.latitude
+        %br
+        #{airport.town.latitude}
+      %td
+        = airport.longitude
+        %br
+        #{airport.town.longitude}
+      %td
+        #{airport.distance_from(airport.town, :units=>:kms) unless airport.town.latitude.blank?} kms
       %td= airport.country.country_iata_code
       %td= airport.runway_aps.count
       %td

@@ -1,10 +1,9 @@
 %h3.center-block
   User #{@user.username} (#{@user.email})
 .field-form
-  .field-form-section
-    .round-image-250
-      = image_tag @user.avatar.size_400, :class => 'img-circle'
-  .field-form-section
+  .col-lg-5.col-md-6
+    = image_tag @user.avatar.size_400, :class => 'img-circle'
+  .col-lg-5.col-md-6
     %p
       %b Имя:
       = @user.username
@@ -32,7 +31,7 @@
       %b Время предыдущего захода:
       = @user.last_sign_in_at
     - if policy(@user).index?
-      = link_to "Все пользователи", users_path, class: "jqbutton"
+      = link_to "Все пользователи", users_path, class: "btn btn-primary"
     ||
     - if policy(@user).edit?
-      = link_to "Редактировать пользователя", edit_user_path(@user), class: "jqbutton"
+      = link_to "Редактировать пользователя", edit_user_path(@user), class: "btn btn-primary"

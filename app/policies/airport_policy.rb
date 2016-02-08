@@ -1,5 +1,9 @@
 class AirportPolicy < ApplicationPolicy
-  def autocomplete_airport_name_rus?
+  def autocomplete_airport_city_rus?
+    readers
+  end
+
+  def search_ap_circle?
     readers
   end
 

@@ -1,9 +1,10 @@
-%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, @airport.town})
+%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, @airport.town unless @airport.town.blank?})
 .field-form
   .field-form-section
     = render "airports/tablo_links"
   .field-form-section
     = render "airports/info"
+= link_to "Редактировать данные", edit_airport_path(@airport), class: "btn btn-primary"
 - if @airport.aircompanies.blank?
   %h2
     Базирующиеся авиакомпании отсутствуют в аэропрте #{@airport.name_rus}.
