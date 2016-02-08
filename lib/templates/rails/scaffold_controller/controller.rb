@@ -9,7 +9,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>
   def index
     @<%= plural_table_name %> = <%= orm_class.all(class_name) %>.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
-    authorize = @<%= plural_table_name %>
+    authorize @<%= plural_table_name %>
     respond_with @<%= plural_table_name %>
   end
 

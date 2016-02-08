@@ -1,4 +1,4 @@
-- model_class = <%= singular_table_name %>
+- model_class = <%= plural_table_name.classify %>
 .page-header
   %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
 

@@ -2,6 +2,9 @@
 = render "airports/tablo_links"
 = form_tag "#", :remote => 'true', :method => 'get', :id => "timetableaps_search"  do
   #tablo_form
+    = label_tag :country, "внутрение/международные линии"
+    = select_tag "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name, params[:country]), prompt: "to all countries", :onchange => "this.form.submit();"
+    %br
     = label_tag :aircomapny, "Город:"
     = select_tag "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus, params[:search_tw]), prompt: "All towns", :onchange => "this.form.submit();"
     = label_tag :aircomapny, "Авиакомпания:"

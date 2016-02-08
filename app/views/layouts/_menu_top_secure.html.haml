@@ -10,6 +10,7 @@
         = navbar_item "Поиск рейсов по аэропртам", timetableaps_path
         = navbar_item "Поиск рейсов по городам", search_tt_path
         = navbar_item "Расстояния между а/п", ap_dist_airports_path
+        = navbar_item "Поиск а/п в точке",search_ap_circle_airports_path
       - if user_signed_in?
         = navbar_dropdown "В мире" do
           = navbar_item "Страны", countries_path

@@ -28,11 +28,11 @@
           = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]
     .field
       = f.label :way_start
-      = autocomplete_field_tag 'start', '', autocomplete_airport_name_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start]
+      = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start]
       = f.hidden_field :way_start, value: params[:way_end]
     .field
       = f.label :way_end
-      = autocomplete_field_tag 'end', '', autocomplete_airport_name_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_end'}, :value => params[:end]
+      = autocomplete_field_tag 'end', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_end'}, :value => params[:end]
       = f.hidden_field :way_end, value: params[:way_start]
     .field
       = f.label :TermStart

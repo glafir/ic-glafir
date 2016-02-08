@@ -13,13 +13,16 @@ class Airports < Application
       {name: :iata_code, header: "Код IATA"},
       {name: :icao_code, header: "Код ICAO"},
       {name: :name_rus, header: "Наименование (RU)"},
-      {name: :name_eng, header: "Наименование (EN)"},
+#      {name: :name_eng, header: "Наименование (EN)"},
       {name: :city_rus, header: "Город (RU)"},
-      {name: :city_eng, header: "Город (EN)"},
+#      {name: :city_eng, header: "Город (EN)"},
+      {name: :airport_state__name, header: "Статус"},
+      {name: :airport_air_traffic__name, header: "Статус"},
       {name: :town__city_rus},
+      {name: :weather_state, header: "В любьую погоду?"},
       {name: :iso_code, header: "Страна"},
-      {name: :latitude, header: "Широта"},
-      {name: :longitude, header: "Долгота"},
+#      {name: :latitude, header: "Широта"},
+#      {name: :longitude, header: "Долгота"},
       {name: :actions, header: "Удалить?"}
     ]
   end

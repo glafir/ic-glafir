@@ -1,0 +1,16 @@
+= form_for @airpor_size_state,  :html => { :class => 'form form-horizontal' } do |f|
+  - if @airpor_size_state.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@airpor_size_state.errors.count, "error")} prohibited this airpor_size_state from being saved:"
+      %ul
+        - @airpor_size_state.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, class: "form-control", required: true
+  = f.submit nil, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), airpor_size_states_path, :class => 'btn btn-default'
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

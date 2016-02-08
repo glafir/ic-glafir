@@ -1,5 +1,17 @@
 - sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f)
 %p
+  %b Статус:
+  = @airport.airport_state.name if @airport.airport_state
+%p
+  %b Статус по пассажирообороту:
+  #{@airport.airport_air_traffic.name if @airport.airport_air_traffic}
+%p
+  %b Координаты:
+  #{@airport.latitude} #{@airport.longitude}
+%p
+  %b Ближайший город:
+  #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless  @airport.town.blank?} (г. #{link_to @airport.town.accent_city, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+%p
   %b Местное время:
   = DateTime.current.in_time_zone(@airport.time_zone)
 %p

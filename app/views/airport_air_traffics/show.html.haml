@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @airport_air_traffic.name
+%p
+  %b Klass:
+  = @airport_air_traffic.klass
+
+= link_to 'Edit', edit_airport_air_traffic_path(@airport_air_traffic)
+\|
+= link_to 'Back', airport_air_traffics_path

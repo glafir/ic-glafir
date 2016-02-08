@@ -1,15 +1,17 @@
 = render "layouts/per_page"
-= form_tag search_tt_path, :method => 'get', :id => "tt_search", remote: true do
+= form_tag search_tt_path, :method => 'get', :id => "tt_search" do
   %p
     = label_tag :start_ap, "Откуда:"
-    = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:city_rus).group(:town_id), "town_id", "city_rus", params[:start_ap]), prompt: "Select start Town"
+    = autocomplete_field_tag 'start', '', autocomplete_town_accent_city_towns_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#start_ap'}, :value => params[:start], autofocus:true
+    = hidden_field_tag :start_ap, params[:start_ap]
     -if params[:start_ap] != nil
       - @airports1.each do |a|
         = check_box_tag "aps1[]", a.id, true
         = a.name_rus
   %p
     = label_tag :end_ap, "Куда:"
-    = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:city_rus).group(:town_id), "town_id", "city_rus", params[:end_ap]), prompt: "Select finish Town"
+    = hidden_field_tag :end_ap, params[:end_ap]
+    = autocomplete_field_tag 'end', '', autocomplete_town_accent_city_towns_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end], autofocus:true
     -if params[:end_ap] != nil
       - @airports2.each do |a|  
         = check_box_tag "aps2[]", a.id, true

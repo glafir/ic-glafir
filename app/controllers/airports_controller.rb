@@ -1,8 +1,8 @@
 class AirportsController < ApplicationController
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
 #layout "without_html", :only => [:tablo]
-autocomplete :airport, :name_rus, :limit => 50, :extra_data => [:city_rus, :city_eng, :iata_code], :display_value => :apdata
-before_filter :check_permissions, only: :autocomplete_airport_name_rus
+autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
+before_filter :check_permissions, only: :autocomplete_airport_city_rus
 
 #  def autocomplete_airport_name_rus
 #    iata_code = params[iata_code]
@@ -33,17 +33,14 @@ before_filter :check_permissions, only: :autocomplete_airport_name_rus
       @timetableaps2 = @timetableaps
       @timetableaps = @timetableaps1 + @timetableaps2
     end
-#    @timetableaps.each do |tt|
-#      if tt.TimeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
-#        tt.timeIN = tt.TimeStart.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
-#      else
-#        tt.timeIN = tt.TimeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
-#      end
-#    end
+  end
+
+  def search_ap_circle
+    authorize :airport
   end
 
   def admin_ap
-    render layout: "application_empty_1"
+#    render layout: "application_empty_1"
     authorize :airport
   end
 
@@ -164,12 +161,12 @@ private
   def tbody_tablo_out
     @timetableap_subs = Array.new
     @timetableaps = Timetableap.where(way_start: @airport.id).where("s#{@wday} = ?",1)
+    @timetableaps = @timetableaps.search_endtw(params[:search_tw])
+    @timetableaps = @timetableaps.search_al(params[:search_al])
+    @timetableaps = @timetableaps.search_endcountry(params[:country])
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
     @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_end)))
-    if  params[:search_tw] and params[:search_tw] != ""
-      @timetableaps = @timetableaps.where(:way_end => Airport.select(:id).where(:town_id => params[:search_tw]))
-    end
-    @timetableaps = @timetableaps.search_al(params[:search_al])
+    @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:way_end)))
     @timetableaps.each do |tt|
       @timetableap_subs0 = TimetableapSub.where(timetableap_id: tt.id)
       if tt.TimeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
@@ -232,11 +229,11 @@ private
     @timetableap_subs = Array.new
     @timetableaps = Timetableap.where(way_end: @airport.id).where("e#{@wday} = ?",1)
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
-    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_start)))
-    if params[:search_tw] and params[:search_tw] != ""
-      @timetableaps = @timetableaps.where(:way_start => Airport.select(:id).where(:town_id => params[:search_tw]))
-    end
+    @timetableaps = @timetableaps.search_starttw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
+    @timetableaps = @timetableaps.search_startcountry(params[:country])
+    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_start)))
+    @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:way_start)))
     @timetableaps.each do |tt|
       @timetableap_subs0 = TimetableapSub.where(timetableap_id: tt.id)
       if tt.TimeEnd.hour < 24 - (Time.zone.now.utc_offset / 3600)

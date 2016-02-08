@@ -1,0 +1,2 @@
+module AirportAirTrafficsHelper
+end

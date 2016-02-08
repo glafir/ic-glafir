@@ -28,7 +28,7 @@
   %b Время предыдущего захода:
   = @user.last_sign_in_at
 - if policy(@user).index?
-  = link_to "Все пользователи", users_path, class: "jqbutton"
+  = link_to "Все пользователи", users_path, class: "btn btn-primary"
 ||
 - if policy(@user).edit?
-  = link_to "Редактировать пользователя", edit_user_path(@user), class: "jqbutton"
+  = link_to "Редактировать пользователя", edit_user_path(@user), class: "btn btn-primary"

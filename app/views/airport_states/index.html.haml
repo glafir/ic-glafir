@@ -1,0 +1,22 @@
+- model_class = AirportState
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @airport_states.each do |airport_state|
+      %tr
+        %td= airport_state.name
+        %td= link_to 'Show', airport_state
+        %td= link_to 'Edit', edit_airport_state_path(airport_state)
+        %td= link_to 'Destroy', airport_state, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_airport_state_path, :class => 'btn btn-primary'
+

@@ -1,4 +1,15 @@
 IcApp::Application.routes.draw do
+  resources :airport_air_traffics
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airpor_size_states
+  resources :airport_states
   resources :station_zones
   resources :stations
   resources :station_types
@@ -95,18 +106,17 @@ IcApp::Application.routes.draw do
     end
   end
   resources :airports do
-    get :autocomplete_airport_name_rus, :on => :collection
+    get :autocomplete_airport_city_rus, :on => :collection
     collection do
       get "admin_ap"
       get "ap_dist"
+      get "search_ap_circle"
     end
     member do
       get "tablo" => "airports#tablo"
       get "tablo/:apt" => "airports#tablo"
       get "tt"
       get "aptt"
-      get "city"
-      get "city/:city_eng" => "airports#city"
       get "apload" => "airports#apload"
       get "apload/:apload" => "airports#apload"
     end

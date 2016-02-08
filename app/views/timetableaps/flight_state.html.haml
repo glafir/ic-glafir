@@ -25,7 +25,11 @@
     %td= @timetableap.timeEnd.in_time_zone(@timetableap.apkey.airport.time_zone)
 %p
   %b Время в пути:
-  = Time.diff(Time.parse(@timetableap.timeStart.to_s), Time.parse(@timetableap.timeEnd.to_s), '%H %N')[:diff]
+  - if @timetableap.TimeStart < @timetableap.TimeEnd
+    = Time.diff(Time.parse(@timetableap.TimeStart.to_s), Time.parse(@timetableap.TimeEnd.to_s), '%H %N')[:diff]
+  - else
+    - @timetableap.TimeEnd = @timetableap.TimeEnd + 24.hour
+    = Time.diff(Time.parse(@timetableap.TimeStart.to_s), Time.parse(@timetableap.TimeEnd.to_s), '%H %N')[:diff]
 %p
   %b Статус:
   - if @timetableap.timeStart < Time.zone.now and @timetableap.timeEnd < Time.zone.now
