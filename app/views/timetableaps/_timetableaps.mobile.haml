@@ -61,7 +61,7 @@
             = link_to "Продлить", update_dateoffinishdate_timetableap_path(timetableap), remote: true
           - if policy(timetableap.timetableap_subs).new?
             = link_to "Добавить доп рейс", new_timetableap_sub_path(timetableap.id)
-              %br
+            %br
           - if policy(timetableap).edit?
             = link_to "Редактировать", edit_timetableap_path(timetableap)
           - if policy(timetableap).destroy?
