@@ -1,4 +1,4 @@
-%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, @airport.town unless @airport.town.blank?})
+%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?}
 .field-form
   .field-form-section
     = render "airports/tablo_links"

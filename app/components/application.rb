@@ -1,11 +1,17 @@
-class Application < Netzke::Basepack::Grid
+class Application < Netzke::Grid::Base
 include Netzke::Basepack::ActionColumn
-css_configure do |c|
+
+plugin :grid_live_search do |c|
+  c.klass = Netzke::Basepack::GridLiveSearch
+end
+
+client_styles do |c|
   c.require :main
 end
 
 
-js_configure do |c|
+
+client_class do |c|
   c.on_show = <<-JS
   function(){
     var tmpl = new Ext.Template("<b>{0}</b>: {1}<br/>"), html = "";
@@ -46,7 +52,7 @@ end
 
 column :actions do |c|
   c.type = :action
-  c.actions = [{name: :delete_row, icon: :delete}]
+  c.actions = [{name: :delete, icon: :delete}]
   c.header = ""
     c.width = 20
   end
@@ -64,8 +70,10 @@ end
     c.height = 600
     c.persistence = true
     c.maximizable = true
-    c.bbar = [:add_in_form, :edit_in_form, :apply, :del, :search]
-    c.tbar = [:add_in_form, :edit_in_form, :apply, :del, :search]
-    c.context_menu = [:show, :add, :add_in_form, :edit_in_form, :del, :apply, :search]
+    c.paging = true
+    c.edit_inline = true
+    c.bbar = [ :add, :edit, :apply, :delete, :search]
+    c.tbar = [ :add, :edit, :apply, :delete, :search]
+    c.context_menu = [:show, :add, :edit, :delete, :apply, :search]
   end
 end

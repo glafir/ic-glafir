@@ -17,6 +17,6 @@
       %fielset
         %legend
           %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
-        #timetableap_subs= render "timetableap_subs/index"
+        #timetableap_subs
       - if policy(@aircompany).edit?
         = link_to 'Edit', edit_aircompany_path(@aircompany), class: "jqbutton"

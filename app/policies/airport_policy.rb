@@ -3,6 +3,10 @@ class AirportPolicy < ApplicationPolicy
     readers
   end
 
+  def ap_maps?
+    readers
+  end
+  
   def search_ap_circle?
     readers
   end

@@ -3,7 +3,6 @@ class AircompaniesController < ApplicationController
   autocomplete :aircompany, :airline_name_rus, :extra_data => [:iata_code]
   before_filter :check_permissions, :only => [:admin_al, :autocomplete_aircompany_airline_name_rus]
   def admin_al
-    render layout: "application_empty_1"
   end
 
   def index

@@ -12,9 +12,6 @@ class CountriesController < ApplicationController
 
   def ap_show
     authorize @country
-    params[:page] = 1.to_i if params[:page].nil?
-    params[:page] = params[:page].to_i + 1.to_i
-    respond_with(@country)
   end
 
   def ap_show_ajax
@@ -30,12 +27,10 @@ class CountriesController < ApplicationController
 
   def tw_show
     authorize @country
-    respond_with(@country)
   end
 
   def al_show
     authorize @country
-    respond_with(@country)
   end
 
   def show
@@ -76,7 +71,7 @@ class CountriesController < ApplicationController
 
 private
   def sort_column
-    Country.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    Country.column_names.include?(params[:sort]) ? params[:sort] : "country_name"
   end
 
   def sort_column_a
@@ -97,6 +92,8 @@ private
 
   def set_airports
     @airports = @country.airports.search(params[:search]).order(sort_column_a + " " + sort_direction).order(:name_rus).order(:name_eng).page(params[:page]).per(params[:limit])
+    params[:page] = 1.to_i if params[:page].nil?
+    params[:page] = params[:page].to_i + 1.to_i
   end
 
   def set_towns

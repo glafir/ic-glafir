@@ -39,7 +39,8 @@ class TimetableapsController < ApplicationController
     end
   end
 
-  def ttair_admin
+  def admin_tt
+    authorize :timetableap
   end
 
   def show

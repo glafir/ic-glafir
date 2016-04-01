@@ -1,4 +1,4 @@
-= paginate @towns
+= paginate @towns, :theme => 'mobile'
 %table.table-striped.table-hover.table-condensed
   %tr
     %th
@@ -27,7 +27,7 @@
       %td= town.latitude
       %td= town.longitude
       %td
-        = link_to 'Edit', edit_town_path(town) if policy(town).edit?
+        = link_to 'Edit', edit_country_town_path(@country, town) if policy(town).edit?
         = link_to 'Destroy', town, :method => :delete, :data => { :confirm => 'Are you sure?' } if policy(town).destroy?
 
-= paginate @towns
+= paginate @towns, :theme => 'mobile'

@@ -1,14 +1,8 @@
 IcApp::Application.routes.draw do
+  concern :paginatable do
+    get '(page/:page)', :action => :index, :on => :collection, :as => ''
+  end
   resources :airport_air_traffics
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
-  resources :airpor_size_states
   resources :airport_states
   resources :station_zones
   resources :stations
@@ -16,8 +10,8 @@ IcApp::Application.routes.draw do
   resources :flash_message_states
   netzke "/netzke", controller: :admin
   get '/search_tt' => "timetableaps#search_tt", :as => "search_tt"
-  resources :user_tracings
-  resources :flash_messages
+  resources :user_tracings, :concerns => :paginatable
+  resources :flash_messages, :concerns => :paginatable
   get "errors/error_404", :as => "error404"
   get "errors/error_403", :as => "error403"
   resources :roles
@@ -26,7 +20,7 @@ IcApp::Application.routes.draw do
   get '/timecor' => "general#timecor"
   get '/apcor' => "general#apcor"
   resources :regions
-  resources :towns do
+  resources :towns, :concerns => :paginatable do
     get :autocomplete_town_accent_city, :on => :collection
     collection do
       get "admin_tw"
@@ -44,8 +38,8 @@ IcApp::Application.routes.draw do
     collection do
     end
   end
-  resources :countries do
-    resources :towns do
+  resources :countries, :concerns => :paginatable do
+    resources :towns, :concerns => :paginatable do
       get :autocomplete_town_accent_city, :on => :collection
     end
     member do
@@ -54,6 +48,10 @@ IcApp::Application.routes.draw do
       post 'ap_show_ajax'
       get 'tw_show'
       get 'al_show'
+      get 'al_show/page/:page', :action => :al_show
+      get 'ap_show/page/:page', :action => :ap_show
+      get 'tw_show/page/:page', :action => :ap_show
+      get 'page/:page', :action => :show
     end
     collection do
     end
@@ -70,7 +68,7 @@ IcApp::Application.routes.draw do
   resources :rw_routes
   resources :rw_stations
   devise_for :users, :controllers => {
-    :sessions => 'users/sessions',
+    :sessions => "users/sessions",
     :registrations => "users/registrations"
   }
   devise_scope :user do
@@ -84,33 +82,37 @@ IcApp::Application.routes.draw do
   end
   resources :zones_stations
   resources :regions
-  resources :timetableaps do
+  resources :timetableaps, :concerns => :paginatable do
     collection do
-      get 'ttair_admin'
+      get 'admin_tt'
     end
     member do
       get "update_dateoffinishdate"
       get "flight_state"
     end
   end
-  resources :timetableap_subs do
+  resources :timetableap_subs, :concerns => :paginatable do
     member do
       get "flight_state" 
     end
   end
   post "/timetableaps/new" => "timetableaps#new"
-  resources :aircompanies do
+  resources :aircompanies, :concerns => :paginatable do
     get :autocomplete_aircompany_airline_name_rus, :on => :collection
     collection do
       get "admin_al"
     end
+    member do
+      get 'flights/page/:page', :action => :show
+    end
   end
-  resources :airports do
+  resources :airports, :concerns => :paginatable do
     get :autocomplete_airport_city_rus, :on => :collection
     collection do
       get "admin_ap"
       get "ap_dist"
       get "search_ap_circle"
+      get "ap_maps"
     end
     member do
       get "tablo" => "airports#tablo"

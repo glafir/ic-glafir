@@ -13,3 +13,7 @@
       = f.check_box :remember_me
       = f.label :remember_me
   %div= f.submit "Sign in"
+:javascript
+  var elem = document.querySelector('#user_remember_me');
+  var init = new Switchery(elem,{ color: '#fec200'});
+

@@ -37,4 +37,7 @@
   - if @aircompany.childs != nil
     %p
       %b Дочерние компании:
-      = @aircompany.childs
+      %br
+      - @aircompany.childs.each do |aa|
+        #{link_to aa.airline_name_rus, aa} базируется в а/п #{link_to aa.airport.name_rus, aa.airport} (г.#{link_to aa.airport.city_rus, country_town_path(aa.airport.country,aa.airport.town) unless aa.airport.town.blank?})
+        %br
