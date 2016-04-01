@@ -78,7 +78,8 @@ ActiveRecord::Schema.define(version: 20160124184713) do
 
   create_table "airport_air_traffics", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.integer  "klass",      limit: 4
+    t.integer  "klass",      limit: 4,   null: false
+    t.integer  "max_pass",   limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -272,8 +273,9 @@ ActiveRecord::Schema.define(version: 20160124184713) do
   end
 
   create_table "timetableaps", force: :cascade do |t|
-    t.integer  "Flight_Number",  limit: 4,   null: false
+    t.integer  "flight_number",  limit: 4,   null: false
     t.integer  "aircompany_id",  limit: 4,   null: false
+    t.integer  "parent_id",      limit: 4
     t.integer  "way_start",      limit: 4,   null: false
     t.integer  "way_end",        limit: 4,   null: false
     t.string   "TermStart",      limit: 255
@@ -303,9 +305,11 @@ ActiveRecord::Schema.define(version: 20160124184713) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "timetableaps", ["Flight_Number", "aircompany_id"], name: "Flight_Number_aircompany_id", unique: true, using: :btree
   add_index "timetableaps", ["aircraft_id"], name: "aircraft_id", using: :btree
+  add_index "timetableaps", ["flight_number", "aircompany_id"], name: "Flight_Number_aircompany_id", unique: true, using: :btree
+  add_index "timetableaps", ["flight_number", "parent_id"], name: "flight_number_parent_id", unique: true, using: :btree
   add_index "timetableaps", ["id"], name: "id", unique: true, using: :btree
+  add_index "timetableaps", ["parent_id"], name: "parent_id", using: :btree
   add_index "timetableaps", ["way_end"], name: "way_end", using: :btree
   add_index "timetableaps", ["way_start"], name: "way_start", using: :btree
 
@@ -346,6 +350,7 @@ ActiveRecord::Schema.define(version: 20160124184713) do
   add_index "towns", ["city_rus"], name: "city_rus", using: :btree
   add_index "towns", ["country_id"], name: "country_id", using: :btree
   add_index "towns", ["country_iso"], name: "country", using: :btree
+  add_index "towns", ["id"], name: "id", unique: true, using: :btree
 
   create_table "user_themes", force: :cascade do |t|
     t.string   "theme",      limit: 255, null: false

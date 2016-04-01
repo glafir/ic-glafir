@@ -2,4 +2,5 @@
 = render 'form'
 = link_to 'Show', @aircompany
 |
-= link_to 'Back', aircompanies_path
+= link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

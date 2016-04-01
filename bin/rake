@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/home/glafir/.rvm/rubies/ruby-2.3.0/bin/ruby
 require_relative '../config/boot'
 require 'rake'
 Rake.application.run

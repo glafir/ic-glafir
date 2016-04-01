@@ -24,9 +24,9 @@
       %h5 Транзит через город #{a.city_rus} (#{a.accent_city})
     - @tt1.each do |tt1|
       - @tt2.each do |tt2|
-        #{tt1.aircompany.iata_code} #{tt1.Flight_Number}
-        #{@airport1.city_rus} (#{tt1.airport.name_rus}) - #{a.city_rus} (#{tt1.apkey.airport.name_rus})  || 
-        #{tt1.TimeStart.in_time_zone(tt1.airport.time_zone).to_s(:time)} - #{tt1.TimeEnd.in_time_zone(tt1.apkey.airport.time_zone).to_s(:time)} ||
+        #{tt1.aircompany.iata_code} #{tt1.flight_number}
+        #{@airport1.city_rus} (#{tt1.airport_start.name_rus}) - #{a.city_rus} (#{tt1.airport_finish.name_rus})  || 
+        #{tt1.TimeStart.in_time_zone(tt1.airport_start.time_zone).to_s(:time)} - #{tt1.TimeEnd.in_time_zone(tt1.airport_finish.time_zone).to_s(:time)} ||
         - tt1.TimeStart = tt1.TimeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
         - tt1.TimeEnd = tt1.TimeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
         - tt2.TimeStart = tt2.TimeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
@@ -51,8 +51,8 @@
           - tt2.TimeEnd = tt2.TimeEnd + 24.hour
           = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
         %br
-        #{tt2.aircompany.iata_code} #{tt2.Flight_Number}
-        #{a.city_rus} (#{tt2.airport.name_rus}) - #{@airport2.city_rus} (#{tt2.apkey.airport.name_rus})  #{tt2.TimeStart.in_time_zone(tt2.airport.time_zone).to_s(:time)} - #{tt2.TimeEnd.in_time_zone(tt2.apkey.airport.time_zone).to_s(:time)} || 
+        #{tt2.aircompany.iata_code} #{tt2.flight_number}
+        #{a.city_rus} (#{tt2.airport_start.name_rus}) - #{@airport2.city_rus} (#{tt2.airport_finish.name_rus})  #{tt2.TimeStart.in_time_zone(tt2.airport_start.time_zone).to_s(:time)} - #{tt2.TimeEnd.in_time_zone(tt2.airport_finish.time_zone).to_s(:time)} || 
         - if tt2.TimeStart < tt2.TimeEnd
           = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
         - else

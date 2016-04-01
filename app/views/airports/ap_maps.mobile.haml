@@ -1,0 +1,42 @@
+%h2 Карта аэропортов
+- @airports = Airport.where(country_id: 528)
+- @centr = Airport.find(25832)
+%canvas#canva{width:1100,height:1100}
+:javascript
+  var canvas = document.getElementById('canva'),
+  obCanvas = canvas.getContext('2d');
+  var x = 400;
+  var y = 600;
+  obCanvas.translate(x,y);
+- @airports.each do |ap|
+  - dist = ap.distance_from(@centr, :units=>:kms)/4
+  - p1 = GeoPoint.new  @centr.latitude.to_f, @centr.longitude.to_f
+  - p2 = GeoPoint.new  ap.latitude.to_f, ap.longitude.to_f
+  - fbear = p1.bearing_to(p2)
+  :javascript
+    var a = (#{fbear.to_f}-90) * (Math.PI/180);
+    var r = #{dist};
+    obCanvas.beginPath();
+    obCanvas.lineWidth = 1;
+    obCanvas.moveTo(0, 0);
+    obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, 5, 0, 2*Math.PI, false);
+    obCanvas.fillStyle = 'yellow';
+    obCanvas.fill();
+    obCanvas.lineWidth = 1;
+    obCanvas.strokeStyle = 'blue';
+    obCanvas.fillStyle   = '#fff';
+    obCanvas.font  = 'italic bold 11px sans-serif';
+    obCanvas.textAlign = 'left';
+    obCanvas.fillText("#{ap.name_rus}", (Math.cos(a)*r)+5, Math.sin(a)*r);
+:javascript
+  obCanvas.beginPath();
+  obCanvas.arc(0, 0, 10, 0, 2*Math.PI, false);
+  obCanvas.fillStyle = 'green';
+  obCanvas.fill();
+  obCanvas.lineWidth = 1;
+  obCanvas.strokeStyle = 'blue';
+  obCanvas.stroke();
+  obCanvas.fillStyle   = '#ffe';
+  obCanvas.font  = 'bold 20px sans-serif';
+  obCanvas.textAlign = 'right';
+  obCanvas.fillText("#{@centr.name_rus}", -10, 0);

@@ -1,2 +1,0 @@
-$("#aircompanies").html("#{escape_javascript(render("aircompanies/aircompanies"))}");
-$('.pagination').html('#{escape_javascript(paginate(@aircompanies, :remote => true).to_s)}');

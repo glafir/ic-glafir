@@ -1,17 +1,21 @@
 = navbar fixed: :top do
   = navbar_header
   = navbar_collapse do
-    = navbar_group class: 'foo', id: 'menu' do
+    = navbar_group align: 'left', class: 'left-userpanel', id: 'menu' do
       %li= link_to image_tag("#{current_user.avatar.url(:thumb_50)}", :class => 'img-circle'), current_user
     = navbar_group align: 'right' do
-      = navbar_dropdown "Поиск и расстояние" do
-        = navbar_item "Поиск городов"
-        = navbar_item "Поиск аэропортов"
-        = navbar_item "Поиск рейсов по аэропртам", timetableaps_path
-        = navbar_item "Поиск рейсов по городам", search_tt_path
-        = navbar_item "Расстояния между а/п", ap_dist_airports_path
-        = navbar_item "Поиск а/п в точке",search_ap_circle_airports_path
       - if user_signed_in?
+        = navbar_dropdown "Админпанель" do
+          = navbar_item "Аэропорты", admin_ap_airports_path
+          = navbar_item "Авиакомпании", admin_al_aircompanies_path
+          = navbar_item "Рейсы", admin_tt_timetableaps_path
+        = navbar_dropdown "Поиск и расстояние" do
+          = navbar_item "Поиск городов"
+          = navbar_item "Поиск аэропортов"
+          = navbar_item "Поиск рейсов прямых по аэропртам", timetableaps_path
+          = navbar_item "Поиск рейсов прямых по городам", search_tt_path
+          = navbar_item "Расстояния между а/п", ap_dist_airports_path
+          = navbar_item "Поиск трансфертных рейсов",search_ap_circle_airports_path
         = navbar_dropdown "В мире" do
           = navbar_item "Страны", countries_path
           = navbar_item "Города", towns_path
@@ -31,6 +35,7 @@
           %li= link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528
           = navbar_item "Рейсы", timetableaps_path
           = navbar_item "ВПП аэропортов", runway_aps_path
+          = navbar_item "Общая карта",ap_maps_airports_path
           = navbar_dropdown_divider
           = navbar_item "Добавить город", new_town_path
           = navbar_item "Добавить аэропорт", new_airport_path
@@ -41,6 +46,6 @@
           %li= link_to "My profile", current_user, class: "btn active"
           %li= link_to 'Edir my profile', edit_user_registration_path, class:"btn active"
           - if policy(current_user).index?
-            = navbar_item "Users", users_path
+            %li= link_to "Users", users_path, class: "btn active"
           = navbar_dropdown_divider
           %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete, class: "btn active" if user_signed_in?

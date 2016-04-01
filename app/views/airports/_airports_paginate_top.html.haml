@@ -1,4 +1,5 @@
 #apple_pagination.apple_pagination
-  = paginate @airports, :remote => true
+  = paginate @airports, :remote => true, :theme => 'desktop'
+
   .page_info
     = page_entries_info @airports

@@ -6,7 +6,7 @@
   //});
 %p#notice= notice
 = form_tag "/timetableaps/new", :method => 'get' do
-  = hidden_field_tag 'Flight_Number', @timetableap.Flight_Number
+  = hidden_field_tag 'flight_number', @timetableap.flight_number
   = hidden_field_tag 'aircompany_id', @timetableap.aircompany_id
   = hidden_field_tag 'way_start', @timetableap.way_start
   = hidden_field_tag 'way_end', @timetableap.way_end
@@ -37,7 +37,7 @@
   = submit_tag 'Добавить обратный рейс.'
 %p
   %b Flight number:
-  = @timetableap.Flight_Number
+  = @timetableap.flight_number
 %p
   %b Aircompany:
   = @timetableap.aircompany.airline_name_rus

@@ -6,7 +6,7 @@ class Airports < Application
     c.docked_items = [{
       xtype: :toolbar,
       dock: :left,
-      items: [:do_som1, :do_som2]
+      items: [:countries, :towns, :airports, :airlines, :flights, :users]
     }]
     c.model = "Airport"
     c.columns = [
@@ -21,10 +21,11 @@ class Airports < Application
       {name: :town__city_rus},
       {name: :weather_state, header: "В любьую погоду?"},
       {name: :iso_code, header: "Страна"},
-#      {name: :latitude, header: "Широта"},
-#      {name: :longitude, header: "Долгота"},
+      {name: :latitude, header: "Широта"},
+      {name: :longitude, header: "Долгота"},
       {name: :actions, header: "Удалить?"}
     ]
+    c.tbar = [ {xtype: 'textfield', attr: :city_rus, empty_text: 'search by name'}, :add, :edit, :apply, :delete, :search ]
   end
 end
 

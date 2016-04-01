@@ -1,5 +1,6 @@
 %h1 Editing aircompany
 = render 'form'
-= link_to 'Show', @aircompany
+= link_to 'Show', @aircompany, :class => 'btn btn-default'
 |
-= link_to 'Back', aircompanies_path
+= link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

@@ -4,12 +4,17 @@ include ActiveModel::Validations
   has_many :timetableap_subs
   belongs_to :aircompany, inverse_of: :timetableaps, :counter_cache => true
   belongs_to :aircraft
-  belongs_to :airport, foreign_key: "way_start"
-#  belongs_to :airport, class_name: "Apkey", foreign_key: "way_end"
-  belongs_to :apkey,  foreign_key: "way_end"
+  belongs_to :airport_start, class_name: "Airport", foreign_key: "way_start"
+  belongs_to :airport_finish, class_name: "Airport", foreign_key: "way_end"
   has_many :timetableapSub, dependent: :destroy
-  attr_accessible :aircompany_id, :DateOfEndNav, :DateOfStartNav, :Flight_Number, :GateEnd, :GateStart, :TermEnd, :TermStart, :TimeEnd, :TimeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start
-  attr_accessor :twrus, :aprus, :f_twrus, :f_aprus, :s_twrus, :s_aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2, :timeEnd, :timeStart, :ap, :s_ap, :f_ap, :bgcolor_apload
+  has_many :childs, class_name: "Timetableap",
+                          foreign_key: "parent_id"
+  belongs_to :parent, class_name: "Timetableap"
+
+
+  attr_accessible :aircompany_id, :DateOfEndNav, :DateOfStartNav, :flight_number, :GateEnd, :GateStart, :TermEnd, :TermStart, :TimeEnd, :TimeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start, :parent_id
+  attr_accessor :twrus, :aprus, :f_twrus, :f_aprus, :s_twrus, :s_aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2, :timeEnd, :timeStart, :ap, :s_ap, :f_ap, :bgcolor_apload, :flight
+
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }
   validates  :way_start, presence: true, numericality: { only_integer: true }
   validates  :way_end, presence: true, numericality: { only_integer: true }
@@ -17,7 +22,25 @@ include ActiveModel::Validations
   validates  :DateOfStartNav, presence: true
   validates  :Flight_Number, presence: true, numericality: { only_integer: true },
                     length: { maximum: 9999 },
-                  uniqueness: { scope: :aircompany_id, message: "should happen once per year" }
+                  uniqueness: { scope: :aircompany_id, message: "This Flight is exist!" }
+  validates  :Flight_Number, numericality: { only_integer: true },
+                    length: { maximum: 9999 },
+                  uniqueness: { scope: :parent_id, message: "This SunFlight is exist!" }
+
+
+  def flight
+    "#{aircompany.iata_code} #{flight_number}"
+  end
+
+  def self.stoday
+    @wday = Time.zone.now.strftime'%w'.to_s
+    where("s#{@wday} = ?",1)
+  end
+
+  def self.etoday
+    @wday = Time.zone.now.strftime'%w'.to_s
+    where("e#{@wday} = ?",1)
+  end
 
   def self.search_start_ap(start_ap)
     if start_ap && start_ap != ""

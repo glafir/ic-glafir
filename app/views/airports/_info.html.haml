@@ -15,6 +15,16 @@
   %b Местное время:
   = DateTime.current.in_time_zone(@airport.time_zone)
 %p
+  %b Количество полос:
+  = @airport.runway_aps.count
+%p
+  %b Количество рейсов в день / самолётов в день:
+  - @aptt_in = @airport.timetableaps_in.where("e#{@wday} = ?",1).count
+  - @aptt_out = @airport.timetableaps_out.where("e#{@wday} = ?",1).count
+  - @aptt_all = @aptt_in + @aptt_out or 0
+  #{@aptt_all} / #{@aptt_out}
+
+%p
   %b Восход:
   = sr = sun_time.sunrise.in_time_zone(@airport.time_zone).to_s(:time) if sun_time.sunrise != nil
   -#= sr = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunrise.in_time_zone(@airport.time_zone).to_s(:time)
@@ -41,3 +51,5 @@
 %b Азимут Ежинска а/п Ежово-1:
 %p
   = @fbear
+%b Мрашрутная карта аэропрта #{@airport.name_rus} : 
+%p= render "airports/map"

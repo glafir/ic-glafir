@@ -13,8 +13,7 @@ require 'devise_traceable'
 #require 'suncalc'
 before_filter :authenticate_user!
 helper_method :sort_column, :sort_direction
-
-#require 'date'
+before_filter :day_week
 #layout :layout_by_resource
 #def store_location
 #  session[:return_to] = request.fullpath
@@ -181,5 +180,9 @@ end
 
   def json_request?
     request.format.json?
+  end
+
+  def day_week
+    @wday = Time.zone.now.strftime'%w'.to_s
   end
 end

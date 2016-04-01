@@ -38,13 +38,13 @@
       %td
         = airport.latitude
         %br
-        #{airport.town.latitude}
+        = airport.town.latitude if airport.town
       %td
         = airport.longitude
         %br
-        #{airport.town.longitude}
+        = airport.town.longitude if airport.town
       %td
-        #{airport.distance_from(airport.town, :units=>:kms) unless airport.town.latitude.blank?} kms
+        #{airport.distance_from(airport.town, :units=>:kms) if airport.town} kms
       %td= airport.country.country_iata_code
       %td= airport.runway_aps.count
       %td
@@ -54,8 +54,8 @@
       %td
         - Time.zone = airport.time_zone
         - @wday = Time.zone.now.strftime'%w'.to_s
-        - @aptt_in = airport.apkey.timetableaps.where(way_end: airport.id).where("e#{@wday} = ?",1).count
-        - @aptt_out = airport.timetableaps.where(way_start: airport.id).where("e#{@wday} = ?",1).count
+        - @aptt_in = airport.timetableaps_in.stoday.count
+        - @aptt_out = airport.timetableaps_out.etoday.count
         - @aptt_all = @aptt_in + @aptt_out or 0
         = @aptt_all
         ||#{@aptt_out}/#{@aptt_in}

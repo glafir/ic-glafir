@@ -41,7 +41,6 @@ class TownsController < ApplicationController
   def new
     @town = Town.new
     authorize @town
-    respond_with(@town)
   end
 
   def edit
@@ -54,7 +53,7 @@ class TownsController < ApplicationController
     flash[:notice] = "The town  #{@town.id} was created!" if @town.save && !request.xhr?
     @flash_message_state_id = 401
     authorize @town
-    respond_with @country
+    respond_with(@country, @town)
   end
 
   def update
@@ -62,13 +61,13 @@ class TownsController < ApplicationController
     flash[:notice] = "The town  #{@town.id} was updated!" if @town.update_attributes(params[:airport]) && !request.xhr?
     @flash_message_state_id = 402
     authorize @town
-    respond_with @country
+    respond_with(@country, @town)
   end
 
   def destroy
     @town.destroy
     authorize @town
-    respond_with @country
+    respond_with(@country, @town)
   end
 
   def tw_dist

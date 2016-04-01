@@ -1,9 +1,7 @@
-%h1 Airports.
 = form_tag  "#", :remote => true, :method => 'get',  :id => "airports_search" do
-  %div
-    = text_field_tag :search, params[:search], autofocus: true
-    = submit_tag "Search", :name => nil
-    = render "layouts/per_page"
-  #airports= render "airports/airports"
-- if policy(@airports).new?
-  = link_to 'New Airport', new_airport_path, class: "jqbutton"
+  .col-xs-6
+    = text_field_tag :search, params[:search], autofocus: true, class: 'form-control'
+  = submit_tag "Search", :name => nil, class: 'btn btn-primary'
+  = render "layouts/per_page"
+  #airports.col-xs-12= render "airports/airports"
+

@@ -14,10 +14,13 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
 #
 #    render :nothing => true
 #   end
+
+  def ap_maps
+    authorize :airport
+  end
+
   def apload
     authorize @airport
-    Time.zone = @airport.time_zone
-    @wday = Time.zone.now.strftime'%w'.to_s
     @timetableaps = Timetableap.where(way_start: @airport.id).where("s#{@wday} = ?",1)
     if params[:apload] == 'out'
       @title = "Загруженность аэропорта #{@airport.name_rus} вылет"
@@ -61,16 +64,8 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
     respond_with(@airport)
   end
 
-  def city
-    @airports = Airport.where(city_eng: params[:city_eng])
-    @airports = @airports.paginate :page => params[:page], :order => 'name_rus'
-    authorize Airport
-    respond_with(@airport)
-  end
-
   def new
     @airport = Airport.new
-    @apkey = Apkey.new
     authorize @airport
     respond_with(@airport)
   end
@@ -81,21 +76,15 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
 
   def create
     @airport = Airport.new(params[:airport])
-    @apkey = Apkey.new
     authorize @airport
-      if @airport.save
-        @apkey.id = @airport.id
-        @apkey.airport_id = @airport.id
-        @apkey.save
-        flash[:notice] = "The airport #{@airport.id} was created!" if @apkey.save && !request.xhr?
-      end
+    flash[:notice] = "The airport #{@airport.id} was created!" if @apkey.save && !request.xhr?
     respond_with(@airport)
   end
 
   def update
+    authorize @airport
     @airport.update_attributes(params[:airport])
     flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
-    authorize @airport
     respond_with(@airport)
   end
 
@@ -107,7 +96,6 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   
   def tablo
     Time.zone = @airport.time_zone
-    @wday = Time.zone.now.strftime'%w'.to_s
     if params[:apt] == 'out'
       @tablo = "Табло вылета на сегодня #{Time.zone.now.to_s(:short)}"
       tbody_tablo_out
@@ -160,7 +148,7 @@ private
 
   def tbody_tablo_out
     @timetableap_subs = Array.new
-    @timetableaps = Timetableap.where(way_start: @airport.id).where("s#{@wday} = ?",1)
+    @timetableaps = @airport.timetableaps_out.stoday
     @timetableaps = @timetableaps.search_endtw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
     @timetableaps = @timetableaps.search_endcountry(params[:country])
@@ -174,12 +162,12 @@ private
       else
         tt.timeIN = tt.TimeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
       end
-      tt.s_ap = tt.airport
-      tt.f_ap = tt.apkey.airport
-      tt.f_aprus = tt.apkey.airport.name_rus
-      tt.f_twrus = tt.apkey.airport.city_rus
-      tt.s_aprus = tt.airport.name_rus
-      tt.s_twrus = tt.airport.city_rus
+      tt.s_ap = tt.airport_start
+      tt.f_ap = tt.airport_finish
+      tt.f_aprus = tt.airport_finish.name_rus
+      tt.f_twrus = tt.airport_finish.city_rus
+      tt.s_aprus = tt.airport_start.name_rus
+      tt.s_twrus = tt.airport_start.city_rus
       tt.aprus = tt.f_aprus
       tt.twrus = tt.f_twrus
       tt.ap = tt.f_ap
@@ -212,9 +200,9 @@ private
         tt0.f_twrus = tt.f_twrus
         tt0.s_aprus = tt.s_aprus
         tt0.s_twrus = tt.s_twrus 
-        tt0.aprus = tt0.timetableap.apkey.airport.name_rus
-        tt0.apkey = tt0.timetableap.apkey
-        tt0.twrus = tt0.timetableap.apkey.airport.city_rus
+        tt0.aprus = tt0.timetableap.airport_finish.name_rus
+        tt0.apkey = tt0.timetableap.airport_finish
+        tt0.twrus = tt0.timetableap.airport_finish.city_rus
         tt0.fstatus = tt.fstatus
         tt0.bgcolor = tt.bgcolor
         tt0.airline = tt0.aircompany.airline_name_rus
@@ -227,7 +215,7 @@ private
 
   def tbody_tablo_in
     @timetableap_subs = Array.new
-    @timetableaps = Timetableap.where(way_end: @airport.id).where("e#{@wday} = ?",1)
+    @timetableaps = @airport.timetableaps_in.etoday
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
     @timetableaps = @timetableaps.search_starttw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
@@ -241,12 +229,12 @@ private
       else
         tt.timeIN = tt.TimeEnd.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
       end
-      tt.s_ap = tt.airport
-      tt.f_ap = tt.apkey.airport
-      tt.s_aprus = tt.airport.name_rus
-      tt.s_twrus = tt.airport.town.city_rus
-      tt.f_aprus = tt.apkey.airport.name_rus
-      tt.f_twrus = tt.apkey.airport.city_rus
+      tt.s_ap = tt.airport_start
+      tt.f_ap = tt.airport_finish
+      tt.s_aprus = tt.airport_start.name_rus
+      tt.s_twrus = tt.airport_start.town.city_rus
+      tt.f_aprus = tt.airport_finish.name_rus
+      tt.f_twrus = tt.airport_finish.city_rus
       tt.aprus = tt.s_aprus
       tt.twrus = tt.s_twrus
       tt.ap = tt.s_ap
@@ -269,8 +257,8 @@ private
         tt0.s_aprus = tt.s_aprus
         tt0.s_twrus = tt.s_twrus
         tt0.timeIN = tt.timeIN
-        tt0.aprus = tt0.timetableap.airport.name_rus
-        tt0.twrus = tt0.timetableap.airport.town.city_rus
+        tt0.aprus = tt0.timetableap.airport_finish.name_rus
+        tt0.twrus = tt0.timetableap.airport_finish.town.city_rus
         tt0.fstatus = tt.fstatus
         tt0.bgcolor = tt.bgcolor
         tt0.apkey = tt0.timetableap.apkey

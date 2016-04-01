@@ -1,5 +1,5 @@
 class TimetableapPolicy < ApplicationPolicy
-  def ttair_admin?
+  def admin_tt?
     admin
   end
 

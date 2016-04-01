@@ -1,7 +1,20 @@
-%p#notice= notice
-= render "aircompanies/index.mobile"
-
-= link_to 'Edit country', edit_country_path(@country)
-= link_to 'Back to all countries', countries_path+"?search=&utf8=✓"
-
+.page-header
+  %h1 Airlines of #{@country.country_name}
+.col-xs-12
+  - if policy(@aircompanies).new?
+    = link_to 'New Aircompany', new_aircompany_path, class: "btn btn-primary"
+    \|
+  - if policy(@country).edit?
+    = link_to 'Edit country', edit_country_path(@country), class: "btn btn-info"
+    \|
+  = link_to 'Back to all countries', countries_path+"?search=&utf8=✓", class: "btn btn-default"
+= render "aircompanies/index"
+.col-xs-12
+  - if policy(@aircompanies).new?
+    = link_to 'New Aircompany', new_aircompany_path, class: "btn btn-primary"
+    \|
+  - if policy(@country).edit?
+    = link_to 'Edit country', edit_country_path(@country), class: "btn btn-info"
+    \|
+  = link_to 'Back to all countries', countries_path+"?search=&utf8=✓", class: "btn btn-default"
 

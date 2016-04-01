@@ -1,19 +1,22 @@
-%h1 Sign in
-= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:data => {:ajax => 'false'}}) do |f|
-  %p
-    = f.label :login
-    = f.text_field :login, :autofocus => true
-  %p
-    = f.label :password
-    = f.password_field :password
+.page-header
+  %h3 Sign in
+= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:data => {:ajax => 'false'}, class: "form form-horizontal user"} ) do |f|
+  .form-group
+    = f.label :login, class: 'col-xs-2 control-label'
+    .controls.col-xs-10
+      = f.text_field :login, size: 30, :autofocus => true, class: 'form-control'
+  .form-group
+    = f.label :password, class: 'col-xs-2 control-label'
+    .controls.col-xs-10
+      = f.password_field :password, size: 30, class: 'form-control'
   - if devise_mapping.rememberable?
-    %p
-      = f.label :remember
-      = f.check_box :remember_me
-  %p.login-submit
-    = f.button "Sign in", class: "login-button"
-  %p.forgot-password
-    %a{:href => "index.html"} Забыл пароль?
-  :javascript
-    var elem = document.querySelector('#user_remember_me');
-            var init = new Switchery(elem,{ color: '#fec200'});
+    .form-group
+      .col-xs-offset-2.col-xs-10
+        = f.label :remember, class: 'control-label'
+        = f.check_box :remember_me
+  .form-group
+    .col-xs-offset-2.col-xs-10
+      = f.button "Войти", class: "btn btn-info"
+:javascript
+  var elem = document.querySelector('#user_remember_me');
+  var init = new Switchery(elem,{ color: '#fec200'});

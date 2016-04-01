@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/home/glafir/.rvm/rubies/ruby-2.3.0/bin/ruby
 require 'pathname'
 
 # path to your application root.

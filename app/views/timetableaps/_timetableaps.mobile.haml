@@ -22,22 +22,21 @@
       %tr
         %td
           %span.glyphicon.glyphicon-plane
-          = timetableap.aircompany.iata_code
-          = timetableap.Flight_Number
+          = timetableap.flight
         %td
-          = timetableap.airport.town.city_rus
+          = timetableap.airport_start.town.city_rus
           = succeed "(" do
             %br/
-          = link_to timetableap.airport.name_rus, timetableap.airport
+          = link_to timetableap.airport_start.name_rus, timetableap.airport_start
           )
-        %td= timetableap.TimeStart.in_time_zone(timetableap.airport.time_zone).to_s(:time)
+        %td= timetableap.TimeStart.in_time_zone(timetableap.airport_start.time_zone).to_s(:time)
         %td
-          = timetableap.apkey.airport.town.city_rus
+          = timetableap.airport_finish.town.city_rus
           = succeed "(" do
             %br/
-          = link_to timetableap.apkey.airport.name_rus, timetableap.apkey.airport
+          = link_to timetableap.airport_finish.name_rus, timetableap.airport_finish
           )
-        %td= timetableap.TimeEnd.in_time_zone(timetableap.apkey.airport.time_zone).to_s(:time)
+        %td= timetableap.TimeEnd.in_time_zone(timetableap.airport_finish.time_zone).to_s(:time)
         - if timetableap.DateOfEndNav <= Date.current
           - bgcolor = "#550C1A"
         - elsif timetableap.DateOfEndNav > Date.current + 2.month and timetableap.DateOfEndNav < Date.current + 4.month

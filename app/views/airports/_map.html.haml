@@ -1,0 +1,71 @@
+.radius
+  = form_tag '#',:method => :get, remote: false do
+    = label_tag "Радиус в км:"
+    = select_tag :radius, options_for_select([10, 15, 20, 30, 50, 75, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000], selected: params[:radius] || params[:radius]), :onchange => "this.form.submit();"
+    = label_tag "km"
+
+- if params[:radius] && params[:radius] != ''
+  %canvas#canva{width:1100,height:1100}
+  - @towns = Airport.within(params[:radius], :origin => @airport)
+  :javascript
+    var canvas = document.getElementById('canva'),
+    obCanvas = canvas.getContext('2d');
+    var x = 550;
+    var y = 550;
+    obCanvas.translate(x,y);
+
+
+
+  %br
+  - @towns.each do |town|
+    - if town.id != @airport.id
+      - dist = town.distance_from(@airport, :units=>:kms)/((params[:radius].to_f)/510)
+      - p1 = GeoPoint.new  town.latitude.to_f, town.longitude.to_f
+      - p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
+      - fbear = p2.bearing_to(p1)
+      - tt = Timetableap.where(way_start: @airport.id).where(way_end: town.id)
+      :javascript
+        var a = (#{fbear.to_f}-90) * (Math.PI/180);
+        var r = #{dist};
+        obCanvas.beginPath();
+        obCanvas.lineWidth = 1;
+        obCanvas.moveTo(0, 0);
+      - if tt.count == 0
+        :javascript
+          obCanvas.strokeStyle = 'gray';
+      - else
+        :javascript
+          obCanvas.strokeStyle = 'red';        
+      :javascript
+        obCanvas.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+        obCanvas.stroke();
+        obCanvas.beginPath();
+        obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, 5, 0, 2*Math.PI, false);
+      - if tt.count == 0
+        :javascript
+          obCanvas.fillStyle = 'gray';
+      - else
+        :javascript
+          obCanvas.fillStyle = 'yellow';
+      :javascript
+        obCanvas.fill();
+        obCanvas.lineWidth = 1;
+        obCanvas.strokeStyle = 'blue';
+        obCanvas.stroke();
+        obCanvas.fillStyle   = '#fff';
+        obCanvas.font  = 'italic bold 11px sans-serif';
+        obCanvas.textAlign = 'left';
+        obCanvas.fillText("#{town.name_rus}", (Math.cos(a)*r)+5, Math.sin(a)*r);
+
+  :javascript
+    obCanvas.beginPath();
+    obCanvas.arc(0, 0, 10, 0, 2*Math.PI, false);
+    obCanvas.fillStyle = 'green';
+    obCanvas.fill();
+    obCanvas.lineWidth = 1;
+    obCanvas.strokeStyle = 'blue';
+    obCanvas.stroke();
+    obCanvas.fillStyle   = '#ffe';
+    obCanvas.font  = 'bold 20px sans-serif';
+    obCanvas.textAlign = 'right';
+    obCanvas.fillText("#{@airport.name_rus}", -10, 0);

@@ -1,1 +1,3 @@
 = render "index.mobile"
+- if policy(@airports).new?
+  = link_to 'New Airport', new_airport_path, class: "btn btn-primary"
