@@ -1,4 +1,5 @@
 class AirportsController < ApplicationController
+include ActionView::Helpers::UrlHelper
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
 #layout "without_html", :only => [:tablo]
 autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
@@ -45,11 +46,12 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   def admin_ap
 #    render layout: "application_empty_1"
     authorize :airport
+    respond_with(@airports)
   end
 
   def index
     @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).order(:name_rus).order(:name_eng).page(params[:page]).per(params[:limit])
-    authorize Airport
+    authorize :airport
     respond_with(@airports)
   end
 
@@ -77,7 +79,7 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   def create
     @airport = Airport.new(params[:airport])
     authorize @airport
-    flash[:notice] = "The airport #{@airport.id} was created!" if @apkey.save && !request.xhr?
+    flash[:notice] = "The airport #{@airport.id} was created!" if @airport.save && !request.xhr?
     respond_with(@airport)
   end
 
@@ -97,37 +99,22 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   def tablo
     Time.zone = @airport.time_zone
     if params[:apt] == 'out'
-      @tablo = "Табло вылета на сегодня #{Time.zone.now.to_s(:short)}"
+      @tablo = "Табло вылета аэропорта #{link_to @airport.name_rus, airport_path(@airport)} на сегодня #{Time.now.in_time_zone(@airport.time_zone).to_s}"
       tbody_tablo_out
-      @timetableaps = @timetableaps + @timetableap_subs
     elsif params[:apt] == 'in'
-      @tablo = "Табло прилёта на сегодня #{Time.zone.now.to_s(:short)}"
+      @tablo = "Табло прилёта аэропорта #{view_context.link_to @airport.name_rus, airport_path(@airport)} на сегодня #{Time.zone.now.to_s(:short)}"
       tbody_tablo_in
-      @timetableaps = @timetableaps + @timetableap_subs
     else
+      @tablo = "Расписание аэропорта #{view_context.link_to @airport.name_rus, airport_path(@airport)} на сегодня #{Time.zone.now.to_s(:short)}"
       tbody_tablo_out
-      @tablo = "Расписание на сегодня #{Time.zone.now.to_s(:short)}"
-      @timetableaps1 = @timetableaps + @timetableap_subs
+      @timetableaps1 = @timetableaps
       tbody_tablo_in
-      @timetableaps2 = @timetableaps + @timetableap_subs
+      @timetableaps2 = @timetableaps
       @timetableaps = @timetableaps1 + @timetableaps2
     end
-
-## ----Для интерактивного селекта---------
-#    @timetableaps = Timetableap.select("*,(select name_rus from airports where airports.id = timetableaps.#{@w_end}) as aprus,(select city_rus from airports where airports.id = timetableaps.#{@w_end}) as rus").where("#{@w_start} = ?", params[:id]).where("s#{@wday} = 1")
-##    @timetableaps = @t.search(params[:id],params[:way_end],params[:search_al])
-
-##    @airports = Airport.search(params[:search])
-##    @timetableaps = Array.new
-##    @airports.each do |arp|
-#      @timetableaps0 = @t.search(params[:id],arp.id,params[:search_al])
-##      @timetableaps = @timetableaps + @t.search(params[:id],arp.id,params[:search_al])
-##     end
-##########################################################################
-#    render layout: "application_empty_1"
     authorize @airport
     respond_with(@airport)
-	end
+  end
 
   def ap_dist
     @ap1 = Airport.find(params[:start_ap]) if params[:start_ap] != nil
@@ -147,7 +134,6 @@ private
   end  
 
   def tbody_tablo_out
-    @timetableap_subs = Array.new
     @timetableaps = @airport.timetableaps_out.stoday
     @timetableaps = @timetableaps.search_endtw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
@@ -156,24 +142,13 @@ private
     @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_end)))
     @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:way_end)))
     @timetableaps.each do |tt|
-      @timetableap_subs0 = TimetableapSub.where(timetableap_id: tt.id)
-      if tt.TimeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
-        tt.timeIN = tt.TimeStart.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
-      else
-        tt.timeIN = tt.TimeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
-      end
       tt.s_ap = tt.airport_start
       tt.f_ap = tt.airport_finish
-      tt.f_aprus = tt.airport_finish.name_rus
-      tt.f_twrus = tt.airport_finish.city_rus
-      tt.s_aprus = tt.airport_start.name_rus
-      tt.s_twrus = tt.airport_start.city_rus
-      tt.aprus = tt.f_aprus
-      tt.twrus = tt.f_twrus
-      tt.ap = tt.f_ap
-      tt.airline = tt.aircompany.airline_name_rus
-      tt.al_plane = tt.aircompany.airline_name_rus
-      tt.plane_al = tt.aircompany
+      if tt.timeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
+        tt.timeIN = tt.timeStart.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+      else
+        tt.timeIN = tt.timeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+      end
       tt.bgcolor_apload = "#9c0a0a"
       if tt.timeIN < Time.zone.now.utc
         tt.fstatus = "Вылетел"
@@ -191,25 +166,6 @@ private
         tt.fstatus = "Ожидается вылет"
         tt.bgcolor = "#1C86EE"
       end
-      @timetableap_subs0.each do |tt0|
-        tt0.f_ap = tt.f_ap 
-        tt0.s_ap = tt.s_ap 
-        tt0.ap = tt.ap
-        tt0.timeIN = tt.timeIN
-        tt0.f_aprus = tt.f_aprus
-        tt0.f_twrus = tt.f_twrus
-        tt0.s_aprus = tt.s_aprus
-        tt0.s_twrus = tt.s_twrus 
-        tt0.aprus = tt0.timetableap.airport_finish.name_rus
-        tt0.apkey = tt0.timetableap.airport_finish
-        tt0.twrus = tt0.timetableap.airport_finish.city_rus
-        tt0.fstatus = tt.fstatus
-        tt0.bgcolor = tt.bgcolor
-        tt0.airline = tt0.aircompany.airline_name_rus
-        tt0.al_plane = tt.al_plane
-        tt0.plane_al = tt0.timetableap.aircompany
-      end
-      @timetableap_subs = @timetableap_subs + @timetableap_subs0
     end
   end
 
@@ -223,24 +179,13 @@ private
     @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_start)))
     @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:way_start)))
     @timetableaps.each do |tt|
-      @timetableap_subs0 = TimetableapSub.where(timetableap_id: tt.id)
-      if tt.TimeEnd.hour < 24 - (Time.zone.now.utc_offset / 3600)
-        tt.timeIN = tt.TimeEnd.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+      tt.f_ap = tt.airport_start
+      tt.s_ap = tt.airport_finish
+      if tt.timeEnd.hour < 24 - (Time.zone.now.utc_offset / 3600)
+        tt.timeIN = tt.timeEnd.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
       else
-        tt.timeIN = tt.TimeEnd.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+        tt.timeIN = tt.timeEnd.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
       end
-      tt.s_ap = tt.airport_start
-      tt.f_ap = tt.airport_finish
-      tt.s_aprus = tt.airport_start.name_rus
-      tt.s_twrus = tt.airport_start.town.city_rus
-      tt.f_aprus = tt.airport_finish.name_rus
-      tt.f_twrus = tt.airport_finish.city_rus
-      tt.aprus = tt.s_aprus
-      tt.twrus = tt.s_twrus
-      tt.ap = tt.s_ap
-      tt.airline = tt.aircompany.airline_name_rus
-      tt.al_plane = tt.aircompany.airline_name_rus
-      tt.plane_al = tt.aircompany
       tt.bgcolor_apload = "#0B3762"
       if tt.timeIN < DateTime.current.in_time_zone(@airport_time_zone).utc
         tt.fstatus = "Прибыл"
@@ -249,24 +194,6 @@ private
         tt.fstatus = "Ожидается прибытие"
         tt.bgcolor = "#1C86EE"
       end
-      @timetableap_subs0.each do |tt0|
-        tt0.f_ap = tt.f_ap
-        tt0.s_ap = tt.s_ap
-        tt0.f_aprus = tt.f_aprus
-        tt0.f_twrus = tt.f_twrus
-        tt0.s_aprus = tt.s_aprus
-        tt0.s_twrus = tt.s_twrus
-        tt0.timeIN = tt.timeIN
-        tt0.aprus = tt0.timetableap.airport_finish.name_rus
-        tt0.twrus = tt0.timetableap.airport_finish.town.city_rus
-        tt0.fstatus = tt.fstatus
-        tt0.bgcolor = tt.bgcolor
-        tt0.apkey = tt0.timetableap.apkey
-        tt0.airline = tt0.aircompany.airline_name_rus
-        tt0.al_plane = tt.al_plane
-        tt0.plane_al = tt0.timetableap.aircompany
-      end
-      @timetableap_subs = @timetableap_subs + @timetableap_subs0
     end
   end
 

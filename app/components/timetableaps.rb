@@ -10,12 +10,13 @@ class Timetableaps < Application
     c.columns = [
       {name: :flight, header: "рейс", width: 40},
       {name: :aircompany__airline_name_rus, header: "Авиакомпания", width: 130},
+      {name: :parent__aircompany__airline_name_rus, header: "Parrent а/к", width: 130},
       {name: :airport_start__name_rus, header: "п. отпр", width: 100},
       {name: :airport_finish__name_rus, header: "п.назнач", width: 100},
-      {name: :DateOfStartNav, header: "Старт навигации", width: 50},
-      {name: :DateOfEndNav, header: "Конец навигации", width: 50},
-      {name: :TimeStart, date_format: "%H:%M", header: "время отпр", width: 50},
-      {name: :TimeEnd, date_format: "%H:%M", header: "время приб", width: 50}
+      {name: :dateOfStartNav, header: "Старт навигации", width: 50},
+      {name: :dateOfEndNav, header: "Конец навигации", width: 50},
+      {name: :timeStart, date_format: "%H:%M", header: "время отпр", width: 50},
+      {name: :timeEnd, date_format: "%H:%M", header: "время приб", width: 50}
     ]
   end
 end

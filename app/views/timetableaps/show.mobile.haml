@@ -5,49 +5,47 @@
   //   });
   //});
 %p#notice= notice
-= form_tag "/timetableaps/new", :method => 'get' do
-  = hidden_field_tag 'flight_number', @timetableap.flight_number
-  = hidden_field_tag 'aircompany_id', @timetableap.aircompany_id
-  = hidden_field_tag 'way_start', @timetableap.way_start
-  = hidden_field_tag 'way_end', @timetableap.way_end
-  = hidden_field_tag 'TermStart', @timetableap.TermStart
-  = hidden_field_tag 'TermEnd', @timetableap.TermEnd
-  = hidden_field_tag 'GateStart', @timetableap.GateStart
-  = hidden_field_tag 'GateEnd', @timetableap.GateEnd
-  = hidden_field_tag 'aircraft_id', @timetableap.aircraft_id
-  = hidden_field_tag 'TimeStart', @timetableap.TimeStart
-  = hidden_field_tag 'TimeEnd', @timetableap.TimeEnd
-  = hidden_field_tag 'DateOfStartNav', @timetableap.DateOfStartNav
-  = hidden_field_tag 'DateOfEndNav', @timetableap.DateOfEndNav
-  = hidden_field_tag 'aircraft_id', @timetableap.aircraft_id
-  = hidden_field_tag 's0', @timetableap.s0
-  = hidden_field_tag 'e0', @timetableap.e0
-  = hidden_field_tag 's1', @timetableap.s1
-  = hidden_field_tag 'e1', @timetableap.e1
-  = hidden_field_tag 's2', @timetableap.s2
-  = hidden_field_tag 'e2', @timetableap.e2
-  = hidden_field_tag 's3', @timetableap.s3
-  = hidden_field_tag 'e3', @timetableap.e3
-  = hidden_field_tag 's4', @timetableap.s4
-  = hidden_field_tag 'e4', @timetableap.e4
-  = hidden_field_tag 's5', @timetableap.s5
-  = hidden_field_tag 'e5', @timetableap.e5
-  = hidden_field_tag 's6', @timetableap.s6
-  = hidden_field_tag 'e6', @timetableap.e6
-  = submit_tag 'Добавить обратный рейс.'
+- if @timetableap.parent_id.blank?
+  = form_tag new_timetableap_path, :method => 'get' do
+    = hidden_field_tag 'flight_number', @timetableap.flight_number
+    = hidden_field_tag 'aircompany_id', @timetableap.aircompany_id
+    = hidden_field_tag 'way_start', @timetableap.way_start
+    = hidden_field_tag 'way_end', @timetableap.way_end
+    = hidden_field_tag 'timeStart', @timetableap.timeStart
+    = hidden_field_tag 'timeEnd', @timetableap.timeEnd
+    = hidden_field_tag 'dateOfStartNav', @timetableap.dateOfStartNav
+    = hidden_field_tag 'dateOfEndNav', @timetableap.dateOfEndNav
+    = hidden_field_tag 'aircraft_id', @timetableap.aircraft_id
+    = hidden_field_tag 's0', @timetableap.s0
+    = hidden_field_tag 'e0', @timetableap.e0
+    = hidden_field_tag 's1', @timetableap.s1
+    = hidden_field_tag 'e1', @timetableap.e1
+    = hidden_field_tag 's2', @timetableap.s2
+    = hidden_field_tag 'e2', @timetableap.e2
+    = hidden_field_tag 's3', @timetableap.s3
+    = hidden_field_tag 'e3', @timetableap.e3
+    = hidden_field_tag 's4', @timetableap.s4
+    = hidden_field_tag 'e4', @timetableap.e4
+    = hidden_field_tag 's5', @timetableap.s5
+    = hidden_field_tag 'e5', @timetableap.e5
+    = hidden_field_tag 's6', @timetableap.s6
+    = hidden_field_tag 'e6', @timetableap.e6
+    = submit_tag 'Добавить обратный рейс.', class: "btn btn-primary"
 %p
   %b Flight number:
-  = @timetableap.flight_number
+  = @timetableap.flight
+  - if @timetableap.parent_id
+    (Совмещён с #{@timetableap.parent.flight})
 %p
   %b Aircompany:
   = @timetableap.aircompany.airline_name_rus
   (#{@timetableap.aircompany.airline_name_rus}, базовый аэропорт #{@timetableap.aircompany.airport.name_rus})
 %p
   %b Way start:
-  = @timetableap.way_start
+  #{@timetableap.airport_start.city_rus} (#{@timetableap.airport_start.name_rus})
 %p
   %b Way end:
-  = @timetableap.way_end
+  #{@timetableap.airport_finish.city_rus} (#{@timetableap.airport_finish.name_rus})
 %p
   %b Termstart:
   = @timetableap.TermStart
@@ -62,19 +60,19 @@
   = @timetableap.GateEnd
 %p
   %b Typeofplane:
-  = @timetableap.aircraft.aircraft_model
+  = @timetableap.aircraft.aircraft_model if @timetableap.aircraft
 %p
   %b Timestart:
-  = @timetableap.TimeStart
+  = @timetableap.timeStart.in_time_zone(@timetableap.airport_start.time_zone)
 %p
   %b Timeend:
-  = @timetableap.TimeEnd
+  = @timetableap.timeEnd.in_time_zone(@timetableap.airport_finish.time_zone)
 %p
   %b Dateofstartnav:
-  = @timetableap.DateOfStartNav
+  = @timetableap.dateOfStartNav
 %p
   %b Dateofendnav:
-  = @timetableap.DateOfEndNav
+  = @timetableap.dateOfEndNav
 %p
   %b S1:
   = @timetableap.s1

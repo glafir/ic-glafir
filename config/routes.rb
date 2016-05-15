@@ -5,7 +5,13 @@ IcApp::Application.routes.draw do
   resources :airport_air_traffics
   resources :airport_states
   resources :station_zones
-  resources :stations
+
+  resources :stations do
+    collection do
+      get "admin_stations"
+    end
+  end
+
   resources :station_types
   resources :flash_message_states
   netzke "/netzke", controller: :admin

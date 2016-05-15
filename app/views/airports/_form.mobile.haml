@@ -1,3 +1,31 @@
+%h3 Расчёт координат от расстояния от города:
+= form_tag '', method: "get" do
+  .form-group
+    = label_tag "Dist From Town (km):", nil, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+    .controls.col-lg-2.col-md-2.col-sm-2.col-xs-3
+      = text_field_tag :dist, params[:dist], class: 'form-control'
+  .form-group
+    = label_tag "Ugol From Town (dg):", nil, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+    .controls.col-lg-2.col-md-2.col-sm-2.col-xs-3
+      = text_field_tag :ugol, params[:ugol], class: 'form-control'
+    = hidden_field_tag 'town_id', params[:town_id]
+    = hidden_field_tag 'city_rus', params[:city_rus]
+    = hidden_field_tag 'city_eng', params[:city_eng]
+    = hidden_field_tag 'country_id', params[:country_id]
+  .form-group
+    = submit_tag "Расчитать координаты", :name => nil, class: 'btn btn-primary'
+
+
+- if (params[:ugol] != nil && params[:ugol] != '') && (params[:dist] != nil && params[:dist] != '') && (params[:town_id] != nil && params[:town_id] != '')
+  - @town = Town.find(params[:town_id])
+  - dist = params[:dist].to_f
+  - bearing = params[:ugol].to_f
+  - @p1 = GeoPoint.new  @town.latitude.to_f, @town.longitude.to_f
+  - dest = @p1.destination_point(bearing, dist).to_s.split(/,/)
+  = @lat = dest[0].parse_dms
+  = @lon = dest[1].parse_dms
+
+%h3 Форма добавления аэропорта:
 = form_for @airport do |f|
   - if @airport.errors.any?
     #error_explanation
@@ -23,37 +51,59 @@
     = f.label :name_eng
     %br/
     = f.text_field :name_eng
+  - if params[:town_id] != nil
+    .field
+      = label_tag "city"
+      = text_field_tag 'city', params[:city_eng], class: 'form-control', disabled: true
+      = f.hidden_field :town_id, value: params[:town_id]
   .field
     = f.label :city_rus
     %br/
-    = f.text_field :city_rus
+    - if params[:city_rus].blank?
+      = f.text_field :city_rus
+    - else
+      = f.text_field :city_rus, value: params[:city_rus]
   .field
     = f.label :city_eng
     %br/
-    = f.text_field :city_eng
+    - if params[:city_eng].blank?
+      = f.text_field :city_eng
+    - else
+      = f.text_field :city_eng, value: params[:city_rus]
   .field
     = f.label :gmt_offset
     %br/
     = f.text_field :gmt_offset
-  %div
+  .field
     = f.label :time_zone
+    %br/
     = f.time_zone_select :time_zone
   .field
     = f.label :iso_code
     %br/
     = f.text_field :iso_code
   .field
-    = f.label :country_id
+    = f.label :country_id, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
     %br/
-    = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}
+    .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+      - if params[:country_id].blank?
+        = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {}, class: 'form-control'
+      - else
+        = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {:selected => params[:country_id]}, {class: 'form-control'}
   .field
     = f.label :latitude
     %br/
-    = f.text_field :latitude
+    - if @lat
+      = f.text_field :latitude, value: @lat, class: 'form-control'
+    - else
+      = f.text_field :latitude, class: 'form-control'
   .field
     = f.label :longitude
     %br/
-    = f.text_field :longitude
+    - if @lon
+      = f.text_field :longitude, value: @lon, class: 'form-control'
+    - else
+      = f.text_field :longitude, class: 'form-control'
   .field
     = f.label :runway_length
     %br/

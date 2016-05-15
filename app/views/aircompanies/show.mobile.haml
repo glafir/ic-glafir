@@ -7,13 +7,13 @@
 = render "aircompanies/al_info"
 %fieldset
   %legend
-    %h2
-      Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
+    %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
   #timetableaps= render "timetableaps/timetableaps.mobile"
-  %fielset
-    %legend
-      %h2
-        Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
-    #timetableap_subs
+%fielset
+  %legend
+    %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
+  - @timetableaps = @aircompany.timetableaps.where('parent_id is not NULL').order(:Flight_Number).page(params[:page]).per(params[:per_page])
+  #timetableaps= render "timetableaps/timetableaps"
+
   %br/
   = link_to 'Edit', edit_aircompany_path(@aircompany)

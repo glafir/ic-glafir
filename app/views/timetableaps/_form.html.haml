@@ -1,148 +1,211 @@
-#new_tt
-  = form_for @timetableap, validate: true do |f|
-    - if @timetableap.errors.any?
-      #error_explanation
-        %h2
-          = pluralize(@timetableap.errors.count, "error")
-          prohibited this timetableap from being saved:
-        %ul
-          - @timetableap.errors.full_messages.each do |msg|
-            %li= msg
-    .field
-      = f.label :Flight_Number
-      - if params[:Flight_Number].blank?
-        = f.number_field :Flight_Number, autofocus: true
+= form_for @timetableap, html: { class: "form form-horizontal timetableap" }, validate: true do |f|
+  - if @timetableap.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@timetableap.errors.count, "error")
+        prohibited this timetableap from being saved:
+      %ul
+        - @timetableap.errors.full_messages.each do |msg|
+          %li= msg
+  .tt
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12
+      .form-group
+        = f.label :flight_number, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-3.col-md-3.col-xs-4
+          - if params[:flight_number].blank?
+            = f.number_field :flight_number, autofocus: true, class: 'form-control'
+          - else
+            = f.number_field :flight_number, :value => ((params[:flight_number]).to_i + 1).to_s, class: 'form-control'
+      - if current_user.alclient?
+        = f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s
+        .form-group
+          = f.label "aircompany", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+          .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+            = text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true, class: 'form-control'
       - else
-        = f.number_field :Flight_Number, :value => ((params[:Flight_Number]).to_i + 1).to_s
-    - if current_user.alclient?
-      = f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s
-      .field
-        = f.label "aircompany"
-        = text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true
-    - else
-      .field
-        = f.label "aircompany"
-        - if params[:aircompany_id].blank?
-          = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s
-        - else
-          = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]
-    .field
-      = f.label :way_start
-      = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start]
-      = f.hidden_field :way_start, value: params[:way_end]
-    .field
-      = f.label :way_end
-      = autocomplete_field_tag 'end', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_end'}, :value => params[:end]
-      = f.hidden_field :way_end, value: params[:way_start]
-    .field
-      = f.label :TermStart
-      = f.text_field :TermStart
-    .field
-      = f.label :GateStart
-      = f.text_field :GateStart
-    .field
-      = f.label :TermEnd
-      = f.text_field :TermEnd
-    .field
-      = f.label :GateEnd
-      = f.text_field :GateEnd
-    .field
-      = f.label :aircraft_id
-      - if params[:aircraft_id].blank?
-        = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model
-      - else
-        = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, :selected => params[:aircraft_id]
-    .field
-      = f.label :TimeStart
-      = f.time_select :TimeStart, {minute_step: 5}
-    .field
-      = f.label :TimeEnd
-      = f.time_select :TimeEnd, {minute_step: 5}
-    .field
-      = f.label :DateOfStartNav
-      - if params[:DateOfStartNav].blank?
-        = f.text_field :DateOfStartNav, size: 8
-      - else
-        = f.text_field :DateOfStartNav, size: 8, value: params[:DateOfStartNav]
-    .field
-      = f.label :DateOfEndNav
-      - if params[:DateOfEndNav].blank?
-        = f.text_field :DateOfEndNav, size: 8
-      - else
-        = f.text_field :DateOfEndNav, size: 8, value: params[:DateOfEndNav]
-    .field
-      = f.label "Mon"
-      - if params[:s1] != "1"
-        = f.check_box(:s1,{},1,0)
-      - else
-        = f.check_box(:s1,{checked: "checked"},1,0)
-      - if params[:e1] != "1"
-        = f.check_box(:e1,{},1,0)
-      - else
-        = f.check_box(:e1,{checked: "checked"},1,0)
-    .field
-      = f.label "Tue"
-      - if params[:s2] != "1"
-        = f.check_box(:s2,{},1,0)
-      - else
-        = f.check_box(:s2,{checked: "checked"},1,0)
-      - if params[:e2] != "1"
-        = f.check_box(:e2,{},1,0)
-      - else
-        = f.check_box(:e2,{checked: "checked"},1,0)
-    .field
-      = f.label "Wen"
-      - if params[:s3] != "1"
-        = f.check_box(:s3,{},1,0)
-      - else
-        = f.check_box(:s3,{checked: "checked"},1,0)
-      - if params[:e3] != "1"
-        = f.check_box(:e3,{},1,0)
-      - else
-        = f.check_box(:e3,{checked: "checked"},1,0)
-    .field
-      = f.label "The"
-      - if params[:s4] != "1"
-        = f.check_box(:s4,{},1,0)
-      - else
-        = f.check_box(:s4,{checked: "checked"},1,0)
-      - if params[:e4] != "1"
-        = f.check_box(:e4,{},1,0)
-      - else
-        = f.check_box(:e4,{checked: "checked"},1,0)
-    .field
-      = f.label "Fri"
-      - if params[:s5] != "1"
-        = f.check_box(:s5,{},1,0)
-      - else
-        = f.check_box(:s5,{checked: "checked"},1,0)
-      - if params[:e5] != "1"
-        = f.check_box(:e5,{},1,0)
-      - else
-        = f.check_box(:e5,{checked: "checked"},1,0)
-    .field
-      = f.label "Sat"
-      - if params[:s6] != "1"
-        = f.check_box(:s6,{},1,0)
-      - else
-        = f.check_box(:s6,{checked: "checked"},1,0)
-      - if params[:e6] != "1"
-        = f.check_box(:e6,{},1,0)
-      - else
-        = f.check_box(:e6,{checked: "checked"},1,0)
-    .field
-      = f.label "Sun"
-      - if params[:s0] != "1"
-        = f.check_box(:s0,{},1,0)
-      - else
-        = f.check_box(:s0,{checked: "checked"},1,0)
-      - if params[:e0] != "1"
-        = f.check_box(:e0,{},1,0)
-      - else
-        = f.check_box(:e0,{checked: "checked"},1,0)
-    .actions
-      = f.submit
+        .form-group
+          = f.label "aircompany", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+          .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+            - if params[:aircompany_id].blank?
+              = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, {}, class: 'form-control'
+            - else
+              = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, {:selected => params[:aircompany_id]}, class: 'form-control'
+      - if params[:parent_id] != nil
+        .form-group
+          = f.label :parent_id, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+          .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+            = f.text_field :parent_id, value: params[:parent_id], class: 'form-control'
+      .form-group
+        = f.label :way_start, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:parent_id] != nil
+            = f.text_field :way_start, :value => params[:way_start], class: 'form-control'
+          - else
+            - if params[:way_and].nil?
+              = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start], class: 'form-control'
+              = f.hidden_field :way_start
+            - else
+              = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start], class: 'form-control'
+              = f.hidden_field :way_start, value: params[:way_and]
+      .form-group
+        = f.label :way_end, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:parent_id] != nil
+            = f.text_field :way_end, value: params[:way_end], class: 'form-control'
+          - else
+            - if params[:way_start].nil?
+              = autocomplete_field_tag 'end', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_end'}, :value => params[:end], class: 'form-control'
+              = f.hidden_field :way_end
+            - else
+              = autocomplete_field_tag 'end', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_end'}, :value => params[:end], class: 'form-control'
+              = f.hidden_field :way_end, value: params[:way_start]
+      .form-group
+        = f.label :TermStart, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :TermStart, class: 'form-control'
+      .form-group
+        = f.label :GateStart, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :GateStart, class: 'form-control'
+      .form-group
+        = f.label :TermEnd, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :TermEnd, class: 'form-control'
+      .form-group
+        = f.label :GateEnd, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :GateEnd, class: 'form-control'
+      .form-group
+        = f.label :dateOfStartNav, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:dateOfStartNav].blank?
+            = f.text_field :dateOfStartNav, size: 8, class: 'form-control datepicker'
+          - else
+            = f.text_field :dateOfStartNav, size: 8, value: params[:DateOfStartNav], class: 'form-control datepicker'
+      .form-group
+        = f.label :dateOfEndNav, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:dateOfEndNav].blank?
+            = f.text_field :dateOfEndNav, size: 8, class: 'form-control datepicker'
+          - else
+            = f.text_field :dateOfEndNav, size: 8, value: params[:DateOfEndNav], class: 'form-control datepicker'
+
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12
+      .form-group
+        = f.label :aircraft_id, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:aircraft_id].blank?
+            = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, {}, class: 'form-control'
+          - else
+            = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, {:selected => params[:aircraft_id]}, class: 'form-control'
+      .form-group
+        = f.label :timeStart, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8.input-group.clockpicker{:data => {:placement => "right", :align => "top", :autoclose => "true"}}
+          - if params[:parent_id].blank?
+            = f.text_field :timeStart, class: 'form-control'
+            %span.input-group-addon
+              %span.glyphicon.glyphicon-time
+          - else
+            = f.text_field :timeStart, value: params[:TimeStart], class: 'form-control'
+      .form-group
+        = f.label :timeEnd, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8.input-group.clockpicker{:data => {:placement => "right", :align => "top", :autoclose => "true"}}
+          - if params[:parent_id].blank?
+            = f.text_field :timeEnd, class: 'form-control'
+            %span.input-group-addon
+              %span.glyphicon.glyphicon-time
+          - else
+            = f.text_field :timeEnd, value: params[:TimeEnd], class: 'form-control'
+      .form-group
+        = f.label "Mon", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s1] != "1"
+            = f.check_box(:s1,{},1,0)
+          - else
+            = f.check_box(:s1,{checked: "checked"},1,0)
+          - if params[:e1] != "1"
+            = f.check_box(:e1,{},1,0)
+          - else
+            = f.check_box(:e1,{checked: "checked"},1,0)
+      .form-group
+        = f.label "Tue", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s2] != "1"
+            = f.check_box(:s2,{},1,0)
+          - else
+            = f.check_box(:s2,{checked: "checked"},1,0)
+          - if params[:e2] != "1"
+            = f.check_box(:e2,{},1,0)
+          - else
+            = f.check_box(:e2,{checked: "checked"},1,0)
+      .form-group
+        = f.label "Wen", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s3] != "1"
+            = f.check_box(:s3,{},1,0)
+          - else
+            = f.check_box(:s3,{checked: "checked"},1,0)
+          - if params[:e3] != "1"
+            = f.check_box(:e3,{},1,0)
+          - else
+            = f.check_box(:e3,{checked: "checked"},1,0)
+      .form-group
+        = f.label "The", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s4] != "1"
+            = f.check_box(:s4,{},1,0)
+          - else
+            = f.check_box(:s4,{checked: "checked"},1,0)
+          - if params[:e4] != "1"
+            = f.check_box(:e4,{},1,0)
+          - else
+            = f.check_box(:e4,{checked: "checked"},1,0)
+      .form-group
+        = f.label "Fri", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s5] != "1"
+            = f.check_box(:s5,{},1,0)
+          - else
+            = f.check_box(:s5,{checked: "checked"},1,0)
+          - if params[:e5] != "1"
+            = f.check_box(:e5,{},1,0)
+          - else
+            = f.check_box(:e5,{checked: "checked"},1,0)
+      .form-group
+        = f.label "Sat", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s6] != "1"
+            = f.check_box(:s6,{},1,0)
+          - else
+            = f.check_box(:s6,{checked: "checked"},1,0)
+          - if params[:e6] != "1"
+            = f.check_box(:e6,{},1,0)
+          - else
+            = f.check_box(:e6,{checked: "checked"},1,0)
+      .form-group
+        = f.label "Sun", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:s0] != "1"
+            = f.check_box(:s0,{},1,0)
+          - else
+            = f.check_box(:s0,{checked: "checked"},1,0)
+          - if params[:e0] != "1"
+            = f.check_box(:e0,{},1,0)
+          - else
+            = f.check_box(:e0,{checked: "checked"},1,0)
+    .form-group
+      .controls.col-xs-offset-6.col-xs-6
+        = f.submit nil, class: 'btn btn-primary'
     :javascript
+      $('.clockpicker').clockpicker({
+        placement: 'bottom',
+        align: 'right',
+        donetext: 'Done',
+        autoclose: true
+      });
+      $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+      });
       var elems = Array.prototype.slice.call(document.querySelectorAll("input[type=checkbox]"));
           elems.forEach(function(elem) {
           var switchery = new Switchery(elem,{

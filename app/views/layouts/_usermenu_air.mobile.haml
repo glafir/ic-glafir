@@ -2,15 +2,15 @@
   %p
     = submit_tag "Search", :name => nil
 %li= link_to "Страны мира", countries_path
-%li
+%li= link_to "Города мира", towns_path
 %li= link_to "Аэропорты мира", airports_path
 %li= link_to "Авиакомпании мира", aircompanies_path
 %li= link_to "Самолёты", aircrafts_path
 %hr/
-%li
-%li= link_to "Аэропорты ЕШ", controller: "/countries", action: "ap_show", id: 528
+%li= link_to "Города EZ", controller: "/countries", action: "tw_show", id: 528
+%li= link_to "Аэропорты EZ", controller: "/countries", action: "ap_show", id: 528
 %li= link_to "ВПП", runway_aps_path
-%li= link_to "Авиакомпании ЕШ", aircompanies_path
+%li= link_to "Авиакомпании EZ", controller: "/countries", action: "al_show", id: 528
 %li= link_to "Поиск рейсов между аэропортами", timetableaps_path
 %li= link_to "Поиск рейсов между городами", search_tt_path
 %br/
@@ -29,3 +29,5 @@
 %li= link_to 'Logs', flash_messages_path
 %li= link_to 'User Signes Logs', user_tracings_path
 %hr/
+быстрое администрирование
+%li=link_to "airports", admin_ap_airports_path

@@ -6,30 +6,34 @@ include ActiveModel::Validations
   belongs_to :aircraft
   belongs_to :airport_start, class_name: "Airport", foreign_key: "way_start"
   belongs_to :airport_finish, class_name: "Airport", foreign_key: "way_end"
-  has_many :timetableapSub, dependent: :destroy
   has_many :childs, class_name: "Timetableap",
                           foreign_key: "parent_id"
   belongs_to :parent, class_name: "Timetableap"
 
 
-  attr_accessible :aircompany_id, :DateOfEndNav, :DateOfStartNav, :flight_number, :GateEnd, :GateStart, :TermEnd, :TermStart, :TimeEnd, :TimeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start, :parent_id
-  attr_accessor :twrus, :aprus, :f_twrus, :f_aprus, :s_twrus, :s_aprus, :timeIN, :bgcolor, :fstatus, :airline, :al_plane, :plane_al, :ap2, :timeEnd, :timeStart, :ap, :s_ap, :f_ap, :bgcolor_apload, :flight
+  attr_accessible :aircompany_id, :dateOfEndNav, :dateOfStartNav, :flight_number, :GateEnd, :GateStart, :TermEnd, :TermStart, :timeEnd, :timeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start, :parent_id
+  attr_accessor :f_tw, :f_ap, :s_tw, :s_ap, :timeIN, :bgcolor, :fstatus, :airline, :bgcolor_apload, :flight
 
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }
   validates  :way_start, presence: true, numericality: { only_integer: true }
   validates  :way_end, presence: true, numericality: { only_integer: true }
   validates  :DateOfEndNav, presence: true
   validates  :DateOfStartNav, presence: true
-  validates  :Flight_Number, presence: true, numericality: { only_integer: true },
+  validates  :TimeStart, presence: true
+  validates  :TimeEnd, presence: true
+  validates  :flight_number, presence: true, numericality: { only_integer: true },
                     length: { maximum: 9999 },
                   uniqueness: { scope: :aircompany_id, message: "This Flight is exist!" }
-  validates  :Flight_Number, numericality: { only_integer: true },
-                    length: { maximum: 9999 },
-                  uniqueness: { scope: :parent_id, message: "This SunFlight is exist!" }
 
+  validates  :parent_id, uniqueness: { scope: :id, message: "This SubFlight is exist!" }
 
   def flight
     "#{aircompany.iata_code} #{flight_number}"
+  end
+
+  def time_str
+#    "#{timeStart}"
+    "#{timeStart.change(:year=>Time.now.in_time_zone('GMT').year, :month=>Time.now.in_time_zone('GMT').month, :day=>Time.now.in_time_zone('GMT').day)}"
   end
 
   def self.stoday
@@ -129,6 +133,6 @@ include ActiveModel::Validations
   end
 
   def aircompany_airline_name_rus(airline_name_rus)
-    self.aircompany = Aircompany.find_by_Airline_name_rus(airline_name_rus) unless airline_name_rus.blank?
+    self.aircompany = Aircompany.find_by_airline_name_rus(airline_name_rus) unless airline_name_rus.blank?
   end
 end

@@ -31,9 +31,10 @@
   %p
     %b Start:
     = @aircompany.al_start
-  %p
-    %b Finish:
-    = @aircompany.al_finish
+  - if @aircompany.al_finish != nil
+    %p
+      %b Finish:
+      = @aircompany.al_finish
   - if @aircompany.childs != nil
     %p
       %b Дочерние компании:

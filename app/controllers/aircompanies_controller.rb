@@ -6,42 +6,42 @@ class AircompaniesController < ApplicationController
   end
 
   def index
+    authorize :aircompany
     @aircompanies = Aircompany.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
-    authorize Aircompany
     respond_with @aircompanies
   end
 
   def show
-    @timetableaps = Timetableap.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:page]).per(params[:per_page])
-    @timetableap_subs = TimetableapSub.where(aircompany_id: params[:id]).order(:Flight_Number).page(params[:sub_page]).per(params[:per_sub_page])
     authorize @aircompany
+    @timetableaps = @aircompany.timetableaps.where(parent_id: nil).order(:Flight_Number).page(params[:page]).per(params[:per_page])
     respond_with @aircompany
   end
   
   def new
     @aircompany = Aircompany.new
-    @airports = Airport.all
     authorize @aircompany
+    @airports = Airport.all
     respond_with @aircompany
   end
 
   def edit
-    @airports = Airport.all
     authorize @aircompany
+    @airports = Airport.all
   end
 
   def create
+    authorize :aircompany
     @aircompany = Aircompany.new(params[:aircompany])
+#    authorize @aircompany
     @aircompany.save
     flash[:notice] = "The aircompany #{@aircompany.id} was created!" if @aircompany.save && !request.xhr?
-    authorize @aircompany
     respond_with @aircompany
   end
 
   def update
+    authorize @aircompany
     @aircompany.update_attributes(params[:aircompany])
     flash[:notice] = "The aircompany #{@aircompany.id} was updated!" if @aircompany.save && !request.xhr?
-    authorize @aircompany
     respond_with @aircompany
   end
 

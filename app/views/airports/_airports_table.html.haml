@@ -53,9 +53,8 @@
         %a{:href => "/airports/#{airport.id}/tablo"} Общее
       %td
         - Time.zone = airport.time_zone
-        - @wday = Time.zone.now.strftime'%w'.to_s
-        - @aptt_in = airport.timetableaps_in.stoday.count
-        - @aptt_out = airport.timetableaps_out.etoday.count
+        - @aptt_in = airport.timetableaps_in.stoday.where('parent_id is NULL').count
+        - @aptt_out = airport.timetableaps_out.etoday.where(parent_id: nil).count
         - @aptt_all = @aptt_in + @aptt_out or 0
         = @aptt_all
         ||#{@aptt_out}/#{@aptt_in}
