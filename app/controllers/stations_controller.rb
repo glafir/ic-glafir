@@ -1,58 +1,52 @@
 class StationsController < ApplicationController
   before_action :set_station, only: [:show, :edit, :update, :destroy]
 
-  # GET /stations
+  def admin_stations
+    authorize :station
+  end
+
   def index
     @stations = Station.all.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
-    authorize Station.all
+    authorize @stations
     respond_with @stations
   end
 
-  # GET /stations/1
   def show
     authorize @station
     respond_with @station
   end
 
-  # GET /stations/new
   def new
     @station = Station.new
     authorize @station
     respond_with @station
   end
 
-  # GET /stations/1/edit
   def edit
     authorize @station
   end
 
-  # POST /stations
   def create
     @station = Station.new(station_params)
-    @station.save
+    authorize @station
     flash[:notice] =  'The station was successfully saved!' if @station.save && !request.xhr?
-    authorize @station
     respond_with @station
   end
 
-  # PATCH/PUT /stations/1
   def update
-    @station.update(station_params)
-    flash[:notice] =  'The station was successfully updated!' if @station.update(station_params) && !request.xhr?
     authorize @station
+    flash[:notice] =  'The station was successfully updated!' if @station.update(station_params) && !request.xhr?
     respond_with @station
   end
 
-  # DELETE /stations/1
   def destroy
-    @station.destroy
     authorize @station
+    @station.destroy
     redirect_to stations_url, notice: 'Station was successfully destroyed.'
     respond_with @station
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_station
       @station = Station.find(params[:id])
     end

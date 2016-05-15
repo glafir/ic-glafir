@@ -19,8 +19,8 @@
   = @airport.runway_aps.count
 %p
   %b Количество рейсов в день / самолётов в день:
-  - @aptt_in = @airport.timetableaps_in.where("e#{@wday} = ?",1).count
-  - @aptt_out = @airport.timetableaps_out.where("e#{@wday} = ?",1).count
+  - @aptt_in = @airport.timetableaps_in.stoday.where('parent_id is NULL').count
+  - @aptt_out = @airport.timetableaps_out.etoday.where(parent_id: nil).count
   - @aptt_all = @aptt_in + @aptt_out or 0
   #{@aptt_all} / #{@aptt_out}
 

@@ -4,19 +4,20 @@
   %h3
     (является дочерней авиакомпанией #{link_to @aircompany.manager.airline_name_rus, @aircompany.manager}.)
 .row
-  .col-lg-4.col-md-5.col-sm-6
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12
     = render "aircompanies/al_logo"
-  .col-lg-4.col-md-5.col-sm-6
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12
     = render "aircompanies/al_info"
 .row  
-  .col-lg-7.col-md-7
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12
     %fieldset
       %legend
         %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
       #timetableaps= render "timetableaps/timetableaps"
-      %fielset
-        %legend
-          %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
-        #timetableap_subs
-      - if policy(@aircompany).edit?
-        = link_to 'Edit', edit_aircompany_path(@aircompany), class: "jqbutton"
+    %fielset
+      %legend
+        %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
+      - @timetableaps = @aircompany.timetableaps.where('parent_id is not NULL').order(:Flight_Number).page(params[:page]).per(params[:per_page])
+      #timetableaps= render "timetableaps/timetableaps"
+  - if policy(@aircompany).edit?
+    = link_to 'Edit', edit_aircompany_path(@aircompany), class: "btn btn-primary"

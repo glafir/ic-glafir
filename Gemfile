@@ -10,11 +10,13 @@ gem 'uglifier', '>= 2.7.1'
 gem 'bootstrap-sass'
 gem 'bootstrap-sass-extras'
 gem "bootstrap_flash_messages"
+gem 'bootstrap_form'
 gem 'kaminari-bootstrap'
+gem 'clockpicker-rails'
 gem 'rails_bootstrap_navbar'
 gem 'bootswatch-rails'
 gem 'bootstrap-select-rails'
-
+gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 gem 'protected_attributes'
 
 #gem 'activerecord-session_store'

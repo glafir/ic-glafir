@@ -18,6 +18,9 @@
 //= require jquery.validate.additional-methods
 //= require mousetrap
 //= require jquery-ui/autocomplete
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
+//= require bootstrap/clockpicker
 //= require autocomplete-rails
 //= require bootstrap-sprockets
 //= require bootstrap

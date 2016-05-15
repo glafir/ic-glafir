@@ -16,6 +16,9 @@
 //= require jquery-tablesorter
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
+//= require bootstrap/clockpicker
 //= require_tree .
 //= require_self
 

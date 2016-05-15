@@ -1,7 +1,6 @@
 = form_tag  "#", :remote => true, :method => 'get',  :id => "airports_search" do
-  .col-xs-6
-    = text_field_tag :search, params[:search], autofocus: true, class: 'form-control'
+  = text_field_tag :search, params[:search], autofocus: true, class: 'form-control'
   = submit_tag "Search", :name => nil, class: 'btn btn-primary'
   = render "layouts/per_page"
-  #airports.col-xs-12= render "airports/airports"
+  #airports= render "airports/airports"
 

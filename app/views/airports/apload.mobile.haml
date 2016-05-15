@@ -10,8 +10,8 @@
           - @timetableaps.each do |tt|
             - if tt.timeIN.in_time_zone(@airport.time_zone).hour == h && tt.timeIN.min == m
               .aptt(style = 'background-color: #{tt.bgcolor_apload}')
-                #{link_to tt.aircompany.iata_code, tt.aircompany} #{link_to tt.Flight_Number, tt}
-                #{link_to tt.twrus, tt.ap}
+                #{link_to tt.aircompany.iata_code, tt.aircompany} #{link_to tt.flight_number, tt}
+                #{link_to tt.f_ap.town.city_rus, tt.f_ap}
                 %br
             - else
               .aptt(style = 'background-color: #070E03, height: 80px')

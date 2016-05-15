@@ -1,0 +1,89 @@
+:javascript
+  $(document).ready(function(){
+    $(".town").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[3,0]]
+     });
+  });
+.radius
+  = form_tag '#',:method => :get, remote: false do
+    = label_tag "Радиус в км:"
+    = select_tag :radius, options_for_select([10, 15, 20, 30, 50, 75, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000], selected: params[:radius] || params[:radius]), :onchange => "this.form.submit();"
+    = label_tag "km"
+
+- if params[:radius] && params[:radius] != ''
+  %canvas#canva{width:1100,height:1100}
+  - @towns = Town.where(country_id: 528).within(params[:radius], :origin => @town)
+  :javascript
+    var canvas = document.getElementById('canva'),
+    obCanvas = canvas.getContext('2d');
+    var x = 550;
+    var y = 550;
+    obCanvas.translate(x,y);
+
+
+
+  %br
+  %table.town.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th City
+        %th latitude
+        %th longitude
+        %th distance_from
+        %th
+    %tbody
+      - @towns.each do |town|
+        - if town.id != @town.id
+          - dist = town.distance_from(@town, :units=>:kms)
+          %tr
+            %td= link_to town.accent_city, town
+            %td= town.latitude
+            %td= town.longitude
+            %td= dist
+            %td
+              = link_to 'Edit', edit_country_town_path(@country, town) if policy(town).edit?
+              = link_to 'Destroy', town, :method => :delete, :data => { :confirm=> 'Are you sure?' } if policy(town).destroy?
+
+        - dist1 = town.distance_from(@town, :units=>:kms)/((params[:radius].to_f)/510)
+        - p1 = GeoPoint.new  town.latitude.to_f, town.longitude.to_f
+        - p2 = GeoPoint.new  @town.latitude.to_f, @town.longitude.to_f
+        - fbear = p2.bearing_to(p1)
+        :javascript
+          var a = (#{fbear.to_f}-90) * (Math.PI/180);
+          var r = #{dist1};
+          obCanvas.beginPath();
+          obCanvas.lineWidth = 0;
+          obCanvas.moveTo(0, 0);
+          obCanvas.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+        
+          obCanvas.beginPath();
+          obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, 5, 0, 2*Math.PI, false);
+        - if town.airports.count == 0
+          :javascript
+            obCanvas.fillStyle = 'gray';
+        - else
+          :javascript
+            obCanvas.fillStyle = 'yellow';
+        :javascript
+          obCanvas.fill();
+          obCanvas.lineWidth = 0;
+          obCanvas.strokeStyle = 'blue';
+          obCanvas.stroke();
+          obCanvas.fillStyle   = '#fff';
+          obCanvas.font  = 'italic bold 11px sans-serif';
+          obCanvas.textAlign = 'left';
+          obCanvas.fillText("#{town.accent_city}", (Math.cos(a)*r)+5, Math.sin(a)*r);
+
+  :javascript
+    obCanvas.beginPath();
+    obCanvas.arc(0, 0, 10, 0, 2*Math.PI, false);
+    obCanvas.fillStyle = 'green';
+    obCanvas.fill();
+    obCanvas.lineWidth = 0;
+    obCanvas.strokeStyle = 'blue';
+    obCanvas.stroke();
+    obCanvas.fillStyle   = '#ffe';
+    obCanvas.font  = 'bold 20px sans-serif';
+    obCanvas.textAlign = 'right';
+    obCanvas.fillText("#{@town.accent_city}", -10, 0);

@@ -3,11 +3,10 @@
     %td
       = link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus
       %br
-      - if timetableap.id < 1000000
-        = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap)
-      - else
-        = link_to timetableap.Flight_Number, flight_state_timetableap_sub_path(timetableap)
+      = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap)
     %td
-      = link_to timetableap.twrus, timetableap.ap
+      = link_to timetableap.f_ap.town.city_rus, timetableap.f_ap
+      = "(Совмещён с #{timetableap.parent.flight})" if timetableap.parent_id
       .tt_status(style = 'background-color: #{timetableap.bgcolor}')= timetableap.fstatus
     %td= timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
+

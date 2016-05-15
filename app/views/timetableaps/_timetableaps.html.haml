@@ -10,12 +10,13 @@
   %thead
     %tr
       %th Flight number
-      %th{width: 120} Way start
+      %th Way start
       %th Timestart
-      %th{width: 120} Way end
+      %th Way end
       %th Timeend
-      %th{width: 90} Navigation
+      %th Navigation
       %th Время в пути
+      %th Дополнительные рейсы
       %th
   %tbody
     - @timetableaps.each do |timetableap|
@@ -25,49 +26,77 @@
           = timetableap.flight
         %td
           = timetableap.airport_start.town.city_rus
-          = succeed "(" do
-            %br/
+          %br
+          (
           = link_to timetableap.airport_start.name_rus, timetableap.airport_start
           )
-        %td= timetableap.TimeStart.in_time_zone(timetableap.airport_start.time_zone).to_s(:time)
+        %td= timetableap.timeStart.in_time_zone(timetableap.airport_start.time_zone).to_s(:time)
         %td
           = timetableap.airport_finish.town.city_rus
-          = succeed "(" do
-            %br/
+          %br
+          (
           = link_to timetableap.airport_finish.name_rus, timetableap.airport_finish
           )
-        %td= timetableap.TimeEnd.in_time_zone(timetableap.airport_finish.time_zone).to_s(:time)
-        - if timetableap.DateOfEndNav <= Date.current
+        %td= timetableap.timeEnd.in_time_zone(timetableap.airport_finish.time_zone).to_s(:time)
+        - if timetableap.dateOfEndNav <= Date.current
           - bgcolor = "#550C1A"
-        - elsif timetableap.DateOfEndNav > Date.current + 2.month and timetableap.DateOfEndNav < Date.current + 4.month
+        - elsif timetableap.dateOfEndNav > Date.current + 2.month and timetableap.dateOfEndNav < Date.current + 4.month
           - bgcolor = "#547C1A"
-        - elsif timetableap.DateOfEndNav > Date.current + 1.month and timetableap.DateOfEndNav < Date.current + 2.month
+        - elsif timetableap.dateOfEndNav > Date.current + 1.month and timetableap.dateOfEndNav < Date.current + 2.month
           - bgcolor = "#544C1A"
-        - elsif timetableap.DateOfEndNav >  Date.current and timetableap.DateOfEndNav < Date.current + 1.month
+        - elsif timetableap.dateOfEndNav >  Date.current and timetableap.dateOfEndNav < Date.current + 1.month
           - bgcolor = "#541C1A"
         %td{:bgcolor => bgcolor, width: 140}
-          = timetableap.DateOfStartNav.to_s(:long)
+          = timetableap.dateOfStartNav.to_s(:long)
           %br
-          = timetableap.DateOfEndNav.to_s(:long)
+          = timetableap.dateOfEndNav.to_s(:long)
         %td
-          - if timetableap.TimeStart < timetableap.TimeEnd
-            = Time.diff(Time.parse(timetableap.TimeStart.to_s), Time.parse(timetableap.TimeEnd.to_s), '%H %N')[:diff]
+          - if timetableap.timeStart < timetableap.timeEnd
+            = Time.diff(Time.parse(timetableap.timeStart.to_s), Time.parse(timetableap.timeEnd.to_s), '%H %N')[:diff]
           - else
-            - timetableap.TimeEnd = timetableap.TimeEnd + 24.hour
-            = Time.diff(Time.parse(timetableap.TimeStart.to_s), Time.parse(timetableap.TimeEnd.to_s), '%H %N')[:diff]
+            - timetableap.timeEnd = timetableap.timeEnd + 24.hour
+            = Time.diff(Time.parse(timetableap.timeStart.to_s), Time.parse(timetableap.timeEnd.to_s), '%H %N')[:diff]
+        %td
+          - if policy(timetableap).new? && timetableap.parent_id.blank?
+            = timetableap.childs.count
+            \|
+            = form_tag new_timetableap_path, :method => 'get', target:"_blank" do
+              = hidden_field_tag 'parent_id', timetableap.id
+              = hidden_field_tag 'way_start', timetableap.way_start
+              = hidden_field_tag 'way_end', timetableap.way_end
+              = hidden_field_tag 'aircraft_id', timetableap.aircraft_id
+              = hidden_field_tag 'timeStart', timetableap.timeStart.to_s(:time)
+              = hidden_field_tag 'timeEnd', timetableap.timeEnd.to_s(:time)
+              = hidden_field_tag 'dateOfStartNav', timetableap.dateOfStartNav
+              = hidden_field_tag 'dateOfEndNav', timetableap.dateOfEndNav
+
+              = hidden_field_tag 's0', timetableap.s0
+              = hidden_field_tag 'e0', timetableap.e0
+              = hidden_field_tag 's1', timetableap.s1
+              = hidden_field_tag 'e1', timetableap.e1
+              = hidden_field_tag 's2', timetableap.s2
+              = hidden_field_tag 'e2', timetableap.e2
+              = hidden_field_tag 's3', timetableap.s3
+              = hidden_field_tag 'e3', timetableap.e3
+              = hidden_field_tag 's4', timetableap.s4
+              = hidden_field_tag 'e4', timetableap.e4
+              = hidden_field_tag 's5', timetableap.s5
+              = hidden_field_tag 'e5', timetableap.e5
+              = hidden_field_tag 's6', timetableap.s6
+              = hidden_field_tag 'e6', timetableap.e6
+              = submit_tag 'Добавить доп рейс.', class: "btn btn-primary"
+          - if timetableap.parent_id != nil
+            Совмещён с рейсом #{timetableap.parent.flight}
         %td
           - if policy(timetableap).update_dateoffinishdate?
             = link_to update_dateoffinishdate_timetableap_path(timetableap), remote: true do
               %span.glyphicon.glyphicon-certificate
-          - if policy(timetableap.timetableap_subs).new?
-            = link_to new_timetableap_sub_path(timetableap.id) do
-              %span.glyphicon.glyphicon-plus #{timetableap.id}
-              %br
           - if policy(timetableap).edit?
             = link_to edit_timetableap_path(timetableap) do
               %span.glyphicon.glyphicon-edit
           - if policy(timetableap).destroy?
             = link_to timetableap, method: :delete, data: { confirm: 'Are you sure?' } do
               %span.glyphicon.glyphicon-remove-circle
+              
 = render "timetableaps/paginate_bottom"
 = link_to 'Добавить основной авиарейс', new_timetableap_path

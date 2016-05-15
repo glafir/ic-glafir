@@ -30,15 +30,12 @@
         obCanvas.beginPath();
         obCanvas.lineWidth = 1;
         obCanvas.moveTo(0, 0);
-      - if tt.count == 0
+      - if tt.count != 0
         :javascript
-          obCanvas.strokeStyle = 'gray';
-      - else
-        :javascript
-          obCanvas.strokeStyle = 'red';        
+          obCanvas.strokeStyle = 'green';
+          obCanvas.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+          obCanvas.stroke();
       :javascript
-        obCanvas.lineTo(Math.cos(a)*r,Math.sin(a)*r);
-        obCanvas.stroke();
         obCanvas.beginPath();
         obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, 5, 0, 2*Math.PI, false);
       - if tt.count == 0

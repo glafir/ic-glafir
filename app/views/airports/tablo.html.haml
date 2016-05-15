@@ -1,4 +1,4 @@
-%h4= @tablo
+%h4= @tablo.html_safe
 = render "airports/tablo_links"
 = form_tag "#",:remote => 'true', :method => 'get', :id => "timetableaps_search"  do
   #tablo_form.form

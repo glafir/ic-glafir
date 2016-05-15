@@ -264,14 +264,6 @@ ActiveRecord::Schema.define(version: 20160124184713) do
     t.datetime "updated_at",                                   null: false
   end
 
-  create_table "timetableap_subs", force: :cascade do |t|
-    t.integer  "Flight_Number",  limit: 4, default: 0, null: false
-    t.integer  "timetableap_id", limit: 4,             null: false
-    t.integer  "aircompany_id",  limit: 4,             null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
   create_table "timetableaps", force: :cascade do |t|
     t.integer  "flight_number",  limit: 4,   null: false
     t.integer  "aircompany_id",  limit: 4,   null: false
@@ -283,10 +275,10 @@ ActiveRecord::Schema.define(version: 20160124184713) do
     t.string   "TermEnd",        limit: 255
     t.string   "GateEnd",        limit: 255
     t.integer  "aircraft_id",    limit: 4
-    t.time     "TimeStart",                  null: false
-    t.time     "TimeEnd",                    null: false
-    t.date     "DateOfStartNav",             null: false
-    t.date     "DateOfEndNav",               null: false
+    t.time     "timeStart",                  null: false
+    t.time     "timeEnd",                    null: false
+    t.date     "dateOfStartNav",             null: false
+    t.date     "dateOfEndNav",               null: false
     t.integer  "s1",             limit: 4,   null: false
     t.integer  "s2",             limit: 4,   null: false
     t.integer  "s3",             limit: 4,   null: false
@@ -307,8 +299,7 @@ ActiveRecord::Schema.define(version: 20160124184713) do
 
   add_index "timetableaps", ["aircraft_id"], name: "aircraft_id", using: :btree
   add_index "timetableaps", ["flight_number", "aircompany_id"], name: "Flight_Number_aircompany_id", unique: true, using: :btree
-  add_index "timetableaps", ["flight_number", "parent_id"], name: "flight_number_parent_id", unique: true, using: :btree
-  add_index "timetableaps", ["id"], name: "id", unique: true, using: :btree
+  add_index "timetableaps", ["id", "parent_id"], name: "id", unique: true, using: :btree
   add_index "timetableaps", ["parent_id"], name: "parent_id", using: :btree
   add_index "timetableaps", ["way_end"], name: "way_end", using: :btree
   add_index "timetableaps", ["way_start"], name: "way_start", using: :btree

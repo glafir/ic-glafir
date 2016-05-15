@@ -20,8 +20,8 @@
   - @towns.each do |town|
     %tr
       %td= link_to town.country.country_name, town.country
-      %td= link_to town.city, town
-      %td= link_to town.accent_city, town
+      %td= link_to town.city, [town.country, town]
+      %td= link_to town.accent_city, [town.country, town]
       %td= town.city_rus
       %td= town.region
       %td= town.latitude

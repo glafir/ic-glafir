@@ -4,19 +4,19 @@
     = load_netzke theme: "aria"
   = render "layouts/head.html"
   %body
-    .container
+    .container-fluid
       - if user_signed_in?
-        = render "layouts/menu_top_secure.html"
+        = render "layouts/header.html"
         .row
-          .col-lg-15.col-md-18
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
             = bootstrap_flash
             = yield
       -else
         .row
-          .col-lg-15.col-md-18
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
             = bootstrap_flash
             = yield
       %footer#footer.footer
         .row
-          .col-lg-15.col-md-18
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
             = render "layouts/footer.html"

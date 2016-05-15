@@ -32,9 +32,9 @@ class TownsController < ApplicationController
   end
 
   def show
+    authorize @town
     @airports = Airport.where(town_id: @town.id)
     @airports = @airports.page(params[:page]).per(params[:per_page])
-    authorize @town
     respond_with(@town)
   end
 
@@ -49,25 +49,24 @@ class TownsController < ApplicationController
 
   def create
     @town = Town.new(params[:town])
-    @town.save
+    authorize @town
     flash[:notice] = "The town  #{@town.id} was created!" if @town.save && !request.xhr?
     @flash_message_state_id = 401
-    authorize @town
     respond_with(@country, @town)
   end
 
   def update
+    authorize @town
     @town.update_attributes(params[:town])
     flash[:notice] = "The town  #{@town.id} was updated!" if @town.update_attributes(params[:airport]) && !request.xhr?
     @flash_message_state_id = 402
-    authorize @town
     respond_with(@country, @town)
   end
 
   def destroy
-    @town.destroy
     authorize @town
-    respond_with(@country, @town)
+    @town.destroy
+    redirect_to :back
   end
 
   def tw_dist

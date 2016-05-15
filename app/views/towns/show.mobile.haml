@@ -1,9 +1,12 @@
-= link_to 'Edit', edit_country_town_path, class: "btn btn-primary"
+= link_to 'Edit', edit_country_town_path(@country, @town), class: "btn btn-primary"
 \|
 = link_to "Вернуться назад", :back, class: "btn btn-primary"
-\|
-= link_to 'New Airport', new_airport_path, class: "btn btn-primary"
-
+= form_tag new_airport_path, :method => 'get' do
+  = hidden_field_tag 'town_id', @town.id
+  = hidden_field_tag 'city_rus', @town.city_rus if @town.city_rus
+  = hidden_field_tag 'city_eng', @town.accent_city if @town.accent_city
+  = hidden_field_tag 'country_id', @town.country_id if @town.country
+  = submit_tag 'Дрвить аэропорт', class: "btn btn-primary"
 %p
   %b ID:
   = @town.id
@@ -28,6 +31,8 @@
 %p
   %b Longitude:
   = @town.longitude
+
+%p= render "towns/map"
 
 - if @airports.blank?
   %h2 В городе аэропорты отсутствуют.
