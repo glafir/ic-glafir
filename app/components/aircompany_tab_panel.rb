@@ -1,4 +1,4 @@
-class AircompanyTabPanel < Netzke::Basepack::TabPanel
+class AircompanyTabPanel < Netzke::Base
   component :incomplete_tasks do |c|
     c.klass = Aircompanies
     c.title = "Действующие"

@@ -1,6 +1,11 @@
 = form_tag  "#", :remote => true, :method => 'get',  :id => "airports_search" do
-  = text_field_tag :search, params[:search], autofocus: true, class: 'form-control'
-  = submit_tag "Search", :name => nil, class: 'btn btn-primary'
-  = render "layouts/per_page"
-  #airports= render "airports/airports"
+  .form-group
+    .controls.col-lg-8.col-md-8.col-sm-10.col-xs-10
+      = text_field_tag :search, params[:search], autofocus: true, class: 'form-control xl-col-3'
+  .form-group
+    = submit_tag "Search", :name => nil, class: 'btn btn-primary'
+  .form-group
+    .controls.col-lg-12.col-md-12.col-sm-12.col-xs-12
+      = render "layouts/per_page"
+#airports= render "airports/airports"
 

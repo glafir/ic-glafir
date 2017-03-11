@@ -11,6 +11,7 @@ gem 'bootstrap-sass'
 gem 'bootstrap-sass-extras'
 gem "bootstrap_flash_messages"
 gem 'bootstrap_form'
+#gem 'bootstrap-tooltip-rails'
 gem 'kaminari-bootstrap'
 gem 'clockpicker-rails'
 gem 'rails_bootstrap_navbar'
@@ -29,7 +30,8 @@ gem "jquery-turbolinks"
 gem "jquery-tmpl-rails"
 gem "momentjs-rails"
 gem 'rails-jquery-autocomplete'
-gem 'mysql2', '~> 0.3.20'
+gem 'mysql2'
+#, '~> 0.3.20'
 gem 'bcrypt-ruby'
 
 gem 'devise'
@@ -48,7 +50,6 @@ gem 'haml-rails'
 gem 'mousetrap-rails'
 #gem 'erb2haml'
 gem 'stamp'
-#gem 'cancan'
 #gem 'fullcalendar-rails'
 gem "unicorn"
 gem "sunriseset"
@@ -83,7 +84,6 @@ gem 'activerecord-session_store'
 
 gem 'rails-erd'
 gem 'rack-cors', :require => 'rack/cors'
-#gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'nested_scaffold'
 gem 'carrierwave'
 gem 'mini_magick'
@@ -94,3 +94,12 @@ gem 'suncalc'
 gem 'bootstrap-glyphicons'
 gem 'geokit'
 gem 'geokit-rails'
+gem 'rack-attack'
+
+gem 'get_process_mem'
+gem 'benchmark-ips'
+
+gem 'react-rails'
+gem 'dalli'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'

@@ -11,14 +11,16 @@
     %th
     %th
     %th
+    %th
   - @countries.each do |country|
     %tr
       %td= link_to country.country_name, country
       %td= country.country_iata_code
       %td= country.country_icao_code
       %td= country.country_number
-      %td= link_to 'Airports', controller: "countries", action: "ap_show", id: country.id
-      %td= link_to 'Towns', controller: "countries", action: "tw_show", id: country.id
+      %td= link_to 'Airports', controller: "countries", action: "ap_show", id: country.id, page: 1
+      %td= link_to 'Airlines', controller: "countries", action: "al_show", id: country.id, page: 1
+      %td= link_to 'Towns', controller: "countries", action: "tw_show", id: country.id, page: 1
       -if policy(country).edit?
         %td= link_to 'Edit', edit_country_path(country)
 = render "countries_paginate_bottom"

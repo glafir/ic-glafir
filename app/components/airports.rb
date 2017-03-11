@@ -3,11 +3,7 @@ class Airports < Application
   def configure(c)
     super
     c.title = "Airports"
-    c.docked_items = [{
-      xtype: :toolbar,
-      dock: :left,
-      items: [:countries, :towns, :airports, :airlines, :flights, :users]
-    }]
+
     c.model = "Airport"
     c.columns = [
       {name: :iata_code, header: "Код IATA"},

@@ -1,0 +1,24 @@
+= form_for @language,  :html => { :class => 'form form-horizontal' } do |f|
+  - if @language.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@language.errors.count, "error")} prohibited this language from being saved:"
+      %ul
+        - @language.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :lang, :class => 'control-label'
+    .controls
+      = f.text_field :lang, class: "form-control", required: true
+  .form-group
+    = f.label :lang_iso, :class => 'control-label'
+    .controls
+      = f.text_field :lang_iso, class: "form-control", required: true
+  .form-group
+    = f.label :lang_iata, :class => 'control-label'
+    .controls
+      = f.text_field :lang_iata, class: "form-control", required: true
+  = f.submit nil, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), languages_path, :class => 'btn btn-default'
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

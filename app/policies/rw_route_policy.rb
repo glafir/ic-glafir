@@ -1,0 +1,2 @@
+class RwRoutePolicy < ApplicationPolicy
+end

@@ -1,5 +1,8 @@
 - sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f)
 %p
+  %b IATA/IATA:
+  #{@airport.iata_code}/#{@airport.icao_code}
+%p
   %b Статус:
   = @airport.airport_state.name if @airport.airport_state
 %p

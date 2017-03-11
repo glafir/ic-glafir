@@ -27,7 +27,7 @@
                 = navbar_item "Добавить аэропорт", new_airport_path
                 = navbar_item "Добавить Авиакомпанию", new_aircompany_path
                 = navbar_item "Добавить Рейс", new_timetableap_path
-            = navbar_dropdown "В EZ:", class: "dropdown-submenu" do
+            = navbar_dropdown "В Вашей стране:", class: "dropdown-submenu" do
               %li= link_to "Города", controller: "/countries", action: "tw_show", id: 528
               %li= link_to "Аэропорты", controller: "/countries", action: "ap_show", id: 528
               %li= link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528
@@ -42,22 +42,26 @@
           = navbar_dropdown "ЖД:", class: "dropdown-submenu" do
             = navbar_item "ЖД станции и вокзалы", stations_path
             = navbar_item "ЖД станции, их зоны", station_zones_path
-            = navbar_item "ЖД станции, их типы", station_types_path
-
+            = navbar_item "ЖД станции, их направления", rw_routes_path
     = navbar_group align: 'right', class: 'right-userpanel', id: 'menu' do
       - if user_signed_in? && current_user.admin?
         = navbar_dropdown "Админпанель" do
           = navbar_item "Аэропорты", admin_ap_airports_path
           = navbar_item "Авиакомпании", admin_al_aircompanies_path
+          = navbar_item "Хабы а-компаний", admin_aphub_aphubs_path
           = navbar_item "Рейсы", admin_tt_timetableaps_path
-          = navbar_item " "
+          = navbar_item "Пользователи"
           = navbar_item "ЖД станции", admin_stations_stations_path
+          = navbar_item "Переводы", translations_path
         = navbar_dropdown "твой профиль: #{current_user.username}" do
           %li= image_tag current_user.avatar.url(:size_200), class: "img-circle"
           %li= link_to "My profile", current_user, class: "btn active"
           %li= link_to 'Edir my profile', edit_user_registration_path, class:"btn active"
           - if policy(current_user).index?
             %li= link_to "Users", users_path, class: "btn active"
+          = navbar_dropdown "Настроить язык", class: "dropdown-submenu pull-left" do
+            - @langs.each do |lang|
+              = navbar_item lang.lang.capitalize
           = navbar_dropdown_divider
           %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete, class: "btn active" if user_signed_in?
         %li= link_to image_tag("#{current_user.avatar.url(:thumb_50)}", :class => 'img-circle'), current_user

@@ -4,6 +4,7 @@
       %p#twrus
         = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus
         = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+        = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
         #{timetableap.airport_start.town.city_rus} - #{timetableap.airport_finish.town.city_rus}
         = "(Совмещён с #{timetableap.parent.flight})" if timetableap.parent_id
         #aprus (#{link_to timetableap.airport_start.name_rus, timetableap.airport_start}) - (#{link_to timetableap.airport_finish.name_rus, timetableap.airport_finish})
@@ -15,11 +16,11 @@
         Выполняется самолётом:
         %strong
           = (timetableap.parent_id.blank?) ? (link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany) : (link_to timetableap.parent.aircompany.airline_name_rus, timetableap.parent.aircompany)
-        .tt_status{:bgcolor => "#{timetableap.bgcolor}"}= timetableap.fstatus
+        .tt_status= timetableap.fstatus
     %td#tt_time
       = timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
       %br
       %em (#{timetableap.timeIN.in_time_zone("Ezhinsk").to_s(:time)})
-      %br
-      = timetableap.time_str
-    %td.tt_status{:bgcolor => "#{timetableap.bgcolor}"}= timetableap.fstatus
+    %td#tt_status
+      #div{:class => "btn #{timetableap.bgcolor}"}
+        = timetableap.fstatus

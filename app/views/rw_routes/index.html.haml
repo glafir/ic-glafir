@@ -1,13 +1,12 @@
 %h1 Список rw_routes
 
-%table
+%table.table.table-striped.table-hover.table-condensed
   %tr
     %th Start route
     %th End route
     %th
     %th
     %th
-
   - @rw_routes.each do |rw_route|
     %tr
       %td= rw_route.start_route

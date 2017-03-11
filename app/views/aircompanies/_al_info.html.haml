@@ -13,21 +13,17 @@
     = @aircompany.airline_name_eng
   %p
     %b Airline name rus:
-    = @aircompany.airline_name_rus
+    = @aircompany.airline_name_rus if @aircompany.airline_name_rus
   %p
     %b Base airport:
-    = link_to @aircompany.airport.name_rus, @aircompany.airport
-    (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) unless @aircompany.airport.town.blank?}
+    = link_to @aircompany.airport.name_rus, @aircompany.airport if @aircompany.airport
+    (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) if @aircompany.airport})
+  %p
+    %b Общее количество рейсов в день (среднее)
+    = @aircompany.timetableaps_count
   %p
     %b Country:
-    = @aircompany.country.country_name
-  %p
-    %b hubs:
-    - @aircompany.aphubs.each {|x|
-    = link_to x.airport.name_rus, x.airport
-    - }
-    ||
-    = link_to "Add hub", new_aphub_path
+    = @aircompany.country.country_name if @aircompany.country
   %p
     %b Start:
     = @aircompany.al_start
@@ -42,3 +38,6 @@
       - @aircompany.childs.each do |aa|
         #{link_to aa.airline_name_rus, aa} базируется в а/п #{link_to aa.airport.name_rus, aa.airport} (г.#{link_to aa.airport.city_rus, country_town_path(aa.airport.country,aa.airport.town) unless aa.airport.town.blank?})
         %br
+  %p
+    = link_to 'Добавить рейс в данную компанию', new_timetableap_path(@aircompany), class: "btn btn-primary"
+

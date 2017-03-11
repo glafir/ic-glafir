@@ -26,44 +26,44 @@
       - @tt2.each do |tt2|
         #{tt1.aircompany.iata_code} #{tt1.flight_number}
         #{@airport1.city_rus} (#{tt1.airport_start.name_rus}) - #{a.city_rus} (#{tt1.airport_finish.name_rus})  || 
-        #{tt1.TimeStart.in_time_zone(tt1.airport_start.time_zone).to_s(:time)} - #{tt1.TimeEnd.in_time_zone(tt1.airport_finish.time_zone).to_s(:time)} ||
-        - tt1.TimeStart = tt1.TimeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
-        - tt1.TimeEnd = tt1.TimeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
-        - tt2.TimeStart = tt2.TimeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
-        - tt2.TimeEnd = tt2.TimeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
-        - if tt1.TimeStart > tt2.TimeStart
-          - tt2.TimeStart = tt2.TimeStart + 24.hour
-          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
-        - if tt2.TimeStart - tt1.TimeEnd > 24.hour
-          - tt2.TimeStart = tt2.TimeStart - 24.hour
-          - tt2.TimeEnd = tt2.TimeEnd - 24.hour
-        - if tt1.TimeStart < tt1.TimeEnd
-          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+        #{tt1.timeStart.in_time_zone(tt1.airport_start.time_zone).to_s(:time)} - #{tt1.timeEnd.in_time_zone(tt1.airport_finish.time_zone).to_s(:time)} ||
+        - tt1.timeStart = tt1.timeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - tt1.timeEnd = tt1.timeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - tt2.timeStart = tt2.timeStart.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - tt2.timeEnd = tt2.timeEnd.change(:year=>Time.now.in_time_zone("UTC").year, :month=>Time.now.in_time_zone("UTC").month, :day=>Time.now.in_time_zone("UTC").day)
+        - if tt1.timeStart > tt2.timeStart
+          - tt2.timeStart = tt2.timeStart + 24.hour
+          - tt2.timeEnd = tt2.timeEnd + 24.hour
+        - if tt2.timeStart - tt1.timeEnd > 24.hour
+          - tt2.timeStart = tt2.timeStart - 24.hour
+          - tt2.timeEnd = tt2.timeEnd - 24.hour
+        - if tt1.timeStart < tt1.timeEnd
+          = Time.diff(Time.parse(tt1.timeStart.to_s), Time.parse(tt1.timeEnd.to_s), '%H %N')[:diff]
         - else
-          - tt1.TimeEnd = tt1.TimeEnd + 24.hour
-          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+          - tt1.timeEnd = tt1.timeEnd + 24.hour
+          = Time.diff(Time.parse(tt1.timeStart.to_s), Time.parse(tt1.timeEnd.to_s), '%H %N')[:diff]
         %br
         Время для транзита: 
-        - if tt2.TimeStart > tt1.TimeEnd
-          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+        - if tt2.timeStart > tt1.timeEnd
+          = Time.diff(Time.parse(tt2.timeStart.to_s), Time.parse(tt1.timeEnd.to_s), '%H %N')[:diff]
         - else
-          - tt2.TimeStart = tt2.TimeStart + 24.hour
-          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
-          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt1.TimeEnd.to_s), '%H %N')[:diff]
+          - tt2.timeStart = tt2.timeStart + 24.hour
+          - tt2.timeEnd = tt2.timeEnd + 24.hour
+          = Time.diff(Time.parse(tt2.timeStart.to_s), Time.parse(tt1.timeEnd.to_s), '%H %N')[:diff]
         %br
         #{tt2.aircompany.iata_code} #{tt2.flight_number}
-        #{a.city_rus} (#{tt2.airport_start.name_rus}) - #{@airport2.city_rus} (#{tt2.airport_finish.name_rus})  #{tt2.TimeStart.in_time_zone(tt2.airport_start.time_zone).to_s(:time)} - #{tt2.TimeEnd.in_time_zone(tt2.airport_finish.time_zone).to_s(:time)} || 
-        - if tt2.TimeStart < tt2.TimeEnd
-          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+        #{a.city_rus} (#{tt2.airport_start.name_rus}) - #{@airport2.city_rus} (#{tt2.airport_finish.name_rus})  #{tt2.timeStart.in_time_zone(tt2.airport_start.time_zone).to_s(:time)} - #{tt2.timeEnd.in_time_zone(tt2.airport_finish.time_zone).to_s(:time)} || 
+        - if tt2.timeStart < tt2.timeEnd
+          = Time.diff(Time.parse(tt2.timeStart.to_s), Time.parse(tt2.timeEnd.to_s), '%H %N')[:diff]
         - else
-          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
-          = Time.diff(Time.parse(tt2.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+          - tt2.timeEnd = tt2.timeEnd + 24.hour
+          = Time.diff(Time.parse(tt2.timeStart.to_s), Time.parse(tt2.timeEnd.to_s), '%H %N')[:diff]
         %br
         %b Общее время в пути:
-        - if tt1.TimeStart < tt2.TimeEnd
-          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+        - if tt1.timeStart < tt2.timeEnd
+          = Time.diff(Time.parse(tt1.timeStart.to_s), Time.parse(tt2.timeEnd.to_s), '%H %N')[:diff]
         - else
-          - tt2.TimeEnd = tt2.TimeEnd + 24.hour
-          = Time.diff(Time.parse(tt1.TimeStart.to_s), Time.parse(tt2.TimeEnd.to_s), '%H %N')[:diff]
+          - tt2.timeEnd = tt2.timeEnd + 24.hour
+          = Time.diff(Time.parse(tt1.timeStart.to_s), Time.parse(tt2.timeEnd.to_s), '%H %N')[:diff]
 
         %hr

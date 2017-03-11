@@ -25,22 +25,22 @@ class AircraftsController < ApplicationController
 
   def create
     @aircraft = Aircraft.new(params[:aircraft])
+    authorize @aircraft
     @aircraft.save
     flash[:notice] = "The aircraft was created!" if @aircraft.save && !request.xhr?
-    authorize @aircraft
     respond_with(@aircraft)
   end
 
   def update
     @aircraft.update_attributes(params[:aircraft])
-    flash[:notice] = "The aircraft was updated!" if @aircraft.update_attributes(params[:aircraft]) && !request.xhr?
     authorize @aircraft
+    flash[:notice] = "The aircraft was updated!" if @aircraft.update_attributes(params[:aircraft]) && !request.xhr?
     respond_with(@aircraft)
   end
 
   def destroy
-    @aircraft.destroy
     authorize @aircraft
+    @aircraft.destroy
     respond_with(@aircraft)
   end
 

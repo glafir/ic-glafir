@@ -1,0 +1,32 @@
+= form_for @translation,  :html => { :class => 'form form-horizontal' } do |f|
+  - if @translation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@translation.errors.count, "error")} prohibited this translation from being saved:"
+      %ul
+        - @translation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :locale, :class => 'control-label'
+    .controls
+      = f.text_field :locale, class: "form-control", required: true
+  .form-group
+    = f.label :key, :class => 'control-label'
+    .controls
+      = f.text_field :key, class: "form-control", required: true
+  .form-group
+    = f.label :value, :class => 'control-label'
+    .controls
+      = f.text_area :value, class: "form-control", required: true
+  .form-group
+    = f.label :interpolations, :class => 'control-label'
+    .controls
+      = f.text_area :interpolations, class: "form-control", required: true
+  .form-group
+    = f.label :is_proc, :class => 'control-label'
+    .controls
+      = f.check_box :is_proc, class: "form-control", required: true
+  = f.submit nil, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), translations_path, :class => 'btn btn-default'
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

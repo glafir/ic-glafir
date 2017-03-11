@@ -1,0 +1,3 @@
+class TranslationPolicy < ApplicationPolicy
+
+end

@@ -17,6 +17,7 @@
     %thead
       %tr
         %th Рейс
+        %th
         %th Направление
         %th Время
     %tbody
@@ -26,7 +27,7 @@
   $(document).ready(function(){
     $("#tt").tablesorter({
       widgets: ["zebra"],
-      sortList:[[2,0]]
+      sortList:[[3,0]]
       });
   });
 

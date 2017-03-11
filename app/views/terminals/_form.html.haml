@@ -1,0 +1,49 @@
+= form_for @terminal,  :html => { :class => 'form form-horizontal' } do |f|
+  - if @terminal.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@terminal.errors.count, "error")} prohibited this terminal from being saved:"
+      %ul
+        - @terminal.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, class: "form-control", required: true
+  .form-group
+    = f.label :marking, :class => 'control-label'
+    .controls
+      = f.text_field :marking, class: "form-control", required: true
+  .form-group
+    = f.label :floor, :class => 'control-label'
+    .controls
+      = f.number_field :floor, class: "form-control", required: true
+  .form-group
+    = f.label :reception, :class => 'control-label'
+    .controls
+      = f.number_field :reception, class: "form-control", required: true
+  .form-group
+    = f.label :parking, :class => 'control-label'
+    .controls
+      = f.number_field :parking, class: "form-control", required: true
+  .form-group
+    = f.label :teletrap, :class => 'control-label'
+    .controls
+      = f.number_field :teletrap, class: "form-control", required: true
+  .form-group
+    = f.label :gate, :class => 'control-label'
+    .controls
+      = f.number_field :gate, class: "form-control", required: true
+  .form-group
+    = f.label :airport_id, :class => 'control-label'
+    .controls.col-xs-6
+      = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#terminal_airport_id'}, :value => params[:airport_id], class: 'form-control'
+      = f.hidden_field :airport_id
+  .form-group
+    = f.label :area, :class => 'control-label'
+    .controls
+      = f.text_field :area, class: "form-control", required: true
+  = f.submit nil, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), terminals_path, :class => 'btn btn-default'
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
+

@@ -1,6 +1,10 @@
 class AphubsController < ApplicationController
   before_filter :set_aphub, only: [:show, :edit, :update, :destroy]
 
+  def admin_aphub
+    authorize :Aphub
+  end
+
   def index
     @aphubs = Aphub.all
     authorize Aphub
@@ -24,14 +28,12 @@ class AphubsController < ApplicationController
 
   def create
     @aphub = Aphub.new(params[:aphub])
-    @aphub.save
     flash[:notice] = "The aphub was saved!" if @aphub.save && !request.xhr?
     authorize @aphub
     respond_with(@aphub)
   end
 
   def update
-    @aphub.update_attributes(params[:aphub])
     flash[:notice] = "The aphub was updated!" if @aphub.update_attributes(params[:aphub]) && !request.xhr?
     authorize @aphub
     respond_with(@aphub)

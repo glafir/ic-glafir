@@ -1,0 +1,25 @@
+ru:
+  activerecord:
+    models:
+      country:
+        one: Страна
+        zero: Стран
+        few: Страны
+        many: Стран
+        other: Стран
+      user:
+        one: Пользователь
+        zero: Пользователей
+        few: Пользователя
+        many: Пользователей
+        other: Пользователей
+      airport:
+        one: Аэропорт
+        zero: Аэропортов
+        few: Аэропорта
+        many: Аэропорты
+        other: Аэропортов
+    attributes:
+      country:
+        country_name: 'Название страны'
+        created_at: "Создан"

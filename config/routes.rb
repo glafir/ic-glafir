@@ -1,4 +1,14 @@
 IcApp::Application.routes.draw do
+  resources :statuses
+  resources :terminals
+  get 'api/getAirports'
+
+  get 'api/getCountries'
+
+  resources :translations
+#scope "/:locale" do
+  resources :languages
+  resources :languages
   concern :paginatable do
     get '(page/:page)', :action => :index, :on => :collection, :as => ''
   end
@@ -20,14 +30,21 @@ IcApp::Application.routes.draw do
   resources :flash_messages, :concerns => :paginatable
   get "errors/error_404", :as => "error404"
   get "errors/error_403", :as => "error403"
+  get "errors/error_401", :as => "error401"
   resources :roles
   resources :user_themes
-  resources :aphubs
+  resources :aphubs do
+    collection do
+      get "admin_aphub"
+    end
+  end
   get '/timecor' => "general#timecor"
   get '/apcor' => "general#apcor"
+  get '/add_sub_tt' => "general#add_sub_tt"
   resources :regions
   resources :towns, :concerns => :paginatable do
     get :autocomplete_town_accent_city, :on => :collection
+    get :autocomplete_town_city_rus, :on => :collection
     collection do
       get "admin_tw"
       get "tw_dist"
@@ -142,5 +159,6 @@ IcApp::Application.routes.draw do
   get "/general" => "general#home"
   get "insertdata" => "timetableaps#insert"
   get "chnglocale" => "general#chnglocale"
-#  get "/*other" => redirect("/errors/error_404")
+  get "/*other" => redirect("/errors/error_404")
+#end
 end

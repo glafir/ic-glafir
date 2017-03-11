@@ -9,6 +9,7 @@
       %th= sortable "airline_name_rus"
       %th= sortable "airport_id"
       %th= sortable "timetableaps_count"
+      %th= sortable "per_cent_tt"
       %th= sortable "al_start"
       %th= sortable "al_finish"
       %th
@@ -21,11 +22,12 @@
         %td= aircompany.iata_code
         %td= aircompany.icao_code
         %td= link_to aircompany.airline_name_eng, aircompany
-        %td= link_to aircompany.airline_name_rus, aircompany
+        %td= link_to aircompany.airline_name_rus, aircompany if aircompany.airline_name_rus
         %td
-          = link_to aircompany.airport.name_rus, aircompany.airport
-          (г.#{link_to aircompany.airport.town.city_rus,  country_town_path(aircompany.country, aircompany.airport.town_id) unless aircompany.airport.town.blank?})
+          = link_to aircompany.airport.name_rus, aircompany.airport if aircompany.airport
+          (г.#{link_to aircompany.airport.town.city_rus,  country_town_path(aircompany.country, aircompany.airport.town_id) if aircompany.airport})
         %td= aircompany.timetableaps_count
+        %td= aircompany.per_cent_tt
         %td= aircompany.al_start
         %td= aircompany.al_finish
         - if policy(aircompany).edit?

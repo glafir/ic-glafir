@@ -21,7 +21,8 @@ body {
     }
 }
 #aprus {
-        font: bold 12px Arial, Helvetica, sans-serif;
+        font: bold 20px Arial, Helvetica, sans-serif;
+        color: #CECA9B;
 }
 
 #twrus{
@@ -29,18 +30,20 @@ body {
 }
 
 #tt_time{
-        vertical-align:middle;
+        vertical-align: middle;
         text-align: center;
         font: bold 22px Arial, Helvetica, sans-serif;
 }
 
 #flight_info{
-    vertical-align:bottom;
+    vertical-align: bottom;
 }
 #tt_al_info{
-    font: 11px Arial, Helvetica, sans-serif;
+    font: 14px Arial, Helvetica, sans-serif;
 }
-
+#tt_status{
+    vertical-align: middle;
+}
 
 
 .marginBottom-0 {margin-bottom:0;}

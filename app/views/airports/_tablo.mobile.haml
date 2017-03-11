@@ -2,8 +2,9 @@
   %tr
     %td
       = link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus
-      %br
       = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap)
+    %td
+      = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
     %td
       = link_to timetableap.f_ap.town.city_rus, timetableap.f_ap
       = "(Совмещён с #{timetableap.parent.flight})" if timetableap.parent_id

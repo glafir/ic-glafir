@@ -1,0 +1,40 @@
+- model_class = Terminal
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing terminals
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Marking
+      %th Floor
+      %th Reception
+      %th Parking
+      %th Teletrap
+      %th Gate
+      %th Airport
+      %th Area
+      %th
+      %th
+      %th
+
+  %tbody
+    - @terminals.each do |terminal|
+      %tr
+        %td= terminal.name
+        %td= terminal.marking
+        %td= terminal.floor
+        %td= terminal.reception
+        %td= terminal.parking
+        %td= terminal.teletrap
+        %td= terminal.gate
+        %td= terminal.airport_id
+        %td= terminal.area
+        %td= link_to 'Show', terminal
+        %td= link_to 'Edit', edit_terminal_path(terminal)
+        %td= link_to 'Destroy', terminal, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_terminal_path, :class => 'btn btn-primary'
+

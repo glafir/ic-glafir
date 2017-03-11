@@ -1,9 +1,0 @@
-;0B;JOR;;Blue Air;Bucharest (BBU);Romania;2004;-;
-;0D;DWT;;Darwin Airline;Lugano (LUG);Switzerland;2004;-;
-;0J;JCS;;Jetclub;Zurich (ZRH);Switzerland;1994;-;
-;0Q;CQN;;Chongqing Airlines;Chongqing (CKG);China;2007;-;
-;0V;VFC;;Vietnam Air Service - VASCO;Ho Chi Minh City (SGN);Vietnam;1993;-;
-;0A;GNT;;Amber Air;;Lithuania;2004;2007;
-;0K;KRT;;Air Kokshetau;;Kazakhstan;2002;2008;
-;0K;KRT;;Kokshetau Airlines;;Kazakhstan;1997;2010;
-;0P;PPC;;Palau Asia Pacific Air;;Palau;2005;2005;

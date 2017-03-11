@@ -5,8 +5,8 @@ acts_as_mappable :default_units => :kms,
                    :distance_field_name => :distance,
                    :lat_column_name => :latitude,
                    :lng_column_name => :longitude
-  paginates_per 20
-  has_one :apkey, dependent: :destroy
+  paginates_per 10
+  has_many :terminals
   has_many :aircompanies, dependent: :destroy
   belongs_to :town
   belongs_to :airport_state
@@ -33,8 +33,34 @@ acts_as_mappable :default_units => :kms,
     "#{name_rus}, #{iata_code}, г.#{city_rus} (#{city_eng})"
   end
 
+  def coordinate
+    "#{latitude}, #{longitude}"
+  end
+
+  def self.ap_distance(airport1, airport2)
+#    @airport1 = Airport.find(airport1) if airport1 != nil
+#    @airport2 = Airport.find(airport2) if airport2 != nil
+    if airport1 != nil || airport2 != nil
+      p1 = GeoPoint.new  airport1.latitude.to_f, airport1.longitude.to_f
+      p2 = GeoPoint.new  airport2.latitude.to_f, airport2.longitude.to_f
+#      return p1, p2
+      return p1.distance_to(p2), p1.bearing_to(p2)
+      #@sbear = @p1.bearing_to(@p2)
+#      ap_distance_return(@p1, @p2)
+#      ap_sbear_return(@p1, @p2)
+    end
+  end
+
+  def dist(p1, p2)
+    p1.distance_to(p2)
+  end
+
+  def sbear(p1, p2)
+    p1.bearing_to(p2)
+  end
+
   def self.search(ap)
-    if ap && ap != ""
+    if ap && ap != "" && ap != " "
       where('name_rus LIKE ? or name_eng LIKE ? or city_rus LIKE ? or city_eng LIKE ? or ICAO_code LIKE ? or IATA_code LIKE ?', "%#{ap}%", "%#{ap}%", "%#{ap}%", "%#{ap}%", "%#{ap}%", "%#{ap}%")
     else
       all

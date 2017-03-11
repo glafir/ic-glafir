@@ -1,0 +1,32 @@
+- model_class = Translation
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing translations
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Locale
+      %th Key
+      %th Value
+      %th Interpolations
+      %th Is proc
+      %th
+      %th
+      %th
+
+  %tbody
+    - @translations.each do |translation|
+      %tr
+        %td= translation.locale
+        %td= translation.key
+        %td= translation.value
+        %td= translation.interpolations
+        %td= translation.is_proc
+        %td= link_to 'Show', translation
+        %td= link_to 'Edit', edit_translation_path(translation)
+        %td= link_to 'Destroy', translation, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_translation_path, :class => 'btn btn-primary'
+

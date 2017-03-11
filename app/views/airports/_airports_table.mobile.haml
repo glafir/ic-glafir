@@ -1,52 +1,62 @@
-%table
-  %tr
-    %th
-      = sortable "iata_code"
-      %br
-      = sortable "icao_code"
-    %th
-      = sortable "name_rus"
-      %br
-      (city_rus)
-    %th runway
-    %th= sortable "timetableap_count"
-    %th кол рейсов
-    %th
-  - @airports.each do |airport|
-    - if  airport.name_rus.blank?
-      - airport.name = airport.name_eng
-    - else
-      - airport.name = airport.name_rus
-    - if  airport.city_rus.blank?
-      - airport.city_name = airport.city_eng
-    - else
-      - airport.city_name = airport.city_rus
-    - if  airport.town.blank?
-      - city = airport.city_name
-    - else
-      - if airport.town.city_rus.blank?
-        - city = airport.town.accent_city
-      - else
-        - city = airport.town.city_rus
+%table#tt.table.table-striped
+  %thead
     %tr
-      %td
-        = airport.iata_code
+      %th
+        = sortable "iata_code"
         %br
-        = airport.icao_code
-      %td
-        = link_to airport.name, airport
+        = sortable "icao_code"
+      %th
+        = sortable "name_rus"
         %br
-        #{link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?}
-      %td= airport.runway_aps.count
-      %td
-        %a{:href => "/airports/#{airport.id}/tablo/out"} вылет
-        %a{:href => "/airports/#{airport.id}/tablo/in"} прилёт
-        %a{:href => "/airports/#{airport.id}/tablo"} Общее
-      %td
-        - Time.zone = airport.time_zone
-        - @aptt_in = airport.timetableaps_in.stoday.where('parent_id is NULL').count
-        - @aptt_out = airport.timetableaps_out.etoday.where(parent_id: nil).count
-        - @aptt_all = @aptt_in + @aptt_out
-        = @aptt_all
-      - if policy(airport).edit?
-        %td= link_to 'Edit', edit_airport_path(airport)
+        (city_rus)
+      %th runway
+      %th
+      %th кол рейсов
+      %th
+  %tbody
+    - @airports.each do |airport|
+      - if  airport.name_rus.blank?
+        - airport.name = airport.name_eng
+      - else
+        - airport.name = airport.name_rus
+      - if  airport.city_rus.blank?
+        - airport.city_name = airport.city_eng
+      - else
+        - airport.city_name = airport.city_rus
+      - if  airport.town.blank?
+        - city = airport.city_name
+      - else
+        - if airport.town.city_rus.blank?
+          - city = airport.town.accent_city
+        - else
+          - city = airport.town.city_rus
+      %tr
+        %td
+          = airport.iata_code
+          %br
+          = airport.icao_code
+        %td
+          = link_to airport.name, airport
+          %br
+          #{link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?}
+        %td= airport.runway_aps.count
+        %td
+          %a{:href => "/airports/#{airport.id}/tablo/out"} вылет
+          %a{:href => "/airports/#{airport.id}/tablo/in"} прилёт
+          %a{:href => "/airports/#{airport.id}/tablo"} Общее
+        %td
+          - Time.zone = airport.time_zone
+          - @aptt_in = airport.timetableaps_in.stoday.where('parent_id is NULL').count
+          - @aptt_out = airport.timetableaps_out.etoday.where(parent_id: nil).count
+          - @aptt_all = @aptt_in + @aptt_out
+          = @aptt_all
+        - if policy(airport).edit?
+          %td= link_to 'Edit', edit_airport_path(airport)
+:javascript
+  $(document).ready(function(){
+    $("#tt").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[1,0]]
+      });
+  });
+

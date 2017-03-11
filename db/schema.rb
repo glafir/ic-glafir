@@ -11,25 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124184713) do
+ActiveRecord::Schema.define(version: 20160729132739) do
 
   create_table "aircompanies", force: :cascade do |t|
-    t.string   "iata_code",          limit: 2,               null: false
-    t.string   "icao_code",          limit: 3,               null: false
-    t.string   "awb_prefix",         limit: 3
-    t.string   "airline_name_eng",   limit: 255,             null: false
-    t.string   "airline_name_rus",   limit: 255
-    t.integer  "airport_id",         limit: 4,               null: false
-    t.integer  "country_id",         limit: 4
-    t.integer  "al_start",           limit: 4
-    t.integer  "al_finish",          limit: 4
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.integer  "timetableaps_count", limit: 4,   default: 0, null: false
-    t.integer  "manager_id",         limit: 4
-    t.string   "avatar",             limit: 255
+    t.string   "airline_name_eng",       limit: 255,             null: false
+    t.string   "alias",                  limit: 255,             null: false
+    t.string   "iata_code",              limit: 2,               null: false
+    t.string   "icao_code",              limit: 3,               null: false
+    t.string   "airline_name_eng_short", limit: 255
+    t.string   "country_str",            limit: 255
+    t.string   "status",                 limit: 3
+    t.string   "awb_prefix",             limit: 3
+    t.string   "airline_name_rus",       limit: 255
+    t.integer  "airport_id",             limit: 4
+    t.integer  "country_id",             limit: 4
+    t.integer  "al_start",               limit: 4
+    t.integer  "al_finish",              limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "timetableaps_count",     limit: 4,   default: 0, null: false
+    t.integer  "manager_id",             limit: 4
+    t.string   "avatar",                 limit: 255
   end
 
+  add_index "aircompanies", ["airline_name_eng"], name: "airline_name_eng", using: :btree
   add_index "aircompanies", ["airport_id"], name: "Base_airport", using: :btree
   add_index "aircompanies", ["country_id"], name: "country_id", using: :btree
   add_index "aircompanies", ["iata_code"], name: "iata_code", using: :btree
@@ -126,12 +131,15 @@ ActiveRecord::Schema.define(version: 20160124184713) do
   add_index "airports", ["iata_code"], name: "iata_code", unique: true, using: :btree
 
   create_table "aphubs", force: :cascade do |t|
-    t.integer  "airport_id",    limit: 4, null: false
-    t.integer  "aircompany_id", limit: 4, null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "airport_id",    limit: 4
+    t.integer  "aircompany_id", limit: 4,             null: false
+    t.integer  "agency_id",     limit: 4
+    t.integer  "hub_type",      limit: 4, default: 0, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
+  add_index "aphubs", ["agency_id"], name: "agency_id", using: :btree
   add_index "aphubs", ["aircompany_id"], name: "aircompany_id", using: :btree
   add_index "aphubs", ["airport_id"], name: "airport_id", using: :btree
 
@@ -174,6 +182,14 @@ ActiveRecord::Schema.define(version: 20160124184713) do
     t.string   "flight_type", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "lang",       limit: 255
+    t.string   "lang_iso",   limit: 255
+    t.string   "lang_iata",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "old_passwords", force: :cascade do |t|
@@ -264,6 +280,26 @@ ActiveRecord::Schema.define(version: 20160124184713) do
     t.datetime "updated_at",                                   null: false
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "terminals", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "marking",    limit: 255
+    t.integer  "floor",      limit: 4
+    t.integer  "reception",  limit: 4
+    t.integer  "parking",    limit: 4
+    t.integer  "teletrap",   limit: 4
+    t.integer  "gate",       limit: 4
+    t.integer  "airport_id", limit: 4
+    t.float    "area",       limit: 24
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "timetableaps", force: :cascade do |t|
     t.integer  "flight_number",  limit: 4,   null: false
     t.integer  "aircompany_id",  limit: 4,   null: false
@@ -339,9 +375,20 @@ ActiveRecord::Schema.define(version: 20160124184713) do
   add_index "towns", ["accent_city"], name: "accent_city", using: :btree
   add_index "towns", ["city"], name: "city", using: :btree
   add_index "towns", ["city_rus"], name: "city_rus", using: :btree
+  add_index "towns", ["city_rus"], name: "city_rus_full_text", type: :fulltext
   add_index "towns", ["country_id"], name: "country_id", using: :btree
   add_index "towns", ["country_iso"], name: "country", using: :btree
   add_index "towns", ["id"], name: "id", unique: true, using: :btree
+
+  create_table "translations", force: :cascade do |t|
+    t.string   "locale",         limit: 255
+    t.string   "key",            limit: 255
+    t.text     "value",          limit: 65535
+    t.text     "interpolations", limit: 65535
+    t.boolean  "is_proc",                      default: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
 
   create_table "user_themes", force: :cascade do |t|
     t.string   "theme",      limit: 255, null: false
@@ -388,6 +435,7 @@ ActiveRecord::Schema.define(version: 20160124184713) do
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+    t.integer  "language_id",            limit: 4,                 null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

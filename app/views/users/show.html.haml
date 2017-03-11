@@ -1,5 +1,6 @@
+- model_class = User
 %h3.center-block
-  User #{@user.username} (#{@user.email})
+  #{t '.title', :default => model_class.model_name.human.titleize} #{@user.username} (#{@user.email})
 .field-form
   .col-md-6.visible-md-block
     = image_tag @user.avatar.size_500, :class => 'img-circle'

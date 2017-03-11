@@ -22,8 +22,9 @@ class Aircompanies < Application
       {name: :airline_name_rus, header: "Наименование (RU)"},
       {name: :airline_name_eng, header: "Наименование (EN)"},
       {name: :airport__name_rus, header: "Базовый аэропорт"},
-      {name: :al_start, format: "d-M-Y", header: "Дата основания"},
-      {name: :al_finish, format: "d-M-Y", header: "Дата прекращения"},
+      {name: :country__country_name, header: "Страна"},
+      {name: :al_start, header: "Год основания"},
+      {name: :al_finish, header: "Год прекращения"},
       {name: :actions, header: "Удвлить?"}
     ]
     c.tbar = [ {xtype: 'textfield', attr: :airline_name_rus, empty_text: 'search by name'}, :add, :edit, :apply, :delete, :search ]

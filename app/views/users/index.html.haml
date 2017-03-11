@@ -1,4 +1,5 @@
-%h3.center-block Users
+- @model_class = User
+%h3.center-block #{t '.title', :default => @model_class.model_name.human.pluralize.titleize}
 .table-responsive
   %table.table-striped.table-hover.table-condensed
     %thead

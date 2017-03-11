@@ -1,12 +1,16 @@
 class Application < Netzke::Grid::Base
 include Netzke::Basepack::ActionColumn
-
+#include Netzke::Grid::Base
 plugin :grid_live_search do |c|
   c.klass = Netzke::Basepack::GridLiveSearch
 end
 
 client_styles do |c|
   c.require :main
+end
+
+client_class do |c|
+  c.layout = :fit
 end
 
 
@@ -38,16 +42,16 @@ client_class do |c|
     }
   JS
 
-c.on_apply = <<-JS
-  function() {
-    Ext.Msg.confirm(this.i18n.confirmation,
-      this.i18n.areYouSure, function(btn) {
-      if (btn == 'yes') {
-        this.getStore().sync();
-      }
-    }, this);
-  }
-JS
+  c.on_apply = <<-JS
+    function() {
+      Ext.Msg.confirm(this.i18n.confirmation,
+        this.i18n.areYouSure, function(btn) {
+        if (btn == 'yes') {
+          this.getStore().sync();
+        }
+      }, this);
+    }
+  JS
 end
 
 column :actions do |c|
@@ -63,17 +67,71 @@ action :show do |c|
   c.handler = :on_show
 end
 
-
   def configure(c)
     super
     c.width = 1100
     c.height = 600
     c.persistence = true
     c.maximizable = true
-    c.paging = true
-    c.edit_inline = true
-    c.bbar = [ :add, :edit, :apply, :delete, :search]
-    c.tbar = [ :add, :edit, :apply, :delete, :search]
+    c.intro_html = "Click on a component in the navigation tree"
+    c.items = [
+      { layout: :border,
+        tbar: [header_html, '->', :about],
+        items: [
+          { region: :west, item_id: :navigation, width: 300, split: true, xtype: :treepanel, root: menu, root_visible: false, border: false, title: "Navigation" },
+          { region: :center, layout: :border, border: false, items: [
+            { region: :north, height: 50, border: false, split: true, layout: :fit, items: [{item_id: :info_panel, padding: 5, border: false}] },
+            { item_id: :main_panel, region: :center, layout: :fit, border: false,items: [{border: false, body_padding: 5, html: "Components will be loaded in thisarea"}] } # items is only needed here for cosmetic reasons (initial border)
+          ]}
+        ]
+      }
+    ]
+    c.bbar = [ :add, :edit, :apply, :delete, :search, :paging]
+    c.tbar = [ :add, :edit, :apply, :delete, :search, :paging]
     c.context_menu = [:show, :add, :edit, :delete, :apply, :search]
+    c.paging = :pagination
+    c.editing = :inline
+  end
+
+  component :airports do |c|
+    c.desc = "Airports"
+  end
+
+
+protected
+
+  def link(text, uri)
+    "<a href='#{uri}'>#{text}</a>"
+  end
+
+  def header_html
+    %Q{
+      <div style="font-size: 150%;">
+        <a href="http://ic.glafir.ru">IC-Glafir</a>
+      </div>
+    }
+  end
+
+  def leaf(text, component, icon = nil)
+    { text: text,
+      id: component,
+      cmp: component,
+      leaf: true
+    }
+  end
+
+
+  def menu
+    out = { 
+      :text => "Navigation",
+      :expanded => true,
+      :children => [
+        leaf("Countries", :countries),
+        leaf("Towns", :towns),
+        leaf("Airports", :airports),
+        leaf("Airlines", :aircompanies)
+        ]
+      }
+    out
   end
 end

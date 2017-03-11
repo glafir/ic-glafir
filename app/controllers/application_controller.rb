@@ -2,6 +2,7 @@
 class ApplicationController < ActionController::Base
 include Pundit
 protect_from_forgery with: :exception, unless: -> { request.format.json? }
+protect_from_forgery prepend: true
 skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 skip_before_action :verify_authenticity_token, if: :json_request?
 #after_action :logging, only: [:create, :update, :destroy]
@@ -11,7 +12,8 @@ require 'tzinfo/data'
 require 'i18n_timezones'
 require 'devise_traceable'
 #require 'suncalc'
-before_filter :authenticate_user!
+before_filter :store_current_location, :unless => :devise_controller?
+before_filter :authenticate_user!, :except => [:error_404, :error_403, :error401]
 helper_method :sort_column, :sort_direction
 before_filter :day_week
 #layout :layout_by_resource
@@ -20,13 +22,15 @@ before_filter :day_week
 #end
 before_filter :force_utf8_params
 before_filter  :set_p3p
-#before_action :set_locale
+before_action :set_locale
 rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 #before_filter :set_mobile_format
 has_mobile_fu
 #before_filter :force_mobile_format
 before_filter :set_timezone 
 before_filter :set_country
+before_filter :lang
+#before_filter :cache_on, only: [:index, :show, :new]
 ActiveSupport::TimeZone::MAPPING["Ezhinsk"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Norok"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Arisha"] = "Asia/Ezhinsk"
@@ -37,7 +41,8 @@ ActiveSupport::TimeZone::MAPPING["Sakhalin"] = "Asia/Sakhalin"
 ActiveSupport::TimeZone::MAPPING["Kamchatka"] = "Asia/Kamchatka"
 ActiveSupport::TimeZone::MAPPING["Anadyr"] = "Asia/Anadyr"
 respond_to :html, :js, :json, :mobile
-after_action :verify_authorized, :except => [:error_404, :error_403]
+after_action :verify_authorized, :except => [:error_404, :error_403, :error401]
+after_action :store_action
 rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 def role?(role)
@@ -81,12 +86,16 @@ end
 #  end
 
   def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
+    if user_signed_in?
+      I18n.locale = current_user.language.lang_iata.to_s.downcase
+    else
+      I18n.default_locale
+    end
   end
 
-  def default_url_options(options = {})
-    { locale: I18n.locale }.merge options
-  end
+#  def default_url_options(options = {})
+#    { locale: I18n.locale }.merge options
+#  end
 
   def force_utf8_params
   traverse = lambda do |object, block|
@@ -110,7 +119,12 @@ end
    @flash_message_state_id = 100
    flash_message_add
 #    request.referrer || user_path(current_user) and return
+#    session[:previous_url] || current_user
     current_user
+  end
+
+  def after_update_path_for(resource)
+    session[:previous_url] || current_user
   end
 
   def after_sign_out_path_for(resource_or_scope)
@@ -147,7 +161,25 @@ end
     flash_message_add
   end
 
+  def store_current_location
+    store_location_for(:user, request.url)
+  end
+
   protected
+
+  def store_action
+    return unless request.get? 
+    if (request.path != "/users/sign_in" &&
+        request.path != "/users/sign_up" &&
+        request.path != "/users/password/new" &&
+        request.path != "/users/password/edit" &&
+        request.path != "/users/confirmation" &&
+        request.path != "/users/sign_out" &&
+        !request.xhr?) # don't store ajax calls
+#      store_location_for(:user, request.fullpath)
+      session[:previous_url] = request.fullpath
+    end
+  end
 
   def user_not_authorized
     flash[:notice] = "Данное действие тебе не разрешено."
@@ -155,6 +187,10 @@ end
     @flash_message_state_id = 403
     flash_message_add
     redirect_to (request.referrer || error403_path), data: { no_turbolink: true } and return
+  end
+
+  def lang
+    @langs = Language.all
   end
 
   def flash_message_add
@@ -184,5 +220,10 @@ end
 
   def day_week
     @wday = Time.zone.now.strftime'%w'.to_s
+  end
+
+  def cache_on
+    expires_in 15.minutes, :public => false
+    sleep 15
   end
 end

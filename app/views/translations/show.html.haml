@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Locale:
+  = @translation.locale
+%p
+  %b Key:
+  = @translation.key
+%p
+  %b Value:
+  = @translation.value
+%p
+  %b Interpolations:
+  = @translation.interpolations
+%p
+  %b Is proc:
+  = @translation.is_proc
+
+= link_to 'Edit', edit_translation_path(@translation)
+\|
+= link_to 'Back', translations_path

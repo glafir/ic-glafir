@@ -1,6 +1,6 @@
 = form_tag '#', :remote => true, :method => 'get', :id => 'aircompanies_search', class: 'form form-horizontal aircompanies_search' do
-  .col-xs-6
+  .col-xs-10
     = text_field_tag :search, params[:search], autofocus: true, class: 'form-control'
   = submit_tag "Search", :name => nil, class: 'btn btn-primary'
   = render "layouts/per_page"
-  #aircompanies.col-xs-12= render 'aircompanies/aircompanies'
+#aircompanies.col-xs-12= render 'aircompanies/aircompanies'

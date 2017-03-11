@@ -4,4 +4,7 @@ class ErrorsController < ApplicationController
 
   def error_403
   end
+
+  def error_401
+  end
 end

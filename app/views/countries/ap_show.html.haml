@@ -9,9 +9,9 @@
     = link_to 'Edit country', edit_country_path(@country), class: "btn btn-info"
     \|
   = link_to 'Back to all countries', countries_path+"?search=&utf8=✓", class: "btn btn-default"
-
-= render "airports/index"
-.col-xs-12
+  %hr
+  = render "airports/index"
+  %hr
   - if policy(@airports).new?
     = link_to 'New Airport', new_airport_path, class: "btn btn-primary"
     \|

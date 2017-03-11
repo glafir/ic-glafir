@@ -24,7 +24,11 @@
 //= require autocomplete-rails
 //= require bootstrap-sprockets
 //= require bootstrap
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree ./templates
 //= require_tree .
 //= require_self
 
+$.fn.bstooltip = $.fn.tooltip;

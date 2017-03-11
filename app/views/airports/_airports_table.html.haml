@@ -1,19 +1,9 @@
 %table.table.table-striped.table-hover.table-condensed
   %tr
-    %th= sortable "iata_code"
-    %th= sortable "icao_code"
     %th= sortable "name_rus"
     %th= sortable "city_rus"
-    %th= sortable "latitude"
-    %th= sortable "longitude"
-    %th Dist to town
-    %th= sortable "iso_code"
-    %th Runway
     %th Расписание и табло.
-    %th Кол-во рейсов всего||отправлено/принято
-    %th
-    %th
-    %th
+    %th Управление
   - @airports.each do |airport|
     %tr
       - if  airport.name_rus.blank?
@@ -31,34 +21,28 @@
           - city = airport.town.accent_city
         - else
           - city = airport.town.city_rus
-      %td= airport.iata_code
-      %td= airport.icao_code
-      %td= link_to airport.name, airport
-      %td= link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?
+        - @aptt_in = airport.timetableaps_in.stoday.where('parent_id is NULL').count
+        - @aptt_out = airport.timetableaps_out.etoday.where(parent_id: nil).count
+        - @aptt_all = @aptt_in + @aptt_out or 0
+      :ruby
+        tooltip_maket = <<EOF;
+          <b>код IATA:<b> #{airport.iata_code} <br>
+          <b>Код ICAO:</b> #{airport.icao_code} <br>
+          <b>City:</b>#{airport.city_eng} <br>
+          <b>Координаты:</b> #{airport.latitude} #{airport.longitude} <br>
+          <b>Количество полос:<b> #{airport.runway_aps.count} <br><br>
+          <b>Количество рейсов в день:</b> #{@aptt_all}||#{@aptt_out}/#{@aptt_in} <br><br>
+          <b>Расстояние до ближайшего города:</b> #{airport.distance_from(airport.town, :units=>:kms) if airport.town} kms
+        EOF
+      %td= link_to airport.name, airport, :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => tooltip_maket
       %td
-        = airport.latitude
-        %br
-        = airport.town.latitude if airport.town
-      %td
-        = airport.longitude
-        %br
-        = airport.town.longitude if airport.town
-      %td
-        #{airport.distance_from(airport.town, :units=>:kms) if airport.town} kms
-      %td= airport.country.country_iata_code
-      %td= airport.runway_aps.count
+        = link_to city, country_town_path(airport.country, airport.town_id), :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => "#{airport.town.latitude if airport.town}, #{airport.town.longitude if airport.town}" unless airport.town.blank?
       %td
         %a{:href => "/airports/#{airport.id}/tablo/out"} вылет
         %a{:href => "/airports/#{airport.id}/tablo/in"} прилёт
         %a{:href => "/airports/#{airport.id}/tablo"} Общее
       %td
-        - Time.zone = airport.time_zone
-        - @aptt_in = airport.timetableaps_in.stoday.where('parent_id is NULL').count
-        - @aptt_out = airport.timetableaps_out.etoday.where(parent_id: nil).count
-        - @aptt_all = @aptt_in + @aptt_out or 0
-        = @aptt_all
-        ||#{@aptt_out}/#{@aptt_in}
-      - if policy(airport).edit?
-        %td= link_to 'Edit', edit_airport_path(airport)
-      - if policy(airport).destroy?
-        %td= link_to 'Destroy', airport, method: :delete, data: { confirm: "Вы уверены, что хотите удалить аэропорт "+airport.name_rus+" в городе "+ airport.city_rus}
+        - if policy(airport).edit?
+          = link_to 'Edit', edit_airport_path(airport), class: "btn btn-default"
+        - if policy(airport).destroy?
+          = link_to 'Destroy', airport, method: :delete, class: "btn btn-danger", data: { confirm: "Вы уверены, что хотите удалить аэропорт "+airport.name_rus+" в городе "+ airport.city_rus}

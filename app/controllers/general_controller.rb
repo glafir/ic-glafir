@@ -57,4 +57,37 @@ layout "without_html", :only => [:timenow, :chnglocale]
 #    end
     @towns = Town.where(country_id: nil)
   end
+
+  def add_sub_tt
+    authorize :general
+    @act = Timetableap.where(aircompany_id: 10096)
+    @act.each do |act|
+      @act_sub = Timetableap.new
+      @act_sub.aircompany_id = 10040
+      @act_sub.parent_id = act.id
+      @act_sub.way_start = act.way_start
+      @act_sub.way_end = act.way_end
+      @act_sub.aircraft_id = act.aircraft_id
+      @act_sub.timeStart = act.timeStart
+      @act_sub.timeEnd = act.timeEnd
+      @act_sub.dateOfStartNav = act.dateOfStartNav
+      @act_sub.dateOfEndNav = act.dateOfEndNav
+      @act_sub.s1 = act.s1
+      @act_sub.s2 = act.s2
+      @act_sub.s3 = act.s3
+      @act_sub.s4 = act.s4
+      @act_sub.s5 = act.s5
+      @act_sub.s6 = act.s6
+      @act_sub.s0 = act.s0
+      @act_sub.e1 = act.e1
+      @act_sub.e2 = act.e2
+      @act_sub.e3 = act.e3
+      @act_sub.e4 = act.e4
+      @act_sub.e5 = act.e5
+      @act_sub.e6 = act.e6
+      @act_sub.e0 = act.e0
+      @act_sub.flight_number = "9#{act.flight_number+500}"
+#      @act_sub.save
+    end
+  end
 end

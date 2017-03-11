@@ -3,14 +3,13 @@ class Users::SessionsController < Devise::SessionsController
 # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-#  def new
-#    if user_signed_in?
-#      redirect_to current_user
-#    else
-#      super
-#      render "devise/sessions/new"
-#    end
-#  end
+  def new
+    if user_signed_in?
+      redirect_to current_user
+    else
+      super
+    end
+  end
 
   # POST /resource/sign_in
   def create

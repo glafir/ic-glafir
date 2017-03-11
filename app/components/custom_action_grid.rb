@@ -1,5 +1,6 @@
-class CustomActionGrid < GridPanel
-js_method :on_show_details, <<-JS
+class CustomActionGrid < Netzke::Grid::Base
+client_class do |c|
+  c.on_show_details = <<-JS
   function(){
     var tmpl = new Ext.Template("<b>{0}</b>: {1}<br/>"), html = "";
 
@@ -14,8 +15,10 @@ js_method :on_show_details, <<-JS
     });
   }
 JS
+end
 
-js_method :init_component, <<-JS
+client_class do |c|
+  c.init_component = <<-JS
   function(){
     #{js_full_class_name}.superclass.initComponent.call(this);
 
@@ -24,15 +27,15 @@ js_method :init_component, <<-JS
     }, this);
   }
 JS
+end
 
 action :show_details, :text => "Show details"
 
-def default_bbar
-  [:show_details.action, "-", *super]
-end
+  def default_bbar
+    [:show_details.action, "-", *super]
+  end
 
-def default_context_menu
-  [:show_details.action, "-", *super]
-end
-
+  def default_context_menu
+    [:show_details.action, "-", *super]
+  end
 end

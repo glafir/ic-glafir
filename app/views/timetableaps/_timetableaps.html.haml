@@ -2,7 +2,7 @@
   $(document).ready(function(){
     $("#tt").tablesorter({
       widgets: ["zebra"],
-      sortList:[[2,0]]
+      sortList:[[3,0]]
      });
   });
 = render "timetableaps/paginate_top"
@@ -10,6 +10,7 @@
   %thead
     %tr
       %th Flight number
+      %th Aircompany
       %th Way start
       %th Timestart
       %th Way end
@@ -25,19 +26,22 @@
           %span.glyphicon.glyphicon-plane
           = timetableap.flight
         %td
+          = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
+          = link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany
+        %td
           = timetableap.airport_start.town.city_rus
           %br
           (
           = link_to timetableap.airport_start.name_rus, timetableap.airport_start
           )
-        %td= timetableap.timeStart.in_time_zone(timetableap.airport_start.time_zone).to_s(:time)
+        %td= timetableap.time_start.in_time_zone(timetableap.airport_start.time_zone).to_s(:time)
         %td
           = timetableap.airport_finish.town.city_rus
           %br
           (
           = link_to timetableap.airport_finish.name_rus, timetableap.airport_finish
           )
-        %td= timetableap.timeEnd.in_time_zone(timetableap.airport_finish.time_zone).to_s(:time)
+        %td= timetableap.time_finish.in_time_zone(timetableap.airport_finish.time_zone).to_s(:time)
         - if timetableap.dateOfEndNav <= Date.current
           - bgcolor = "#550C1A"
         - elsif timetableap.dateOfEndNav > Date.current + 2.month and timetableap.dateOfEndNav < Date.current + 4.month
