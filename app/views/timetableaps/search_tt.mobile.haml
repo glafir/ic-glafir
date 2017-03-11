@@ -1,23 +1,24 @@
 = form_tag '#', :method => 'get', :id => "tt_search" do
-  %p
+  .form-group
     = label_tag :start_ap, "Откуда:"
     = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:city_rus).group(:town_id), "town_id", "city_rus", params[:start_ap]), prompt: "Select start Town"
     -if params[:start_ap] != nil
       - @airports1.each do |a|
         = check_box_tag "aps1", '1', true
         = a.name_rus
-  %p
+  .form-group
     = label_tag :end_ap, "Куда:"
     = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:city_rus).group(:town_id), "town_id", "city_rus", params[:end_ap]), prompt: "Select finish Town"
     -if params[:end_ap] != nil
       - @airports2.each do |a|
         = check_box_tag "aps2", '1', true
         = a.name_rus
-  %p
+  .form-group
+    = label_tag :aircraft, "Самолёт:", class: 'control-label'
+    = select_tag :aircraft, options_from_collection_for_select(@aircrafts, "id", "aircraft_model", selected: params[:aircraft]), class: 'form-control'
+  .form-group
     = submit_tag "Search", :name => nil
   = render "layouts/per_page"
--if params[:start_ap] != nil && params[:end_ap] =! nil
-  = render "airports/ap_dist_result"
-  #timetableaps
-    = render "timetableaps/timetableaps"
-
+  -if params[:start_ap] != nil && params[:end_ap] =! nil
+    = render "airports/ap_dist_result"
+    #timetableaps= render "timetableaps/timetableaps"

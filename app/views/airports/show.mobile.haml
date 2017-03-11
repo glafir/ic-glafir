@@ -1,30 +1,4 @@
-%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?}
-.field-form
-  .field-form-section
-    = render "airports/tablo_links"
-  .field-form-section
-    = render "airports/info"
+%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+= render "airports/tablo_links"
+= render "airports/info"
 = link_to "Редактировать данные", edit_airport_path(@airport), class: "btn btn-primary"
-- if @airport.aircompanies.blank?
-  %h2
-    Базирующиеся авиакомпании отсутствуют в аэропрте #{@airport.name_rus}.
-- else
-  %h2
-    Авиакомпании, базирующиеся в аэропорту #{@airport.name_rus}
-  = render "aircompanies/aircompanies.mobile"
-  = link_to "Добавить авиакомпанию в #{@airport.name_rus}", new_aircompany_path, class: "btn btn-primary"
-- if @airport.aphubs.blank?
-  %h2
-    Авиакомпании-хабы отсутствуют в аэропрте #{@airport.name_rus}.
-- else
-  %h2
-    Авиакомпании-хабы в аэропорту #{@airport.name_rus}
-  - @aircompanies = @aircompanies.clear
-  - @aircompany = Array.new
-  - @airport.aphubs.each {|x|
-  - @aircompanies[@aircompanies.size] = x.aircompany
-  - }
-  - @aircompanies = @aircompanies
-  = render "aircompanies/aircompanies_table.mobile"
-  = link_to "Добавить авиакомпанию-хаб в #{@airport.name_rus}", new_aircompany_path, class: "btn btn-primary"
-

@@ -1,5 +1,5 @@
 class AirportsController < ApplicationController
-include ActionView::Helpers::UrlHelper
+#include ActionView::Helpers::UrlHelper
 before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
 #layout "without_html", :only => [:tablo]
 autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
@@ -85,21 +85,20 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
 
   def update
     authorize @airport
-    @airport.update_attributes(params[:airport])
     flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
     respond_with(@airport)
   end
 
   def destroy
-    @airport.destroy
     authorize @airport
+    @airport.destroy
     respond_with(@airport)
   end
   
   def tablo
     Time.zone = @airport.time_zone
     if params[:apt] == 'out'
-      @tablo = "Табло вылета аэропорта #{link_to @airport.name_rus, airport_path(@airport)} на сегодня #{Time.now.in_time_zone(@airport.time_zone).to_s}"
+      @tablo = "Табло вылета аэропорта #{view_context.link_to @airport.name_rus, airport_path(@airport)} на сегодня #{Time.now.in_time_zone(@airport.time_zone).to_s}"
       tbody_tablo_out
     elsif params[:apt] == 'in'
       @tablo = "Табло прилёта аэропорта #{view_context.link_to @airport.name_rus, airport_path(@airport)} на сегодня #{Time.zone.now.to_s(:short)}"
@@ -117,15 +116,10 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   end
 
   def ap_dist
+    authorize :airport
     @ap1 = Airport.find(params[:start_ap]) if params[:start_ap] != nil
     @ap2 = Airport.find(params[:end_ap]) if params[:end_ap] != nil
-    if @ap1 != nil || @ap2 != nil
-      @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-      @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
-      @dist = @p1.distance_to(@p2)
-      @sbear = @p1.bearing_to(@p2)
-    end
-  authorize :airport
+    @dist = Airport.ap_distance(@ap1, @ap2)
   end
   
 private
@@ -134,6 +128,7 @@ private
   end  
 
   def tbody_tablo_out
+    Time.zone = @airport.time_zone
     @timetableaps = @airport.timetableaps_out.stoday
     @timetableaps = @timetableaps.search_endtw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
@@ -144,33 +139,34 @@ private
     @timetableaps.each do |tt|
       tt.s_ap = tt.airport_start
       tt.f_ap = tt.airport_finish
-      if tt.timeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
-        tt.timeIN = tt.timeStart.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
-      else
-        tt.timeIN = tt.timeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
-      end
+#      if tt.timeStart.hour < 24 - (DateTime.current.in_time_zone(@airport_time_zone).utc_offset / 3600)
+#        tt.timeIN = tt.timeStart.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+#      else
+#        tt.timeIN = tt.timeStart.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+#      end
+      tt.timeIN = tt.time_start
       tt.bgcolor_apload = "#9c0a0a"
       if tt.timeIN < Time.zone.now.utc
         tt.fstatus = "Вылетел"
-        tt.bgcolor = "#32CD32"
+        tt.bgcolor = "btn-success"
       elsif tt.timeIN < Time.zone.now.utc+10.minute and tt.timeIN > Time.zone.now.utc
         tt.fstatus = "Выход закрыт"
-        tt.bgcolor = "#9c0a0a"
+        tt.bgcolor = "btn-danger"
       elsif tt.timeIN < Time.zone.now.utc+60.minute and tt.timeIN > Time.zone.now.utc+10.minute
         tt.fstatus = "Посадка"
-        tt.bgcolor = "#F7110D"
+        tt.bgcolor = "btn-warning"
       elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+60.minute
         tt.fstatus = "регистрация"
-        tt.bgcolor = "#A67C27"
+        tt.bgcolor = "btn-info"
       else
         tt.fstatus = "Ожидается вылет"
-        tt.bgcolor = "#1C86EE"
+        tt.bgcolor = "btn-default"
       end
     end
   end
 
   def tbody_tablo_in
-    @timetableap_subs = Array.new
+    Time.zone = @airport.time_zone
     @timetableaps = @airport.timetableaps_in.etoday
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
     @timetableaps = @timetableaps.search_starttw(params[:search_tw])
@@ -181,18 +177,19 @@ private
     @timetableaps.each do |tt|
       tt.f_ap = tt.airport_start
       tt.s_ap = tt.airport_finish
-      if tt.timeEnd.hour < 24 - (Time.zone.now.utc_offset / 3600)
-        tt.timeIN = tt.timeEnd.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
-      else
-        tt.timeIN = tt.timeEnd.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
-      end
+#      if tt.timeEnd.hour < 24 - (Time.zone.now.utc_offset / 3600)
+#        tt.timeIN = tt.timeEnd.change(:year=>Time.zone.now.year, :month=>Time.zone.now.month, :day=>Time.zone.now.day)
+#      else
+#        tt.timeIN = tt.timeEnd.change(:year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
+#      end
+      tt.timeIN = tt.time_finish
       tt.bgcolor_apload = "#0B3762"
-      if tt.timeIN < DateTime.current.in_time_zone(@airport_time_zone).utc
+      if tt.timeIN < Time.zone.now
         tt.fstatus = "Прибыл"
-        tt.bgcolor = "#32CD32"
+        tt.bgcolor = "btn-primary"
       else
         tt.fstatus = "Ожидается прибытие"
-        tt.bgcolor = "#1C86EE"
+        tt.bgcolor = "btn-default"
       end
     end
   end

@@ -14,6 +14,8 @@ class AircompaniesController < ApplicationController
   def show
     authorize @aircompany
     @timetableaps = @aircompany.timetableaps.where(parent_id: nil).order(:Flight_Number).page(params[:page]).per(params[:per_page])
+    @hubs = @aircompany.aphubs.where(hub_status:1)
+    @agencies = @aircompany.aphubs.where(hub_status:0)
     respond_with @aircompany
   end
   

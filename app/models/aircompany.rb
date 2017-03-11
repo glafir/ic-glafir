@@ -6,14 +6,13 @@ mount_uploader :avatar, AvatarUploader
   belongs_to :airport
   belongs_to :country
   has_many :timetableaps, dependent: :destroy, inverse_of: :aircompany
-  has_many :timetableap_subs, dependent: :destroy
-  has_many :timetableap_flights, dependent: :destroy
-  has_many :aphubs, dependent: :destroy
+#  has_many :timetableap_flights, dependent: :destroy
+  has_many :aphubs
   has_many :childs, class_name: "Aircompany",
                           foreign_key: "manager_id"
   belongs_to :manager, class_name: "Aircompany"
   attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id, :manager_id, :avatar, :avatar_cache
-
+  attr_accessor :per_cent_tt
   validates :iata_code, presence: true, length: { is: 2 }
   validates :icao_code, presence: true, length: { is: 3 }
   validates :airline_name_eng, presence: true, length: { minimum: 2 }
@@ -37,5 +36,10 @@ mount_uploader :avatar, AvatarUploader
 
   def image
     image = "/images/air_tm/#{iata_code}.png"
+  end
+
+  def per_cent_tt
+    tt_all = Timetableap.all
+    (timetableaps.count.to_f / tt_all.count.to_f * 100).round(2)
   end
 end

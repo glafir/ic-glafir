@@ -63,10 +63,10 @@
   = @timetableap.aircraft.aircraft_model if @timetableap.aircraft
 %p
   %b Timestart:
-  = @timetableap.timeStart.in_time_zone(@timetableap.airport_start.time_zone)
+  = @timetableap.time_start.in_time_zone(@timetableap.airport_start.time_zone)
 %p
   %b Timeend:
-  = @timetableap.timeEnd.in_time_zone(@timetableap.airport_finish.time_zone)
+  = @timetableap.time_finish.in_time_zone(@timetableap.airport_finish.time_zone)
 %p
   %b Dateofstartnav:
   = @timetableap.dateOfStartNav

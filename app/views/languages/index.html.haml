@@ -1,0 +1,28 @@
+- model_class = Language
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing languages
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Lang
+      %th Lang iso
+      %th Lang iata
+      %th
+      %th
+      %th
+
+  %tbody
+    - @languages.each do |language|
+      %tr
+        %td= language.lang
+        %td= language.lang_iso
+        %td= language.lang_iata
+        %td= link_to 'Show', language
+        %td= link_to 'Edit', edit_language_path(language)
+        %td= link_to 'Destroy', language, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_language_path, :class => 'btn btn-primary'
+

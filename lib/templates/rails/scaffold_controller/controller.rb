@@ -35,7 +35,6 @@ class <%= controller_class_name %>Controller < ApplicationController
   def create
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
     authorize @<%= singular_table_name %>
-    @<%= orm_instance.save %>
     flash[:notice] =  'The <%= singular_table_name %> was successfully saved!' if @<%= orm_instance.save %> && !request.xhr?
     respond_with @<%= singular_table_name %>
   end
@@ -51,7 +50,6 @@ class <%= controller_class_name %>Controller < ApplicationController
   # DELETE <%= route_url %>/1
   def destroy
     authorize @<%= singular_table_name %>
-    @<%= orm_instance.destroy %>
     redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully destroyed.'" %>  if @<%= orm_instance.destroy %> && !request.xhr?
   end
 

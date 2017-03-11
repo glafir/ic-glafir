@@ -9,8 +9,8 @@
 
 }
 body{
-  width: 980 !important;
-  max-width: 980px;
+  width: 100% !important;
+  max-width: 600px;
   font-family:Tahoma;
   font-weight:bold;
   background-color:#000;
@@ -50,7 +50,7 @@ a:visited:after{
 */
 legend{
   color:#0FF;
-  margin-left:30px;
+  margin-left:6px;
 }
 fieldset{
   border: 2px solid gray;
@@ -62,41 +62,3 @@ p{
 #all {
    float: none;
 }
-.head { 
-	background: image-url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2I1YmRjOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM2JSIgc3RvcC1jb2xvcj0iIzgyOGM5NSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyODM0M2IiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+");
-	background: -moz-linear-gradient(top, #000000 0%, #000000 45%, #000000 100%);
-	background: -webkit-gradient(linear, left top, left bottom, 
-	color-stop(0%,100000), color-stop(36%,#300000), color-stop(100%,#600000));
-	background: -webkit-linear-gradient(top, #100000 0%,#300000 36%,#600000 100%); 
-	background: -o-linear-gradient(top, #000000 0%,#000000 36%,#000000 100%);
-	background: -ms-linear-gradient(top, #000000 0%,#000000 36%,#000000 100%); 
-	background: linear-gradient(to bottom, #000000 0%,#000000 36%,#000000 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#28343b',GradientType=0 );
-	dysplat:block;
-	margin: 0 auto;
-	text-align: center;
-	padding:1px;
-	z-index:100;
-        max-width: 980px;
-	width: auto;
-	float: none;
-}
-#menu {
-        width: auto;
-        max-width: 980px;
-	float: none;
-}
-.foot {
-        padding:1px;
-        margin: 0 auto;
-        text-align: center;
-        font: bold 20px Arial, Helvetica, sans-serif;
-	width: auto;
-        max-width: 980px;
-	float: none;
-}
-.container-fluid .container{
-        width: 980px;
-        max-width: 980px;
-}
-

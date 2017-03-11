@@ -1,22 +1,26 @@
 = form_tag search_tt_path, :method => 'get', :id => "tt_search" do
-  %p
-    = label_tag :start_ap, "Откуда:"
-    = autocomplete_field_tag 'start', '', autocomplete_town_accent_city_towns_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#start_ap'}, :value => params[:start], autofocus:true
+  .form-group
+    = label_tag :start_ap, "Откуда:", class: 'control-label'
+    = autocomplete_field_tag 'start', '', autocomplete_town_city_rus_towns_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#start_ap'}, :value => params[:start], class: 'form-control'
     = hidden_field_tag :start_ap, params[:start_ap]
     -if params[:start_ap] != nil
       - @airports1.each do |a|
         = check_box_tag "aps1[]", a.id, true
         = a.name_rus
-  %p
-    = label_tag :end_ap, "Куда:"
+  .form-group
+    = label_tag :end_ap, "Куда:", class: 'control-label'
     = hidden_field_tag :end_ap, params[:end_ap]
-    = autocomplete_field_tag 'end', '', autocomplete_town_accent_city_towns_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end], autofocus:true
+    = autocomplete_field_tag 'end', '', autocomplete_town_city_rus_towns_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#end_ap'}, :value => params[:end], autofocus:true, class: 'form-control'
     -if params[:end_ap] != nil
       - @airports2.each do |a|  
         = check_box_tag "aps2[]", a.id, true
         = a.name_rus
-  %p
-    = submit_tag "Search", :name => nil
+  .form-group
+    = label_tag :aircraft, "Самолёт:", class: 'control-label'
+    = select_tag :aircraft, options_from_collection_for_select(@aircrafts, "id", "aircraft_model", selected: params[:aircraft]), class: 'form-control'
+  .form-group
+    = submit_tag "Search", :name => nil, class: 'btn btn-primary'
   = render "layouts/per_page"
-  = render "airports/ap_dist_result"
-  #timetableaps= render "timetableaps/timetableaps"
+  -if params[:start_ap] != nil && params[:end_ap] =! nil
+    = render "airports/ap_dist_result"
+    #timetableaps= render "timetableaps/timetableaps"

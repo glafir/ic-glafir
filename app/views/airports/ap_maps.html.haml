@@ -1,7 +1,7 @@
 %h2 Карта аэропортов
 - @airports = Airport.where(country_id: 528)
 - @centr = Airport.find(25832)
-%canvas#canva{width:1100,height:1100}
+%canvas#canva{width:1100,height:1000}
 :javascript
   var canvas = document.getElementById('canva'),
   obCanvas = canvas.getContext('2d');
@@ -9,6 +9,14 @@
   var y = 600;
   obCanvas.translate(x,y);
 - @airports.each do |ap|
+  - tcount = 3 if ap.timetableaps_in.count < 25
+  - tcount = 5 if ap.timetableaps_in.count >= 25 && ap.timetableaps_in.count < 50
+  - tcount = 7 if ap.timetableaps_in.count >= 50 && ap.timetableaps_in.count < 75
+  - tcount = 9 if ap.timetableaps_in.count >= 75 && ap.timetableaps_in.count < 100
+  - tcount = 11 if ap.timetableaps_in.count >= 100 && ap.timetableaps_in.count < 200
+  - tcount = 13 if ap.timetableaps_in.count >= 200 && ap.timetableaps_in.count < 400
+  - tcount = 15 if ap.timetableaps_in.count >= 400 && ap.timetableaps_in.count < 600
+  - tcount = 17 if ap.timetableaps_in.count >= 600
   - dist = ap.distance_from(@centr, :units=>:kms)/4
   - p1 = GeoPoint.new  @centr.latitude.to_f, @centr.longitude.to_f
   - p2 = GeoPoint.new  ap.latitude.to_f, ap.longitude.to_f
@@ -19,7 +27,7 @@
     obCanvas.beginPath();
     obCanvas.lineWidth = 1;
     obCanvas.moveTo(0, 0);
-    obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, 5, 0, 2*Math.PI, false);
+    obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, #{tcount}, 0, 2*Math.PI, false);
     obCanvas.fillStyle = 'yellow';
     obCanvas.fill();
     obCanvas.lineWidth = 1;
@@ -30,13 +38,14 @@
     obCanvas.fillText("#{ap.name_rus}", (Math.cos(a)*r)+5, Math.sin(a)*r);
 :javascript
   obCanvas.beginPath();
-  obCanvas.arc(0, 0, 10, 0, 2*Math.PI, false);
-  obCanvas.fillStyle = 'green';
+  obCanvas.arc(0, 0, 5, 0, 2*Math.PI, false);
+  obCanvas.fillStyle = 'yellow';
   obCanvas.fill();
   obCanvas.lineWidth = 1;
   obCanvas.strokeStyle = 'blue';
   obCanvas.stroke();
   obCanvas.fillStyle   = '#ffe';
-  obCanvas.font  = 'bold 20px sans-serif';
+  obCanvas.font  = 'bold 11px sans-serif';
   obCanvas.textAlign = 'right';
   obCanvas.fillText("#{@centr.name_rus}", -10, 0);
+

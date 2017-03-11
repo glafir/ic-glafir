@@ -1,9 +1,9 @@
 class TownsController < ApplicationController
   before_filter :set_town, only: [:show, :edit, :update, :destroy]
-  before_filter :check_permissions, only: :autocomplete_town_accent_city
+  before_filter :check_permissions, only: [:autocomplete_town_accent_city, :autocomplete_town_city_rus]
 #  before_filter :load_parent
-
   autocomplete :town, :accent_city, :limit => 50, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
+  autocomplete :town, :city_rus, :limit => 50, :display_value => :twdata, :extra_data => [:city, :accent_city, :country_iso, :latitude, :longitude]
 
   def admin_tw
     render layout: "application_empty_1"
@@ -20,21 +20,9 @@ class TownsController < ApplicationController
     respond_with(@towns)
   end
 
-  def apToTw
-  authorize Airport
-    @airports = Airport.all
-    @airports.each do |airport|
-      @apkey = Apkey.new
-      @apkey.id = airport.id if apkey.id.blank?
-      @apkey.airport_id = airport.id if apkey.airport_id.blank?
-      @apkey.save
-    end
-  end
-
   def show
     authorize @town
-    @airports = Airport.where(town_id: @town.id)
-    @airports = @airports.page(params[:page]).per(params[:per_page])
+    @airports = @town.airports.page(params[:page]).per(params[:per_page])
     respond_with(@town)
   end
 
@@ -70,14 +58,10 @@ class TownsController < ApplicationController
   end
 
   def tw_dist
+    authorize Town
     @ap1 = Town.find(params[:start_ap]) if params[:start_ap] != nil
     @ap2 = Town.find(params[:end_ap]) if params[:end_ap] != nil
-    if @ap1 != nil || @ap2 != nil
-      @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-      @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
-      @dist = @p1.distance_to(@p2)
-    end
-    authorize Town
+    @dist = Airport.distance(@p1,@p2)
   end
 
 private

@@ -27,9 +27,9 @@
           = f.label "aircompany", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
           .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
             - if params[:aircompany_id].blank?
-              = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, {}, class: 'form-control'
+              = f.collection_select :aircompany_id, Aircompany.where("country_id is not NULL").where(al_finish: nil).order(:airline_name_eng), :id, :airline_name_eng.to_s, {}, class: 'form-control'
             - else
-              = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, {:selected => params[:aircompany_id]}, class: 'form-control'
+              = f.collection_select :aircompany_id, Aircompany.where("country_id is not NULL").where(al_finish: nil).order(:airline_name_eng), :id, :airline_name_eng.to_s, {:selected => params[:aircompany_id]}, class: 'form-control'
       - if params[:parent_id] != nil
         .form-group
           = f.label :parent_id, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
@@ -41,12 +41,12 @@
           - if params[:parent_id] != nil
             = f.text_field :way_start, :value => params[:way_start], class: 'form-control'
           - else
-            - if params[:way_and].nil?
+            - if params[:way_end].nil?
               = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start], class: 'form-control'
               = f.hidden_field :way_start
             - else
               = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :update_elements => {:id => '#timetableap_way_start'}, :value => params[:start], class: 'form-control'
-              = f.hidden_field :way_start, value: params[:way_and]
+              = f.hidden_field :way_start, value: params[:way_end]
       .form-group
         = f.label :way_end, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
         .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
@@ -81,14 +81,14 @@
           - if params[:dateOfStartNav].blank?
             = f.text_field :dateOfStartNav, size: 8, class: 'form-control datepicker'
           - else
-            = f.text_field :dateOfStartNav, size: 8, value: params[:DateOfStartNav], class: 'form-control datepicker'
+            = f.text_field :dateOfStartNav, size: 8, value: params[:dateOfStartNav], class: 'form-control datepicker'
       .form-group
         = f.label :dateOfEndNav, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
         .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
           - if params[:dateOfEndNav].blank?
             = f.text_field :dateOfEndNav, size: 8, class: 'form-control datepicker'
           - else
-            = f.text_field :dateOfEndNav, size: 8, value: params[:DateOfEndNav], class: 'form-control datepicker'
+            = f.text_field :dateOfEndNav, size: 8, value: params[:dateOfEndNav], class: 'form-control datepicker'
 
     .col-lg-6.col-md-6.col-sm-6.col-xs-12
       .form-group
@@ -106,7 +106,7 @@
             %span.input-group-addon
               %span.glyphicon.glyphicon-time
           - else
-            = f.text_field :timeStart, value: params[:TimeStart], class: 'form-control'
+            = f.text_field :timeStart, value: params[:timeStart], class: 'form-control'
       .form-group
         = f.label :timeEnd, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
         .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8.input-group.clockpicker{:data => {:placement => "right", :align => "top", :autoclose => "true"}}
@@ -115,7 +115,7 @@
             %span.input-group-addon
               %span.glyphicon.glyphicon-time
           - else
-            = f.text_field :timeEnd, value: params[:TimeEnd], class: 'form-control'
+            = f.text_field :timeEnd, value: params[:timeEnd], class: 'form-control'
       .form-group
         = f.label "Mon", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
         .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8

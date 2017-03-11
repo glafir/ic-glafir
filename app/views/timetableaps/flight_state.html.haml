@@ -7,23 +7,23 @@
 %p
   %b Перевозчик:
   %br/
-  = @timetableap.aircompany.airline_name_rus
-  (#{@timetableap.aircompany.airline_name_eng}, базовый аэропорт #{@timetableap.aircompany.airport.name_rus})
+  = link_to @timetableap.aircompany.airline_name_rus, @timetableap.aircompany
+  (базовый аэропорт #{link_to @timetableap.aircompany.airport.name_rus, @timetableap.aircompany})
 %table
   %tr
     %td
       %b Отправление:
     %td
-      = @timetableap.airport_start.town.city_rus
-      (#{@timetableap.airport_start.name_rus})
-    %td= @timetableap.timeStart.in_time_zone(@timetableap.airport_start.time_zone)
+      = link_to @timetableap.airport_start.town.city_rus, @timetableap.airport_start.town
+      (#{link_to @timetableap.airport_start.name_rus, @timetableap.airport_start})
+    %td= @timetableap.time_start.in_time_zone(@timetableap.airport_start.time_zone)
   %tr
     %td
       %b Прибытие::
     %td
-      = @timetableap.airport_finish.town.city_rus
-      (#{@timetableap.airport_finish.name_rus})
-    %td= @timetableap.timeEnd.in_time_zone(@timetableap.airport_finish.time_zone)
+      = link_to @timetableap.airport_finish.town.city_rus, @timetableap.airport_finish.town
+      (#{link_to @timetableap.airport_finish.name_rus, @timetableap.airport_finish})
+    %td= @timetableap.time_finish.in_time_zone(@timetableap.airport_finish.time_zone)
 %p
   %b Время в пути:
   - if @timetableap.timeStart < @timetableap.timeEnd
@@ -33,9 +33,9 @@
     = Time.diff(Time.parse(@timetableap.timeStart.to_s), Time.parse(@timetableap.timeEnd.to_s), '%H %N')[:diff]
 %p
   %b Статус:
-  - if @timetableap.timeStart < Time.zone.now and @timetableap.timeEnd < Time.zone.now
+  - if @timetableap.time_start < Time.zone.now and @timetableap.time_finish < Time.zone.now
     Прибыл в #{@timetableap.airport_finish.town.city_rus}
-  - elsif @timetableap.timeStart < Time.zone.now and @timetableap.timeEnd > Time.zone.now
+  - elsif @timetableap.time_start < Time.zone.now and @timetableap.time_finish > Time.zone.now
     В полёте.
   - else
     Ожидает.

@@ -25,9 +25,9 @@
         = f.label :aircompany_airline_name_rus
         %br/
         - if params[:aircompany_id].blank?
-          = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s
+          = f.collection_select :aircompany_id, Aircompany.where("country_id is not NULL").where(al_finish: nil).order(:airline_name_eng), :id, :airline_name_eng.to_s
         - else
-          = f.collection_select :aircompany_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :selected => params[:aircompany_id]
+          = f.collection_select :aircompany_id, Aircompany.where("country_id is not NULL").where(al_finish: nil).order(:airline_name_eng), :id, :airline_name_eng.to_s, :selected => params[:aircompany_id]
     - if params[:parent_id] != nil
       .form-group
         = f.label :parent_id, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
@@ -82,28 +82,28 @@
       - if params[:parent_id].blank?
         = f.time_select :timeStart, {minute_step: 5}
       - else
-        = f.text_field :timeStart, value: params[:TimeStart], class: 'form-control'
+        = f.text_field :timeStart, value: params[:timeStart], class: 'form-control'
     .field
       = f.label :timeEnd
       %br/
       - if params[:parent_id].blank?
         = f.time_select :timeEnd, {minute_step: 5}
       - else
-        = f.text_field :timeEnd, value: params[:TimeEnd], class: 'form-control'
+        = f.text_field :timeEnd, value: params[:timeEnd], class: 'form-control'
     .field
       = f.label :dateOfStartNav
       %br/
       - if params[:dateOfStartNav].blank?
         = f.text_field :dateOfStartNav, size: 8, class: 'datepicker'
       - else
-        = f.text_field :dateOfStartNav, size: 8, value: params[:DateOfStartNav], class: 'datepicker'
+        = f.text_field :dateOfStartNav, size: 8, value: params[:dateOfStartNav], class: 'datepicker'
     .field
       = f.label :dateOfEndNav
       %br/
       - if params[:dateOfEndNav].blank?
         = f.text_field :dateOfEndNav, size: 8, class: 'datepicker'
       - else
-        = f.text_field :dateOfEndNav, size: 8, value: params[:DateOfEndNav], class: 'datepicker'
+        = f.text_field :dateOfEndNav, size: 8, value: params[:dateOfEndNav], class: 'datepicker'
     .field
       = f.label "Mon"
       %br/

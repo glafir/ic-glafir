@@ -1,11 +1,14 @@
+%br
 .dist
-  distance #{@dist} km
+  = "distance "+@dist[0].to_s+" km." unless @dist.nil?
   %BR
-  Initial bearing (direction) #{@sbear}
+  = "Initial bearing (direction) "+@dist[1].to_s unless @dist.nil?
   %BR
   -if params[:start_ap] != nil and params[:end_ap] != nil
     %p
-      #{@ap1.name_rus} - #{@p1}
+      dist time: #{time_spent_in_words(@dist_time)}
     %p
-      #{@ap2.name_rus} - #{@p2}
+      #{@ap1.name_rus} - #{@ap1.coordinate}
+    %p
+      #{@ap2.name_rus} - #{@ap2.coordinate}
 

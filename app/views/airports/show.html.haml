@@ -1,29 +1,16 @@
-%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?}
-.field-form
-  .field-form-section
-    = render "airports/tablo_links"
-  .field-form-section
+%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+= render "airports/tablo_links"
+%ul.nav.nav-tabs
+  %li= link_to 'Об аэропорте', "#panel1", 'data-toggle' => "tab"
+  %li= link_to 'Авиакомпании и направления', "#panel2", 'data-toggle' => "tab"
+  %li= link_to 'Карта направлений', "#panel3", 'data-toggle' => "tab"
+  %li= link_to 'Поиск рейсов', "#panel4", 'data-toggle' => "tab"
+.tab-content
+  #panel1.tab-pane.fade.in.active
     = render "airports/info"
+  #panel2.tab-pane.fade
+    = render "airports/direction_info"
+  #panel3.tab-pane.fade.in
+  #panel4.tab-pane.fade.in
+
 = link_to "Редактировать данные", edit_airport_path(@airport), class: "btn btn-primary"
-- if @airport.aircompanies.blank?
-  %h2
-    Базирующиеся авиакомпании отсутствуют в аэропрте #{@airport.name_rus}.
-- else
-  %h2
-    Авиакомпании, базирующиеся в аэропорту #{@airport.name_rus}
-  = render "aircompanies/aircompanies"
-  = link_to "Добавить авиакомпанию в #{@airport.name_rus}", new_aircompany_path, class: "btn btn-primary"
-- if @airport.aphubs.blank?
-  %h2
-    Авиакомпании-хабы отсутствуют в аэропрте #{@airport.name_rus}.
-- else
-  %h2
-    Авиакомпании-хабы в аэропорту #{@airport.name_rus}
-  - @aircompanies = @aircompanies.clear
-  - @aircompany = Array.new
-  - @airport.aphubs.each {|x|
-  - @aircompanies[@aircompanies.size] = x.aircompany
-  - }
-  - @aircompanies = @aircompanies
-  = render "aircompanies/aircompanies_table"
-  = link_to "Добавить авиакомпанию-хаб в #{@airport.name_rus}", new_aircompany_path, class: "btn btn-primary"

@@ -11,14 +11,11 @@ class TimetableapsController < ApplicationController
   end
 
   def search_tt
+    authorize :timetableap
     @ap1 = Town.find(params[:start_ap]).airports.first if params[:start_ap] != nil
     @ap2 = Town.find(params[:end_ap]).airports.first if params[:end_ap] != nil
-    if @ap1 != nil || @ap2 != nil
-      @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-      @p2 = GeoPoint.new  @ap2.latitude.to_f, @ap2.longitude.to_f
-      @dist = @p1.distance_to(@p2)
-      @sbear = @p1.bearing_to(@p2)
-    end
+    @dist = Airport.ap_distance(@ap1,@ap2)
+    @aircrafts = Aircraft.all
     if params[:start_ap].nil? && params[:end_ap].nil?
       @timetableaps = Timetableap.page(params[:page]).per(params[:limit])
       render action: 'search_tt'
@@ -26,8 +23,18 @@ class TimetableapsController < ApplicationController
       @timetableaps = Timetableap.where(:way_start => Airport.select(:id).where(:town_id => (params[:start_ap]))).where(:way_end => Airport.select(:id).where(:town_id => (params[:end_ap]))).page(params[:page]).per(params[:limit])
       @airports1 = Airport.where(town_id: params[:start_ap]).order(:name_rus)
       @airports2 = Airport.where(town_id: params[:end_ap]).order(:name_rus)
+      @aircraft = Aircraft.find(params[:aircraft])
+      if @aircraft.aircraft_wake_category_id = 1
+        @corr_time = 1200
+      end
+      if @aircraft.aircraft_wake_category_id = 2
+        @corr_time = 1400
+      end
+      if @aircraft.aircraft_wake_category_id = 3
+        @corr_time = 1900
+      end
+      @dist_time = (@dist[0]*1000) / (@aircraft.aircraft_maxspeed * 0.97 / 3.6) + @corr_time
     end
-    authorize :timetableap
   end
 
   def validate
@@ -74,9 +81,18 @@ class TimetableapsController < ApplicationController
   def create
     @timetableap = Timetableap.new(params[:timetableap])
     authorize @timetableap
-    flash[:notice] = "The flight #{@timetableap.id} was saved!" if @timetableap.save && !request.xhr?
-    @flash_message_state_id = 401
-    @flash = flash[:notice]
+    if @timetableap.save && !request.xhr?
+      if (@timetableap.aircompany.airport_id != @timetableap.way_end) && (Aphub.where(aircompany_id: @timetableap.aircompany_id).where(airport_id: @timetableap.way_end).count == 0)
+        aphub = Aphub.new
+        aphub.aircompany_id = @timetableap.aircompany_id
+        aphub.airport_id = @timetableap.way_end
+        aphub.hub_type = 0
+        aphub.save
+      end
+      flash[:notice] = "The flight #{@timetableap.id} was saved!"
+      @flash_message_state_id = 401
+      @flash = flash[:notice]
+    end
     respond_with(@timetableap)
   end
 

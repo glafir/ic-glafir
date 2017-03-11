@@ -5,7 +5,9 @@ include ActiveModel::Validations
   belongs_to :aircompany, inverse_of: :timetableaps, :counter_cache => true
   belongs_to :aircraft
   belongs_to :airport_start, class_name: "Airport", foreign_key: "way_start"
+    scope :ordered_by_airport_start_city_rus, -> { joins(:airport_start).order('airports.city_rus') }
   belongs_to :airport_finish, class_name: "Airport", foreign_key: "way_end"
+    scope :ordered_by_airport_finish_city_rus, -> { joins(:airport_finish).order('airports.city_rus') }
   has_many :childs, class_name: "Timetableap",
                           foreign_key: "parent_id"
   belongs_to :parent, class_name: "Timetableap"
@@ -17,10 +19,10 @@ include ActiveModel::Validations
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }
   validates  :way_start, presence: true, numericality: { only_integer: true }
   validates  :way_end, presence: true, numericality: { only_integer: true }
-  validates  :DateOfEndNav, presence: true
-  validates  :DateOfStartNav, presence: true
-  validates  :TimeStart, presence: true
-  validates  :TimeEnd, presence: true
+  validates  :dateOfEndNav, presence: true
+  validates  :dateOfStartNav, presence: true
+  validates  :timeStart, presence: true
+  validates  :timeEnd, presence: true
   validates  :flight_number, presence: true, numericality: { only_integer: true },
                     length: { maximum: 9999 },
                   uniqueness: { scope: :aircompany_id, message: "This Flight is exist!" }
@@ -28,13 +30,31 @@ include ActiveModel::Validations
   validates  :parent_id, uniqueness: { scope: :id, message: "This SubFlight is exist!" }
 
   def flight
-    "#{aircompany.iata_code} #{flight_number}"
+    [aircompany.iata_code, flight_number].join(' ')
   end
 
-  def time_str
-#    "#{timeStart}"
-    "#{timeStart.change(:year=>Time.now.in_time_zone('GMT').year, :month=>Time.now.in_time_zone('GMT').month, :day=>Time.now.in_time_zone('GMT').day)}"
+  def flight=(flight)
+    split = flight.split(' ', 2)
+    self.aircompany.iata_code = split.first
+    self.flight_number = split.last
   end
+
+  def time_start
+    if timeStart.hour < 24 - (DateTime.current.in_time_zone(airport_start.time_zone).utc_offset / 3600)
+      timeStart.change(:year=>Time.now.in_time_zone(airport_start.time_zone).year, :month=>Time.now.in_time_zone(airport_start.time_zone).month, :day=>Time.now.in_time_zone(airport_start.time_zone).day)
+    else
+      timeStart.change(:year=>(Time.now.in_time_zone(airport_start.time_zone)-1.day).year, :month=>(Time.now.in_time_zone(airport_start.time_zone)-1.day).month, :day=>(Time.now.in_time_zone(airport_start.time_zone)-1.day).day)
+    end
+  end
+
+  def time_finish
+    if timeEnd.hour < 24 - (DateTime.current.in_time_zone(airport_finish.time_zone).utc_offset / 3600)
+      timeEnd.change(:year=>Time.now.in_time_zone(airport_finish.time_zone).year, :month=>Time.now.in_time_zone(airport_finish.time_zone).month, :day=>Time.now.in_time_zone(airport_finish.time_zone).day)
+    else
+      timeEnd.change(:year=>(Time.now.in_time_zone(airport_finish.time_zone)-1.day).year, :month=>(Time.now.in_time_zone(airport_finish.time_zone)-1.day).month, :day=>(Time.now.in_time_zone(airport_finish.time_zone)-1.day).day)
+    end
+  end
+
 
   def self.stoday
     @wday = Time.zone.now.strftime'%w'.to_s

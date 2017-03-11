@@ -1,0 +1,63 @@
+%h2 Карта аэропортов
+- @airports = Airport.where(country_id: @aircompany.country_id)
+- @centr = Airport.find(25832)
+%canvas#canva{width:1100,height:1000}
+:javascript
+  var canvas = document.getElementById('canva'),
+  obCanvas = canvas.getContext('2d');
+  var x = 400;
+  var y = 600;
+  obCanvas.translate(x,y);
+- @airports.each do |ap|
+  - dist = ap.distance_from(@centr, :units=>:kms)/4
+  - p1 = GeoPoint.new  @centr.latitude.to_f, @centr.longitude.to_f
+  - p2 = GeoPoint.new  ap.latitude.to_f, ap.longitude.to_f
+  - fbear = p1.bearing_to(p2)
+  - tt = ap.timetableaps_out.where(aircompany_id:@aircompany.id).group("way_end")
+  :javascript
+    var a = (#{fbear.to_f}-90) * (Math.PI/180);
+    var r = #{dist};
+  :javascript
+    obCanvas.beginPath();
+    obCanvas.moveTo(0,0)
+    obCanvas.lineWidth = 1;
+    obCanvas.arc(Math.cos(a)*r, Math.sin(a)*r, 3, 0, 2*Math.PI, false);
+    obCanvas.fillStyle = 'yellow';
+    obCanvas.fill();
+    obCanvas.lineWidth = 1;
+    obCanvas.strokeStyle = 'blue';
+    obCanvas.fillStyle   = '#fff';
+    obCanvas.font  = 'italic bold 11px sans-serif';
+    obCanvas.textAlign = 'left';
+    obCanvas.fillText("#{ap.name_rus}", (Math.cos(a)*r)+5, Math.sin(a)*r);
+  - tt.each do |ttt|
+    - @centr1 = ttt.airport_start
+    - dist1 = ttt.airport_finish.distance_from(@centr1, :units=>:kms)/4
+    - p11 = GeoPoint.new  @centr1.latitude.to_f, @centr1.longitude.to_f
+    - p21 = GeoPoint.new  ttt.airport_finish.latitude.to_f, ttt.airport_finish.longitude.to_f
+    - fbear1 = p11.bearing_to(p21)
+
+    %p #{ap.name_rus} --> #{ttt.flight} #{ttt.airport_finish.name_rus}
+    %p (#{p11}) -> (#{p21}) = #{dist1} kms/4,  #{fbear1} grad
+    :javascript
+      var a1 = (#{fbear1.to_f}-90) * (Math.PI/180);
+      var r1 = #{dist1};
+      obCanvas.beginPath();
+      obCanvas.moveTo(Math.cos(a)*r,Math.sin(a)*r);
+      obCanvas.lineTo(Math.cos(a1)*r1,Math.sin(a1)*r1)
+      obCanvas.lineWidth = 1;
+      obCanvas.strokeStyle = 'red';
+      obCanvas.stroke();
+
+:javascript
+  obCanvas.beginPath();
+  obCanvas.arc(0, 0, 5, 0, 2*Math.PI, false);
+  obCanvas.fillStyle = 'yellow';
+  obCanvas.fill();
+  obCanvas.lineWidth = 1;
+  obCanvas.strokeStyle = 'blue';
+  obCanvas.stroke();
+  obCanvas.fillStyle   = '#ffe';
+  obCanvas.font  = 'bold 11px sans-serif';
+  obCanvas.textAlign = 'right';
+  obCanvas.fillText("#{@centr.name_rus}", -10, 0);

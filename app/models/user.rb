@@ -15,6 +15,7 @@ mount_uploader :avatar, AvatarUploader
   belongs_to :user_theme
   belongs_to :town
   belongs_to :country
+  belongs_to :language
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable

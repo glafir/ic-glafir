@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @terminal.name
+%p
+  %b Marking:
+  = @terminal.marking
+%p
+  %b Floor:
+  = @terminal.floor
+%p
+  %b Reception:
+  = @terminal.reception
+%p
+  %b Parking:
+  = @terminal.parking
+%p
+  %b Teletrap:
+  = @terminal.teletrap
+%p
+  %b Gate:
+  = @terminal.gate
+%p
+  %b Airport:
+  = @terminal.airport_id
+%p
+  %b Area:
+  = @terminal.area
+
+= link_to 'Edit', edit_terminal_path(@terminal)
+\|
+= link_to 'Back', terminals_path

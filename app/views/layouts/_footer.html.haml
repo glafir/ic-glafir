@@ -1,10 +1,13 @@
+- mem = GetProcessMem.new
+%hr
 .raw
   .col-lg-4.col-md-4.col-sm-4
     %li This a Desktop Version
     %li Страница загружена за #{Benchmark.ms { yield }} сек
+    %li Использовано памяти: #{mem.mb} МБ
   .col-lg-4.col-md-4.col-sm-4
     %li © 2011 - #{Date.current.year}
-    %li v3.3.2 release from 15-05-2016
+    %li v3.3.3 release from 11-03-2017
   .col-lg-4.col-md-4.col-sm-4
     %li ICQ: 277823912
     %li Skype: glafir777

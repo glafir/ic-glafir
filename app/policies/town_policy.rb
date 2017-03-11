@@ -10,4 +10,8 @@ class TownPolicy < ApplicationPolicy
   def autocomplete_town_accent_city?
     readers
   end
+
+  def autocomplete_town_city_rus?
+    readers
+  end
 end
