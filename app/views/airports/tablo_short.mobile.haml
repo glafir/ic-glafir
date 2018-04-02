@@ -1,0 +1,33 @@
+%h4= @tablo.html_safe
+= render "airports/tablo_links"
+= form_tag "#", :remote => 'true', :method => 'get', :id => "timetableaps_search"  do
+  #tablo_form
+    = label_tag :country, "внутрение/международные линии"
+    = select_tag "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name, params[:country]), prompt: "to all countries", :onchange => "this.form.submit();"
+    %br
+    = label_tag :aircomapny, "Город:"
+    = select_tag "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus, params[:search_tw]), prompt: "All towns", :onchange => "this.form.submit();"
+    = label_tag :aircomapny, "Авиакомпания:"
+    = select_tag "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"
+    %br
+    = select_tag "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:start_time]), :onchange => "this.form.submit();"
+    = select_tag "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:end_time]), :onchange => "this.form.submit();"
+#tda.table-responsive
+  %table#tt.table.table-striped.tablo
+    %thead
+      %tr
+        %th{:width => '10%'} Time
+        %th{:width => '40%'} Flight & Airline
+        %th{:width => '30%'} Town
+        %th{:width => '20%'} State
+    %tbody
+      = render "airports/tablo_short.mobile"
+
+:javascript
+  $(document).ready(function(){
+    $("#tt").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[0,0]]
+      });
+  });
+

@@ -12,12 +12,13 @@ acts_as_mappable :default_units => :kms,
   belongs_to :airport_state
   belongs_to :airport_air_traffic
   has_many :runway_aps, dependent: :destroy
-  has_many :timetableaps_in, dependent: :destroy, class_name: "Timetableap", inverse_of: :airport_finish, foreign_key: "way_end"
-  has_many :timetableaps_out, dependent: :destroy, class_name: "Timetableap", inverse_of: :airport_start, foreign_key: "way_start"
+  has_many :timetableaps_in, dependent: :destroy, class_name: "Timetableap", inverse_of: :airport_finish, foreign_key: "airport_finish_id"
+  has_many :timetableaps_out, dependent: :destroy, class_name: "Timetableap", inverse_of: :airport_start, foreign_key: "airport_start_id"
   belongs_to :country
   has_many :aphubs
-  attr_accessible :Dist_to_town, :Terminals, :TerminalsColl, :city_eng, :city_rus, :email, :fax, :gmt_offset, :iata_code, :icao_code, :iso_code, :latitude, :longitude, :name_eng, :name_rus, :phone, :runnway_coll, :runway_elevation, :runway_length, :website, :town_id, :aircompanies_count, :country_id, :time_zone, :airport_state_id, :weather_state
-  attr_accessor :name, :city_name, :ap
+  has_many :weathers, foreign_key: "place_id"
+#  attr_accessible :Dist_to_town, :Terminals, :TerminalsColl, :city_eng, :city_rus, :email, :fax, :gmt_offset, :iata_code, :icao_code, :iso_code, :latitude, :longitude, :name_eng, :name_rus, :phone, :runnway_coll, :runway_elevation, :runway_length, :website, :town_id, :aircompanies_count, :country_id, :time_zone, :airport_state_id, :weather_state
+  attr_accessor :name, :city_name, :ap, :ap1, :ap2
   validates  :iata_code, presence: true, length: { is: 3 }, uniqueness: true
   validates  :icao_code, presence: true, length: { is: 4 }
   validates  :name_eng, presence: true, length: { minimum: 2 }
@@ -58,6 +59,10 @@ acts_as_mappable :default_units => :kms,
   def sbear(p1, p2)
     p1.bearing_to(p2)
   end
+
+#  def to_s
+#    city_rus
+#  end
 
   def self.search(ap)
     if ap && ap != "" && ap != " "

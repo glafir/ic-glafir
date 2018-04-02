@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Airport terminal:
+  = @airport_terminal_gate.airport_terminal_id
+%p
+  %b Gate:
+  = @airport_terminal_gate.gate
+
+= link_to 'Edit', edit_airport_terminal_gate_path(@airport_terminal_gate)
+\|
+= link_to 'Back', airport_terminal_gates_path

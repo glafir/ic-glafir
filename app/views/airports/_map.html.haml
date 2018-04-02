@@ -23,7 +23,7 @@
       - p1 = GeoPoint.new  town.latitude.to_f, town.longitude.to_f
       - p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
       - fbear = p2.bearing_to(p1)
-      - tt = Timetableap.where(way_start: @airport.id).where(way_end: town.id)
+      - tt = Timetableap.where(airport_start_id: @airport.id).where(airport_finish_id: town.id)
       :javascript
         var a = (#{fbear.to_f}-90) * (Math.PI/180);
         var r = #{dist};

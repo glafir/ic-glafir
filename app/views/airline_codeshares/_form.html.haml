@@ -1,0 +1,11 @@
+= simple_form_for @airline_codeshare,  :html => { :class => 'form-horizontal' } do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :aircompany, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path
+    = f.input :codeshare, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path
+    = f.input :code_share_start, :as => :string, input_html: {size: 8, class: 'datepicker'}
+    = f.input :code_share_finish, :as => :string, input_html: {size: 8, class: 'datepicker'}
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+= link_to t('.cancel', :default => t("helpers.links.cancel")), airline_codeshares_path, :class => 'btn btn-default'
+

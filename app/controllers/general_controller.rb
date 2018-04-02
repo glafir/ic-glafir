@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class GeneralController < ApplicationController
-before_filter :authenticate_user!
+before_action :authenticate_user!
 layout "without_html", :only => [:timenow, :chnglocale]
 ##layout "general", :only => [:home, :rw, :air, :help]
   def login
@@ -33,14 +33,14 @@ layout "without_html", :only => [:timenow, :chnglocale]
   end
 
   def timecor
-#    @als = Timetableap.where(aircompany_id: 10006).where(way_start: 18438)
+#    @als = Timetableap.where(aircompany_id: 10006).where(airport_start_id: 18438)
 #    @als.each { |al|
 #       @all = Timetableap.where(aircompany_id: 10006).find_by_Flight_Number(al.Flight_Number + 1)
 #       al['neew'] = @all.Flight_Number
 
-#      @all.way_end = 25832
+#      @all.airport_finish_id = 25832
 #      @all.save
-#      al.way_start = 25832
+#      al.airport_start_id = 25832
 #      al.save
 #    }
   end
@@ -65,8 +65,8 @@ layout "without_html", :only => [:timenow, :chnglocale]
       @act_sub = Timetableap.new
       @act_sub.aircompany_id = 10040
       @act_sub.parent_id = act.id
-      @act_sub.way_start = act.way_start
-      @act_sub.way_end = act.way_end
+      @act_sub.airport_start_id = act.airport_start_id
+      @act_sub.airport_finish_id = act.airport_finish_id
       @act_sub.aircraft_id = act.aircraft_id
       @act_sub.timeStart = act.timeStart
       @act_sub.timeEnd = act.timeEnd

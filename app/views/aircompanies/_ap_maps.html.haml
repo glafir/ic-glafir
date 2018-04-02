@@ -13,7 +13,7 @@
   - p1 = GeoPoint.new  @centr.latitude.to_f, @centr.longitude.to_f
   - p2 = GeoPoint.new  ap.latitude.to_f, ap.longitude.to_f
   - fbear = p1.bearing_to(p2)
-  - tt = ap.timetableaps_out.where(aircompany_id:@aircompany.id).group("way_end")
+  - tt = ap.timetableaps_out.where(aircompany_id:@aircompany.id).group("airport_finish_id")
   :javascript
     var a = (#{fbear.to_f}-90) * (Math.PI/180);
     var r = #{dist};
@@ -26,8 +26,8 @@
     obCanvas.fill();
     obCanvas.lineWidth = 1;
     obCanvas.strokeStyle = 'blue';
-    obCanvas.fillStyle   = '#fff';
     obCanvas.font  = 'italic bold 11px sans-serif';
+    obCanvas.fillStyle   = '#0af';
     obCanvas.textAlign = 'left';
     obCanvas.fillText("#{ap.name_rus}", (Math.cos(a)*r)+5, Math.sin(a)*r);
   - tt.each do |ttt|

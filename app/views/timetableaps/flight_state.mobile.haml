@@ -46,4 +46,8 @@
   %b Выполняется самолётом авиакомпании
   = (@timetableap.parent_id.blank?) ? (link_to @timetableap.aircompany.airline_name_rus, @timetableap.aircompany) : (link_to @timetableap.parent.aircompany.airline_name_rus, @timetableap.parent.aircompany)
 %p
-  %a{:href => ""} Другие рейсы по данному направлению.
+  %a{:href => "/search_tt?utf8=%E2%9C%93&search_tt%5Btown_start_id%5D=#{@timetableap.airport_start.town.id}&search_tt%5Btown_start%5D=#{@timetableap.airport_start.town.city_rus}&search_tt%5Btown_finish_id%5D=#{@timetableap.airport_finish.town.id}&search_tt%5Btown_finish%5D=#{@timetableap.airport_finish.town.city_rus}&aircraft=#{@timetableap.aircraft.nil? ? 18 : @timetableap.aircraft.id}&commit=Search+Flights"} Другие рейсы по данному направлению
+
+%p
+  - if policy(@timetableap).edit?
+    = link_to "Редактировать рейс", edit_timetableap_path(@timetableap)

@@ -1,8 +1,10 @@
 class Aircompany < ActiveRecord::Base
 include ActiveModel::Validations
 mount_uploader :avatar, AvatarUploader
-  paginates_per 10
+  paginates_per 100
   has_many :users
+  has_many :airline_codeshares
+  has_many :codeshares, class_name: "AirlineCodeshare", foreign_key: "codeshare_id"
   belongs_to :airport
   belongs_to :country
   has_many :timetableaps, dependent: :destroy, inverse_of: :aircompany
@@ -11,7 +13,9 @@ mount_uploader :avatar, AvatarUploader
   has_many :childs, class_name: "Aircompany",
                           foreign_key: "manager_id"
   belongs_to :manager, class_name: "Aircompany"
-  attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id, :manager_id, :avatar, :avatar_cache
+  has_many :airline_codeshares
+  
+#  attr_accessible :awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id, :manager_id, :avatar, :avatar_cache
   attr_accessor :per_cent_tt
   validates :iata_code, presence: true, length: { is: 2 }
   validates :icao_code, presence: true, length: { is: 3 }
@@ -20,6 +24,10 @@ mount_uploader :avatar, AvatarUploader
   validates :airport_id, presence: true, numericality: { only_integer: true }
   validates :country_id, presence: true, numericality: { only_integer: true }
   validates :al_start, presence: true
+
+  def to_s
+    airline_name_rus
+  end
 
   def self.search(search)
     if search

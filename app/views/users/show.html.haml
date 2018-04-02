@@ -2,15 +2,15 @@
 %h3.center-block
   #{t '.title', :default => model_class.model_name.human.titleize} #{@user.username} (#{@user.email})
 .field-form
-  .col-md-6.visible-md-block
+  .col-md-7.visible-md-block
     = image_tag @user.avatar.size_500, :class => 'img-circle'
-  .col-lg-6.visible-lg-block
+  .col-lg-7.visible-lg-block
     = image_tag @user.avatar.size_600, :class => 'img-circle'
-  .col-sm-6.visible-sm-block
+  .col-sm-7.visible-sm-block
     = image_tag @user.avatar.size_400, :class => 'img-circle'
   .col-xs-12.visible-xs-block
     = image_tag @user.avatar.size_300, :class => 'img-circle'
-  .col-lg-6.col-md-6.col-sm-6.col-xs-12
+  .col-lg-5.col-md-5.col-sm-5.col-xs-12
     %p
       %b Имя:
       = @user.username

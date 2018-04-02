@@ -33,8 +33,8 @@ mount_uploader :avatar, AvatarUploader
          :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessor :login
-  attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id
+#  attr_accessible :login, :email, :password, :password_confirmation, :remember_me, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id
+   attr_accessor :login
   validates :username,
     :uniqueness => {:case_sensitive => false}
   validates :email, :presence => true, 
@@ -43,10 +43,6 @@ mount_uploader :avatar, AvatarUploader
                     :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
 #  has_attached_file :avatar, :styles => { :big => "600x600>", :medium_400 => "400x400>", :medium_300 => "300x300>", :small => "200x200>", :thumb => "100x100>" }, :thumb_50 => "50x50>", :default_url => "/images/:style/missing.png"
 #  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
-
-  def set_default_role
-    self.role ||= :user
-  end
 
     def self.find_for_database_authentication(warden_conditions)
       conditions = warden_conditions.dup

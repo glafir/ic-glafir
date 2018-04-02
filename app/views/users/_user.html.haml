@@ -17,7 +17,7 @@
           = user.role
         %td
           - if policy(user).edit?
-            = link_to "Edit", edit_user_path(user), :class => 'jqbutton' unless user.unknown?
+            = link_to "Edit", edit_user_path(user), :class => 'btn btn-info' unless user.unknown?
             |
           - if policy(user).destroy?
-            = link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'jqbutton') unless user == current_user || user.unknown?
+            = link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger') unless user == current_user || user.unknown?

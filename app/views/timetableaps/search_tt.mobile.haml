@@ -1,24 +1,20 @@
-= form_tag '#', :method => 'get', :id => "tt_search" do
-  .form-group
-    = label_tag :start_ap, "Откуда:"
-    = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:city_rus).group(:town_id), "town_id", "city_rus", params[:start_ap]), prompt: "Select start Town"
-    -if params[:start_ap] != nil
-      - @airports1.each do |a|
-        = check_box_tag "aps1", '1', true
-        = a.name_rus
-  .form-group
-    = label_tag :end_ap, "Куда:"
-    = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:city_rus).group(:town_id), "town_id", "city_rus", params[:end_ap]), prompt: "Select finish Town"
-    -if params[:end_ap] != nil
-      - @airports2.each do |a|
-        = check_box_tag "aps2", '1', true
-        = a.name_rus
-  .form-group
-    = label_tag :aircraft, "Самолёт:", class: 'control-label'
+= simple_form_for :search_tt, url: search_tt_path, :method => 'get' do |f|
+  .form-inputs
+    = f.input :town_start, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
+    = f.input :town_finish, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
     = select_tag :aircraft, options_from_collection_for_select(@aircrafts, "id", "aircraft_model", selected: params[:aircraft]), class: 'form-control'
-  .form-group
-    = submit_tag "Search", :name => nil
-  = render "layouts/per_page"
-  -if params[:start_ap] != nil && params[:end_ap] =! nil
+  .form-actions
+    = f.button :submit, "Search Flights", class: "btn btn-info"
+-unless params['search_tt'].nil?
+  -unless params['search_tt']['town_start_id'].nil? && params['search_tt']['town_finish_id'].nil?
+    %a{:class => "btn btn-info", :href => "/search_tt?utf8=%E2%9C%93&search_tt%5Btown_start_id%5D=#{params['search_tt']['town_finish_id']}&search_tt%5Btown_start%5D=#{params['search_tt']['town_finish']}&search_tt%5Btown_finish_id%5D=#{params['search_tt']['town_start_id']}&search_tt%5Btown_finish%5D=#{params['search_tt']['town_start']}&aircraft=#{params['aircraft']}&commit=Search+Flights"} Обратные рейсы
+    %p
+      %b Общее количество рейсов на маршруте:
+      = @timetableaps_all.count
+    %p
+      %b Количество авиакомпаний на маршруте:
+      = @timetableaps_all.order(:aircompany_id).uniq.pluck(:aircompany_id).count
+
     = render "airports/ap_dist_result"
     #timetableaps= render "timetableaps/timetableaps"
+

@@ -1,5 +1,5 @@
 class RunwayApsController < ApplicationController
-  before_filter :set_runway_ap, only: [:show, :edit, :update, :destroy, :runway_calendar, :rasp_runway_day]
+  before_action :set_runway_ap, only: [:show, :edit, :update, :destroy, :runway_calendar, :rasp_runway_day]
 
   def index
     @runway_aps = RunwayAp.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
@@ -53,17 +53,17 @@ class RunwayApsController < ApplicationController
     @date = Date.parse(params[:date])
 	@time = Time.parse("00:00").to_time
 	@day_current = @date.day
-	@timetablesap_flights = TimetablesapFlight.where("runway_start = :runway_start OR runway_end = :runway_end",{:runway_start => params[:id],:runway_end => params[:id]}).where(:start => (@date-1.day)..(@date+1.day)).where(:end => (@date-1.day)..(@date+1.day))
+	@timetablesap_flights = TimetablesapFlight.where("runairport_start_id = :runairport_start_id OR runairport_finish_id = :runairport_finish_id",{:runairport_start_id => params[:id],:runairport_finish_id => params[:id]}).where(:start => (@date-1.day)..(@date+1.day)).where(:end => (@date-1.day)..(@date+1.day))
 	1.step(288,1) do
       @timetablesap_flights.each do |timetablesap_flight|
-        if timetablesap_flight.start.strftime("%H:%M")==@time.strftime("%H:%M") and timetablesap_flight.start.strftime("%Y-%m-%d").to_s==@date.to_s and timetablesap_flight.runway_start==@runway_ap.id
+        if timetablesap_flight.start.strftime("%H:%M")==@time.strftime("%H:%M") and timetablesap_flight.start.strftime("%Y-%m-%d").to_s==@date.to_s and timetablesap_flight.runairport_start_id==@runway_ap.id
 		  @ac = timetablesap_flight.aircompany.IATA_code
 		  @fl = timetablesap_flight.Flight_Number
 		  @bcolor = "#1874CD"
 		  @state = "Взлёт"
 		  @arr.push [@time.strftime("%H:%M"),@fl,@ac,@bcolor,@state,timetablesap_flight]
 		  @time+=5.minute
-        elsif timetablesap_flight.end.strftime("%H:%M")==@time.strftime("%H:%M") and timetablesap_flight.end.strftime("%Y-%m-%d").to_s==@date.to_s and timetablesap_flight.runway_end==@runway_ap.id
+        elsif timetablesap_flight.end.strftime("%H:%M")==@time.strftime("%H:%M") and timetablesap_flight.end.strftime("%Y-%m-%d").to_s==@date.to_s and timetablesap_flight.runairport_finish_id==@runway_ap.id
 		  @ac = timetablesap_flight.aircompany.IATA_code
 		  @fl = timetablesap_flight.Flight_Number          
 		  @bcolor = "#CD661D"
@@ -90,5 +90,9 @@ private
 
   def set_runway_ap
     @runway_ap = RunwayAp.find(params[:id])
+  end
+
+  def runway_ap_params
+    params.require(:runway_ap).permit(:airport_id, :runway_name,  :runway_data, :runway_elevation, :runway_length)
   end
 end

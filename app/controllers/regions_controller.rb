@@ -85,4 +85,9 @@ class RegionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+private
+  def region_params
+    params.require(:region).permit(:capitalcity_id, :country_id, :name_eng, :name_rus, :population)
+  end
 end

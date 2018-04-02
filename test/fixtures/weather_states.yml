@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  weather_id: 1
+  main: MyString
+  description: MyString
+  icon: MyString
+
+two:
+  weather_id: 1
+  main: MyString
+  description: MyString
+  icon: MyString

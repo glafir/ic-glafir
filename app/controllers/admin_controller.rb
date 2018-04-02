@@ -1,9 +1,11 @@
 class AdminController < ApplicationController
   include Netzke::Railz::ControllerExtensions
 
-  before_filter :check_permissions, :only => [:index, :ext, :direct, :dispatcher]
-  skip_before_filter :require_no_authentication
+  before_action :check_permissions, :only => [:index, :ext, :direct, :dispatcher]
+  skip_before_action :authenticate_user!, unless: :devise_controller?
   protect_from_forgery :except => [:index, :ext, :direct, :dispatcher]
+  skip_after_action :verify_authorized
+
   protected
 
   def check_permissions

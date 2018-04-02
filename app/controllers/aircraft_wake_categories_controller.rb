@@ -1,5 +1,5 @@
 class AircraftWakeCategoriesController < ApplicationController
-  before_filter :set_aircraft_wake_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_aircraft_wake_category, only: [:show, :edit, :update, :destroy]
 
   def index
     @aircraft_wake_categories = AircraftWakeCategory.all
@@ -46,5 +46,9 @@ class AircraftWakeCategoriesController < ApplicationController
 private
   def set_aircraft_wake_category
     @aircraft_wake_category = AircraftWakeCategory.find(params[:id])
+  end
+
+  def aircraft_wake_category_params
+    params.require(:aircraft_wake_category).permit(:category)
   end
 end

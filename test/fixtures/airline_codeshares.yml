@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  aircompany_id: 1
+  codeshare_id: 1
+  code_share_start: 2017-04-15
+  code_share_finish: 2017-04-15
+
+two:
+  aircompany_id: 1
+  codeshare_id: 1
+  code_share_start: 2017-04-15
+  code_share_finish: 2017-04-15

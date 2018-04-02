@@ -115,7 +115,7 @@ Devise.setup do |config|
   # config.maximum_accounts_attempted = 3
   #
   # The name of the table storing the failed sign in attempts
-  config.sign_in_failures_table_name = 'sign_in_failures'
+#  config.sign_in_failures_table_name = 'sign_in_failures'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without

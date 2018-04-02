@@ -1,0 +1,9 @@
+= simple_form_for(@airport_terminal_gate) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :airport_terminal_id
+    = f.input :gate
+
+  .form-actions
+    = f.button :submit

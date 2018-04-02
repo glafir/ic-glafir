@@ -1,9 +1,10 @@
 class AirportsController < ApplicationController
 #include ActionView::Helpers::UrlHelper
-before_filter :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
+before_action :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
 #layout "without_html", :only => [:tablo]
 autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
-before_filter :check_permissions, only: :autocomplete_airport_city_rus
+#autocomplete :airport, :city_rus
+before_action :check_permissions, only: :autocomplete_airport_city_rus
 
 #  def autocomplete_airport_name_rus
 #    iata_code = params[iata_code]
@@ -22,7 +23,7 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
 
   def apload
     authorize @airport
-    @timetableaps = Timetableap.where(way_start: @airport.id).where("s#{@wday} = ?",1)
+    @timetableaps = Timetableap.where(airport_start_id: @airport.id).where("s#{@wday} = ?",1)
     if params[:apload] == 'out'
       @title = "Загруженность аэропорта #{@airport.name_rus} вылет"
       tbody_tablo_out
@@ -50,8 +51,8 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   end
 
   def index
-    @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).order(:name_rus).order(:name_eng).page(params[:page]).per(params[:limit])
     authorize :airport
+    @airports = Airport.search(params[:search]).order(sort_column + " " + sort_direction).order(:name_rus).order(:name_eng).page(params[:page]).per(params[:limit])
     respond_with(@airports)
   end
 
@@ -77,7 +78,7 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
   end
 
   def create
-    @airport = Airport.new(params[:airport])
+    @airport = Airport.new(airport_params)
     authorize @airport
     flash[:notice] = "The airport #{@airport.id} was created!" if @airport.save && !request.xhr?
     respond_with(@airport)
@@ -85,7 +86,7 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
 
   def update
     authorize @airport
-    flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.update_attributes(params[:airport]) && !request.xhr?
+    flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.update_attributes(airport_params) && !request.xhr?
     respond_with(@airport)
   end
 
@@ -112,7 +113,12 @@ before_filter :check_permissions, only: :autocomplete_airport_city_rus
       @timetableaps = @timetableaps1 + @timetableaps2
     end
     authorize @airport
-    respond_with(@airport)
+    if  params[:size] == 'full'
+      render "tablo"
+    elsif  params[:size] == 'short'
+      render "tablo_short"
+    end
+#    respond_with(@airport)
   end
 
   def ap_dist
@@ -130,12 +136,14 @@ private
   def tbody_tablo_out
     Time.zone = @airport.time_zone
     @timetableaps = @airport.timetableaps_out.stoday
-    @timetableaps = @timetableaps.search_endtw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
+#    @timetableaps1 = @timetableaps.childs.search_al(params[:search_al])
+    @timetableaps = @timetableaps.where(parent_id:nil)
+    @timetableaps = @timetableaps.search_endtw(params[:search_tw])
     @timetableaps = @timetableaps.search_endcountry(params[:country])
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
-    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_end)))
-    @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:way_end)))
+    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:airport_finish_id)))
+    @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_finish_id)))
     @timetableaps.each do |tt|
       tt.s_ap = tt.airport_start
       tt.f_ap = tt.airport_finish
@@ -152,10 +160,10 @@ private
       elsif tt.timeIN < Time.zone.now.utc+10.minute and tt.timeIN > Time.zone.now.utc
         tt.fstatus = "Выход закрыт"
         tt.bgcolor = "btn-danger"
-      elsif tt.timeIN < Time.zone.now.utc+60.minute and tt.timeIN > Time.zone.now.utc+10.minute
+      elsif tt.timeIN < Time.zone.now.utc+30.minute and tt.timeIN > Time.zone.now.utc+10.minute
         tt.fstatus = "Посадка"
         tt.bgcolor = "btn-warning"
-      elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+60.minute
+      elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+30.minute
         tt.fstatus = "регистрация"
         tt.bgcolor = "btn-info"
       else
@@ -167,13 +175,13 @@ private
 
   def tbody_tablo_in
     Time.zone = @airport.time_zone
-    @timetableaps = @airport.timetableaps_in.etoday
+    @timetableaps = @airport.timetableaps_in.etoday.where(parent_id:nil)
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
     @timetableaps = @timetableaps.search_starttw(params[:search_tw])
     @timetableaps = @timetableaps.search_al(params[:search_al])
     @timetableaps = @timetableaps.search_startcountry(params[:country])
-    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:way_start)))
-    @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:way_start)))
+    @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:airport_start_id)))
+    @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_start_id)))
     @timetableaps.each do |tt|
       tt.f_ap = tt.airport_start
       tt.s_ap = tt.airport_finish
@@ -199,6 +207,10 @@ private
 
   def set_airport
     @airport = Airport.find(params[:id])
+  end
+
+  def airport_params
+    params.require(:airport).permit(:Dist_to_town, :Terminals, :TerminalsColl, :city_eng, :city_rus, :email, :fax, :gmt_offset, :iata_code, :icao_code, :iso_code, :latitude, :longitude, :name_eng, :name_rus, :phone, :runnway_coll, :runway_elevation, :runway_length, :website, :town_id, :aircompanies_count, :country_id, :time_zone, :airport_state_id, :weather_state)
   end
   protected
 

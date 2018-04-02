@@ -1,5 +1,5 @@
 class AircraftCompaniesController < ApplicationController
-  before_filter :set_aircraft_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_aircraft_company, only: [:show, :edit, :update, :destroy]
 
 
   def index
@@ -47,5 +47,9 @@ class AircraftCompaniesController < ApplicationController
   private
   def set_aircraft_company
     @aircraft_company = AircraftCompany.find(params[:id])
+  end
+
+  def aircraft_company_params
+    params.require(:aircraft_company).permit(:aircraft_company, :country_id)
   end
 end

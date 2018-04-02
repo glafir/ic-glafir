@@ -16,18 +16,17 @@
   %table#tt.table.table-striped
     %thead
       %tr
-        %th Рейс
-        %th
-        %th Направление
-        %th Время
+        %th Time
+        %th Flight
+        %th Info
     %tbody
       = render "airports/tablo.mobile"
-    %tbody
+
 :javascript
   $(document).ready(function(){
     $("#tt").tablesorter({
       widgets: ["zebra"],
-      sortList:[[3,0]]
+      sortList:[[0,0]]
       });
   });
 

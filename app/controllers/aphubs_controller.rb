@@ -1,5 +1,5 @@
 class AphubsController < ApplicationController
-  before_filter :set_aphub, only: [:show, :edit, :update, :destroy]
+  before_action :set_aphub, only: [:show, :edit, :update, :destroy]
 
   def admin_aphub
     authorize :Aphub
@@ -48,5 +48,9 @@ class AphubsController < ApplicationController
   private
   def set_aphub
     @aphub = Aphub.find(params[:id])
+  end
+
+  def aphub_params
+    params.require(:aphub).permit(:aircompany_id, :airport_id, :hub_type)
   end
 end

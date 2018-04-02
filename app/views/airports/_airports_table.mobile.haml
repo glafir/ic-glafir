@@ -1,4 +1,4 @@
-%table#tt.table.table-striped
+%table#tt.table
   %thead
     %tr
       %th
@@ -9,12 +9,17 @@
         = sortable "name_rus"
         %br
         (city_rus)
-      %th runway
+      %th CTemp
+      %th CCloud
+      %th CPressure
+      %th CWind
+      %th CHumidity
       %th
       %th кол рейсов
       %th
   %tbody
     - @airports.each do |airport|
+      - weather_current = airport.weathers.order("created_at").last
       - if  airport.name_rus.blank?
         - airport.name = airport.name_eng
       - else
@@ -39,19 +44,25 @@
           = link_to airport.name, airport
           %br
           #{link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?}
-        %td= airport.runway_aps.count
+        %td= eval(sprintf("%8.2f", weather_current.temp.to_f - 273.15)) if airport.weathers.count != 0
+        %td= weather_current.clouds if airport.weathers.count != 0
+        %td= weather_current.pressure if airport.weathers.count != 0
+        %td= weather_current.wind_speed if airport.weathers.count != 0
+        %td= weather_current.humidity if airport.weathers.count != 0
         %td
-          %a{:href => "/airports/#{airport.id}/tablo/out"} вылет
-          %a{:href => "/airports/#{airport.id}/tablo/in"} прилёт
-          %a{:href => "/airports/#{airport.id}/tablo"} Общее
+          %a{:href => "/airports/#{airport.id}/tablo/full/out"} вылет
+          %a{:href => "/airports/#{airport.id}/tablo/full/in"} прилёт
+          %a{:href => "/airports/#{airport.id}/tablo/full"} Общее
         %td
           - Time.zone = airport.time_zone
           - @aptt_in = airport.timetableaps_in.stoday.where('parent_id is NULL').count
           - @aptt_out = airport.timetableaps_out.etoday.where(parent_id: nil).count
           - @aptt_all = @aptt_in + @aptt_out
           = @aptt_all
-        - if policy(airport).edit?
-          %td= link_to 'Edit', edit_airport_path(airport)
+        %td
+          - if policy(airport).edit?
+            = link_to 'Edit', edit_airport_path(airport)
+          w updated at #{weather_current.updated_at if airport.weathers.count != 0}
 :javascript
   $(document).ready(function(){
     $("#tt").tablesorter({

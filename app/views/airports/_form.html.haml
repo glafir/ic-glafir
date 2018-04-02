@@ -5,7 +5,7 @@
     .controls.col-lg-2.col-md-2.col-sm-2.col-xs-3
       = text_field_tag :dist, params[:dist], class: 'form-control'
   .form-group
-    = label_tag "Ugol From Town (dg):", nil, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+    = label_tag "Azimuth From Town (dg):", nil, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
     .controls.col-lg-2.col-md-2.col-sm-2.col-xs-3
       = text_field_tag :ugol, params[:ugol], class: 'form-control'
     = hidden_field_tag 'town_id', params[:town_id]
@@ -25,7 +25,7 @@
   = @lon = dest[1].parse_dms
 
 %h3 Форма добавления аэропорта:
-= form_for @airport, html: { class: "form form-horizontal airport" }, validate: true do |f|
+= simple_form_for @airport, html: { class: "form form-horizontal airport" }, validate: true do |f|
   - if @airport.errors.any?
     #error_explanation
       %h2
@@ -69,12 +69,11 @@
             = f.text_field :city_eng, value: params[:city_eng], class: 'form-control', disabled: true
             = f.hidden_field :city_eng, :value => params[:city_eng]
       .form-group
-        = f.label :town_id, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
         .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
         - if params[:town_id].blank?
-          = autocomplete_field_tag 'town', '', autocomplete_town_accent_city_towns_path, :size => 30, 'data-auto-focus' => true, :update_elements => {:id => '#airport_town_id'}, :value => params[:town], class: 'form-control'
-          = f.hidden_field :town_id
+          = f.input :town, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
         - else
+          = f.label :town_id, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
           = text_field_tag 'city', params[:city_eng], class: 'form-control', disabled: true
           = f.hidden_field :town_id, value: params[:town_id]
       .form-group

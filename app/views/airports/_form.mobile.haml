@@ -5,7 +5,7 @@
     .controls.col-lg-2.col-md-2.col-sm-2.col-xs-3
       = text_field_tag :dist, params[:dist], class: 'form-control'
   .form-group
-    = label_tag "Ugol From Town (dg):", nil, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+    = label_tag "Azimuth From Town (dg):", nil, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
     .controls.col-lg-2.col-md-2.col-sm-2.col-xs-3
       = text_field_tag :ugol, params[:ugol], class: 'form-control'
     = hidden_field_tag 'town_id', params[:town_id]
@@ -14,7 +14,6 @@
     = hidden_field_tag 'country_id', params[:country_id]
   .form-group
     = submit_tag "Расчитать координаты", :name => nil, class: 'btn btn-primary'
-
 
 - if (params[:ugol] != nil && params[:ugol] != '') && (params[:dist] != nil && params[:dist] != '') && (params[:town_id] != nil && params[:town_id] != '')
   - @town = Town.find(params[:town_id])
@@ -26,7 +25,7 @@
   = @lon = dest[1].parse_dms
 
 %h3 Форма добавления аэропорта:
-= form_for @airport do |f|
+= simple_form_for @airport, html: { class: "form form-horizontal airport" }, validate: true do |f|
   - if @airport.errors.any?
     #error_explanation
       %h2
@@ -35,114 +34,118 @@
       %ul
         - @airport.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :iata_code
-    %br/
-    = f.text_field :iata_code
-  .field
-    = f.label :icao_code
-    %br/
-    = f.text_field :icao_code
-  .field
-    = f.label :name_rus
-    %br/
-    = f.text_field :name_rus
-  .field
-    = f.label :name_eng
-    %br/
-    = f.text_field :name_eng
-  - if params[:town_id] != nil
-    .field
-      = label_tag "city"
-      = text_field_tag 'city', params[:city_eng], class: 'form-control', disabled: true
-      = f.hidden_field :town_id, value: params[:town_id]
-  .field
-    = f.label :city_rus
-    %br/
-    - if params[:city_rus].blank?
-      = f.text_field :city_rus
-    - else
-      = f.text_field :city_rus, value: params[:city_rus]
-  .field
-    = f.label :city_eng
-    %br/
-    - if params[:city_eng].blank?
-      = f.text_field :city_eng
-    - else
-      = f.text_field :city_eng, value: params[:city_rus]
-  .field
-    = f.label :gmt_offset
-    %br/
-    = f.text_field :gmt_offset
-  .field
-    = f.label :time_zone
-    %br/
-    = f.time_zone_select :time_zone
-  .field
-    = f.label :iso_code
-    %br/
-    = f.text_field :iso_code
-  .field
-    = f.label :country_id, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
-    %br/
-    .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-      - if params[:country_id].blank?
-        = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {}, class: 'form-control'
-      - else
-        = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {:selected => params[:country_id]}, {class: 'form-control'}
-  .field
-    = f.label :latitude
-    %br/
-    - if @lat
-      = f.text_field :latitude, value: @lat, class: 'form-control'
-    - else
-      = f.text_field :latitude, class: 'form-control'
-  .field
-    = f.label :longitude
-    %br/
-    - if @lon
-      = f.text_field :longitude, value: @lon, class: 'form-control'
-    - else
-      = f.text_field :longitude, class: 'form-control'
-  .field
-    = f.label :runway_length
-    %br/
-    = f.text_field :runway_length
-  .field
-    = f.label :runway_elevation
-    %br/
-    = f.text_field :runway_elevation
-  .field
-    = f.label :runnway_coll
-    %br/
-    = f.text_field :runnway_coll
-  .field
-    = f.label :phone
-    %br/
-    = f.text_field :phone
-  .field
-    = f.label :fax
-    %br/
-    = f.text_field :fax
-  .field
-    = f.label :email
-    %br/
-    = f.text_field :email
-  .field
-    = f.label :website
-    %br/
-    = f.text_field :website
-  .field
-    = f.label :TerminalsColl
-    %br/
-    = f.text_field :TerminalsColl
-  .field
-    = f.label :Terminals
-    %br/
-    = f.text_field :Terminals
-  .field
-    = f.label :Dist_to_town
-    %br/
-    = f.text_field :Dist_to_town
-  .actions
-    = f.submit
+  .field-form
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12
+      .form-group
+        = f.label :iata_code, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :iata_code, class: 'form-control'
+      .form-group
+        = f.label :icao_code, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :icao_code, class: 'form-control'
+      .form-group
+        = f.label :name_rus, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :name_rus, class: 'form-control'
+      .form-group
+        = f.label :name_eng, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :name_eng, class: 'form-control'
+      .form-group
+        = f.label :city_rus, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:city_rus].blank?
+            = f.text_field :city_rus, class: 'form-control'
+          - else
+            = f.text_field :city_rus, value: params[:city_rus], class: 'form-control', disabled: true
+            = f.hidden_field :city_rus, :value => params[:city_rus]
+      .form-group
+        = f.label :city_eng, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:city_eng].blank?
+            = f.text_field :city_eng, class: 'form-control'
+          - else
+            = f.text_field :city_eng, value: params[:city_eng], class: 'form-control', disabled: true
+            = f.hidden_field :city_eng, :value => params[:city_eng]
+      .form-group
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+        - if params[:town_id].blank?
+          = f.input :town, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
+        - else
+          = f.label :town_id, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+          = text_field_tag 'city', params[:city_eng], class: 'form-control', disabled: true
+          = f.hidden_field :town_id, value: params[:town_id]
+      .form-group
+        = f.label :gmt_offset, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :gmt_offset, class: 'form-control'
+      .form-group
+        = f.label :time_zone, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = time_zone_select "airport", "time_zone", ActiveSupport::TimeZone.all, {}, class: 'form-control'
+      .form-group
+        = f.label :iso_code, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :iso_code, class: 'form-control'
+      .form-group
+        = f.label :country_id, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if params[:country_id].blank?
+            = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {}, class: 'form-control'
+          - else
+            = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {:selected => params[:country_id]}, {class: 'form-control'}
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12
+      .form-group
+        = f.label :latitude, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if @lat
+            = f.text_field :latitude, value: @lat, class: 'form-control'
+          - else
+            = f.text_field :latitude, class: 'form-control'
+      .form-group
+        = f.label :longitude, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          - if @lon
+            = f.text_field :longitude, value: @lon, class: 'form-control'
+          - else
+            = f.text_field :longitude, class: 'form-control'
+      .form-group
+        = f.label :runway_length, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :runway_length, class: 'form-control'
+
+      .form-group
+        = f.label :runway_elevation, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :runway_elevation, class: 'form-control'
+      .form-group
+        = f.label :runnway_coll, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :runnway_coll, class: 'form-control'
+      .form-group
+        = f.label :phone, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :phone, class: 'form-control'
+      .form-group
+        = f.label :fax, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :fax, class: 'form-control'
+      .form-group
+        = f.label :email, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :email, class: 'form-control'
+      .form-group
+        = f.label :website, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :website, class: 'form-control'
+      .form-group
+        = f.label :TerminalsColl, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :TerminalsColl, class: 'form-control'
+      .form-group
+        = f.label :Terminals, class: "col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label"
+        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
+          = f.text_field :Terminals, class: 'form-control'
+      .form-group
+        = f.submit nil, class: 'btn btn-primary'

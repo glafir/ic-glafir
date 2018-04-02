@@ -1,5 +1,13 @@
 /*
  *= require_self
- *= require jquery-ui/autocomplete
+ *= require bootstrap/clockpicker
  *= require_tree .
  */
+
+@import "bootstrap-sprockets";
+@import "bootswatch/lumen/variables";
+@import "bootstrap";
+@import "rails_bootstrap_forms";
+@import 'bootstrap/tooltip';
+@import "bootswatch/lumen/bootswatch";
+@import 'bootstrap/glyphicons';

@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b Place:
+  = @weather.place_id
+%p
+  %b Temp:
+  = @weather.temp
+%p
+  %b Temp min:
+  = @weather.temp_min
+%p
+  %b Temp max:
+  = @weather.temp_max
+%p
+  %b Pressure:
+  = @weather.pressure
+%p
+  %b Pressure sea level:
+  = @weather.pressure_sea_level
+%p
+  %b Pressure grnd level:
+  = @weather.pressure_grnd_level
+%p
+  %b Wind speed:
+  = @weather.wind_speed
+%p
+  %b Wind deg:
+  = @weather.wind_deg
+%p
+  %b Clouds:
+  = @weather.clouds
+%p
+  %b Dt:
+  = @weather.dt
+
+= link_to 'Edit', edit_weather_path(@weather)
+\|
+= link_to 'Back', weathers_path

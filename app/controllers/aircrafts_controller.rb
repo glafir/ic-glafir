@@ -1,5 +1,5 @@
 class AircraftsController < ApplicationController
-  before_filter :set_aircraft, only: [:show, :edit, :update, :destroy]
+  before_action :set_aircraft, only: [:show, :edit, :update, :destroy]
   autocomplete :aircraft, :aircraft_model
 
   def index
@@ -47,5 +47,9 @@ class AircraftsController < ApplicationController
 private
   def set_aircraft
     @aircraft = Aircraft.find(params[:id])
+  end
+
+  def aircraft_params
+    params.require(:aircraft).permit(:aircraft_iata_code, :aircraft_icao_code, :aircraft_maxspeed, :aircraft_model, :aircraft_seats, :aircraft_type_id, :aircraft_wake_category_id, :aircraft_webinfo, :aircraft_company_id)
   end
 end

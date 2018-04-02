@@ -25,9 +25,6 @@
     %b Country:
     = @aircompany.country.country_name if @aircompany.country
   %p
-    %b hubs:
-    =render "aircompanies/al_hubs"
-  %p
     %b Start:
     = @aircompany.al_start
   - if @aircompany.al_finish != nil
@@ -41,3 +38,6 @@
       - @aircompany.childs.each do |aa|
         #{link_to aa.airline_name_rus, aa} базируется в а/п #{link_to aa.airport.name_rus, aa.airport} (г.#{link_to aa.airport.city_rus, country_town_path(aa.airport.country,aa.airport.town) unless aa.airport.town.blank?})
         %br
+  %p
+    %b hubs:
+    =render "aircompanies/al_hubs"

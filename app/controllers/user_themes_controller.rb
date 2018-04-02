@@ -1,5 +1,5 @@
 class UserThemesController < ApplicationController
-  before_filter :set_user_theme, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_theme, only: [:show, :edit, :update, :destroy]
 
   def index
     @user_themes = UserTheme.all
@@ -38,4 +38,8 @@ class UserThemesController < ApplicationController
     def set_user_theme
       @user_theme = UserTheme.find(params[:id])
     end
+
+  def user_theme_params
+    params.require(:user_theme).permit(:theme)
+  end
 end

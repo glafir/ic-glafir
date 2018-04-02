@@ -1,0 +1,30 @@
+- model_class = AirlineCodeshare
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing airline_codeshares
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Aircompany
+      %th Codeshare
+      %th Code share start
+      %th Code share finish
+      %th
+      %th
+      %th
+
+  %tbody
+    - @airline_codeshares.each do |airline_codeshare|
+      %tr
+        %td= link_to airline_codeshare.aircompany.airline_name_rus, airline_codeshare.aircompany if airline_codeshare.aircompany
+        %td= link_to airline_codeshare.codeshare.airline_name_rus, airline_codeshare.codeshare if airline_codeshare.codeshare
+        %td= airline_codeshare.code_share_start
+        %td= airline_codeshare.code_share_finish
+        %td= link_to 'Show', airline_codeshare
+        %td= link_to 'Edit', edit_airline_codeshare_path(airline_codeshare)
+        %td= link_to 'Destroy', airline_codeshare, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_airline_codeshare_path, :class => 'btn btn-primary'
+

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Aircompany:
+  =link_to @airline_codeshare.aircompany.airline_name_rus, @airline_codeshare.aircompany
+%p
+  %b Codeshare:
+  =link_to @airline_codeshare.codeshare.airline_name_rus, @airline_codeshare.codeshare
+%p
+  %b Code share start:
+  = @airline_codeshare.code_share_start
+%p
+  %b Code share finish:
+  = @airline_codeshare.code_share_finish
+
+= link_to 'Edit', edit_airline_codeshare_path(@airline_codeshare)
+\|
+= link_to 'Back', airline_codeshares_path

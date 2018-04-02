@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.6'
+gem 'puma', '~> 3.0'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
 gem 'sass-rails', '~> 5.0.1'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2'
 gem 'uglifier', '>= 2.7.1'
 #gem 'compass-rails','~> 2.0.4'
 #gem 'twitter-bootstrap-rails'
@@ -16,22 +17,20 @@ gem 'kaminari-bootstrap'
 gem 'clockpicker-rails'
 gem 'rails_bootstrap_navbar'
 gem 'bootswatch-rails'
-gem 'bootstrap-select-rails'
+#gem 'bootstrap-select-rails'
 gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
-gem 'protected_attributes'
 
 #gem 'activerecord-session_store'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem "jquery-easing-rails"
 gem 'jquery-validation-rails'
-gem "jquery-form-rails"
-gem "jquery-turbolinks"
-gem "jquery-tmpl-rails"
-gem "momentjs-rails"
-gem 'rails-jquery-autocomplete'
+#gem "jquery-form-rails"
+#gem "jquery-turbolinks"
+#gem "jquery-tmpl-rails"
+#gem "momentjs-rails"
+#gem 'rails-jquery-autocomplete'
 gem 'mysql2'
-#, '~> 0.3.20'
 gem 'bcrypt-ruby'
 
 gem 'devise'
@@ -39,7 +38,7 @@ gem 'devise-encryptable'
 gem 'warden'
 gem 'devise_traceable'
 gem 'devise-i18n'
-gem 'devise_hacker_tracker'
+gem 'devise_hacker_tracker', :git => 'https://github.com/glafir/devise_hacker_tracker'
 gem 'devise_password_history'
 
 gem 'i18n'
@@ -62,7 +61,7 @@ gem 'geo_point'
 gem 'geo_calc'
 gem 'netzke'
 gem 'compass'
-gem 'netzke-communitypack'
+#gem 'netzke-communitypack'
 gem "mobile-fu"
 gem 'responders'
 gem 'rails4_client_side_validations'
@@ -72,14 +71,11 @@ gem 'tzinfo-data'
 gem 'jquery-ui-themes'
 gem 'html5_validators'
 gem 'pundit'
-gem 'dalli'
-gem 'better_errors'
-gem 'quiet_assets'
-gem 'rails_layout'
-gem 'spring-commands-rspec'
-gem "binding_of_caller"
+#gem 'better_errors'
+#gem 'rails_layout'
+#gem 'spring-commands-rspec'
+#gem "binding_of_caller"
 
-gem 'gritter_notices'
 gem 'activerecord-session_store'
 
 gem 'rails-erd'
@@ -99,7 +95,12 @@ gem 'rack-attack'
 gem 'get_process_mem'
 gem 'benchmark-ips'
 
-gem 'react-rails'
+#gem 'react-rails'
 gem 'dalli'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+#gem 'actionpack-page_caching'
+#gem 'actionpack-action_caching'
+
+gem 'simple_form'
+gem 'bootstrap3_autocomplete_input'
+
+#gem 'openweather2'
