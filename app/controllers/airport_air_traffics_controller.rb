@@ -57,7 +57,8 @@ class AirportAirTrafficsController < ApplicationController
     end
 
     def sort_column
-      AirportAirTraffic.all.column_names.include?(params[:sort]) ? params[:sort] : "id"
+#      AirportAirTraffic.all.column_names.include?(params[:sort]) ? params[:sort] : "id"
+      params[:sort] || "city_rus"
     end
 
 

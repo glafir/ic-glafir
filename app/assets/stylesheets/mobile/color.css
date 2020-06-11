@@ -10,13 +10,6 @@ body, .x-body {
 a {
   color: #e8f10a;
 }
-a:hover, a:focus {
-  color: #beb31b;
-}
-tr:hover{
-  background: #4b4b4b;
-  color: #01090D;
-}
 
 #tt-in{
   background: #065014;
@@ -31,8 +24,6 @@ legend{
 }
 fieldset{
   border: 2px solid gray;
-}
-
 }
 
 #twrus{

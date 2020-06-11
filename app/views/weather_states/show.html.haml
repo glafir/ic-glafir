@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Weather:
+  = @weather_state.weather_id
+%p
+  %b Main:
+  = @weather_state.main
+%p
+  %b Description:
+  = @weather_state.description
+%p
+  %b Icon:
+  = @weather_state.icon
+
+= link_to 'Edit', edit_weather_state_path(@weather_state)
+\|
+= link_to 'Back', weather_states_path

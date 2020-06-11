@@ -9,7 +9,7 @@ acts_as_mappable :default_units => :kms,
   has_many :users
   belongs_to :country
   has_many :airports, inverse_of: :town
-  attr_accessible :accent_city, :city, :country_iso, :country_id, :latitude, :longitude, :region, :city_rus
+#  attr_accessible :accent_city, :city, :country_iso, :country_id, :latitude, :longitude, :region, :city_rus
   validates :country_id, presence: true, numericality: { only_integer: true }
   validates :accent_city, presence: true
   validates :city, presence: true
@@ -28,5 +28,9 @@ acts_as_mappable :default_units => :kms,
 
   def self.town_with_ap
     where(:id => Airport.select("town_id").where.not(town_id: nil))
+  end
+
+  def self.autocomplete_town_city_rus(q)
+    select(:id, :city_rus).where('city_rus is not NULL and city_rus like ?', "#{q}%")
   end
 end

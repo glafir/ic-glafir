@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Airport start:
+  = @airport_distance.airport_start_id
+%p
+  %b Airport finish:
+  = @airport_distance.airport_finish_id
+%p
+  %b Distance:
+  = @airport_distance.distance
+
+= link_to 'Edit', edit_airport_distance_path(@airport_distance)
+\|
+= link_to 'Back', airport_distances_path

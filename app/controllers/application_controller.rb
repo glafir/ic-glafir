@@ -1,9 +1,12 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
 include Pundit
+require "active_support/all"
+require "openweather2.rb"
+require "sunriseset"
 protect_from_forgery with: :exception, unless: -> { request.format.json? }
 protect_from_forgery prepend: true
-skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
+skip_before_action :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
 skip_before_action :verify_authenticity_token, if: :json_request?
 #after_action :logging, only: [:create, :update, :destroy]
 require "calendar_helper.rb"
@@ -12,25 +15,25 @@ require 'tzinfo/data'
 require 'i18n_timezones'
 require 'devise_traceable'
 #require 'suncalc'
-before_filter :store_current_location, :unless => :devise_controller?
-before_filter :authenticate_user!, :except => [:error_404, :error_403, :error401]
+before_action :store_current_location, :unless => :devise_controller?
+before_action :authenticate_user!, :except => [:weather_grub, :error_404, :error_403, :error401]
 helper_method :sort_column, :sort_direction
-before_filter :day_week
+before_action :day_week
 #layout :layout_by_resource
 #def store_location
 #  session[:return_to] = request.fullpath
 #end
-before_filter :force_utf8_params
-before_filter  :set_p3p
+before_action :force_utf8_params
+before_action  :set_p3p
 before_action :set_locale
-rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-#before_filter :set_mobile_format
+#rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+#before_action :set_mobile_format
 has_mobile_fu
-#before_filter :force_mobile_format
-before_filter :set_timezone 
-before_filter :set_country
-before_filter :lang
-#before_filter :cache_on, only: [:index, :show, :new]
+#before_action :force_mobile_format
+before_action :set_timezone 
+before_action :set_country
+before_action :lang
+#before_action :cache_on, only: [:index, :show, :new]
 ActiveSupport::TimeZone::MAPPING["Ezhinsk"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Norok"] = "Asia/Ezhinsk"
 ActiveSupport::TimeZone::MAPPING["Arisha"] = "Asia/Ezhinsk"
@@ -41,9 +44,15 @@ ActiveSupport::TimeZone::MAPPING["Sakhalin"] = "Asia/Sakhalin"
 ActiveSupport::TimeZone::MAPPING["Kamchatka"] = "Asia/Kamchatka"
 ActiveSupport::TimeZone::MAPPING["Anadyr"] = "Asia/Anadyr"
 respond_to :html, :js, :json, :mobile
-after_action :verify_authorized, :except => [:error_404, :error_403, :error401]
+after_action :verify_authorized, :except => [:weather_grub, :error_404, :error_403, :error401]
 after_action :store_action
 rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+Openweather2.configure do |config|
+  config.endpoint = 'https://api.openweathermap.org/data/2.5/weather'
+#  config.apikey = '1cc9a2a59f851e39dfcfa8e29b62d584'
+ config.apikey = '4b4fbe105fd022ead7bf99839bfadc2b'
+end
 
 def role?(role)
   return !!self.roles.find_by_name(role.to_s.camelize)

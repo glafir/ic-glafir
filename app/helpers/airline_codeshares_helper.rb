@@ -1,0 +1,2 @@
+module AirlineCodesharesHelper
+end

@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_filter :check_permissions, :only => [:new, :create, :cancel, :edit, :update]
-  skip_before_filter :require_no_authentication
-  before_filter :configure_permitted_parameters
+  before_action :check_permissions, :only => [:new, :create, :cancel, :edit, :update]
+  skip_before_action :require_no_authentication
+  before_action :configure_permitted_parameters
 
   protected
 

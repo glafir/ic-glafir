@@ -1,0 +1,10 @@
+= simple_form_for(@airport_distance) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :airport_start_id
+    = f.input :airport_finish_id
+    = f.input :distance
+
+  .form-actions
+    = f.button :submit

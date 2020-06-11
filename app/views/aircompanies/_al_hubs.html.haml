@@ -1,18 +1,18 @@
-%table.table.table-hover
+%table.table
   %tr
     %th(colspan=2)
   %tr
     %td
-      %table.table.table-hover
+      %table.table.table-striped
         %tr
           %th(colspan=2)
             %h4= link_to @aircompany.airport.town.city_rus, @aircompany.airport.town
             %h6 (#{link_to @aircompany.airport.name_rus, @aircompany.airport})
-            #{@aircompany.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("way_end").uniq.pluck(:way_end).count} направлений
-        - @aircompany.airport.timetableaps_out.group("way_end").ordered_by_airport_finish_city_rus.where(aircompany_id: @aircompany.id).each do |tt|
+            #{@aircompany.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
+        - @aircompany.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id: @aircompany.id).each do |tt|
           %tr
             %td
-              - @aircompany.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(way_end: tt.way_end).order("flight_number").each do |fl|
+              - @aircompany.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                 #{fl.flight_number},
             %td
               #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish})
@@ -25,18 +25,18 @@
       %td(colspan=2)
         %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
         %h6= link_to aphub.airport.name_rus, aphub.airport
-        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("way_end").uniq.pluck(:way_end).count} направлений
+        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
 
     %tr
       %td
-        %table.table.table-hover
+        %table.table.table-striped
           %tr
             %th Рейсы
             %th Направления
-          - aphub.airport.timetableaps_out.group("way_end").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
+          - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
             %tr
               %td
-                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(way_end: tt.way_end).order("flight_number").each do |fl|
+                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                   #{fl.flight_number},
               %td
                 #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
@@ -48,17 +48,17 @@
       %td(colspan=2)
         %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
         %h6= link_to aphub.airport.name_rus, aphub.airport
-        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("way_end").uniq.pluck(:way_end).count} направлений
+        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
     %tr
       %td
-        %table.table.table-hover
+        %table.table.table-striped
           %tr
             %th Рейсы
             %th Направления
-          - aphub.airport.timetableaps_out.group("way_end").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
+          - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
             %tr
               %td
-                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(way_end: tt.way_end).order("flight_number").each do |fl|
+                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                   #{fl.flight_number},
               %td
                 #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
@@ -69,19 +69,20 @@
   - @aircompany.aphubs.where_airport_country(@aircompany.country_id,1).ordered_by_airport_city_rus.where(hub_type:0).each do |aphub|
     %tr
       %td(colspan=2)
-        %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
+        - unless aphub.airport.town.nil?
+          %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
         %h6= link_to aphub.airport.name_rus, aphub.airport
-        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("way_end").uniq.pluck(:way_end).count} направлений
+        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
     %tr
       %td
-        %table.table.table-hover
+        %table.table.table-striped
           %tr
             %th Рейсы
             %th Направления
-          - aphub.airport.timetableaps_out.group("way_end").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
+          - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
             %tr
               %td
-                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(way_end: tt.way_end).order("flight_number").each do |fl|
+                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                   #{fl.flight_number},
               %td
                 #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),

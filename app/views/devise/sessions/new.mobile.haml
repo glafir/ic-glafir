@@ -1,19 +1,13 @@
-%h2 Sign in
-= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:data => {:ajax => 'false'}}) do |f|
-  %div
-    = f.label :login
-    %br/
-    = f.text_field :login, :autofocus => true
-  %div
-    = f.label :password
-    %br/
-    = f.password_field :password
-  - if devise_mapping.rememberable?
-    %div
-      = f.label :remember_me
-      = f.check_box :remember_me
-  %div= f.submit "Sign in"
+.page-header
+  %h1.h1.center-block Sign in
+= simple_form_for resource, :as => resource_name, :url => session_path(resource_name), :html => {:data => {:ajax => 'false'}, class: "form-horizontal"}  do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :login,  size: 30, :autofocus => true, error: 'Username is mandatory, please specify one', required: true
+    = f.input :password,  size: 30, required: true
+    = f.input :remember_me, inline_label: 'Yes, remember me', as: :boolean
+  .form-actions
+    = f.button :submit, "Sign In", class: "btn btn-info"
 :javascript
   var elem = document.querySelector('#user_remember_me');
   var init = new Switchery(elem,{ color: '#fec200'});
-

@@ -4,21 +4,19 @@ include ActiveModel::Validations
   has_many :timetableap_subs
   belongs_to :aircompany, inverse_of: :timetableaps, :counter_cache => true
   belongs_to :aircraft
-  belongs_to :airport_start, class_name: "Airport", foreign_key: "way_start"
+  belongs_to :airport_start, class_name: "Airport", foreign_key: "airport_start_id"
     scope :ordered_by_airport_start_city_rus, -> { joins(:airport_start).order('airports.city_rus') }
-  belongs_to :airport_finish, class_name: "Airport", foreign_key: "way_end"
+  belongs_to :airport_finish, class_name: "Airport", foreign_key: "airport_finish_id"
     scope :ordered_by_airport_finish_city_rus, -> { joins(:airport_finish).order('airports.city_rus') }
-  has_many :childs, class_name: "Timetableap",
-                          foreign_key: "parent_id"
+  has_many :childs, class_name: "Timetableap", foreign_key: "parent_id"
   belongs_to :parent, class_name: "Timetableap"
 
 
-  attr_accessible :aircompany_id, :dateOfEndNav, :dateOfStartNav, :flight_number, :GateEnd, :GateStart, :TermEnd, :TermStart, :timeEnd, :timeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :way_end, :way_start, :parent_id
   attr_accessor :f_tw, :f_ap, :s_tw, :s_ap, :timeIN, :bgcolor, :fstatus, :airline, :bgcolor_apload, :flight
 
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }
-  validates  :way_start, presence: true, numericality: { only_integer: true }
-  validates  :way_end, presence: true, numericality: { only_integer: true }
+  validates  :airport_start_id, presence: true, numericality: { only_integer: true }
+  validates  :airport_finish_id, presence: true, numericality: { only_integer: true }
   validates  :dateOfEndNav, presence: true
   validates  :dateOfStartNav, presence: true
   validates  :timeStart, presence: true
@@ -55,7 +53,6 @@ include ActiveModel::Validations
     end
   end
 
-
   def self.stoday
     @wday = Time.zone.now.strftime'%w'.to_s
     where("s#{@wday} = ?",1)
@@ -68,7 +65,7 @@ include ActiveModel::Validations
 
   def self.search_start_ap(start_ap)
     if start_ap && start_ap != ""
-      where('way_start = ?', "#{start_ap}")
+      where('airport_start_id = ?', "#{start_ap}")
     else
       all
     end
@@ -76,7 +73,7 @@ include ActiveModel::Validations
 
   def self.search_end_ap(end_ap)
     if end_ap && end_ap != ""
-      where('way_end = ?', "#{end_ap}")
+      where('airport_finish_id = ?', "#{end_ap}")
     else
       all
     end
@@ -84,7 +81,7 @@ include ActiveModel::Validations
 
   def self.search_endtw(tw)
     if tw && tw != ""
-      where(:way_end => Airport.select(:id).where("town_id = ?", "#{tw}"))
+      where(:airport_finish_id => Airport.select(:id).where("town_id = ?", "#{tw}"))
     else
       all
     end
@@ -92,7 +89,7 @@ include ActiveModel::Validations
 
   def self.search_starttw(tw)
     if tw && tw != ""
-      where(:way_start => Airport.select(:id).where("town_id = ?", "#{tw}"))
+      where(:airport_start_id => Airport.select(:id).where("town_id = ?", "#{tw}"))
     else
       all
     end
@@ -100,7 +97,7 @@ include ActiveModel::Validations
 
   def self.search_endcountry(con)
     if con && con != ""
-      where(:way_end => Airport.select(:id).where("country_id = ?", "#{con}"))
+      where(:airport_finish_id => Airport.select(:id).where("country_id = ?", "#{con}"))
     else
       all
     end
@@ -108,7 +105,7 @@ include ActiveModel::Validations
 
   def self.search_startcountry(con)
     if con && con != ""
-      where(:way_start => Airport.select(:id).where("country_id = ?", "#{con}"))
+      where(:airport_start_id => Airport.select(:id).where("country_id = ?", "#{con}"))
     else
       all
     end

@@ -9,7 +9,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '<%= SecureRandom.hex(64) %>'
+  config.secret_key = '<%= SecureRandom.hex(64) %>'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -115,7 +115,7 @@ Devise.setup do |config|
   # config.maximum_accounts_attempted = 3
   #
   # The name of the table storing the failed sign in attempts
-  config.sign_in_failures_table_name = 'sign_in_failures'
+#  config.sign_in_failures_table_name = 'sign_in_failures'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without

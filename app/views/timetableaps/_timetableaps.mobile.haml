@@ -65,8 +65,8 @@
             \|
             = form_tag new_timetableap_path, :method => 'get', target:"_blank" do
               = hidden_field_tag 'parent_id', timetableap.id
-              = hidden_field_tag 'way_start', timetableap.way_start
-              = hidden_field_tag 'way_end', timetableap.way_end
+              = hidden_field_tag 'airport_start_id', timetableap.airport_start_id
+              = hidden_field_tag 'airport_finish_id', timetableap.airport_finish_id
               = hidden_field_tag 'aircraft_id', timetableap.aircraft_id
               = hidden_field_tag 'timeStart', timetableap.timeStart.to_s(:time)
               = hidden_field_tag 'timeEnd', timetableap.timeEnd.to_s(:time)

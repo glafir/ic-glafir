@@ -1,0 +1,3 @@
+class AirportTerminalPolicy < ApplicationPolicy
+
+end

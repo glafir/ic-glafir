@@ -1,0 +1,18 @@
+= simple_form_for(@weather) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :place_id
+    = f.input :temp
+    = f.input :temp_min
+    = f.input :temp_max
+    = f.input :pressure
+    = f.input :pressure_sea_level
+    = f.input :pressure_grnd_level
+    = f.input :wind_speed
+    = f.input :wind_deg
+    = f.input :clouds
+    = f.input :dt
+
+  .form-actions
+    = f.button :submit

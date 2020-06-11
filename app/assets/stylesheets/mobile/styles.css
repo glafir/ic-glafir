@@ -18,17 +18,21 @@ body{
   float: none;
   -webkit-appearance: none;
 }
+
+@media (max-width: 600px){
+    .specifictd {    
+        width:70px;  /* adjust to desired wrapping */
+        display:table;
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+}
 a{
   color: #ffffaa; /* Цвет ссылок */
   padding: 2px; /* Поля вокруг текста */ 
-}
-a:hover{
-  background: #234; /* Цвет фона под ссылкой */ 
-  color: #F5F103; /* Цвет ссылки */ 
-}
-tr:hover{
-  background: #234; /* Цвет фона под ссылкой */ 
-  color: #ffe; /* Цвет ссылки */
 }
 
 #tt-in{
@@ -62,3 +66,34 @@ p{
 #all {
    float: none;
 }
+
+.flight-parent{
+    font: bold 18px Arial, Helvetica, sans-serif;
+}
+
+.flight-child{ 
+    font: bold 14px Arial, Helvetica, sans-serif;
+}
+
+TABLE.table-striped > tbody > tr:nth-child(even){
+  background-color: #333;
+}
+
+
+TABLE.table-striped > tbody > tr:nth-child(odd){
+  background-color: #111;
+}
+table.tablo {
+    table-layout: fixed;
+}
+
+td.tablo {
+    white-space: normal !important;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+.wi {
+        font-size:50px;
+}
+

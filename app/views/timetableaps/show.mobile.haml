@@ -9,8 +9,8 @@
   = form_tag new_timetableap_path, :method => 'get' do
     = hidden_field_tag 'flight_number', @timetableap.flight_number
     = hidden_field_tag 'aircompany_id', @timetableap.aircompany_id
-    = hidden_field_tag 'way_start', @timetableap.way_start
-    = hidden_field_tag 'way_end', @timetableap.way_end
+    = hidden_field_tag 'airport_start_id', @timetableap.airport_start_id
+    = hidden_field_tag 'airport_finish_id', @timetableap.airport_finish_id
     = hidden_field_tag 'timeStart', @timetableap.timeStart
     = hidden_field_tag 'timeEnd', @timetableap.timeEnd
     = hidden_field_tag 'dateOfStartNav', @timetableap.dateOfStartNav

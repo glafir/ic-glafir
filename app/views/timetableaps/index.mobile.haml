@@ -1,15 +1,8 @@
 %h1 Поиск авиарейсов
-= render "layouts/per_page"
-= form_tag timetableaps_path, :method => 'get', :id => "timetableaps_search" do
-  %p
-    = label_tag :start_ap, "Откуда:"
-    = select_tag :start_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus), "id", "name_rus", params[:start_ap]), prompt: "All Airports", :onchange => "this.form.submit();"
-  %p
-    = label_tag :end_ap, "Куда:"
-    = select_tag :end_ap, options_from_collection_for_select(Airport.where(iso_code: 'EZ').order(:name_rus),  "id", "name_rus", params[:end_ap]), prompt: "All Airports", :onchange => "this.form.submit();"
-  %p
-    = label_tag :aircomapny, "Авиакомпания:"
-    = select_tag "search_al", options_from_collection_for_select(Aircompany.all, :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();"
+= simple_form_for :timetableaps_path, :method => 'get' do |f|
+  %p= f.input :airport_start, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:timetableaps_path][:airport_start_id]
+  %p= f.input :airport_finish, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:timetableaps_path][:airport_finish_id]
+  %p= f.input :aircompany, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path, :value => params[:timetableaps_path][:aircompany_id]
   %p
     = label_tag :date, "По дате окончания:"
     = select_date(@fc_start, :prefix => 'fc_start')
@@ -20,4 +13,4 @@
   %p
     = submit_tag "Search", :name => nil
   = render "layouts/per_page"
-  #timetableaps= render "timetableaps/timetableaps.mobile"
+  #timetableaps= render "timetableaps/timetableaps"

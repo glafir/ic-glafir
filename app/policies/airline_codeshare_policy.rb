@@ -1,0 +1,3 @@
+class AirlineCodesharePolicy < ApplicationPolicy
+
+end

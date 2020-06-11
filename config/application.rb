@@ -9,6 +9,7 @@ end
 
 module IcApp
   class Application < Rails::Application
+    config.active_record.time_zone_aware_types = [:datetime]
 #    config.autoload_paths += %W(#{config.root}/lib)
     #before_filter :check_aut, :except => [:login, :logout]
     # Settings in config/environments/* take precedence over those specified here.
@@ -52,7 +53,7 @@ module IcApp
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
+#    config.active_record.whitelist_attributes = true
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -62,16 +63,16 @@ module IcApp
     config.active_record.raise_in_transactional_callbacks = true
     config.middleware.use Rack::Attack
 
-    config.middleware.insert_before 0, "Rack::Cors", :debug => true, :logger => (-> { Rails.logger }) do
+    config.middleware.insert_before 0, Rack::Cors, :debug => true, :logger => (-> { Rails.logger }) do
       allow do
         origins '*'
-
         resource '/netzke/*',
           :headers => :any,
           :methods => [:get, :post, :delete, :put, :options, :head],
-          :credentials => true,
+          :credentials => false,
           :max_age => 0
       end
     end
+
   end
 end

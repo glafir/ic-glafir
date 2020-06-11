@@ -17,7 +17,7 @@
   %p
     %b Base airport:
     = link_to @aircompany.airport.name_rus, @aircompany.airport if @aircompany.airport
-    (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) if @aircompany.airport})
+    (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) unless @aircompany.airport.nil?})
   %p
     %b Общее количество рейсов в день (среднее)
     = @aircompany.timetableaps_count

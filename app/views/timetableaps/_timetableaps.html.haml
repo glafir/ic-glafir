@@ -1,6 +1,6 @@
 :javascript
   $(document).ready(function(){
-    $("#tt").tablesorter({
+    $(".tt").tablesorter({
       widgets: ["zebra"],
       sortList:[[3,0]]
      });
@@ -27,7 +27,8 @@
           = timetableap.flight
         %td
           = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
-          = link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany
+          %p
+            = link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany
         %td
           = timetableap.airport_start.town.city_rus
           %br
@@ -66,8 +67,8 @@
             \|
             = form_tag new_timetableap_path, :method => 'get', target:"_blank" do
               = hidden_field_tag 'parent_id', timetableap.id
-              = hidden_field_tag 'way_start', timetableap.way_start
-              = hidden_field_tag 'way_end', timetableap.way_end
+              = hidden_field_tag 'airport_start_id', timetableap.airport_start_id
+              = hidden_field_tag 'airport_finish_id', timetableap.airport_finish_id
               = hidden_field_tag 'aircraft_id', timetableap.aircraft_id
               = hidden_field_tag 'timeStart', timetableap.timeStart.to_s(:time)
               = hidden_field_tag 'timeEnd', timetableap.timeEnd.to_s(:time)

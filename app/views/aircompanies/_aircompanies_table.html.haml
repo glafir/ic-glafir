@@ -25,12 +25,12 @@
       %td
         = link_to aircompany.airport.name_rus, aircompany.airport if aircompany.airline_name_rus
         %br/
-        (г.#{link_to aircompany.airport.town.city_rus, country_town_path(aircompany.country, aircompany.airport.town_id) if aircompany.airport})
+        (г.#{link_to aircompany.airport.town.city_rus, country_town_path(aircompany.country, aircompany.airport.town_id) if aircompany.airport && aircompany.airport.town })
       %td= aircompany.timetableaps_count
       %td= aircompany.per_cent_tt
       %td= aircompany.al_start
       %td= aircompany.al_finish
       - if policy(aircompany).edit?
-        %td= link_to 'Edit', edit_aircompany_path(aircompany), class: 'btn btn-default'
+        %td= link_to 'Edit', edit_aircompany_path(aircompany), class: 'btn btn-info'
       - if policy(aircompany).destroy?
         %td= link_to 'Destroy', aircompany, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }

@@ -1,12 +1,5 @@
-= form_for @aircompany, html: { class: "form form-horizontal aircompany" }, validate: true do |f|
-  - if @aircompany.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@aircompany.errors.count, "error")
-        prohibited this aircompany from being saved:
-      %ul
-        - @aircompany.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for @aircompany, html: { class: "form form-horizontal aircompany" }, validate: true do |f|
+  = f.error_notification
   .form-group
     %label{class: 'col-xs-3 control-label'} My Avatar
     = f.file_field :avatar
@@ -35,8 +28,7 @@
   .form-group
     = f.label :Base_airport, class: 'col-xs-3 control-label'
     .controls.col-xs-6
-      = autocomplete_field_tag 'start', '', autocomplete_airport_city_rus_airports_path, :size => 20, 'data-auto-focus' => true, :update_elements => {:id => '#aircompany_airport_id'}, :value => params[:airport_id], class: 'form-control'
-      = f.hidden_field :airport_id
+      = f.input :airport, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path
   .form-group
     = f.label :country_id, class: 'col-xs-3 control-label'
     .controls.col-xs-6

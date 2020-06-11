@@ -4,7 +4,7 @@ has_many :airports
 has_many :towns
 has_many :users
 has_many :aircompanies
-  attr_accessible :country_iata_code, :country_icao_code, :country_name, :country_number
+#  attr_accessible :country_iata_code, :country_icao_code, :country_name, :country_number
 
   def self.search(search)
     if search

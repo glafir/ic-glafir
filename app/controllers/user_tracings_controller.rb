@@ -1,5 +1,5 @@
 class UserTracingsController < ApplicationController
-  before_filter :set_user_tracing, only: [:show]
+  before_action :set_user_tracing, only: [:show]
 
   def index
     @user_tracings = UserTracing.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])
@@ -42,5 +42,9 @@ private
 
   def set_user_tracing
     @user_tracing = UserTracing.find(params[:id])
+  end
+
+  def user_tracing_params
+    params.require(:user_tracing).permit(:user_id, :sign_in_at, :sign_out_at, :ip_address)
   end
 end

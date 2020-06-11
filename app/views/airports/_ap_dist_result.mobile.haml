@@ -1,14 +1,13 @@
 %br
 .dist
-  = "distance "+@dist[0].to_s+" km." unless @dist.nil?
-  %BR
-  = "Initial bearing (direction) "+@dist[1].to_s unless @dist.nil?
-  %BR
-  -if params[:start_ap] != nil and params[:end_ap] != nil
-    %p
-      dist time: #{time_spent_in_words(@dist_time)}
-    %p
-      #{@ap1.name_rus} - #{@ap1.coordinate}
-    %p
-      #{@ap2.name_rus} - #{@ap2.coordinate}
+  %p
+    = "distance "+@dist[0].to_s+" km." unless @dist.nil?
+  %p
+    = "Initial bearing (direction) "+@dist[1].to_s unless @dist.nil?
+  %p
+    dist time: #{time_spent_in_words(@dist_time)}
+  %p
+    #{@ap1.name_rus} - #{@ap1.coordinate}
+  %p
+    #{@ap2.name_rus} - #{@ap2.coordinate}
 

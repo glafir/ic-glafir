@@ -1,8 +1,10 @@
 class AircompaniesController < ApplicationController
-  before_filter :set_aircompany, only: [:show, :edit, :update, :destroy]
-  autocomplete :aircompany, :airline_name_rus, :extra_data => [:iata_code]
-  before_filter :check_permissions, :only => [:admin_al, :autocomplete_aircompany_airline_name_rus]
+  before_action :set_aircompany, only: [:show, :edit, :update, :destroy]
+#  autocomplete :aircompany, :airline_name_rus, :extra_data => [:iata_code]
+  autocomplete  :aircompany, :airline_name_rus
+  before_action :check_permissions, :only => [:autocomplete_aircompany_airline_name_rus, :autocomplete_airline_name_rus,]
   def admin_al
+    authorize :aircompany
   end
 
   def index
@@ -33,7 +35,7 @@ class AircompaniesController < ApplicationController
 
   def create
     authorize :aircompany
-    @aircompany = Aircompany.new(params[:aircompany])
+    @aircompany = Aircompany.new(aircompany_params)
 #    authorize @aircompany
     @aircompany.save
     flash[:notice] = "The aircompany #{@aircompany.id} was created!" if @aircompany.save && !request.xhr?
@@ -42,7 +44,7 @@ class AircompaniesController < ApplicationController
 
   def update
     authorize @aircompany
-    @aircompany.update_attributes(params[:aircompany])
+    @aircompany.update_attributes(aircompany_params)
     flash[:notice] = "The aircompany #{@aircompany.id} was updated!" if @aircompany.save && !request.xhr?
     respond_with @aircompany
   end
@@ -56,11 +58,16 @@ class AircompaniesController < ApplicationController
 private
 
   def sort_column
-    Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "airline_name_rus"
+#    Aircompany.column_names.include?(params[:sort]) ? params[:sort] : "airline_name_rus"
+    params[:sort] || "airline_name_rus"
   end
 
   def set_aircompany
     @aircompany = Aircompany.find(params[:id])
+  end
+
+  def aircompany_params
+    params.require(:aircompany).permit(:awb_prefix, :airline_name_eng, :airline_name_rus, :airport_id, :iata_code, :icao_code, :al_start, :al_finish, :country_id, :manager_id, :avatar, :avatar_cache)
   end
 
   protected

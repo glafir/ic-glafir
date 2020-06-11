@@ -1,48 +1,50 @@
-= form_for(@aircompany) do |f|
-  - if @aircompany.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@aircompany.errors.count, "error")
-        prohibited this aircompany from being saved:
-      %ul
-        - @aircompany.errors.full_messages.each do |msg|
-          %li= msg
-  .field
-    = f.label :iata_code
-    %br/
-    = f.text_field :iata_code
-  .field
-    = f.label :icao_code
-    %br/
-    = f.text_field :icao_code
-  .field
-    = f.label :awb_prefix
-    %br/
-    = f.text_field :awb_prefix
-  .field
-    = f.label :airline_name_eng
-    %br/
-    = f.text_field :airline_name_eng
-  .field
-    = f.label :airline_name_rus
-    %br/
-    = f.text_field :airline_name_rus
-  .field
-    = f.label :Base_airport
-    %br/
-    = f.select :airport_id, Airport.where(iso_code: 'EZ').order(:name_rus).collect{|item| [item.name_rus, item.id]}
-  .field
-    = f.label :country_id
-    %br/
-    = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}
-  .field
-    = f.label :al_start
-    = f.select :al_start, 1930..Time.now.year
-  .field
-    = f.label :al_finish
-    = f.select :al_finish, 1960..Time.now.year, :include_blank => "а/к работает"
-  .field
-    = f.label :manager_id
-    = f.collection_select :manager_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, :include_blank => "а/к независима"
-  .actions
-    = f.submit
+= simple_form_for @aircompany, html: { class: "form form-horizontal aircompany" }, validate: true do |f|
+  = f.error_notification
+  .form-group
+    %label{class: 'col-xs-3 control-label'} My Avatar
+    = f.file_field :avatar
+    .controls.col-xs-6
+      = f.hidden_field :avatar_cache
+  .form-group
+    = f.label :iata_code, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.text_field :iata_code, autofocus: true, class: 'form-control', size: 2
+  .form-group
+    = f.label :icao_code, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.text_field :icao_code, class: 'form-control', size: 3
+  .form-group
+    = f.label :awb_prefix, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.text_field :awb_prefix, class: 'form-control', size: 3
+  .form-group
+    = f.label :airline_name_eng, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.text_field :airline_name_eng, class: 'form-control', size: 25
+  .form-group
+    = f.label :airline_name_rus, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.text_field :airline_name_rus, class: 'form-control', size: 25
+  .form-group
+    = f.label :Base_airport, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.input :airport, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path
+  .form-group
+    = f.label :country_id, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {},  class: 'form-control bfh-selectbox'
+  .form-group
+    = f.label :al_start, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.select :al_start, 1930..Time.now.year, {}, class: 'form-control bfh-selectbox'
+  .form-group
+    = f.label :al_finish, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.select :al_finish, 1960..Time.now.year, {:include_blank => "а/к работает"}, {class: 'form-control bfh-selectbox'}
+  .form-group
+    = f.label :manager_id, class: 'col-xs-3 control-label'
+    .controls.col-xs-6
+      = f.collection_select :manager_id, Aircompany.where(al_finish: nil).order(:airline_name_rus), :id, :airline_name_rus.to_s, {:include_blank => "Недочерняя компания"},  {class: 'form-control bfh-selectbox'}
+  .form-group
+    .controls.col-xs-offset-3.col-xs-6
+      = f.submit nil, class: 'btn btn-primary'

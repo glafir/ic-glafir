@@ -1,5 +1,0 @@
-#!/bin/sh
-unicorn_pid=`cat /home/glafir/RoR/ic-glafir/tmp/pids/unicorn.pid`
-echo "Stopping Unicorn ($unicorn_pid)"
-kill -9 $unicorn_pid
-echo "Unicorn ($unicorn_pid) was stopped!"

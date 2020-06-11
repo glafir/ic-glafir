@@ -13,7 +13,7 @@
 
 - if params[:radius] && params[:radius] != ''
   %canvas#canva{width:1100,height:1100}
-  - @towns = Town.where(country_id: 528).within(params[:radius], :origin => @town)
+  - @towns = Town.within(params[:radius], :origin => @town)
   :javascript
     var canvas = document.getElementById('canva'),
     obCanvas = canvas.getContext('2d');
@@ -64,13 +64,13 @@
             obCanvas.fillStyle = 'gray';
         - else
           :javascript
-            obCanvas.fillStyle = 'yellow';
+            obCanvas.fillStyle = 'blue';
         :javascript
           obCanvas.fill();
           obCanvas.lineWidth = 0;
           obCanvas.strokeStyle = 'blue';
           obCanvas.stroke();
-          obCanvas.fillStyle   = '#fff';
+          obCanvas.fillStyle   = '#33f';
           obCanvas.font  = 'italic bold 11px sans-serif';
           obCanvas.textAlign = 'left';
           obCanvas.fillText("#{town.accent_city}", (Math.cos(a)*r)+5, Math.sin(a)*r);
@@ -81,9 +81,9 @@
     obCanvas.fillStyle = 'green';
     obCanvas.fill();
     obCanvas.lineWidth = 0;
-    obCanvas.strokeStyle = 'blue';
+    obCanvas.strokeStyle = 'red';
     obCanvas.stroke();
-    obCanvas.fillStyle   = '#ffe';
+    obCanvas.fillStyle   = '#eee';
     obCanvas.font  = 'bold 20px sans-serif';
     obCanvas.textAlign = 'right';
     obCanvas.fillText("#{@town.accent_city}", -10, 0);

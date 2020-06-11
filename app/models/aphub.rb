@@ -1,6 +1,6 @@
 class Aphub < ActiveRecord::Base
 include ActiveModel::Validations
-  attr_accessible :aircompany_id, :airport_id, :hub_type
+#  attr_accessible :aircompany_id, :airport_id, :hub_type
   belongs_to :aircompany
   belongs_to :airport
     scope :ordered_by_airport_city_rus, -> { joins(:airport).order('airports.city_rus') }

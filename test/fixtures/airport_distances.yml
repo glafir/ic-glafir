@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  airport_start_id: 1
+  airport_finish_id: 1
+  distance: 1.5
+
+two:
+  airport_start_id: 1
+  airport_finish_id: 1
+  distance: 1.5

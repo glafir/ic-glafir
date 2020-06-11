@@ -1,0 +1,11 @@
+= simple_form_for(@weather_state) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :weather_id
+    = f.input :main
+    = f.input :description
+    = f.input :icon
+
+  .form-actions
+    = f.button :submit

@@ -1,5 +1,5 @@
 class AircraftTypesController < ApplicationController
-  before_filter :set_aircraft_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_aircraft_type, only: [:show, :edit, :update, :destroy]
 
   def index
     @aircraft_types = AircraftType.all
@@ -46,5 +46,9 @@ class AircraftTypesController < ApplicationController
   private
   def set_aircraft_type
     @aircraft_type = AircraftType.find(params[:id])
+  end
+
+  def aircraft_type_params
+    params.require(:aircraft_type).permit(:atype)
   end
 end

@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-before_filter :set_authtorize
+before_action :set_authtorize
   def getAirports
     @airports = Airport.where(country_id: 528)
     render json: @airports

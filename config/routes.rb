@@ -1,4 +1,14 @@
 IcApp::Application.routes.draw do
+  resources :airport_distances
+  resources :weathers do
+    collection do
+      get "weather_grub"
+    end
+    resources :weather_states
+  end
+  resources :airport_terminal_gates
+  resources :airport_terminals
+  resources :airline_codeshares
   resources :statuses
   resources :terminals
   get 'api/getAirports'
@@ -7,7 +17,6 @@ IcApp::Application.routes.draw do
 
   resources :translations
 #scope "/:locale" do
-  resources :languages
   resources :languages
   concern :paginatable do
     get '(page/:page)', :action => :index, :on => :collection, :as => ''
@@ -77,6 +86,7 @@ IcApp::Application.routes.draw do
       get 'page/:page', :action => :show
     end
     collection do
+      get 'weather'
     end
   end
 
@@ -121,6 +131,7 @@ IcApp::Application.routes.draw do
   end
   post "/timetableaps/new" => "timetableaps#new"
   resources :aircompanies, :concerns => :paginatable do
+    get :autocomplete_aircompany_airline_name_eng, :on => :collection
     get :autocomplete_aircompany_airline_name_rus, :on => :collection
     collection do
       get "admin_al"
@@ -138,8 +149,10 @@ IcApp::Application.routes.draw do
       get "ap_maps"
     end
     member do
+      get "ap_stats"
       get "tablo" => "airports#tablo"
-      get "tablo/:apt" => "airports#tablo"
+      get "tablo/:size" => "airports#tablo"
+      get "tablo/:size/:apt" => "airports#tablo"
       get "tt"
       get "aptt"
       get "apload" => "airports#apload"
@@ -160,5 +173,4 @@ IcApp::Application.routes.draw do
   get "insertdata" => "timetableaps#insert"
   get "chnglocale" => "general#chnglocale"
   get "/*other" => redirect("/errors/error_404")
-#end
 end

@@ -1,0 +1,2 @@
+class WeatherStatePolicy < ApplicationPolicy
+end

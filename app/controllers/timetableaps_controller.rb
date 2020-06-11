@@ -1,39 +1,42 @@
 class TimetableapsController < ApplicationController
   layout "application_empty_1", :only => [:flight_state, :ttair_admin]
-  before_filter :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
+  before_action :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
 
   def index
     params[:fc_start] == nil ? @fc_start = Date.current : @fc_start = Date.civil(params[:fc_start][:year].to_i, params[:fc_start][:month].to_i,params[:fc_start][:day].to_i)
     params[:fc_end] == nil ? @fc_end = Date.current : @fc_end = Date.civil(params[:fc_end][:year].to_i, params[:fc_end][:month].to_i,params[:fc_end][:day].to_i)
-    @timetableaps = Timetableap.search_start_ap(params[:start_ap]).search_end_ap(params[:end_ap]).search_al(params[:search_al]).search_date(@fc_start,@fc_end).search_fn(params[:flight_number]).page(params[:page]).per(params[:limit])
+    @timetableaps = Timetableap.search_start_ap(params[:timetableaps_path][:airport_start_id]).search_end_ap(params[:timetableaps_path][:airport_finish_id]).search_al(params[:timetableaps_path][:aircompany_id]).search_date(@fc_start,@fc_end).search_fn(params[:flight_number]).page(params[:page]).per(params[:limit])
     authorize @timetableaps
     respond_with(@timetableaps)
   end
 
   def search_tt
     authorize :timetableap
-    @ap1 = Town.find(params[:start_ap]).airports.first if params[:start_ap] != nil
-    @ap2 = Town.find(params[:end_ap]).airports.first if params[:end_ap] != nil
+    @ap1 = Town.find(params['search_tt']['town_start_id']).airports.first unless params['search_tt'].nil?
+    @ap2 = Town.find(params['search_tt']['town_finish_id']).airports.first unless params['search_tt'].nil?
     @dist = Airport.ap_distance(@ap1,@ap2)
     @aircrafts = Aircraft.all
-    if params[:start_ap].nil? && params[:end_ap].nil?
-      @timetableaps = Timetableap.page(params[:page]).per(params[:limit])
-      render action: 'search_tt'
-    else
-      @timetableaps = Timetableap.where(:way_start => Airport.select(:id).where(:town_id => (params[:start_ap]))).where(:way_end => Airport.select(:id).where(:town_id => (params[:end_ap]))).page(params[:page]).per(params[:limit])
-      @airports1 = Airport.where(town_id: params[:start_ap]).order(:name_rus)
-      @airports2 = Airport.where(town_id: params[:end_ap]).order(:name_rus)
-      @aircraft = Aircraft.find(params[:aircraft])
-      if @aircraft.aircraft_wake_category_id = 1
-        @corr_time = 1200
+    unless params['search_tt'].nil?
+      if params['search_tt']['town_start_id'].nil? && params['search_tt']['town_finish_id'].nil?
+        @timetableaps = Timetableap.page(params[:page]).per(params[:limit])
+        render action: 'search_tt'
+      else
+        @timetableaps_all = Timetableap.where(:airport_start_id => Airport.select(:id).where(:town_id => (params['search_tt']['town_start_id']))).where(:airport_finish_id => Airport.select(:id).where(:town_id => (params['search_tt']['town_finish_id'])))
+        @timetableaps = @timetableaps_all.page(params[:page]).per(params[:limit])
+        @airports1 = Airport.where(town_id: params['search_tt']['town_start_id']).order(:name_rus)
+        @airports2 = Airport.where(town_id: params['search_tt']['town_finish_id']).order(:name_rus)
+        params['aircraft'].nil? ? params['aircraft'] == 18 : @aircraft = Aircraft.find(params['aircraft'])
+        if @aircraft.aircraft_wake_category_id = 1
+          @corr_time = 1000
+        end
+        if @aircraft.aircraft_wake_category_id = 2
+          @corr_time = 1300
+        end
+        if @aircraft.aircraft_wake_category_id = 3
+          @corr_time = 1900
+        end
+        @dist_time = (@dist[0]*1000) / (@aircraft.aircraft_maxspeed * 0.97 / 3.6) + @corr_time
       end
-      if @aircraft.aircraft_wake_category_id = 2
-        @corr_time = 1400
-      end
-      if @aircraft.aircraft_wake_category_id = 3
-        @corr_time = 1900
-      end
-      @dist_time = (@dist[0]*1000) / (@aircraft.aircraft_maxspeed * 0.97 / 3.6) + @corr_time
     end
   end
 
@@ -79,13 +82,13 @@ class TimetableapsController < ApplicationController
   end
 
   def create
-    @timetableap = Timetableap.new(params[:timetableap])
+    @timetableap = Timetableap.new(timetableap_params)
     authorize @timetableap
     if @timetableap.save && !request.xhr?
-      if (@timetableap.aircompany.airport_id != @timetableap.way_end) && (Aphub.where(aircompany_id: @timetableap.aircompany_id).where(airport_id: @timetableap.way_end).count == 0)
+      if (@timetableap.aircompany.airport_id != @timetableap.airport_finish_id) && (Aphub.where(aircompany_id: @timetableap.aircompany_id).where(airport_id: @timetableap.airport_finish_id).count == 0)
         aphub = Aphub.new
         aphub.aircompany_id = @timetableap.aircompany_id
-        aphub.airport_id = @timetableap.way_end
+        aphub.airport_id = @timetableap.airport_finish_id
         aphub.hub_type = 0
         aphub.save
       end
@@ -98,7 +101,7 @@ class TimetableapsController < ApplicationController
 
   def update
     authorize @timetableap
-    flash[:notice] = "The flight #{@timetableap.id} was updated!" if @timetableap.update_attributes(params[:timetableap]) && !request.xhr?
+    flash[:notice] = "The flight #{@timetableap.id} was updated!" if @timetableap.update_attributes(timetableap_params) && !request.xhr?
     if @timetableap.childs.count != 0
       @timetableap.childs.each do |c|
         c.update!( :dateOfEndNav => @timetableap.dateOfEndNav,
@@ -120,8 +123,8 @@ class TimetableapsController < ApplicationController
                    :s4 => @timetableap.s4, 
                    :s5 => @timetableap.s5, 
                    :s6 => @timetableap.s6, 
-                   :way_end => @timetableap.way_end, 
-                   :way_start => @timetableap.way_start)
+                   :airport_finish_id => @timetableap.airport_finish_id, 
+                   :airport_start_id => @timetableap.airport_start_id)
       end
     end
     @flash_message_state_id = 402
@@ -155,5 +158,9 @@ private
 
   def sort_column
     Timetableap.column_names.include?(params[:sort]) ? params[:sort] : "flight_number"
+  end
+
+  def timetableap_params
+    params.require(:timetableap).permit(:aircompany_id, :dateOfEndNav, :dateOfStartNav, :flight_number, :GateEnd, :GateStart, :TermEnd, :TermStart, :timeEnd, :timeStart, :aircraft_id, :e0, :e1, :e2, :e3, :e4, :e5, :e6, :s0, :s1, :s2, :s3, :s4, :s5, :s6, :airport_finish_id, :airport_start_id, :parent_id)
   end
 end

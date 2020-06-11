@@ -8,7 +8,7 @@
 /* Switchery defaults. */
 
 .switchery {
-  background-color: #fff;
+  background-color: #000;
   border: 1px solid #dfdfdf;
   border-radius: 20px;
   cursor: pointer;
@@ -26,7 +26,12 @@
   box-sizing: content-box;
   background-clip: content-box;
 }
-
+element.style {
+  background-color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 0 16px #ddd inset;
+  transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+}
 .switchery > small {
   background: #fff;
   border-radius: 100%;

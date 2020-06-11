@@ -1,0 +1,44 @@
+- model_class = Weather
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing weathers
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Place
+      %th Temp
+      %th Temp min
+      %th Temp max
+      %th Pressure
+      %th Pressure sea level
+      %th Pressure grnd level
+      %th Wind speed
+      %th Wind deg
+      %th Clouds
+      %th Dt
+      %th
+      %th
+      %th
+
+  %tbody
+    - @weathers.each do |weather|
+      %tr
+        %td= weather.place_id
+        %td= weather.temp
+        %td= weather.temp_min
+        %td= weather.temp_max
+        %td= weather.pressure
+        %td= weather.pressure_sea_level
+        %td= weather.pressure_grnd_level
+        %td= weather.wind_speed
+        %td= weather.wind_deg
+        %td= weather.clouds
+        %td= weather.dt
+        %td= link_to 'Show', weather
+        %td= link_to 'Edit', edit_weather_path(weather)
+        %td= link_to 'Destroy', weather, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_weather_path, :class => 'btn btn-primary'
+
