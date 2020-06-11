@@ -1,0 +1,37 @@
+%h1 Statistics in the #{@airport.name_eng unless @airport.name_eng.nil?} for hours
+= render "airports/tablo_links"
+- tt_in = @airport.timetableaps_in.stoday.where(parent_id: nil)
+- tt_out = @airport.timetableaps_out.stoday.where(parent_id: nil)
+
+%canvas#canva{width:1200,height:1200}
+:javascript
+  var canvas = document.getElementById('canva'),
+  ctx = canvas.getContext('2d');
+  ctx.transform(1, 0, 0, -1, 0, 1100);
+  ctx.strokeRect(0,0,1200,1100);
+
+%table.table
+  %thead
+    %tr
+      %th часы
+      %th Отправлено
+      %th Прибыло
+      %th Ссего
+  %tbody
+    - 0.step(23, 01) do |h|
+    - count_out = tt_out.find_all {|ttt| ttt.time_start.in_time_zone(@airport.time_zone).to_datetime.hour == h}.count
+    - count_in = tt_in.find_all {|ttt| ttt.time_finish.in_time_zone(@airport.time_zone).to_datetime.hour  == h}.count
+    - count_all = count_out + count_in
+    - width = 50
+      %tr
+        %td= h
+        %td= count_out
+        %td= count_in
+        %td= count_all
+        :javascript
+          ctx.fillStyle = 'red';
+          ctx.fillRect(#{h*50},0,#{width},#{count_all*10});
+          ctx.font = '30px Arial';
+          ctx.fillText(#{h}, #{h*50}, 0);
+
+

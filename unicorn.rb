@@ -8,10 +8,10 @@ err_log = "#{deploy_to}/log/unicorn.stdout.log"
 
 #rails_env = ENV['RAILS_ENV'] || 'production'
 #worker_processes (rails_env == 'production' ? 3 : 1)
-worker_processes 8
+worker_processes 16
 preload_app true
 timeout 36000
-listen socket_file, :backlog => 1024
+listen socket_file, :backlog => 4096
 pid pid_file
 stderr_path err_log
 stdout_path log_file

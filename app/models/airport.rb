@@ -6,7 +6,7 @@ acts_as_mappable :default_units => :kms,
                    :lat_column_name => :latitude,
                    :lng_column_name => :longitude
   paginates_per 10
-  has_many :terminals
+  has_many :airport_terminals
   has_many :aircompanies, dependent: :destroy
   belongs_to :town
   belongs_to :airport_state
@@ -14,6 +14,8 @@ acts_as_mappable :default_units => :kms,
   has_many :runway_aps, dependent: :destroy
   has_many :timetableaps_in, dependent: :destroy, class_name: "Timetableap", inverse_of: :airport_finish, foreign_key: "airport_finish_id"
   has_many :timetableaps_out, dependent: :destroy, class_name: "Timetableap", inverse_of: :airport_start, foreign_key: "airport_start_id"
+  has_many :distances_in, dependent: :destroy, class_name: "Airport_distance", inverse_of: :airport_finish, foreign_key: "airport_finish_id"
+  has_many :distances_out, dependent: :destroy, class_name: "Airport_distance", inverse_of: :airport_start, foreign_key: "airport_start_id"
   belongs_to :country
   has_many :aphubs
   has_many :weathers, foreign_key: "place_id"

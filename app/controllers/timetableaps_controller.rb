@@ -5,7 +5,7 @@ class TimetableapsController < ApplicationController
   def index
     params[:fc_start] == nil ? @fc_start = Date.current : @fc_start = Date.civil(params[:fc_start][:year].to_i, params[:fc_start][:month].to_i,params[:fc_start][:day].to_i)
     params[:fc_end] == nil ? @fc_end = Date.current : @fc_end = Date.civil(params[:fc_end][:year].to_i, params[:fc_end][:month].to_i,params[:fc_end][:day].to_i)
-    @timetableaps = Timetableap.search_start_ap(params[:start_ap]).search_end_ap(params[:end_ap]).search_al(params[:search_al]).search_date(@fc_start,@fc_end).search_fn(params[:flight_number]).page(params[:page]).per(params[:limit])
+    @timetableaps = Timetableap.search_start_ap(params[:timetableaps_path][:airport_start_id]).search_end_ap(params[:timetableaps_path][:airport_finish_id]).search_al(params[:timetableaps_path][:aircompany_id]).search_date(@fc_start,@fc_end).search_fn(params[:flight_number]).page(params[:page]).per(params[:limit])
     authorize @timetableaps
     respond_with(@timetableaps)
   end

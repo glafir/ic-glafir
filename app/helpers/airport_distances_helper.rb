@@ -1,0 +1,2 @@
+module AirportDistancesHelper
+end

@@ -1,7 +1,13 @@
 #!/bin/sh
-i=0
-while [ $i -lt 138 ]
+i=1
+while [ $i -lt 153 ]
 do
-  i=`expr $i + 1`
-  /usr/bin/curl https://ic.glafir.ru/weathers/weather_grub
+  /usr/bin/curl -k -sS -f --connect-timeout 3 --max-time 10 https://ic.glafir.ru/weathers/weather_grub
+  if [ "$?" -eq "0" ]
+  then
+    i=`expr $i + 1`
+    continue
+  else
+    sleep 1
+  fi
 done

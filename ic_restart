@@ -1,0 +1,2 @@
+#!/bin/sh
+/home/glafir/RoR/ic-glafir/./ic_stop && /home/glafir/RoR/ic-glafir/./ic_start

@@ -56,10 +56,6 @@ class AirportAirTrafficsController < ApplicationController
       @airport_air_traffic = AirportAirTraffic.find(params[:id])
     end
 
-    def _params
-      params.require(:).permit()
-    end
-
     def sort_column
 #      AirportAirTraffic.all.column_names.include?(params[:sort]) ? params[:sort] : "id"
       params[:sort] || "city_rus"

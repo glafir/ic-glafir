@@ -18,7 +18,8 @@ body{
   float: none;
   -webkit-appearance: none;
 }
-@media (max-width: 600px)
+
+@media (max-width: 600px){
     .specifictd {    
         width:70px;  /* adjust to desired wrapping */
         display:table;
@@ -90,5 +91,9 @@ td.tablo {
     white-space: normal !important;
     vertical-align: middle;
     word-wrap: break-word;
+}
+
+.wi {
+        font-size:50px;
 }
 

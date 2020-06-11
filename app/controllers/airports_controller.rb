@@ -1,10 +1,12 @@
 class AirportsController < ApplicationController
 #include ActionView::Helpers::UrlHelper
-before_action :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload]
+before_action :set_airport, only: [:show, :edit, :update, :destroy, :aptt, :tablo, :apload, :ap_stats]
 #layout "without_html", :only => [:tablo]
 autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
 #autocomplete :airport, :city_rus
+#autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
 before_action :check_permissions, only: :autocomplete_airport_city_rus
+
 
 #  def autocomplete_airport_name_rus
 #    iata_code = params[iata_code]
@@ -18,6 +20,10 @@ before_action :check_permissions, only: :autocomplete_airport_city_rus
 #   end
 
   def ap_maps
+    authorize :airport
+  end
+
+  def ap_stats
     authorize :airport
   end
 
@@ -48,6 +54,10 @@ before_action :check_permissions, only: :autocomplete_airport_city_rus
 #    render layout: "application_empty_1"
     authorize :airport
     respond_with(@airports)
+  end
+
+  def weather
+    authorize :airport
   end
 
   def index
@@ -157,13 +167,13 @@ private
       if tt.timeIN < Time.zone.now.utc
         tt.fstatus = "Вылетел"
         tt.bgcolor = "btn-success"
-      elsif tt.timeIN < Time.zone.now.utc+10.minute and tt.timeIN > Time.zone.now.utc
+      elsif tt.timeIN < Time.zone.now.utc+15.minute and tt.timeIN > Time.zone.now.utc
         tt.fstatus = "Выход закрыт"
         tt.bgcolor = "btn-danger"
-      elsif tt.timeIN < Time.zone.now.utc+30.minute and tt.timeIN > Time.zone.now.utc+10.minute
+      elsif tt.timeIN < Time.zone.now.utc+40.minute and tt.timeIN > Time.zone.now.utc+15.minute
         tt.fstatus = "Посадка"
         tt.bgcolor = "btn-warning"
-      elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+30.minute
+      elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+40.minute
         tt.fstatus = "регистрация"
         tt.bgcolor = "btn-info"
       else

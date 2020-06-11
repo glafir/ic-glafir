@@ -1,0 +1,28 @@
+- model_class = AirportDistance
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing airport_distances
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Airport start
+      %th Airport finish
+      %th Distance
+      %th
+      %th
+      %th
+
+  %tbody
+    - @airport_distances.each do |airport_distance|
+      %tr
+        %td= airport_distance.airport_start_id
+        %td= airport_distance.airport_finish_id
+        %td= airport_distance.distance
+        %td= link_to 'Show', airport_distance
+        %td= link_to 'Edit', edit_airport_distance_path(airport_distance)
+        %td= link_to 'Destroy', airport_distance, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_airport_distance_path, :class => 'btn btn-primary'
+

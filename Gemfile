@@ -3,7 +3,7 @@ gem 'rails', '5.0.6'
 gem 'puma', '~> 3.0'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
-gem 'sass-rails', '~> 5.0.1'
+gem 'sass-rails', '~> 5.0.6'
 gem 'coffee-rails', '~> 4.2'
 gem 'uglifier', '>= 2.7.1'
 #gem 'compass-rails','~> 2.0.4'
@@ -30,7 +30,7 @@ gem 'jquery-validation-rails'
 #gem "jquery-tmpl-rails"
 #gem "momentjs-rails"
 #gem 'rails-jquery-autocomplete'
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.10'
 gem 'bcrypt-ruby'
 
 gem 'devise'
@@ -51,7 +51,7 @@ gem 'mousetrap-rails'
 gem 'stamp'
 #gem 'fullcalendar-rails'
 gem "unicorn"
-gem "sunriseset"
+#gem "sunriseset"
 gem 'jquery-tablesorter'
 gem "duration"
 gem "time_diff"

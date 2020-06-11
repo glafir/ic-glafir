@@ -17,7 +17,7 @@
   %p
     %b Base airport:
     = link_to @aircompany.airport.name_rus, @aircompany.airport if @aircompany.airport
-    (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) if @aircompany.airport}
+    (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) unless @aircompany.airport.nil?})
   %p
     %b Общее количество рейсов в день (среднее)
     = @aircompany.timetableaps_count
@@ -39,5 +39,5 @@
         #{link_to aa.airline_name_rus, aa} базируется в а/п #{link_to aa.airport.name_rus, aa.airport} (г.#{link_to aa.airport.city_rus, country_town_path(aa.airport.country,aa.airport.town) unless aa.airport.town.blank?})
         %br
   %p
-    %b hubs:
-    =render "aircompanies/al_hubs"
+    = link_to 'Добавить рейс в данную компанию', new_timetableap_path(@aircompany), class: "btn btn-primary"
+

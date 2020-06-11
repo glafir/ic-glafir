@@ -44,11 +44,14 @@
           = link_to airport.name, airport
           %br
           #{link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?}
-        %td= eval(sprintf("%8.2f", weather_current.temp.to_f - 273.15)) if airport.weathers.count != 0
-        %td= weather_current.clouds if airport.weathers.count != 0
-        %td= weather_current.pressure if airport.weathers.count != 0
-        %td= weather_current.wind_speed if airport.weathers.count != 0
-        %td= weather_current.humidity if airport.weathers.count != 0
+        %td= eval(sprintf("%.f", weather_current.temp.to_f - 273.15)) unless weather_current.nil?
+        %td
+          - unless weather_current.nil?
+            - weather_current.weather_states.each do |w|
+              %i(class="wi wi-owm-#{w.weather_icon_id}")
+        %td= weather_current.pressure unless weather_current.nil?
+        %td= weather_current.wind_speed unless weather_current.nil?
+        %td= weather_current.humidity unless weather_current.nil?
         %td
           %a{:href => "/airports/#{airport.id}/tablo/full/out"} вылет
           %a{:href => "/airports/#{airport.id}/tablo/full/in"} прилёт
@@ -62,7 +65,7 @@
         %td
           - if policy(airport).edit?
             = link_to 'Edit', edit_airport_path(airport)
-          w updated at #{weather_current.updated_at if airport.weathers.count != 0}
+          w updated at #{weather_current.updated_at unless weather_current.nil?}
 :javascript
   $(document).ready(function(){
     $("#tt").tablesorter({

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 include Pundit
 require "active_support/all"
 require "openweather2.rb"
+require "sunriseset"
 protect_from_forgery with: :exception, unless: -> { request.format.json? }
 protect_from_forgery prepend: true
 skip_before_action :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
@@ -49,8 +50,8 @@ rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 Openweather2.configure do |config|
   config.endpoint = 'https://api.openweathermap.org/data/2.5/weather'
-  config.apikey = '1cc9a2a59f851e39dfcfa8e29b62d584'
-# config.apikey = '4b4fbe105fd022ead7bf99839bfadc2b'
+#  config.apikey = '1cc9a2a59f851e39dfcfa8e29b62d584'
+ config.apikey = '4b4fbe105fd022ead7bf99839bfadc2b'
 end
 
 def role?(role)

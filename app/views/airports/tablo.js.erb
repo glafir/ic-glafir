@@ -1,1 +1,2 @@
-#$("#timetableaps").html("<%= escape_javascript(render("tablo")) %>");
+$("#tda").html("<%= escape_javascript(render("airports/tablo")) %>");
+$('.pagination').html('<%= escape_javascript(paginate(@timetableaps, :remote => true).to_s) %>');

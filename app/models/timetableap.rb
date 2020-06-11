@@ -53,7 +53,6 @@ include ActiveModel::Validations
     end
   end
 
-
   def self.stoday
     @wday = Time.zone.now.strftime'%w'.to_s
     where("s#{@wday} = ?",1)

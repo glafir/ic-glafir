@@ -60,10 +60,6 @@ class AirportStatesController < ApplicationController
       AirportState.all.column_names.include?(params[:sort]) ? params[:sort] : "id"
     end
 
-    def _params
-      params.require(:).permit()
-    end
-
     # Only allow a trusted parameter "white list" through.
     def airport_state_params
       params.require(:airport_state).permit(:name)

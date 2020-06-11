@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118201019) do
+ActiveRecord::Schema.define(version: 20190118093659) do
 
   create_table "aircompanies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "airline_name_eng",                                                      null: false
@@ -96,6 +96,14 @@ ActiveRecord::Schema.define(version: 20180118201019) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "airport_distances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "airport_start_id"
+    t.integer  "airport_finish_id"
+    t.float    "distance",          limit: 24
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
   create_table "airport_states", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -147,7 +155,19 @@ ActiveRecord::Schema.define(version: 20180118201019) do
     t.integer  "aircompanies_count"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.index ["airport_air_traffic_id"], name: "airport_air_traffic_id", using: :btree
+    t.index ["airport_state_id"], name: "airport_state_id", using: :btree
+    t.index ["city_eng"], name: "city_eng", type: :fulltext
+    t.index ["city_rus"], name: "city_rus", type: :fulltext
+    t.index ["country_id"], name: "country_id", using: :btree
     t.index ["iata_code"], name: "iata_code", unique: true, using: :btree
+    t.index ["icao_code"], name: "icao_code", using: :btree
+    t.index ["latitude"], name: "latitude", using: :btree
+    t.index ["longitude"], name: "longitude", using: :btree
+    t.index ["name_eng"], name: "name_eng", type: :fulltext
+    t.index ["name_rus"], name: "name_rus", type: :fulltext
+    t.index ["town_id"], name: "town_id", using: :btree
+    t.index ["weather_state"], name: "weather_state", using: :btree
   end
 
   create_table "aphubs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -347,6 +367,8 @@ ActiveRecord::Schema.define(version: 20180118201019) do
     t.index ["flight_number", "aircompany_id"], name: "Flight_Number_aircompany_id", unique: true, using: :btree
     t.index ["id", "parent_id"], name: "id", unique: true, using: :btree
     t.index ["parent_id"], name: "parent_id", using: :btree
+    t.index ["timeEnd"], name: "timeEnd", using: :btree
+    t.index ["timeStart"], name: "timeStart", using: :btree
   end
 
   create_table "timetablesap_flights", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -388,6 +410,8 @@ ActiveRecord::Schema.define(version: 20180118201019) do
     t.index ["country_id"], name: "country_id", using: :btree
     t.index ["country_iso"], name: "country", using: :btree
     t.index ["id"], name: "id", unique: true, using: :btree
+    t.index ["latitude"], name: "latitude", using: :btree
+    t.index ["longitude", "latitude"], name: "longitude", using: :btree
   end
 
   create_table "translations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -454,8 +478,14 @@ ActiveRecord::Schema.define(version: 20180118201019) do
     t.string   "main"
     t.string   "description"
     t.string   "icon"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "weather_icon_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["description"], name: "description", using: :btree
+    t.index ["icon"], name: "icon", using: :btree
+    t.index ["main"], name: "main", using: :btree
+    t.index ["weather_icon_id"], name: "weather_icon_id", using: :btree
+    t.index ["weather_id"], name: "weather_id", using: :btree
   end
 
   create_table "weathers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -473,8 +503,14 @@ ActiveRecord::Schema.define(version: 20180118201019) do
     t.integer  "dt"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.index ["clouds"], name: "clouds", using: :btree
+    t.index ["dt"], name: "dt", using: :btree
+    t.index ["humidity"], name: "humidity", using: :btree
     t.index ["place_id", "temp"], name: "place_id", using: :btree
+    t.index ["pressure"], name: "pressure", using: :btree
     t.index ["temp"], name: "temp", using: :btree
+    t.index ["wind_deg"], name: "wind_deg", using: :btree
+    t.index ["wind_speed"], name: "wind_speed", using: :btree
   end
 
 end

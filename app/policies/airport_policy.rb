@@ -6,6 +6,10 @@ class AirportPolicy < ApplicationPolicy
   def ap_maps?
     readers
   end
+
+  def ap_stats?
+    readers
+  end
   
   def search_ap_circle?
     readers
@@ -16,6 +20,10 @@ class AirportPolicy < ApplicationPolicy
   end
 
   def ap_dist?
+    readers
+  end
+
+  def weather?
     readers
   end
 

@@ -1,7 +1,11 @@
 = simple_form_for :search_tt, :method => 'get' do |f|
   .form-inputs
-    = f.input :town_start, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
-    = f.input :town_finish, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
+    - if  params[:search_tt].nil?
+      = f.input :town_start, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path, 'data-auto-focus' => true, :items => 20
+      = f.input :town_finish, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path, 'data-auto-focus' => true, :items => 20
+    - else
+      = f.input :town_start, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path, 'data-auto-focus' => true, :items => 20, :value => params[:search_tt][:town_start_id]
+      = f.input :town_finish, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path, 'data-auto-focus' => true, :items => 20, :value => params[:search_tt][:town_finish_id]
     = select_tag :aircraft, options_from_collection_for_select(@aircrafts, "id", "aircraft_model", selected: params[:aircraft]), class: 'form-control'
   .form-actions
     = f.button :submit, "Search Flights", class: "btn btn-info"

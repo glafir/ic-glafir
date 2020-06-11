@@ -3,15 +3,16 @@
     %thead
       %th= sortable "name_rus"
       %th= sortable "city_rus"
+      %th Latutyde
       %th CTemp
       %th CCloud
       %th CPressure
-      %th CHumidity
+      %th Weather
       %th Расписание и табло.
       %th Управление
   %tbody
     - @airports.each do |airport|
-      - weather_current = airport.weathers.order("created_at").last
+      - weather_current = airport.weathers.order('created_at').last
       %tr
         - if  airport.name_rus.blank?
           - airport.name = airport.name_eng
@@ -44,10 +45,14 @@
         %td= link_to airport.name, airport, :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => tooltip_maket
         %td
           = link_to city, country_town_path(airport.country, airport.town_id), :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => "#{airport.town.latitude if airport.town}, #{airport.town.longitude if airport.town}" unless airport.town.blank?
-        %td= eval(sprintf("%8.2f", weather_current.temp.to_f - 273.15)) if airport.weathers.count != 0
-        %td= weather_current.clouds if airport.weathers.count != 0
-        %td= weather_current.pressure if airport.weathers.count != 0
-        %td= weather_current.humidity if airport.weathers.count != 0
+        %td= airport.latitude
+        %td= eval(sprintf("%8.2f", weather_current.temp.to_f - 273.15)) unless weather_current.nil?
+        %td= weather_current.clouds unless weather_current.nil?
+        %td= weather_current.pressure unless weather_current.nil?
+        %td
+          - unless weather_current.nil?
+            - weather_current.weather_states.each do |w|
+              %i(class="wi wi-owm-#{w.weather_icon_id} wi-fw")
         %td
           %a{:href => "/airports/#{airport.id}/tablo/full/out"} вылет
           %a{:href => "/airports/#{airport.id}/tablo/full/in"} прилёт
@@ -57,7 +62,7 @@
             = link_to 'Edit', edit_airport_path(airport), class: "btn btn-info"
           - if policy(airport).destroy?
             = link_to 'Destroy', airport, method: :delete, class: "btn btn-danger", data: { confirm: "Вы уверены, что хотите удалить аэропорт "+airport.name_rus+" в городе "+ airport.city_rus}
-          %p Weather update at #{weather_current.created_at if airport.weathers.count != 0}
+          %p Weather update at #{weather_current.created_at unless weather_current.nil?}
 :javascript
   $(document).ready(function(){
     $("#tt").tablesorter({

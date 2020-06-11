@@ -9,7 +9,8 @@
 //= require bootstrap-sprockets
 //= require bootstrap
 //= require bootstrap3-typeahead.min
-//= require bootstrap3-autocomplete-input.min
+//= require bootstrap3-autocomplete-input
+//= require bootstrap3-autocomplete-input-init
 //= require jquery-tablesorter/jquery.tablesorter
 //= require jquery-tablesorter/jquery.tablesorter.widgets
 //= require_tree .

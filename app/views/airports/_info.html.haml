@@ -1,4 +1,5 @@
-- sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f)
+- sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone).to_datetime, @airport.latitude.to_f, @airport.longitude.to_f)
+- sss = SunRiseSet.new(DateTime.now.in_time_zone(@airport.time_zone).to_datetime, @airport.latitude.to_f, @airport.longitude.to_f)
 - airport_wheather = Openweather2.get_weather(lat: @airport.latitude, lon: @airport.longitude)
 %p
   %b Погода сейчас #{airport_wheather.info}, #{airport_wheather.description} &nbsp;
@@ -61,19 +62,32 @@
   = @airport.runway_aps.count
 %p
   %b Восход:
-  = sr = sun_time.sunrise.in_time_zone(@airport.time_zone).to_s(:time) if sun_time.sunrise != nil
-  -#= sr = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunrise.to_s(:time)
+  Солнца:
+  = sr = sss.sunrise.to_s(:time) if sss.sunrise.is_a?(DateTime)
+  Гражданские сумерки:
+  = sss.civilTwilightStart.to_s(:time) if sss.civilTwilightStart.is_a?(DateTime)
+  Навигационные сумерки:
+  = sss.navalTwilightStart.to_s(:time) if sss.navalTwilightStart.is_a?(DateTime)
+  Астрономические сумерки:
+  = sss.astroTwilightStart.to_s(:time) if sss.astroTwilightStart.is_a?(DateTime)
+
 %p
   %b Закат:
-  = ss = sun_time.sunset.in_time_zone(@airport.time_zone).to_s(:time) if sun_time.sunset != nil
-  -#= ss = SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).sunset.to_s(:time)
-%p
-  %b Астрономический полдень:
-  -#= SunRiseSet.new(DateTime.current.in_time_zone(@airport.time_zone), @airport.latitude.to_f, @airport.longitude.to_f).solNoon.to_s(:time)
--#%p
-  %b Долгота дня:
-  - if sr != nil && ss != nil
-    = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff]
+  Солнца:
+  = ss = sss.sunset.to_s(:time) if sss.sunset.is_a?(DateTime)
+  Гражданские сумерки:
+  = sss.civilTwilightEnd.to_s(:time) if sss.civilTwilightEnd.is_a?(DateTime)
+  Навигационные сумерки:
+  = sss.navalTwilightEnd.to_s(:time) if sss.navalTwilightEnd.is_a?(DateTime)
+  Астрономические сумерки:
+  = sss.astroTwilightEnd.to_s(:time) if sss.astroTwilightEnd.is_a?(DateTime)
+- if (sss.sunrise.is_a?(DateTime) && sss.sunset.is_a?(DateTime))
+  %p
+    %b Астрономический полдень:
+    = sss.solNoon.to_s(:time)
+  %p
+    %b Долгота дня:
+    = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff] 
 %p
   %b Расстояние до Ежинска а/п Ежово-1:
   - @ap1 = Airport.find(25832)

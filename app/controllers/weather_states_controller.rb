@@ -66,6 +66,6 @@ class WeatherStatesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def weather_state_params
-      params.require(:weather_state).permit(:weather_id, :main, :description, :icon)
+      params.require(:weather_state).permit(:weather_id, :main, :description, :icon, :weather_icon_id)
     end
 end

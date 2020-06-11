@@ -1,37 +1,61 @@
-- @timetableaps.each do |timetableap|
-  %tr.tablo
-    %td#tt_time
-      = timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
-      %br
-      %em (#{timetableap.timeIN.in_time_zone("Ezhinsk").to_s(:time)})
-    %td
-      %table
-        %tr
-          %td{:width => 90}
-            = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
-          %td
-            .flight-parent
-              = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus
-              = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
-              %p= link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany
-        %tr
-          - timetableap.childs.each do |child|
-            %td
-              = image_tag child.aircompany.avatar.thumb_50 if child.aircompany.avatar?
-            %td
-              .flight-child
-                = link_to child.aircompany.iata_code, child.aircompany, :title => child.aircompany.airline_name_rus
-                = link_to child.flight_number, flight_state_timetableap_path(child), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
-                %p= link_to child.aircompany.airline_name_rus, child.aircompany
-    %td
-      %p#twrus
-        #{timetableap.airport_start.town.city_rus} - #{timetableap.airport_finish.town.city_rus}
-        #aprus (#{link_to timetableap.airport_start.name_rus, timetableap.airport_start}) - (#{link_to timetableap.airport_finish.name_rus, timetableap.airport_finish})
-      #tt_al_info
-        Выполняется самолётом:
-        %strong
-          = (timetableap.parent_id.blank?) ? (link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany) : (link_to timetableap.parent.aircompany.airline_name_rus, timetableap.parent.aircompany)
-        .tt_status= timetableap.fstatus
-    %td#tt_status
-      #div{:class => "btn #{timetableap.bgcolor}"}
-        = timetableap.fstatus
+%table#tt.tablesorter.table.table-striped.table-hover
+  %thead
+    %tr
+      %th
+        %p Time local
+        %p (Time Ezhinsk)
+      %th Flight
+      %th Info
+      %th State
+  %tbody
+    - @timetableaps.each do |timetableap|
+      %tr.tablo
+        %td#tt_time
+          = timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
+          %br
+          %em (#{timetableap.timeIN.in_time_zone("Ezhinsk").to_s(:time)})
+        %td
+          %table
+            %tr
+              %td{:width => 90}
+                = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
+              %td
+                .flight-parent
+                  = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus
+                  = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+                  %p= link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany
+            %tr
+              - timetableap.childs.each do |child|
+                %td
+                  = image_tag child.aircompany.avatar.thumb_50 if child.aircompany.avatar?
+                %td
+                  .flight-child
+                    = link_to child.aircompany.iata_code, child.aircompany, :title => child.aircompany.airline_name_rus
+                    = link_to child.flight_number, flight_state_timetableap_path(child), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+                    %p= link_to child.aircompany.airline_name_rus, child.aircompany
+        %td
+          %p#twrus
+            #{timetableap.airport_start.town.city_rus} - #{timetableap.airport_finish.town.city_rus}
+            #aprus (#{link_to timetableap.airport_start.name_rus, timetableap.airport_start}) - (#{link_to timetableap.airport_finish.name_rus, timetableap.airport_finish})
+          #tt_al_info
+            Выполняется самолётом:
+            %strong
+              = (timetableap.parent_id.blank?) ? (link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany) : (link_to timetableap.parent.aircompany.airline_name_rus, timetableap.parent.aircompany)
+            .tt_status= timetableap.fstatus
+        %td#tt_status
+          #div{:class => "btn #{timetableap.bgcolor}"}
+            = timetableap.fstatus
+
+:javascript
+  $(document).ready(function(){
+  setInterval(foo, 60000);
+  foo();
+  function foo () {
+  $('#tda').load("# #tt", function() {
+    $("#tt").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[0,0]]
+      });
+    });}
+  });
+
