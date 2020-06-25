@@ -1,7 +1,7 @@
 .radius
-  = form_tag '#',:method => :get, remote: false do
+  = form_tag '#',:method => :get, remote: true do
     = label_tag "Радиус в км:"
-    = select_tag :radius, options_for_select([10, 15, 20, 30, 50, 75, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000], selected: params[:radius] || params[:radius]), :onchange => "this.form.submit();"
+    = select_tag :radius, options_for_select([10, 15, 20, 30, 50, 75, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000], selected: params[:radius] || params[:radius]), onchange: 'Rails.fire(this.form, "submit")'
     = label_tag "km"
 
 - if params[:radius] && params[:radius] != ''

@@ -93,7 +93,11 @@ td.tablo {
     word-wrap: break-word;
 }
 
-.wi {
+.wi-table {
         font-size:50px;
+}
+
+.wi-show {
+        font-size:60px;
 }
 
