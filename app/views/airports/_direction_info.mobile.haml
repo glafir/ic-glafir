@@ -1,43 +1,47 @@
-%table
+%table.table.table-hover
   %tr
     %td Авиакомпании
     %td Направления
   %tr
     %td Основные авиакомпании
   - @airport.aircompanies.order("airline_name_eng").each do |aircompany|
-    %tr
-      %td
-        = image_tag aircompany.avatar.thumb_80 if aircompany.avatar?
-        %br
-        = link_to aircompany.airline_name_eng, aircompany
-        (#{link_to aircompany.iata_code, aircompany})
-      %td
-        - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
-          #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
+    - cache aircompany do
+      %tr
+        %td
+          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+          %br
+          = link_to aircompany.airline_name_eng, aircompany
+          (#{link_to aircompany.iata_code, aircompany})
+        %td
+          - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
+            #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
+
   %tr
     %td Авиакомпании-хабы
   - @airport.aphubs.where(hub_type:1).each do |aphub|
-    - aircompany = aphub.aircompany
-    %tr
-      %td
-        = image_tag aircompany.avatar.thumb_80 if aircompany.avatar?
-        %br
-        = link_to aircompany.airline_name_eng, aircompany
-        (#{link_to aircompany.iata_code, aircompany})
-      %td
-        - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
-          #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
+    - cache aphub do
+      - aircompany = aphub.aircompany
+      %tr
+        %td
+          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+          %br
+          = link_to aircompany.airline_name_eng, aircompany
+          (#{link_to aircompany.iata_code, aircompany})
+        %td
+          - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
+            #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
 
   %tr
     %td Авиакомпании-представители (Местные)
   - @airport.aphubs.where(hub_type:0).each do |aphub|
-    - aircompany = aphub.aircompany
-    %tr
-      %td
-        = image_tag aircompany.avatar.thumb_80 if aircompany.avatar?
-        %br
-        = link_to aircompany.airline_name_eng, aircompany
-        (#{link_to aircompany.iata_code, aircompany})
-      %td
-        - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
-          #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
+    - cache aphub do
+      - aircompany = aphub.aircompany
+      %tr
+        %td
+          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+          %br
+          = link_to aircompany.airline_name_eng, aircompany
+          (#{link_to aircompany.iata_code, aircompany})
+        %td
+          - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
+            #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),

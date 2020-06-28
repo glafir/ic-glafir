@@ -1,19 +1,20 @@
-%h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
-= render "airports/tablo_links"
-%ul.nav.nav-tabs
-  %li= link_to 'Об аэропорте', "#panel1", 'data-toggle' => "tab"
-  %li= link_to 'Авиакомпании и направления', "#panel2", 'data-toggle' => "tab"
-  %li= link_to 'Карта направлений', "#panel3", 'data-toggle' => "tab"
-  %li= link_to 'Поиск рейсов', "#panel4", 'data-toggle' => "tab"
-  %li= link_to 'История погоды', "#panel5", 'data-toggle' => "tab"
-.tab-content
-  #panel1.tab-pane.fade.in.active
-    = render "airports/info"
-  #panel2.tab-pane.fade
-    = render "airports/direction_info"
-  #panel3.tab-pane.fade.in
-  #panel4.tab-pane.fade.in
-  #panel5.tab-pane.fade.in
-    = render "airports/weather_history"
+- cache @airport do
+  %h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+  = render "airports/tablo_links"
+  %ul.nav.nav-tabs
+    %li= link_to 'Об аэропорте', "#panel1", 'data-toggle' => "tab"
+    %li= link_to 'Авиакомпании и направления', "#panel2", 'data-toggle' => "tab"
+    %li= link_to 'Карта направлений', "#panel3", 'data-toggle' => "tab"
+    %li= link_to 'Поиск рейсов', "#panel4", 'data-toggle' => "tab"
+    %li= link_to 'История погоды', "#panel5", 'data-toggle' => "tab"
+  .tab-content
+    #panel1.tab-pane.fade.in.active
+      = render "airports/info"
+    #panel2.tab-pane.fade
+      = render "airports/direction_info"
+    #panel3.tab-pane.fade.in
+    #panel4.tab-pane.fade.in
+    #panel5.tab-pane.fade.in
+      = render "airports/weather_history"
 
 = link_to "Редактировать данные", edit_airport_path(@airport), class: "btn btn-primary"

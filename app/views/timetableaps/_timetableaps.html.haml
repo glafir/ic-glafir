@@ -26,7 +26,7 @@
           %span.glyphicon.glyphicon-plane
           = timetableap.flight
         %td
-          = image_tag timetableap.aircompany.avatar.thumb_80 if timetableap.aircompany.avatar?
+          = image_tag timetableap.aircompany.avatar.thumb_80.url if timetableap.aircompany.avatar?
           %p
             = link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany
         %td

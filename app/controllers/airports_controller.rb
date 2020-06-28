@@ -6,7 +6,7 @@ autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city
 #autocomplete :airport, :city_rus
 #autocomplete :airport, :city_rus, :limit => 50, :extra_data => [:name_rus, :city_eng, :iata_code], :display_value => :apdata
 before_action :check_permissions, only: :autocomplete_airport_city_rus
-
+#caches_page :show, :new
 
 #  def autocomplete_airport_name_rus
 #    iata_code = params[iata_code]

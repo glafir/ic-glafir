@@ -3,7 +3,7 @@
     %legend
       Панель для пользователя #{current_user.username}
     .round-image-100
-      = image_tag current_user.avatar.size_100
+      = image_tag current_user.avatar.size_100.url
     %li
       = link_to current_user.username, current_user
       (#{link_to current_user.email, current_user}) - #{current_user.role}

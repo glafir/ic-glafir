@@ -1,6 +1,6 @@
 %h3
   User #{@user.username} (#{@user.email})
-= image_tag @user.avatar.size_300, :class => 'img-circle'
+= image_tag @user.avatar.size_300.url, :class => 'img-circle' unless @user.avatar.size_300.nil?
 %p
   %b Имя:
   = @user.username

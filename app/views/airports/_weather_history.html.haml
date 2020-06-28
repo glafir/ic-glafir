@@ -24,12 +24,13 @@
   - n=0
   %hr
   - weathers.each do |weather|
-    - temp = weather.temp
-    - temp_next = weathers.where("id > ?", weather.id).first.temp unless weathers.where("id > ?", weather.id).first.nil?
-    :javascript
-      var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
-      ctx.moveTo(t, temp);
-      ctx.lineTo(t+1.25, temp_next);
-      ctx.strokeStyle = "#ff0000";
-      ctx.stroke();
-    - t = t+1.25
+    - cache weather do
+      - temp = weather.temp
+      - temp_next = weathers.where("id > ?", weather.id).first.temp unless weathers.where("id > ?", weather.id).first.nil?
+      :javascript
+        var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
+        ctx.moveTo(t, temp);
+        ctx.lineTo(t+1.25, temp_next);
+        ctx.strokeStyle = "#ff0000";
+        ctx.stroke();
+      - t = t+1.25

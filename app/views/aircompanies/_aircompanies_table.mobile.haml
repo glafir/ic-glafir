@@ -18,7 +18,7 @@
     - @aircompanies.each do |aircompany|
       %tr
         %td= aircompany.id
-        %td= image_tag aircompany.avatar.thumb_80 if aircompany.avatar?
+        %td= image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
         %td= aircompany.iata_code
         %td= aircompany.icao_code
         %td= link_to aircompany.airline_name_eng, aircompany
