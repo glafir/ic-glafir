@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # This file contains data derived from the IANA Time Zone Database
-# (http://www.iana.org/time-zones).
+# (https://www.iana.org/time-zones).
 
 module TZInfo
   module Data
@@ -12,11 +12,11 @@ module TZInfo
           
           timezone 'Asia/Magadan' do |tz|
             tz.offset :o0, 36192, 0, :LMT
-            tz.offset :o1, 36000, 0, :MAGT
-            tz.offset :o2, 39600, 0, :MAGT
-            tz.offset :o3, 39600, 3600, :MAGST
-            tz.offset :o4, 36000, 3600, :MAGST
-            tz.offset :o5, 43200, 0, :MAGT
+            tz.offset :o1, 36000, 0, :'+10'
+            tz.offset :o2, 39600, 0, :'+11'
+            tz.offset :o3, 39600, 3600, :'+12'
+            tz.offset :o4, 36000, 3600, :'+11'
+            tz.offset :o5, 43200, 0, :'+12'
             
             tz.transition 1924, 5, :o1, -1441188192, 2181516373, 900
             tz.transition 1930, 6, :o2, -1247565600, 29113777, 12
@@ -43,8 +43,8 @@ module TZInfo
             tz.transition 1991, 3, :o4, 670345200
             tz.transition 1991, 9, :o1, 686073600
             tz.transition 1992, 1, :o2, 695750400
-            tz.transition 1992, 3, :o3, 701784000
-            tz.transition 1992, 9, :o2, 717505200
+            tz.transition 1992, 3, :o3, 701794800
+            tz.transition 1992, 9, :o2, 717519600
             tz.transition 1993, 3, :o3, 733244400
             tz.transition 1993, 9, :o2, 748969200
             tz.transition 1994, 3, :o3, 764694000
@@ -83,7 +83,7 @@ module TZInfo
             tz.transition 2010, 10, :o2, 1288450800
             tz.transition 2011, 3, :o5, 1301151600
             tz.transition 2014, 10, :o1, 1414245600
-            tz.transition 2015, 5, :o2, 1432987200
+            tz.transition 2016, 4, :o2, 1461427200
           end
         end
       end

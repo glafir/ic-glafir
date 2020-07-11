@@ -22,7 +22,7 @@
     %td(colspan=2)
       %h3 Хабы:
   - @aircompany.aphubs.ordered_by_airport_city_rus.where(hub_type:1).each do |aphub|
-    - cache aphub dp
+    - cache aphub do
       %tr
         %td(colspan=2)
           %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
@@ -36,7 +36,7 @@
             %th Рейсы
             %th Направления
           - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
-            - cache tt dp
+            - cache tt do
               %tr
                 %td
                   - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|

@@ -4,4 +4,6 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     = render "layouts/head"
   %body
-    = yield
+    .raw
+      .col-lg-12.col-md-12.col-sm-12.col-xs-12
+        = yield

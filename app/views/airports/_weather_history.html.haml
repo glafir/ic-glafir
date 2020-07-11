@@ -1,13 +1,11 @@
 - weathers = @airport.weathers.where("created_at >= ?", "#{Time.now - 120.hours}").order(:created_at)
-- unless weathers.nil?
+- wcount = weathers.count*1.25
+- unless weathers.count < 3
   .w_info
     %p= tmax = weathers.map { |d| d[:temp] }.max - 273.15
     %p= tmin = weathers.map { |d| d[:temp] }.min - 273.15
     %p= tamp = tmax - tmin
     - ycorr = 0 - tmin
-    %p= ycorr
-    %p= @airport.weathers.order(:id).where("created_at >= ?", "#{Time.now.beginning_of_day - 24.hours}").average(:temp) - 273.15
-    %p= wcount = weathers.count*1.25
   %canvas#weather{width:"#{wcount}",height:"#{tamp*11}"}
   :javascript
     var canvas = document.getElementById('weather'), ctx = canvas.getContext('2d'), tmin = #{tmin};

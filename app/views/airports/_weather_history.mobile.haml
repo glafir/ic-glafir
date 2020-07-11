@@ -1,13 +1,12 @@
 - weathers = @airport.weathers.where("created_at >= ?", "#{Time.now - 120.hours}").order(:created_at)
-- unless weathers.count == 0
+- wcount = weathers.count*1.25
+- unless weathers.nil?
   .w_info
     %p= tmax = weathers.map { |d| d[:temp] }.max - 273.15
     %p= tmin = weathers.map { |d| d[:temp] }.min - 273.15
     %p= tamp = tmax - tmin
     - ycorr = 0 - tmin
     %p= ycorr
-    %p= @airport.weathers.order(:id).where("created_at >= ?", "#{Time.now.beginning_of_day - 24.hours}").average(:temp) - 273.15
-    %p= wcount = weathers.count*1.25
   %canvas#weather{width:"#{wcount}",height:"#{tamp*11}"}
   :javascript
     var canvas = document.getElementById('weather'), ctx = canvas.getContext('2d'), tmin = #{tmin};
@@ -24,12 +23,13 @@
   - n=0
   %hr
   - weathers.each do |weather|
-    - temp = weather.temp
-    - temp_next = weathers.where("id > ?", weather.id).first.temp unless weathers.where("id > ?", weather.id).first.nil?
-    :javascript
-      var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
-      ctx.moveTo(t, temp);
-      ctx.lineTo(t+1.25, temp_next);
-      ctx.strokeStyle = "#ff0000";
-      ctx.stroke();
-    - t = t+1.25
+    - cache weather do
+      - temp = weather.temp
+      - temp_next = weathers.where("id > ?", weather.id).first.temp unless weathers.where("id > ?", weather.id).first.nil?
+      :javascript
+        var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
+        ctx.moveTo(t, temp);
+        ctx.lineTo(t+1.25, temp_next);
+        ctx.strokeStyle = "#ff0000";
+        ctx.stroke();
+      - t = t+1.25

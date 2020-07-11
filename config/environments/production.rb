@@ -3,7 +3,9 @@ Rails.application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
-  config.cache_store = :redis_cache_store
+#  config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 60.minutes }
+  config.cache_store = :redis_cache_store, { expires_in: 60.minutes }
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
