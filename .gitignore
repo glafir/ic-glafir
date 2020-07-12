@@ -27,5 +27,5 @@ Gemfile.lock
 *.bowerrc
 bower.json
 
-/public/assets/
+public/assets/
 /config/database.yml
