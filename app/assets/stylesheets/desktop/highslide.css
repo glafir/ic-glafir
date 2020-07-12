@@ -90,11 +90,6 @@ a.highslide-credits i {
 	text-decoration: none;
 	font-size: 10px;
 }
-a.highslide-credits:hover,
-a.highslide-credits:hover i {
-	color: white;
-	background-color: gray;
-}
 .highslide-move, .highslide-move * {
 	cursor: move;
 }
@@ -285,15 +280,17 @@ html>/**/body .highslide-gallery ul img {
 .highslide-maincontent {
 	display: none;
 }
+/**
 .highslide-html {
 	background-color: #111;
 }
 .mobile .highslide-html {
 	border: 1px solid silver;
 }
+**/
 .highslide-html-content {
 	display: none;
-	width: 400px;
+	width: 600px;
 	padding: 0 5px 5px 5px;
 }
 .highslide-header {

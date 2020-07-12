@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # This file contains data derived from the IANA Time Zone Database
-# (http://www.iana.org/time-zones).
+# (https://www.iana.org/time-zones).
 
 module TZInfo
   module Data
@@ -12,10 +12,10 @@ module TZInfo
           
           timezone 'Asia/Kamchatka' do |tz|
             tz.offset :o0, 38076, 0, :LMT
-            tz.offset :o1, 39600, 0, :PETT
-            tz.offset :o2, 43200, 0, :PETT
-            tz.offset :o3, 43200, 3600, :PETST
-            tz.offset :o4, 39600, 3600, :PETST
+            tz.offset :o1, 39600, 0, :'+11'
+            tz.offset :o2, 43200, 0, :'+12'
+            tz.offset :o3, 43200, 3600, :'+13'
+            tz.offset :o4, 39600, 3600, :'+12'
             
             tz.transition 1922, 11, :o1, -1487759676, 17448250027, 7200
             tz.transition 1930, 6, :o2, -1247569200, 58227553, 24
@@ -42,8 +42,8 @@ module TZInfo
             tz.transition 1991, 3, :o4, 670341600
             tz.transition 1991, 9, :o1, 686070000
             tz.transition 1992, 1, :o2, 695746800
-            tz.transition 1992, 3, :o3, 701780400
-            tz.transition 1992, 9, :o2, 717501600
+            tz.transition 1992, 3, :o3, 701791200
+            tz.transition 1992, 9, :o2, 717516000
             tz.transition 1993, 3, :o3, 733240800
             tz.transition 1993, 9, :o2, 748965600
             tz.transition 1994, 3, :o3, 764690400

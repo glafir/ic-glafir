@@ -1,2 +1,2 @@
 .al_logo.al_info_section{:id => "al_logo al_info_section"}
-  = image_tag @aircompany.avatar.size_400, :class => 'img-circle' if @aircompany.avatar?
+  = image_tag @aircompany.avatar.size_400.url, :class => 'img-circle' if @aircompany.avatar?

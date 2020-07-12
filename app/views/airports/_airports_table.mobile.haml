@@ -48,7 +48,7 @@
         %td
           - unless weather_current.nil?
             - weather_current.weather_states.each do |w|
-              %i(class="wi wi-owm-#{w.weather_icon_id}")
+              %i(class="wi wi-table wi-owm-#{w.weather_icon_id}")
         %td= weather_current.pressure unless weather_current.nil?
         %td= weather_current.wind_speed unless weather_current.nil?
         %td= weather_current.humidity unless weather_current.nil?

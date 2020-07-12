@@ -147,6 +147,8 @@ class TimetableapsController < ApplicationController
       @timetableap.timeEnd = @timetableap.timeEnd.change( :year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
       @timetableap.timeStart = @timetableap.timeStart.change( :year=>(Time.zone.now - 1.day).year, :month=>(Time.zone.now - 1.day).month, :day=>(Time.zone.now - 1.day).day)
     end
+    @wheather_airport_start = Openweather2.get_weather(lat: @timetableap.airport_start.latitude, lon: @timetableap.airport_start.longitude)
+    @wheather_airport_finish = Openweather2.get_weather(lat: @timetableap.airport_finish.latitude, lon: @timetableap.airport_finish.longitude)
     authorize @timetableap
     respond_with(@timetableap)
   end

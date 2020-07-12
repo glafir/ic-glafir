@@ -5,14 +5,16 @@
       %table.child
         %tr
           %td{:width => 52}
-            = image_tag timetableap.aircompany.avatar.thumb_50 if timetableap.aircompany.avatar?
+            - if timetableap.aircompany.avatar.thumb_50.url
+              = image_tag timetableap.aircompany.avatar.thumb_50.url
           %td.flight-parent
             = link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus
             = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap)
         - timetableap.childs.each do |child|
           %tr
             %td
-              = image_tag child.aircompany.avatar.thumb_50 if timetableap.aircompany.avatar?
+              - if child.aircompany.avatar.thumb_50.url
+                = image_tag child.aircompany.avatar.thumb_50.url
             %td.flight-child
               = link_to child.aircompany.iata_code, child.aircompany, title => child.aircompany.airline_name_rus
               = link_to child.flight_number, flight_state_timetableap_path(child)

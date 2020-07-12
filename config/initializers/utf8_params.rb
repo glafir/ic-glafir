@@ -17,6 +17,6 @@ class ActionController::Base
     end
     traverse.call(params, force_encoding)
   end
-  before_filter :force_utf8_params
+  before_action :force_utf8_params
   
 end

@@ -5,13 +5,19 @@ Rails.application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-#  config.cache_store = :dalli_store
+#  config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 60.minutes }
+  config.cache_store = :redis_cache_store, { expires_in: 60.minutes }
+
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = true
+  config.action_dispatch.rack_cache = {
+    metastore:   'redis://localhost:6379/1/metastore',
+    entitystore: 'redis://localhost:6379/1/entitystore'
+  }
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -35,7 +41,6 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-  config.cache_store = :dalli_store
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

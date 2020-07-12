@@ -120,6 +120,10 @@ body {
 .dropdown-submenu.pull-left:hover>a:after{
         border-right-color:#555;
 }
-.wi {
+.wi-table {
 	font-size:50px;
+}
+
+.wi-show {
+        font-size:70px;
 }

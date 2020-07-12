@@ -1,11 +1,3 @@
-/** 
- * Name:    Highslide JS
- * Version: 4.1.13 (2011-10-06)
- * Config:  default +inline +ajax +iframe +flash
- * Author:  Torstein Hønsi
- * Support: www.highslide.com/support
- * License: www.highslide.com/#license
- */
 if (!hs) { var hs = {
 // Language strings
 lang : {
@@ -14,7 +6,7 @@ lang : {
 	loadingTitle : 'Click to cancel',
 	focusTitle : 'Click to bring to front',
 	fullExpandTitle : 'Expand to actual size (f)',
-	creditsText : 'Powered by <i>ICE</i>',
+	creditsText : 'Powered by <i>Glafir</i>',
 	creditsTitle : 'Go to the ICE homepage',
 	previousText : 'Previous',
 	nextText : 'Next', 
@@ -36,8 +28,8 @@ lang : {
 graphicsDir : '/images/highslide/',
 expandCursor : 'zoomin.cur', // null disables
 restoreCursor : 'zoomout.cur', // null disables
-expandDuration : 250, // milliseconds
-restoreDuration : 250,
+expandDuration : 400, // milliseconds
+restoreDuration : 400,
 marginLeft : 15,
 marginRight : 15,
 marginTop : 15,
@@ -52,7 +44,7 @@ padToMinWidth : false, // pad the popup width to make room for wide caption
 fullExpandPosition : 'bottom right',
 fullExpandOpacity : 1,
 showCredits : true, // you can set this to false if you want
-creditsHref : 'http://bagche.ru',
+creditsHref : 'http://ic.glafir.ru',
 creditsTarget : '_self',
 enableKeyListener : false,
 openerTagNames : ['a'], // Add more to allow slideshow indexing
@@ -60,11 +52,11 @@ openerTagNames : ['a'], // Add more to allow slideshow indexing
 allowWidthReduction : false,
 allowHeightReduction : true,
 preserveContent : true, // Preserve changes made to the content and position of HTML popups.
-objectLoadTime : 'before', // Load iframes 'before' or 'after' expansion.
+objectLoadTime : 'after', // Load iframes 'before' or 'after' expansion.
 cacheAjax : false, // Cache ajax popups for instant display. Can be overridden for each popup.
 dragByHeading: true,
-minWidth: 200,
-minHeight: 200,
+minWidth: 300,
+minHeight: 300,
 allowSizeReduction: true, // allow the image to reduce to fit client size. If false, this overrides minWidth and minHeight
 outlineType : 'drop-shadow', // set null to disable outlines
 skin : {

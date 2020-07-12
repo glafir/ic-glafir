@@ -10,22 +10,24 @@
             %h6 (#{link_to @aircompany.airport.name_rus, @aircompany.airport})
             #{@aircompany.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
         - @aircompany.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id: @aircompany.id).each do |tt|
-          %tr
-            %td
-              - @aircompany.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
-                #{fl.flight_number},
-            %td
-              #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish})
+          - cache tt do
+            %tr
+              %td
+                - @aircompany.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
+                  #{fl.flight_number},
+              %td
+                #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish})
 
   %tr
     %td(colspan=2)
       %h3 Хабы:
   - @aircompany.aphubs.ordered_by_airport_city_rus.where(hub_type:1).each do |aphub|
-    %tr
-      %td(colspan=2)
-        %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
-        %h6= link_to aphub.airport.name_rus, aphub.airport
-        #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
+    - cache aphub do
+      %tr
+        %td(colspan=2)
+          %h4= link_to aphub.airport.town.city_rus, aphub.airport.town
+          %h6= link_to aphub.airport.name_rus, aphub.airport
+          #{aphub.airport.timetableaps_out.where(aircompany_id:@aircompany.id).order("airport_finish_id").uniq.pluck(:airport_finish_id).count} направлений
 
     %tr
       %td
@@ -34,12 +36,13 @@
             %th Рейсы
             %th Направления
           - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
-            %tr
-              %td
-                - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
-                  #{fl.flight_number},
-              %td
-                #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
+            - cache tt do
+              %tr
+                %td
+                  - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
+                    #{fl.flight_number},
+                %td
+                  #{link_to tt.airport_finish.town.city_rus, tt.airport_finish.town} (#{link_to tt.airport_finish.name_rus, tt.airport_finish}),
   %tr
     %td(colspan=2)
       %h3 Представительства (местные)

@@ -11,7 +11,7 @@ module IcApp
   class Application < Rails::Application
     config.active_record.time_zone_aware_types = [:datetime]
 #    config.autoload_paths += %W(#{config.root}/lib)
-    #before_filter :check_aut, :except => [:login, :logout]
+    #before_action :check_aut, :except => [:login, :logout]
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -60,7 +60,6 @@ module IcApp
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.active_record.raise_in_transactional_callbacks = true
     config.middleware.use Rack::Attack
 
     config.middleware.insert_before 0, Rack::Cors, :debug => true, :logger => (-> { Rails.logger }) do

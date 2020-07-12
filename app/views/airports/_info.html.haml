@@ -1,104 +1,113 @@
 - sun_time = SunTime.new(DateTime.current.in_time_zone(@airport.time_zone).to_datetime, @airport.latitude.to_f, @airport.longitude.to_f)
 - sss = SunRiseSet.new(DateTime.now.in_time_zone(@airport.time_zone).to_datetime, @airport.latitude.to_f, @airport.longitude.to_f)
 - airport_wheather = Openweather2.get_weather(lat: @airport.latitude, lon: @airport.longitude)
-%p
-  %b Погода сейчас #{airport_wheather.info}, #{airport_wheather.description} &nbsp;
-.wheather
-  %p
-    %b Температура
-    Текущая #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
-    Максимальная #{sprintf("%.2f", airport_wheather.max_temperature - 273.15).to_f}C  &nbsp;  
-    Минимальная  #{sprintf("%.2f", airport_wheather.min_temperature - 273.15).to_f}C &nbsp;
-  %p
-    %b Облачность
-    #{airport_wheather.clouds} &nbsp;
-  %p
-    %b Видимость
-    #{airport_wheather.visibility}м &nbsp;
-  %p
-    %b Влажность
-    #{airport_wheather.humidity}% &nbsp;
-  %p
-    %b Давление
-    #{airport_wheather.pressure}ГПа (мбар) &nbsp;
-  %p
-    %b Ветер
-    Скорость #{airport_wheather.wind_speed}м/с &nbsp;, Направление #{airport_wheather.wind_angle} &nbsp;
-  %p
-    %b Последнее время измерение данных 
-    #{airport_wheather.dt} &nbsp;
-%p
-  %b IATA/IATA:
-  #{@airport.iata_code}/#{@airport.icao_code}
-%p
-  %b Количество рейсов в день / самолётов в день:
-  - @aptt_in = @airport.timetableaps_in.stoday.where('parent_id is NULL').count
-  - @aptt_out = @airport.timetableaps_out.etoday.where(parent_id: nil).count
-  - @aptt_all = @aptt_in + @aptt_out or 0
-  #{@aptt_all} / #{@aptt_out}
-%p
-  %b Кол-во направлений:
-  = @airport.timetableaps_out.order(:airport_finish_id).uniq.pluck(:airport_finish_id).count
-%p
-  %b из них международных:
--#-  = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_finish_id))).count
-%p
-  %b Статус:
-  = @airport.airport_state.name if @airport.airport_state
-%p
-  %b Статус по пассажирообороту:
-  = @airport.airport_air_traffic.name if @airport.airport_air_traffic
-%p
-  %b Координаты:
-  #{@airport.latitude} #{@airport.longitude}
-%p
-  %b Ближайший город:
-  #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?} (г. #{link_to @airport.town.accent_city, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
-%p
-  %b Местное время:
-  = DateTime.current.in_time_zone(@airport.time_zone)
-%p
-  %b Количество полос:
-  = @airport.runway_aps.count
-%p
-  %b Восход:
-  Солнца:
-  = sr = sss.sunrise.to_s(:time) if sss.sunrise.is_a?(DateTime)
-  Гражданские сумерки:
-  = sss.civilTwilightStart.to_s(:time) if sss.civilTwilightStart.is_a?(DateTime)
-  Навигационные сумерки:
-  = sss.navalTwilightStart.to_s(:time) if sss.navalTwilightStart.is_a?(DateTime)
-  Астрономические сумерки:
-  = sss.astroTwilightStart.to_s(:time) if sss.astroTwilightStart.is_a?(DateTime)
+.field-form
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12
+    %p
+      %b IATA/IATA:
+      #{@airport.iata_code}/#{@airport.icao_code}
+    %p
+      %b Количество рейсов в день / самолётов в день:
+      - @aptt_in = @airport.timetableaps_in.stoday.where('parent_id is NULL').count
+      - @aptt_out = @airport.timetableaps_out.etoday.where(parent_id: nil).count
+      - @aptt_all = @aptt_in + @aptt_out or 0
+      #{@aptt_all} / #{@aptt_out}
+    %p
+      %b Кол-во направлений:
+      = @airport.timetableaps_out.order(:airport_finish_id).uniq.pluck(:airport_finish_id).count
+    %p
+      %b из них международных:
+    -#-  = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_finish_id))).count
+    %p
+      %b Статус:
+      = @airport.airport_state.name if @airport.airport_state
+    %p
+      %b Статус по пассажирообороту:
+      = @airport.airport_air_traffic.name if @airport.airport_air_traffic
+    %p
+      %b Координаты:
+      #{@airport.latitude} #{@airport.longitude}
+    %p
+      %b Ближайший город:
+      #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?} (г. #{link_to @airport.town.accent_city, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+    %p
+      %b Местное время:
+      = DateTime.current.in_time_zone(@airport.time_zone)
+    %p
+      %b Количество полос:
+      = @airport.runway_aps.count
+    %p
+      %b Восход Солнца:
+      = sr = sss.sunrise.to_s(:time) if sss.sunrise.is_a?(DateTime)
+      Гражданские сумерки:
+      = sss.civilTwilightStart.to_s(:time) if sss.civilTwilightStart.is_a?(DateTime)
+      Навигационные сумерки:
+      = sss.navalTwilightStart.to_s(:time) if sss.navalTwilightStart.is_a?(DateTime)
+      Астрономические сумерки:
+      = sss.astroTwilightStart.to_s(:time) if sss.astroTwilightStart.is_a?(DateTime)
+    %p
+      %b Закат Солнца:
+      = ss = sss.sunset.to_s(:time) if sss.sunset.is_a?(DateTime)
+      Гражданские сумерки:
+      = sss.civilTwilightEnd.to_s(:time) if sss.civilTwilightEnd.is_a?(DateTime)
+      Навигационные сумерки:
+      = sss.navalTwilightEnd.to_s(:time) if sss.navalTwilightEnd.is_a?(DateTime)
+      Астрономические сумерки:
+      = sss.astroTwilightEnd.to_s(:time) if sss.astroTwilightEnd.is_a?(DateTime)
+    - if (sss.sunrise.is_a?(DateTime) && sss.sunset.is_a?(DateTime))
+      %p
+        %b Астрономический полдень:
+        = sss.solNoon.to_s(:time)
+      %p
+        %b Долгота дня:
+        = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff] 
+    %p
+      %b Расстояние до Ежинска а/п Ежово-1:
+      - @ap1 = Airport.find(25832)
+      - @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+      - @p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
+      - @dist = @p1.distance_to(@p2)
+      - @fbear = @p2.bearing_to(@p1)
+      = @dist
+      km
+    %b Азимут Ежинска а/п Ежово-1:
+    %p
+      = @fbear
+    %b Мрашрутная карта аэропрта #{@airport.name_rus} : 
+    = form_tag '#',:method => :get, :name => "switch_radius", remote: true do
+      = label_tag "Радиус в км:"
+      = select_tag :radius, options_for_select([10, 25, 50, 75, 100, 150, 200, 300, 400 ,500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000, 3500, 4000, 5000], selected: params[:radius] || params[:radius]), :onchange => "this.form.submit();"
+      = label_tag "km"
+    #radius= render "airports/map"
 
-%p
-  %b Закат:
-  Солнца:
-  = ss = sss.sunset.to_s(:time) if sss.sunset.is_a?(DateTime)
-  Гражданские сумерки:
-  = sss.civilTwilightEnd.to_s(:time) if sss.civilTwilightEnd.is_a?(DateTime)
-  Навигационные сумерки:
-  = sss.navalTwilightEnd.to_s(:time) if sss.navalTwilightEnd.is_a?(DateTime)
-  Астрономические сумерки:
-  = sss.astroTwilightEnd.to_s(:time) if sss.astroTwilightEnd.is_a?(DateTime)
-- if (sss.sunrise.is_a?(DateTime) && sss.sunset.is_a?(DateTime))
-  %p
-    %b Астрономический полдень:
-    = sss.solNoon.to_s(:time)
-  %p
-    %b Долгота дня:
-    = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff] 
-%p
-  %b Расстояние до Ежинска а/п Ежово-1:
-  - @ap1 = Airport.find(25832)
-  - @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-  - @p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
-  - @dist = @p1.distance_to(@p2)
-  - @fbear = @p2.bearing_to(@p1)
-  = @dist
-  km
-%b Азимут Ежинска а/п Ежово-1:
-%p
-  = @fbear
-%b Мрашрутная карта аэропрта #{@airport.name_rus} : 
-%p= render "airports/map"
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12
+    %p
+      %b Погода сейчас #{airport_wheather.info}, #{airport_wheather.description} &nbsp;
+    .wheather
+      .wi-show
+        - airport_wheather.main.each do |w|
+          %i(class="wi wi-owm-#{w['id']} wi-fw")
+          #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+      %p
+        %b Температура
+        Текущая #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+        Максимальная #{sprintf("%.2f", airport_wheather.max_temperature - 273.15).to_f}C  &nbsp;
+        Минимальная  #{sprintf("%.2f", airport_wheather.min_temperature - 273.15).to_f}C &nbsp;
+      %p
+        %b Облачность
+        #{airport_wheather.clouds} &nbsp;
+      %p
+        %b Видимость
+        #{airport_wheather.visibility}м &nbsp;
+      %p
+        %b Влажность
+        #{airport_wheather.humidity}% &nbsp;
+      %p
+        %b Давление
+        #{airport_wheather.pressure}ГПа (мбар) &nbsp;
+      %p
+        %b Ветер
+        Скорость #{airport_wheather.wind_speed}м/с &nbsp;, Направление #{airport_wheather.wind_angle} &nbsp;
+      %p
+        %b Последнее время измерение данных
+        #{DateTime.strptime(airport_wheather.dt.to_s,'%s')} &nbsp;
