@@ -157,6 +157,7 @@ IcApp::Application.routes.draw do
       get "aptt"
       get "apload" => "airports#apload"
       get "apload/:apload" => "airports#apload"
+      post "" => "airports#show"
     end
   end
 

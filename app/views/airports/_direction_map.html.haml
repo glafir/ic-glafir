@@ -1,0 +1,6 @@
+%h2 Мрашрутная карта аэропрта #{@airport.name_rus} :
+= form_tag '#', :id => "switch_radius", :method => :post, remote: true do
+  = label_tag "Радиус в км:"
+  = select_tag :radius, options_for_select([10, 25, 50, 75, 100, 150, 200, 300, 400 ,500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000, 3500, 4000, 5000]), :onchange => "$('#switch_radius').submit();"
+  = label_tag "km"
+#airport_map= render "airports/map"

@@ -73,12 +73,6 @@
     %b Азимут Ежинска а/п Ежово-1:
     %p
       = @fbear
-    %b Мрашрутная карта аэропрта #{@airport.name_rus} : 
-    = form_tag '#',:method => :get, :name => "switch_radius", remote: true do
-      = label_tag "Радиус в км:"
-      = select_tag :radius, options_for_select([10, 25, 50, 75, 100, 150, 200, 300, 400 ,500, 600, 800, 1000, 1200, 1400, 1600, 1800,  2000, 2500, 3000, 3500, 4000, 5000], selected: params[:radius] || params[:radius]), :onchange => "this.form.submit();"
-      = label_tag "km"
-    #radius= render "airports/map"
 
   .col-lg-6.col-md-6.col-sm-6.col-xs-12
     %p
