@@ -1,12 +1,8 @@
 %table.table
   %thead
     %tr
-      %th= sortable "id"
-      %th Label
-      %th= sortable "iata_code"
-      %th= sortable "icao_code"
-      %th= sortable "airline_name_eng"
-      %th= sortable "airline_name_rus"
+      %th Label & IATA/ICAO code
+      %th Airline name
       %th= sortable "airport_id"
       %th= sortable "timetableaps_count"
       %th= sortable "per_cent_tt"
@@ -17,12 +13,13 @@
   %tbody
     - @aircompanies.each do |aircompany|
       %tr
-        %td= aircompany.id
-        %td= image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
-        %td= aircompany.iata_code
-        %td= aircompany.icao_code
-        %td= link_to aircompany.airline_name_eng, aircompany
-        %td= link_to aircompany.airline_name_rus, aircompany if aircompany.airline_name_rus
+        %td
+          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar? 
+          = aircompany.iata_code
+          = aircompany.icao_code
+        %td
+          = link_to aircompany.airline_name_eng, aircompany
+          = link_to aircompany.airline_name_rus, aircompany if aircompany.airline_name_rus
         %td
           = link_to aircompany.airport.name_rus, aircompany.airport if aircompany.airport
           (г.#{link_to aircompany.airport.town.city_rus,  country_town_path(aircompany.country, aircompany.airport.town_id) if aircompany.airport && aircompany.airport.town})

@@ -1,6 +1,6 @@
 class Timetableap < ActiveRecord::Base
 include ActiveModel::Validations
-  paginates_per 100
+  paginates_per 150
   has_many :timetableap_subs
   belongs_to :aircompany, inverse_of: :timetableaps, :counter_cache => true
   belongs_to :aircraft

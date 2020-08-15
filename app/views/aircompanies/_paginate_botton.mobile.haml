@@ -1,4 +1,4 @@
 #apple_pagination.apple_pagination
   .page_info
     = page_entries_info @aircompanies
-  = paginate @aircompanies, :theme => 'mobile'
+  = paginate @aircompanies, :theme => 'mobile', :remote => true

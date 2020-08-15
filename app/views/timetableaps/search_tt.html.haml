@@ -10,15 +10,9 @@
   .form-actions
     = f.button :submit, "Search Flights", class: "btn btn-info"
 -unless params['search_tt'].nil?
-  -unless params['search_tt']['town_start_id'].nil? && params['search_tt']['town_finish_id'].nil?
+  -unless params['search_tt']['town_start_id'].nil? && params['search_tt']['town_finish_id'].nil? || @timetableaps.nil?
     %a{:class => "btn btn-info", :href => "/search_tt?utf8=%E2%9C%93&search_tt%5Btown_start_id%5D=#{params['search_tt']['town_finish_id']}&search_tt%5Btown_start%5D=#{params['search_tt']['town_finish']}&search_tt%5Btown_finish_id%5D=#{params['search_tt']['town_start_id']}&search_tt%5Btown_finish%5D=#{params['search_tt']['town_start']}&aircraft=#{params['aircraft']}&commit=Search+Flights"} Обратные рейсы
     = render "airports/ap_dist_result"
-    %p
-      %b Общее количество рейсов на маршруте:
-      = @timetableaps.count
-    %p
-      %b Количество авиакомпаний на маршруте:
-      = @timetableaps.order(:aircompany_id).uniq.pluck(:aircompany_id).count
-      
+    = render "timetableaps/filters"
     #timetableaps= render "timetableaps/timetableaps"
 

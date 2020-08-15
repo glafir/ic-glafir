@@ -1,4 +1,9 @@
-:plain
-  $("#airports").html("#{escape_javascript(render("airports/airports"))}");
-  $('.pagination').html('#{escape_javascript(paginate(@airports, :remote => true).to_s)}');
-= render :file => Rails.root + 'app/assets/javascripts/tooltip.js'
+-if is_mobile_device?
+  :plain
+    $("#airports").html("#{escape_javascript(render("airports/airports.mobile"))}");
+    $('.pagination').html('#{escape_javascript(paginate(@airports, :theme => 'mobile' , :remote => true).to_s)}');
+-else
+  :plain
+    $("#airports").html("#{escape_javascript(render("airports/airports"))}");
+    $('.pagination').html('#{escape_javascript(paginate(@airports, :theme => 'desktop', :remote => true).to_s)}');
+  = render :file => Rails.root + 'app/assets/javascripts/tooltip.js'

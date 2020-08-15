@@ -1,5 +1,5 @@
 - cache @airport do
-  %h2 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+  %h1 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
   = render "airports/tablo_links"
   %ul.nav.nav-tabs
     %li= link_to 'Об аэропорте', "#panel1", 'data-toggle' => "tab"
@@ -13,6 +13,7 @@
     #panel2.tab-pane.fade
       = render "airports/direction_info"
     #panel3.tab-pane.fade.in
+      = render "direction_map"
     #panel4.tab-pane.fade.in
     #panel5.tab-pane.fade.in
       = render "airports/weather_history"

@@ -1,4 +1,0 @@
-:plain
-  $("#airports").html("#{escape_javascript(render("airports/airports"))}");
-  $('.pagination').html('#{escape_javascript(paginate(@airports, :remote => true).to_s)}');
-= render :file => Rails.root + 'app/assets/javascripts/tooltip.js'

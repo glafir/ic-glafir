@@ -5,6 +5,13 @@
       sortList:[[3,0]]
      });
   });
+%p
+  %b Общее количество рейсов на маршруте:
+  = @timetableaps.count
+%p
+  %b Количество авиакомпаний на маршруте:
+  = @timetableaps.distinct.pluck(:aircompany_id).count
+
 = render "timetableaps/paginate_top"
 %table#tt.tt.table-striped.table-hover.table-condensed
   %thead

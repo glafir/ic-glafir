@@ -1,5 +1,5 @@
 .per_page.col-xs-10
-  %label{class: 'col-xs-3 control-label'} Отобразить на странице:
+  %label.col-xs-3.control-label Отобразить на странице:
   .col-xs-2
     = select_tag :limit, options_for_select([10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "this.form.submit();", class: 'form-control'
-  %label{class: 'col-xs-2 control-label'} элементов.
+  %label.col-xs-2.control-label элементов.
