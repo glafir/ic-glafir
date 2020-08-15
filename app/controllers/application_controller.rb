@@ -11,7 +11,7 @@ skip_before_action :verify_authenticity_token, if: :json_request?
 #after_action :logging, only: [:create, :update, :destroy]
 require "calendar_helper.rb"
 require "tzinfo/data"
-#require 'i18n_timezones'
+require 'i18n_timezones'
 require 'devise_traceable'
 #require 'suncalc'
 before_action :store_current_location, :unless => :devise_controller?
@@ -26,8 +26,8 @@ before_action :force_utf8_params
 before_action  :set_p3p
 before_action :set_locale
 #rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-#before_action :set_mobile_format
-has_mobile_fu
+before_action :set_mobile_format
+has_mobile_fu false
 #before_action :force_mobile_format
 before_action :set_timezone 
 before_action :set_country
@@ -154,13 +154,16 @@ end
 
   def set_mobile_format
     if is_mobile_device?
-#      render layout: "layouts/application.mobile"
-      is_device?("iphone") ? request.format = :html : super
-      if (devise_controller? && action_name == 'create' && request.method == ('POST'))
-        request.format = :html
-      else
+      unless request.format.js? || request.format.json?
         request.format = :mobile
       end
+#      render layout: "layouts/application.mobile"
+#      is_device?("iphone") ? request.format = :html : super
+#      if (devise_controller? && action_name == 'create' && request.method == ('POST'))
+#        request.format = :html
+#      else
+#        request.format = :mobile
+#      end
     end
   end
 

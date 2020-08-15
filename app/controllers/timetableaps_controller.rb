@@ -12,32 +12,47 @@ class TimetableapsController < ApplicationController
 
   def search_tt
     authorize :timetableap
-    @ap1 = Town.find(params['search_tt']['town_start_id']).airports.first unless params['search_tt'].nil?
-    @ap2 = Town.find(params['search_tt']['town_finish_id']).airports.first unless params['search_tt'].nil?
-    @dist = Airport.ap_distance(@ap1,@ap2)
     @aircrafts = Aircraft.all
-    unless params['search_tt'].nil?
-      if params['search_tt']['town_start_id'].nil? && params['search_tt']['town_finish_id'].nil?
-        @timetableaps = Timetableap.page(params[:page]).per(params[:limit])
+    if params['search_tt'].nil?
+      if params['filter_tt'].nil?
         render action: 'search_tt'
       else
-        @timetableaps_all = Timetableap.where(:airport_start_id => Airport.select(:id).where(:town_id => (params['search_tt']['town_start_id']))).where(:airport_finish_id => Airport.select(:id).where(:town_id => (params['search_tt']['town_finish_id'])))
-        @timetableaps = @timetableaps_all.page(params[:page]).per(params[:limit])
-        @airports1 = Airport.where(town_id: params['search_tt']['town_start_id']).order(:name_rus)
-        @airports2 = Airport.where(town_id: params['search_tt']['town_finish_id']).order(:name_rus)
-        params['aircraft'].nil? ? params['aircraft'] == 18 : @aircraft = Aircraft.find(params['aircraft'])
-        if @aircraft.aircraft_wake_category_id = 1
-          @corr_time = 1000
-        end
-        if @aircraft.aircraft_wake_category_id = 2
-          @corr_time = 1300
-        end
-        if @aircraft.aircraft_wake_category_id = 3
-          @corr_time = 1900
-        end
-        @dist_time = (@dist[0]*1000) / (@aircraft.aircraft_maxspeed * 0.97 / 3.6) + @corr_time
+        @start = params['filter_tt']['town_start_id']
+        @finish = params['filter_tt']['town_finish_id']
+        @start_ap = params['filter_tt']['start_ap']
+        @finish_ap = params['filter_tt']['finish_ap']
       end
     end
+    if params['search_tt']
+    if params['filter_tt'].nil?
+      @start = params['search_tt']['town_start_id']
+      @finish = params['search_tt']['town_finish_id']
+      @start_ap = ''
+      @finish_ap = ''
+    end
+    if params['search_tt']['town_start_id'] == '' || params['search_tt']['town_finish_id'] == ''
+      render action: 'search_tt'
+    else
+      @ap1 = Town.find(params['search_tt']['town_start_id']).airports.first
+      @ap2 = Town.find(params['search_tt']['town_finish_id']).airports.first
+      @dist = Airport.ap_distance(@ap1,@ap2)
+      @airports1 = Airport.where(town_id: params['search_tt']['town_start_id']).order(:name_rus)
+      @airports2 = Airport.where(town_id: params['search_tt']['town_finish_id']).order(:name_rus)
+      params['aircraft'].nil? ? params['aircraft'] == 18 : @aircraft = Aircraft.find(params['aircraft'])
+      if @aircraft.aircraft_wake_category_id = 1
+        @corr_time = 1000
+      end
+      if @aircraft.aircraft_wake_category_id = 2
+        @corr_time = 1300
+      end
+      if @aircraft.aircraft_wake_category_id = 3
+        @corr_time = 1900
+      end
+      @dist_time = (@dist[0]*1000) / (@aircraft.aircraft_maxspeed * 0.97 / 3.6) + @corr_time
+    end
+    end
+    @timetableaps_all = Timetableap.where(:airport_start_id => Airport.select(:id).where(:town_id => @start)).where(:airport_finish_id => Airport.select(:id).where(:town_id => @finish))
+    @timetableaps = @timetableaps_all.search_start_ap(@start_ap).search_end_ap(@finish_ap).page(params[:page]).per(params[:limit])
   end
 
   def validate

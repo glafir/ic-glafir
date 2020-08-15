@@ -1,6 +1,6 @@
 class CountriesController < ApplicationController
-  before_action :set_country, only: [:show, :ap_show, :ap_show_ajax, :al_show, :tw_show, :edit, :update, :destroy]
-  before_action :set_airports, only: [:ap_show, :ap_show_ajax, :show]
+  before_action :set_country, only: [:show, :ap_show, :al_show, :tw_show, :edit, :update, :destroy]
+  before_action :set_airports, only: [:ap_show, :show]
   before_action :set_towns, only: [:tw_show, :show]
   before_action :set_airlines, only: [:al_show, :show]
 
@@ -12,17 +12,12 @@ class CountriesController < ApplicationController
 
   def ap_show
     authorize @country
-  end
-
-  def ap_show_ajax
-    authorize @country
-    result = {}
-    result["airports"] = @airports
-    
-    if (params[:page].to_i + 1) * ((params[:limit]).nil? ? 30 : params[:limit]) < @airports.size
-      result['page'] = params[:page].to_i + 1
-    end
-    render json: result
+  respond_to do |format|
+    format.html 
+    format.json
+    format.js
+   end
+#    respond_with(@country,@airports) && !request.xhr?
   end
 
   def tw_show

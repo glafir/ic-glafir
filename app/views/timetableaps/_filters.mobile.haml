@@ -1,0 +1,9 @@
+= simple_form_for :filter_tt, :method => 'get', :remote => true do |f|
+  .form-group
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      = f.select :start_ap, options_from_collection_for_select(@airports1.order(:name_rus), "id", "name_rus"), {:include_blank => "Все аэропорты", :class => 'form-control'}, {:onchange => "$('.filter_tt').submit();"}
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      = f.select :finish_ap, options_from_collection_for_select(@airports2.order(:name_rus), "id", "name_rus"), {:include_blank => "Все аэропорты", :class => 'form-control'}, {:onchange => "$('.filter_tt').submit();"}
+      = f.hidden_field :town_start_id, :value => params['search_tt']['town_start_id']
+      = f.hidden_field :town_finish_id, :value => params['search_tt']['town_finish_id']
+

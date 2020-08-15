@@ -1,0 +1,10 @@
+-if is_mobile_device?
+  :plain
+    $("#aircompanies").html("#{escape_javascript(render("aircompanies/aircompanies.mobile"))}");
+    $('.pagination').html('#{escape_javascript(paginate(@aircompanies, :theme => 'mobile' , :remote => true).to_s)}');
+-else
+  :plain
+    $("#aircompanies").html("#{escape_javascript(render("aircompanies/aircompanies"))}");
+    $('.pagination').html('#{escape_javascript(paginate(@aircompanies, :theme => 'desktop', :remote => true).to_s)}');
+  = render :file => Rails.root + 'app/assets/javascripts/tooltip.js'
+

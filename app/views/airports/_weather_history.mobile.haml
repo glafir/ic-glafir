@@ -1,6 +1,6 @@
 - weathers = @airport.weathers.where("created_at >= ?", "#{Time.now - 120.hours}").order(:created_at)
 - wcount = weathers.count*1.25
-- unless weathers.nil?
+- unless weathers.count < 3
   .w_info
     %p= tmax = weathers.map { |d| d[:temp] }.max - 273.15
     %p= tmin = weathers.map { |d| d[:temp] }.min - 273.15

@@ -1,0 +1,9 @@
+-if is_mobile_device?
+  :plain
+    $("#timetableaps").html("#{escape_javascript(render("timetableaps/timetableaps.mobile"))}");
+    $('.pagination').html('#{escape_javascript(paginate(@timetableaps, :theme => 'mobile' , :remote => true).to_s)}');
+-else
+  :plain
+    $("#timetableaps").html("#{escape_javascript(render("timetableaps/timetableaps"))}");
+    $('.pagination').html('#{escape_javascript(paginate(@timetableaps, :theme => 'desktop', :remote => true).to_s)}');
+  = render :file => Rails.root + 'app/assets/javascripts/tooltip.js'
