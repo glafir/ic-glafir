@@ -1,71 +1,13 @@
 %h4= @tablo.html_safe
 = render "airports/tablo_links"
-= form_tag "#",:remote => 'true', :method => 'get', :class => 'form form-horizontal', :id => "timetableaps_search"  do
-  .form-group
-    = label_tag :country, "внутрение/международные линии", class: 'col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label'
-    .controls.col-lg-3.col-md-3.col-sm-3.col-xs-3
-      = select_tag "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name, params[:country]), prompt: "to all countries", :onchange => "this.form.submit();", class: 'form-control'
-  .form-group
-    = label_tag :aircomapny, "Город:", class: 'col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label'
-    .controls.col-lg-3.col-md-3.col-xs-3
-      = select_tag "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus, params[:search_tw]), prompt: "All towns", :onchange => "this.form.submit();", class: 'form-control'
-  .form-group
-    = label_tag :aircomapny, "Авиакомпания:", class: 'col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label'
-    .controls.col-lg-3.col-md-3.col-xs-3
-      = select_tag "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines", :onchange => "this.form.submit();", class: 'form-control'
-  .form-group
-    = label_tag "", "time", class: "col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label"
-    .controls.col-lg-3.col-md-3.col-xs-3
-      = select_tag "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:start_time]), :onchange => "this.form.submit();", class: 'form-control'
-      = select_tag "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:end_time]), :onchange => "this.form.submit();", class: 'form-control'
-#tda.table-responsive
-  %table#tt.tablesorter.table.table-striped.table-hover
-    %thead
-      %tr
-        %th{:width => 25} Time local
-        %th{:width => 138} Flight
-        %th Info/State
-    %tbody
-      = render "airports/tablo"
-
+= bootstrap_form_tag :url => '#', :remote => 'true', :method => 'get', :id => "timetableaps_search"  do |f|
+  = f.select "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name, params[:country]), prompt: "to all countries"
+  = f.select "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus, params[:search_tw]), prompt: "All towns"
+  = f.select "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines"
+  = f.select "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:start_time])
+  = f.select "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:end_time])
+#tda.table-responsive= render "airports/tablo"
 :javascript
-  $(document).ready(function(){
-    var max = $('#start_time').val();
-    var min = $('#end_time').val();
-    var rangeSlider = $('#slider')
-      .slider({
-        min: 1,
-        max: 24,
-        step: 1,
-        values: [1, 24],
-        value: $("#start_time").selectedIndex + 1,
-        range: true,
-        animate: true,
-        slide: function(e,ui) {
-          $('#start_time')[0].selectedIndex = ui.value - 1;
-          $('#end_time')[0].selectedIndex = ui.value - 1;
-         $(this)
-            .find('#start_time option:selected').val(ui.values[0]).text();
-          $(this)
-            .find('#end_time option:selected').val(ui.values[1]).text();
-        },
-        stop: function(event, ui) {
-           $.get("#", { start_time: $("#start_time").val(), end_time: $("#end_time").val()} );
-           }
-      })
-   // .before('<h3>Drag the slider to filter by price:</h3>');
-  
-    $('#tablo_form').after(rangeSlider);
-  });
-:javascript
-  $(document).ready(function(){
-  setInterval(foo, 60000);
-  foo();
-  function foo () {
-  $('#tda').load("# #tt", function() {
-    $("#tt").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[0,0]]
-      });
-    });}
+  $('select').on('change', function(e){
+    this.form.submit()
   });
