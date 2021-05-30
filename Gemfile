@@ -31,7 +31,7 @@ gem 'jquery-validation-rails'
 #gem "jquery-tmpl-rails"
 #gem "momentjs-rails"
 #gem 'rails-jquery-autocomplete'
-gem 'mysql2', '~> 0.4.10'
+gem 'mysql2'
 gem 'bcrypt-ruby'
 
 gem 'devise'
