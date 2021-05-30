@@ -46,7 +46,7 @@
         %td
           = link_to city, country_town_path(airport.country, airport.town_id), :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => "#{airport.town.latitude if airport.town}, #{airport.town.longitude if airport.town}" unless airport.town.blank?
         %td= airport.latitude
-        %td= eval(sprintf("%8.2f", weather_current.temp.to_f - 273.15)) unless weather_current.nil?
+        %td= eval(sprintf("%8.2f", weather_current.temperature.to_f - 273.15)) unless weather_current.nil?
         %td= weather_current.clouds unless weather_current.nil?
         %td= weather_current.pressure unless weather_current.nil?
         %td

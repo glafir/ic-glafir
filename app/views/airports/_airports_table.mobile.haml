@@ -44,7 +44,7 @@
           = link_to airport.name, airport
           %br
           #{link_to city, country_town_path(airport.country, airport.town_id) unless airport.town.blank?}
-        %td= eval(sprintf("%.f", weather_current.temp.to_f - 273.15)) unless weather_current.nil?
+        %td= eval(sprintf("%.f", weather_current.temperature.to_f - 273.15)) unless weather_current.nil?
         %td
           - unless weather_current.nil?
             - weather_current.weather_states.each do |w|
