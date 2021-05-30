@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_141253) do
+ActiveRecord::Schema.define(version: 2021_05_30_144518) do
 
   create_table "aircompanies", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "airline_name_eng", null: false
@@ -506,7 +506,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_141253) do
     t.float "pressure_sea_level"
     t.float "pressure_grnd_level"
     t.float "wind_speed"
-    t.float "wind_deg"
+    t.float "wind_angle"
     t.float "humidity"
     t.integer "clouds"
     t.integer "dt"
@@ -517,12 +517,12 @@ ActiveRecord::Schema.define(version: 2021_05_30_141253) do
     t.index ["dt"], name: "dt"
     t.index ["humidity"], name: "humidity"
     t.index ["id", "place_id", "created_at"], name: "id_place_id_created_at"
-    t.index ["place_id", "temperature", "clouds", "dt", "pressure", "wind_speed", "wind_deg", "humidity"], name: "ALL_WEATHER_INFO"
+    t.index ["place_id", "temperature", "clouds", "dt", "pressure", "wind_speed", "wind_angle", "humidity"], name: "ALL_WEATHER_INFO"
     t.index ["place_id", "temperature"], name: "place_id"
     t.index ["pressure"], name: "pressure"
     t.index ["temperature"], name: "temp"
     t.index ["updated_at"], name: "updated_at"
-    t.index ["wind_deg"], name: "wind_deg"
+    t.index ["wind_angle"], name: "wind_deg"
     t.index ["wind_speed"], name: "wind_speed"
   end
 

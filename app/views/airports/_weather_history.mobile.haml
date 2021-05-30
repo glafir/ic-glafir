@@ -2,11 +2,10 @@
 - wcount = weathers.count*1.25
 - unless weathers.count < 3
   .w_info
-    %p= tmax = weathers.map { |d| d[:temp] }.max - 273.15
-    %p= tmin = weathers.map { |d| d[:temp] }.min - 273.15
+    %p= tmax = weathers.map { |d| d[:temperature] }.max - 273.15
+    %p= tmin = weathers.map { |d| d[:temperature] }.min - 273.15
     %p= tamp = tmax - tmin
     - ycorr = 0 - tmin
-    %p= ycorr
   %canvas#weather{width:"#{wcount}",height:"#{tamp*11}"}
   :javascript
     var canvas = document.getElementById('weather'), ctx = canvas.getContext('2d'), tmin = #{tmin};
@@ -24,8 +23,8 @@
   %hr
   - weathers.each do |weather|
     - cache weather do
-      - temp = weather.temp
-      - temp_next = weathers.where("id > ?", weather.id).first.temp unless weathers.where("id > ?", weather.id).first.nil?
+      - temp = weather.temperature
+      - temp_next = weathers.where("id > ?", weather.id).first.temperature unless weathers.where("id > ?", weather.id).first.nil?
       :javascript
         var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
         ctx.moveTo(t, temp);
