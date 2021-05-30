@@ -88,7 +88,7 @@
         - airport_wheather = @airport.weathers.order("created_at").last
         .wi-show
           - airport_wheather.weather_states.each do |w|
-            %i(class="wi wi-owm-#{w['id']} wi-fw")
+            %i(class="wi wi-owm-#{w.weather_icon_id} wi-fw")
             #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
       %p
         %b Температура
