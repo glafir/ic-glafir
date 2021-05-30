@@ -21,7 +21,7 @@ class WeathersController < ApplicationController
       weather.pressure_sea_level = airport_wheather.pressure_sea_level
       weather.pressure_grnd_level = airport_wheather.pressure_grnd_level
       weather.wind_speed = airport_wheather.wind_speed
-      weather.wind_deg = airport_wheather.wind_angle
+      weather.wind_angle = airport_wheather.wind_angle
       weather.clouds = airport_wheather.clouds
       weather.dt = airport_wheather.dt
       weather.humidity = airport_wheather.humidity
@@ -94,6 +94,6 @@ class WeathersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def weather_params
-      params.require(:weather).permit(:place_id, :temperature, :min_temperature, :max_temperature, :pressure, :pressure_sea_level, :pressure_grnd_level, :wind_speed, :wind_deg, :clouds, :dt, :humidity)
+      params.require(:weather).permit(:place_id, :temperature, :min_temperature, :max_temperature, :pressure, :pressure_sea_level, :pressure_grnd_level, :wind_speed, :wind_angle, :clouds, :dt, :humidity)
     end
 end

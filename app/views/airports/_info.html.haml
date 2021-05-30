@@ -81,6 +81,9 @@
           - airport_wheather.main.each do |w|
             %i(class="wi wi-owm-#{w['id']} wi-fw")
             #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+          %p
+            %b Видимость
+            #{airport_wheather.visibility}м &nbsp;
       - else
         - airport_wheather = @airport.weathers.order("created_at").last
         .wi-show
@@ -95,9 +98,6 @@
       %p
         %b Облачность
         #{airport_wheather.clouds} &nbsp;
-      %p
-        %b Видимость
-        #{airport_wheather.visibility}м &nbsp;
       %p
         %b Влажность
         #{airport_wheather.humidity}% &nbsp;
