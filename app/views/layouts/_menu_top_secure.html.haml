@@ -33,7 +33,8 @@
               %li= link_to "Аэропорты", controller: "/countries", action: "ap_show", id: 528
               %li= link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528
               = navbar_item "Рейсы", timetableaps_path
-              = navbar_item "Терминалы", terminals_path
+              = navbar_item "Терминалы", airport_terminals_path
+              = navbar_item "Гейты", airport_terminal_gates_path
               = navbar_item "ВПП аэропортов", runway_aps_path
               = navbar_item "Общая карта",ap_maps_airports_path
               = navbar_dropdown_divider

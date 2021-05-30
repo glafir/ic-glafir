@@ -1,4 +1,5 @@
-//= require jquery2.min
+//= require jquery3
+//= require jquery3.min
 //= require jquery-ui
 //= require jquery_ujs
 //= require mousetrap

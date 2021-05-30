@@ -13,9 +13,9 @@ development:
   adapter: mysql2
   encoding: utf8
   database: ic_dev
-  username: root
-  password: shkurko
-  host: localhost  
+  username: glafir
+  password: zj2j0zFaOJ3FzPzjkhdld830JHafh
+  host: 10.50.2.179 
   
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -24,15 +24,15 @@ test:
   adapter: mysql2
   encoding: utf8
   database: ic_dev
-  username: root
-  password: shkurko
-  host: localhost
+  username: glafir
+  password: zj2j0zFaOJ3FzPzjkhdld830JHafh
+  host: 10.50.2.179
 
 production:
   adapter: mysql2
   encoding: utf8
   database: ic_dev
-  username: root
-  password: shkurko
-  host: localhost
+  username: glafir
+  password: zj2j0zFaOJ3FzPzjkhdld830JHafh
+  host: 10.50.2.179
 

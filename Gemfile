@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'rails', '5.2.4'
-gem 'puma', '~> 3.11'
+gem 'puma'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
 gem 'sass-rails', '~> 5.0'
