@@ -13,7 +13,7 @@
       #{@aptt_all} / #{@aptt_out}
     %p
       %b Кол-во направлений:
-      = @airport.timetableaps_out.order(:airport_finish_id).uniq.pluck(:airport_finish_id).count
+      = @airport.timetableaps_out.select(:airport_finish_id).pluck(:airport_finish_id).uniq.count
     %p
       %b из них международных:
     -#-  = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_finish_id))).each
