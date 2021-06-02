@@ -110,3 +110,14 @@ td.tablo {
         font-size:60px;
 }
 
+.btn-tt {
+        display: block;
+        padding: 0px;
+        margin: 0;
+        border: 1px solid #000;
+        border-radius: 15px;
+}
+
+.btn-tt span.text {
+    padding: 2px;
+}

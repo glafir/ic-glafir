@@ -168,7 +168,7 @@ private
         tt.fstatus = "Вылетел"
         tt.bgcolor = "success"
       elsif tt.timeIN < Time.zone.now.utc+15.minute and tt.timeIN > Time.zone.now.utc
-        tt.fstatus = "Выход закрыт"
+        tt.fstatus = "Выход<br />закрыт"
         tt.bgcolor = "danger"
       elsif tt.timeIN < Time.zone.now.utc+40.minute and tt.timeIN > Time.zone.now.utc+15.minute
         tt.fstatus = "Посадка"
@@ -177,7 +177,7 @@ private
         tt.fstatus = "регистрация"
         tt.bgcolor = "info"
       else
-        tt.fstatus = "Ожидается вылет"
+        tt.fstatus = "Ожидается<br />вылет"
         tt.bgcolor = "default"
       end
     end
@@ -206,7 +206,7 @@ private
         tt.fstatus = "Прибыл"
         tt.bgcolor = "primary"
       else
-        tt.fstatus = "Ожидается прибытие"
+        tt.fstatus = "Ожидается<br />прибытие"
         tt.bgcolor = "default"
       end
     end

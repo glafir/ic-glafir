@@ -56,6 +56,11 @@ body {
         font: bold 22px Arial, Helvetica, sans-serif;
 }
 
+#tt_flight{
+        vertical-align: middle;
+        text-align: center;
+}
+
 #flight_info{
     vertical-align: bottom;
 }
@@ -139,4 +144,16 @@ body {
 
 .wi-show {
         font-size:70px;
+}
+
+.btn-tt {
+	display: block;
+	padding: 0px;
+	margin: 0;
+	border: 1px solid #000;
+	border-radius: 15px;
+}
+
+.btn-tt span.text {
+    padding: 2px;
 }

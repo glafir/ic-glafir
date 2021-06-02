@@ -16,7 +16,7 @@
                 %td{:width => 52}
                   - if timetableap.aircompany.avatar.thumb_50.url
                     = image_tag timetableap.aircompany.avatar.thumb_50.url
-                %td.flight-parent
+                %td.flight-parent{:width => 110}
                   = link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus
                   = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap)
               - timetableap.childs.each do |child|
@@ -30,8 +30,8 @@
           %td
             #{link_to timetableap.f_ap.town.city_rus, timetableap.f_ap}/#{timetableap.f_ap.iata_code}
           %td
-            #div{:class => "btn btn-#{timetableap.bgcolor}"}
-              = timetableap.fstatus
+            #div{:class => "btn btn-tt btn-sm btn-block btn-#{timetableap.bgcolor}"}
+              %span= raw timetableap.fstatus
 
 :javascript
   jQuery(document).ready(function(){
