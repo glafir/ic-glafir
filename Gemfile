@@ -110,3 +110,4 @@ gem 'rack-cache'
 gem 'redis-rack-cache'
 gem 'redis-store'
 
+gem 'jquery-datatables-rails'

@@ -45,19 +45,22 @@
               = (timetableap.parent_id.blank?) ? (link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany) : (link_to timetableap.parent.aircompany.airline_name_rus, timetableap.parent.aircompany)
             .tt_status= timetableap.fstatus
         %td#tt_status
-          #div{:class => "btn #{timetableap.bgcolor}"}
+          #div{:class => "btn btn-#{timetableap.bgcolor}"}
             = timetableap.fstatus
 
 :javascript
-  $(document).ready(function(){
-  setInterval(foo, 60000);
-  foo();
-  function foo () {
-  $('#tda').load("# #tt", function() {
-    $("#tt").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[0,0]]
+  jQuery(document).ready(function(){
+    setInterval(foo, 60000);
+    foo();
+    function foo () {
+    $('#tda').load("# #tt", function() {
+      $('#tt').DataTable( {
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        "order": [[ 0, "asc" ]]
       });
     });}
   });
-

@@ -14,7 +14,6 @@
 //= require bootstrap3-autocomplete-input-init
 //= require jquery-tablesorter/jquery.tablesorter
 //= require jquery-tablesorter/jquery.tablesorter.widgets
+//= require dataTables/jquery.dataTables
 //= require_tree .
 //= require_self
-
-$.fn.bstooltip = $.fn.tooltip;

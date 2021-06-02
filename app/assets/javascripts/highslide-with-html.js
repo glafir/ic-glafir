@@ -9,10 +9,10 @@ lang : {
 	creditsText : 'Powered by <i>Glafir</i>',
 	creditsTitle : 'Go to the ICE homepage',
 	previousText : 'Previous',
-	nextText : 'Next', 
+	nextText : 'Next',
 	moveText : 'Move',
-	closeText : 'Close', 
-	closeTitle : 'Close (esc)', 
+	closeText : 'Close',
+	closeTitle : 'Close (esc)',
 	resizeTitle : 'Resize',
 	playText : 'Play',
 	playTitle : 'Play slideshow (spacebar)',
@@ -24,7 +24,7 @@ lang : {
 	fullExpandText : '1:2',
 	restoreTitle : 'Click to close image, click and drag to move. Use arrow keys for next and previous.'
 },
-// See http://highslide.com/ref for examples of settings  
+// See http://highslide.com/ref for examples of settings
 graphicsDir : '/images/highslide/',
 expandCursor : 'zoomin.cur', // null disables
 restoreCursor : 'zoomout.cur', // null disables
@@ -38,7 +38,7 @@ zIndexCounter : 1001, // adjust to other absolutely positioned elements
 loadingOpacity : 0.75,
 allowMultipleInstances: true,
 numberOfImagesToPreload : 5,
-outlineWhileAnimating : 2, // 0 = never, 1 = always, 2 = HTML only 
+outlineWhileAnimating : 2, // 0 = never, 1 = always, 2 = HTML only
 outlineStartOffset : 3, // ends at 10
 padToMinWidth : false, // pad the popup width to make room for wide caption
 fullExpandPosition : 'bottom right',
@@ -106,10 +106,8 @@ overrides : [
 	'headingOverlay',
 	'creditsPosition',
 	'dragByHeading',
-	
 	'width',
 	'height',
-	
 	'contentId',
 	'allowWidthReduction',
 	'allowHeightReduction',
@@ -117,11 +115,11 @@ overrides : [
 	'maincontentId',
 	'maincontentText',
 	'maincontentEval',
-	'objectType',	
-	'cacheAjax',	
+	'objectType',
+	'cacheAjax',
 	'objectWidth',
 	'objectHeight',
-	'objectLoadTime',	
+	'objectLoadTime',
 	'swfOptions',
 	'wrapperClassName',
 	'minWidth',
@@ -174,7 +172,7 @@ createElement : function (tag, attribs, styles, parent, nopad) {
 	if (attribs) hs.extend(el, attribs);
 	if (nopad) hs.setStyles(el, {padding: 0, border: 'none', margin: 0});
 	if (styles) hs.setStyles(el, styles);
-	if (parent) parent.appendChild(el);	
+	if (parent) parent.appendChild(el);
 	return el;
 },
 
@@ -209,13 +207,13 @@ animate: function(el, prop, opt) {
 	opt.curAnim = hs.extend({}, prop);
 	for (var name in prop) {
 		var e = new hs.fx(el, opt , name );
-		
+
 		start = parseFloat(hs.css(el, name)) || 0;
 		end = parseFloat(prop[name]);
 		unit = name != 'opacity' ? 'px' : '';
-		
+
 		e.custom( start, end, unit );
-	}	
+	}
 },
 css: function(el, prop) {
 	if (el.style[prop]) {
@@ -226,24 +224,24 @@ css: function(el, prop) {
 	} else {
 		if (prop == 'opacity') prop = 'filter';
 		var val = el.currentStyle[prop.replace(/\-(\w)/g, function (a, b){ return b.toUpperCase(); })];
-		if (prop == 'filter') 
-			val = val.replace(/alpha\(opacity=([0-9]+)\)/, 
+		if (prop == 'filter')
+			val = val.replace(/alpha\(opacity=([0-9]+)\)/,
 				function (a, b) { return b / 100 });
 		return val === '' ? 1 : val;
-	} 
+	}
 },
 
 getPageSize : function () {
-	var d = document, w = window, iebody = d.compatMode && d.compatMode != 'BackCompat' 
+	var d = document, w = window, iebody = d.compatMode && d.compatMode != 'BackCompat'
 		? d.documentElement : d.body,
 		ieLt9 = hs.ie && (hs.uaVersion < 9 || typeof pageXOffset == 'undefined');
-	
-	var width = ieLt9 ? iebody.clientWidth : 
+
+	var width = ieLt9 ? iebody.clientWidth :
 			(d.documentElement.clientWidth || self.innerWidth),
 		height = ieLt9 ? iebody.clientHeight : self.innerHeight;
 	hs.page = {
 		width: width,
-		height: height,		
+		height: height,
 		scrollLeft: ieLt9 ? iebody.scrollLeft : pageXOffset,
 		scrollTop: ieLt9 ? iebody.scrollTop : pageYOffset
 	};

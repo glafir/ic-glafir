@@ -166,19 +166,19 @@ private
       tt.bgcolor_apload = "#9c0a0a"
       if tt.timeIN < Time.zone.now.utc
         tt.fstatus = "Вылетел"
-        tt.bgcolor = "btn-success"
+        tt.bgcolor = "success"
       elsif tt.timeIN < Time.zone.now.utc+15.minute and tt.timeIN > Time.zone.now.utc
         tt.fstatus = "Выход закрыт"
-        tt.bgcolor = "btn-danger"
+        tt.bgcolor = "danger"
       elsif tt.timeIN < Time.zone.now.utc+40.minute and tt.timeIN > Time.zone.now.utc+15.minute
         tt.fstatus = "Посадка"
-        tt.bgcolor = "btn-warning"
+        tt.bgcolor = "warning"
       elsif tt.timeIN < Time.zone.now.utc+4.hour and tt.timeIN > Time.zone.now.utc+40.minute
         tt.fstatus = "регистрация"
-        tt.bgcolor = "btn-info"
+        tt.bgcolor = "info"
       else
         tt.fstatus = "Ожидается вылет"
-        tt.bgcolor = "btn-default"
+        tt.bgcolor = "default"
       end
     end
   end
@@ -204,10 +204,10 @@ private
       tt.bgcolor_apload = "#0B3762"
       if tt.timeIN < Time.zone.now
         tt.fstatus = "Прибыл"
-        tt.bgcolor = "btn-primary"
+        tt.bgcolor = "primary"
       else
         tt.fstatus = "Ожидается прибытие"
-        tt.bgcolor = "btn-default"
+        tt.bgcolor = "default"
       end
     end
   end
