@@ -1,36 +1,46 @@
-%table.table.table-striped.table-hover.table-condensed
-  %tr
-    %th= sortable "id"
-    %th Label
-    %th= sortable "iata_code"
-    %th= sortable "icao_code"
-    %th= sortable "airline_name_eng"
-    %th= sortable "airline_name_rus"
-    %th= sortable "airport"
-    %th= sortable "timetableaps_count"
-    %th= sortable "per_cent_tt"
-    %th= sortable "al_start"
-    %th= sortable "al_finish"
-    %th
-    %th
-  - @aircompanies.each do |aircompany|
+%table#aircompany.table.table-striped.table-hover.table-condensed
+  %thead
     %tr
-      %td= aircompany.id
-      %td
-        = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
-      %td= aircompany.iata_code
-      %td= aircompany.icao_code
-      %td= link_to aircompany.airline_name_eng, aircompany 
-      %td= link_to aircompany.airline_name_rus, aircompany if aircompany.airline_name_rus
-      %td
-        = link_to aircompany.airport.name_rus, aircompany.airport if aircompany.airline_name_rus
-        %br/
-        (г.#{link_to aircompany.airport.town.city_rus, country_town_path(aircompany.country, aircompany.airport.town_id) if aircompany.airport && aircompany.airport.town })
-      %td= aircompany.timetableaps_count
-      %td= aircompany.per_cent_tt
-      %td= aircompany.al_start
-      %td= aircompany.al_finish
-      - if policy(aircompany).edit?
-        %td= link_to 'Edit', edit_aircompany_path(aircompany), class: 'btn btn-info'
-      - if policy(aircompany).destroy?
-        %td= link_to 'Destroy', aircompany, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+      %th sortable "id"
+      %th Label
+      %th iata_code
+      %th icao_code
+      %th airline_name_eng
+      %th airline_name_rus
+      %th airport
+      %th timetableaps_count
+      %th per_cent_tt
+      %th al_start
+      %th al_finish
+      %th
+      %th
+  %tbody
+    - @aircompanies.each do |aircompany|
+      %tr
+        %td= aircompany.id
+        %td
+          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+        %td= aircompany.iata_code
+        %td= aircompany.icao_code
+        %td= link_to aircompany.airline_name_eng, aircompany 
+        %td= link_to aircompany.airline_name_rus, aircompany if aircompany.airline_name_rus
+        %td
+          = link_to aircompany.airport.name_rus, aircompany.airport if aircompany.airline_name_rus
+          %br/
+          (г.#{link_to aircompany.airport.town.city_rus, country_town_path(aircompany.country, aircompany.airport.town_id) if aircompany.airport && aircompany.airport.town })
+        %td= aircompany.timetableaps_count
+        %td= aircompany.per_cent_tt
+        %td= aircompany.al_start
+        %td= aircompany.al_finish
+        - if policy(aircompany).edit?
+          %td= link_to 'Edit', edit_aircompany_path(aircompany), class: 'btn btn-info'
+        - if policy(aircompany).destroy?
+          %td= link_to 'Destroy', aircompany, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+
+:javascript
+  $(document).ready(function(){
+    $("#aircompany").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[4,0]]
+      });
+  });

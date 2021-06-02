@@ -3,25 +3,34 @@
 /*
  * Reset
  */ 
-*{
-  margin: 0;
-  padding: 0;
 
-}
-body{
-  width: 100% !important;
-  max-width: 600px;
-  font-family:Tahoma;
-  font-weight:bold;
-  background-color:#000;
-  color:#FFF;
-  float: none;
-  -webkit-appearance: none;
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
 }
 
-@media (max-width: 600px){
-    .specifictd {    
-        width:70px;  /* adjust to desired wrapping */
+@media only screen and (max-width: 800px) {
+	#unseen table td:nth-child(2), 
+	#unseen table th:nth-child(2) {display: none;}
+}
+
+@media (max-width: 680px){
+	#unseen table td:nth-child(4),
+	#unseen table th:nth-child(4),
+	#unseen table td:nth-child(7),
+	#unseen table th:nth-child(7),
+	#unseen table td:nth-child(8),
+	#unseen table th:nth-child(8){display: none;} 
+   .specifictd {    
+        width:52px;  /* adjust to desired wrapping */
         display:table;
         white-space: pre-wrap; /* css-3 */
         white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
@@ -101,3 +110,14 @@ td.tablo {
         font-size:60px;
 }
 
+.btn-tt {
+        display: block;
+        padding: 0px;
+        margin: 0;
+        border: 1px solid #000;
+        border-radius: 15px;
+}
+
+.btn-tt span.text {
+    padding: 2px;
+}

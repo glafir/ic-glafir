@@ -1,13 +1,13 @@
-%table.table
+%table#aircompany.table
   %thead
     %tr
       %th Label & IATA/ICAO code
       %th Airline name
-      %th= sortable "airport_id"
-      %th= sortable "timetableaps_count"
-      %th= sortable "per_cent_tt"
-      %th= sortable "al_start"
-      %th= sortable "al_finish"
+      %th airport
+      %th tt_count
+      %th per_cent_tt
+      %th date_start
+      %th date_finish
       %th
       %th
   %tbody
@@ -31,3 +31,11 @@
           %td= link_to 'Edit', edit_aircompany_path(aircompany)
         - if policy(aircompany).destroy?
           %td= link_to 'Destroy', aircompany, method: :delete, data: { confirm: 'Are you sure?' }
+
+:javascript
+  $(document).ready(function(){
+    $("#aircompany").tablesorter({
+      widgets: ["zebra"],
+      sortList:[[1,0]]
+      });
+  });

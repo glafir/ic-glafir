@@ -4,7 +4,8 @@
       %tr
         %th Time
         %th Flight
-        %th Info/State
+        %th Info
+        %th State
     %tbody
       - @timetableaps.each do |timetableap|
         %tr
@@ -15,7 +16,7 @@
                 %td{:width => 52}
                   - if timetableap.aircompany.avatar.thumb_50.url
                     = image_tag timetableap.aircompany.avatar.thumb_50.url
-                %td.flight-parent
+                %td.flight-parent{:width => 110}
                   = link_to timetableap.aircompany.iata_code, timetableap.aircompany, title => timetableap.aircompany.airline_name_rus
                   = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap)
               - timetableap.childs.each do |child|
@@ -28,46 +29,23 @@
                     = link_to child.flight_number, flight_state_timetableap_path(child)
           %td
             #{link_to timetableap.f_ap.town.city_rus, timetableap.f_ap}/#{timetableap.f_ap.iata_code}
-            .tt_status(style = 'background-color: #{timetableap.bgcolor}')= timetableap.fstatus
+          %td
+            #div{:class => "btn btn-tt btn-sm btn-block btn-#{timetableap.bgcolor}"}
+              %span= raw timetableap.fstatus
 
 :javascript
-  $(document).ready(function(){
-    var max = $('#start_time').val();
-    var min = $('#end_time').val();
-    var rangeSlider = $('#slider')
-      .slider({
-        min: 1,
-        max: 24,
-        step: 1,
-        values: [1, 24],
-        value: $("#start_time").selectedIndex + 1,
-        range: true,
-        animate: true,
-        slide: function(e,ui) {
-          $('#start_time')[0].selectedIndex = ui.value - 1;
-          $('#end_time')[0].selectedIndex = ui.value - 1;
-         $(this)
-            .find('#start_time option:selected').val(ui.values[0]).text();
-          $(this)
-            .find('#end_time option:selected').val(ui.values[1]).text();
-        },
-        stop: function(event, ui) {
-           $.get("#", { start_time: $("#start_time").val(), end_time: $("#end_time").val()} );
-           }
-      })
-   // .before('<h3>Drag the slider to filter by price:</h3>');
-
-    $('#tablo_form').after(rangeSlider);
-  });
-:javascript
-  $(document).ready(function(){
-  setInterval(foo, 60000);
-  foo();
-  function foo () {
-  $('#tda').load("# #tt", function() {
-    $("#tt").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[0,0]]
+  jQuery(document).ready(function(){
+    setInterval(foo, 60000);
+    foo();
+    function foo () {
+    $('#tda').load("# #tt", function() {
+      $('#tt').DataTable( {
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        "order": [[ 0, "asc" ]]
       });
     });}
   });

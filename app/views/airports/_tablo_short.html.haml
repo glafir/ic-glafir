@@ -2,18 +2,15 @@
   %tr.tablo
     %td{:width => 30}= timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
     %td
-      %table
-        %tr
-          %td{:width => 60}
-            = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_eng
-            = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
-          %td= link_to timetableap.aircompany.airline_name_eng, timetableap.aircompany
-        %tr
-          - timetableap.childs.each do |child|
-            %td
-              = link_to child.aircompany.iata_code, child.aircompany, :title => child.aircompany.airline_name_eng
-              = link_to child.flight_number, flight_state_timetableap_path(child), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
-            %td= link_to child.aircompany.airline_name_eng, child.aircompany
+      .parent
+        = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_eng
+        = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+        = link_to timetableap.aircompany.airline_name_eng, timetableap.aircompany
+      - timetableap.childs.each do |child|
+        .child
+          = link_to child.aircompany.iata_code, child.aircompany, :title => child.aircompany.airline_name_eng
+          = link_to child.flight_number, flight_state_timetableap_path(child), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+          = link_to child.aircompany.airline_name_eng, child.aircompany
     %td
       #{timetableap.f_ap.town.accent_city}/#{timetableap.f_ap.iata_code}
       (#{timetableap.f_ap.town.country.country_iata_code})
