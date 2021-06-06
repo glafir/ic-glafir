@@ -3,6 +3,7 @@ class AircompaniesController < ApplicationController
 #  autocomplete :aircompany, :airline_name_rus, :extra_data => [:iata_code]
   autocomplete  :aircompany, :airline_name_rus
   before_action :check_permissions, :only => [:autocomplete_aircompany_airline_name_rus, :autocomplete_airline_name_rus,]
+
   def admin_al
     authorize :aircompany
   end

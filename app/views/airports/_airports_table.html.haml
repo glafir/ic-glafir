@@ -65,9 +65,13 @@
           %p Weather update at #{weather_current.created_at unless weather_current.nil?}
 :javascript
   $(document).ready(function(){
-    $("#tt").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[1,0]]
+      $('.table').DataTable( {
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        searching: false,
+        order: [[ 0, "asc" ]]
       });
   });
-

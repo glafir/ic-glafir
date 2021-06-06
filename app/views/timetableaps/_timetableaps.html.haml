@@ -1,11 +1,3 @@
-:javascript
-  $(document).ready(function(){
-    $(".tt").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[3,0]]
-     });
-  });
-
 %p
   %b Общее количество рейсов на маршруте:
   = @timetableaps.count
@@ -32,7 +24,7 @@
       %tr
         %td
           %span.glyphicon.glyphicon-plane
-          = timetableap.flight
+          %a= timetableap.flight
         %td
           = image_tag timetableap.aircompany.avatar.thumb_80.url if timetableap.aircompany.avatar?
           %p
@@ -113,3 +105,31 @@
               
 = render "timetableaps/paginate_bottom"
 = link_to 'Добавить основной авиарейс', new_timetableap_path
+
+:javascript
+  jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "first-id-pre": function ( a ) {
+        return parseInt($(a).text().split(' ')[1]);
+    },
+ 
+    "first-id-asc": function ( a, b ) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    },
+ 
+    "fist-id-desc": function ( a, b ) {
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    }
+  } );
+
+  var table = $('#tt').DataTable({
+    paging:   false,
+    autoWidth: false,
+    ordering: true,
+    info:     false,
+    stateSave: true,
+    searching: false,
+    order: [[ 3, "asc" ]],
+    columnDefs : [
+      { type: 'first-id', targets: 0 }
+    ]
+  })

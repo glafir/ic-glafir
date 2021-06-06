@@ -34,8 +34,13 @@
 
 :javascript
   $(document).ready(function(){
-    $("#aircompany").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[1,0]]
+      $('#aircompany').DataTable( {
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        searching: false,
+        order: [[ 0, "asc" ]]
       });
   });

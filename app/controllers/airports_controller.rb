@@ -51,7 +51,6 @@ before_action :check_permissions, only: :autocomplete_airport_city_rus
   end
 
   def admin_ap
-#    render layout: "application_empty_1"
     authorize :airport
     respond_with(@airports)
   end

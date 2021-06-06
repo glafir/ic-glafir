@@ -5,5 +5,5 @@
 -else
   :plain
     $("#airports").html("#{escape_javascript(render("airports/airports"))}");
-    $('.pagination').html('#{escape_javascript(paginate(@airports, :theme => 'desktop', :remote => true).to_s)}');
+    $('.pagination').html('#{escape_javascript(paginate(@airports, :theme => 'twitter-bootstrap-4', :remote => true).to_s)}');
   = render :file => Rails.root + 'app/assets/javascripts/tooltip.js'

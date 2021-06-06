@@ -5,13 +5,13 @@
     %h3
       (является дочерней авиакомпанией #{link_to @aircompany.manager.airline_name_rus, @aircompany.manager}.)
   .row
-    %ul.nav.nav-tabs
-      %li= link_to 'Информация об авикомпании', "#panel1", 'data-toggle' => "tab"
-      %li= link_to 'Хабы и направления', "#panel2", 'data-toggle' => "tab"
-      %li= link_to 'Рейсы на собственных самолётах', "#panel3", 'data-toggle' => "tab"
-      %li= link_to 'Рейсы на компаниях-партнёрах', "#panel4", 'data-toggle' => "tab"
-  .tab-content
-    #panel1.tab-pane.fade.in.active
+    %ul.nav.nav-pills.flex-column.flex-sm-row.nav-tabs
+      %li.nav-item.flex-sm-fill.text-sm-center= link_to 'Информация об авикомпании', "#panel1", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link active'
+      %li.nav-item.flex-sm-fill.text-sm-center= link_to 'Хабы и направления', "#panel2", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+      %li.nav-item.flex-sm-fill.text-sm-center= link_to 'Рейсы на собственных самолётах', "#panel3", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+      %li.nav-item.flex-sm-fill.text-sm-center= link_to 'Рейсы на компаниях-партнёрах', "#panel4", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+  .tab-content#pills-tabContent
+    #panel1.tab-pane.fade.show.active
       .col-lg-6.col-md-6.col-sm-6.col-xs-12
         = render "aircompanies/al_logo"
       .col-lg-6.col-md-6.col-sm-6.col-xs-12
@@ -22,7 +22,7 @@
     #panel3.tab-pane.fade.in.col-lg-12.col-md-12.col-sm-12.col-xs-12
       %fieldset
         %legend
-          %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
+          %h3 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
         #timetableaps= render "timetableaps/timetableaps"
     #panel4.tab-pane.fade.in.col-lg-12.col-md-12.col-sm-12.col-xs-12
       %fielset

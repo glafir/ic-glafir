@@ -1,4 +1,4 @@
-= paginate @towns, :remote => true, :theme => 'desktop'
+= paginate @towns, :remote => true, :theme => 'twitter-bootstrap-4'
 %table.table-striped.table-hover.table-condensed
   %tr
     %th
@@ -30,4 +30,4 @@
         = link_to 'Edit', edit_country_town_path(@country, town) if policy(town).edit?
         = link_to 'Destroy', town, :method => :delete, :data => { :confirm => 'Are you sure?' } if policy(town).destroy?
 
-= paginate @towns, :remote => true, :theme => 'desktop'
+= paginate @towns, :remote => true, :theme => 'twitter-bootstrap-4'
