@@ -96,7 +96,7 @@ gem 'dalli'
 #gem 'actionpack-action_caching'
 
 gem 'simple_form'
-gem 'bootstrap3_autocomplete_input'
+gem 'bootstrap_autocomplete_input'
 
 #gem 'openweather2'
 gem 'redis'

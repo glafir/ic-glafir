@@ -1,8 +1,8 @@
 - model_class = User
 %h3.center-block
   #{t '.title', :default => model_class.model_name.human.titleize} #{@user.username} (#{@user.email})
-.field-form
-  .col
+.row.field-form
+  .col-12.col-sm-12.col-md-12.col-lg-8.col-xl-8
     .d-none.d-xl-block
       = image_tag @user.avatar.size_500.url, :class => 'rounded-circle' unless @user.avatar.size_500.nil?
     .d-none.d-md-block.d-lg-none
@@ -13,7 +13,7 @@
       = image_tag @user.avatar.size_400.url, :class => 'rounded-circle' unless @user.avatar.size_400.nil?
     .d-block.d-sm-none
       = image_tag @user.avatar.size_300.url, :class => 'rounded-circle' unless @user.avatar.size_300.nil?
-  .col
+  .col-12.col-sm-12.col-md-12.col-lg-4.col-xl-4
     %p
       %b Имя:
       = @user.username

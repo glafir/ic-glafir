@@ -1,70 +1,86 @@
-= navbar container: false, fixed: :top, responsive: true do
-  = navbar_header  brand: "Glafir`s Information Centre", brand_link: root_path
-  = navbar_collapse do
-    = navbar_group align: 'left' do
+.navbar.navbar-expand-md
+  = link_to "Glafir`s Information Centre", root_path, class: "navbar-brand d-flex w-50 mr-auto"
+  .collapse.navbar-collapse.justify-content-between.flex-grow-0
+    = navbar_group class: 'mr-auto' do
       - if user_signed_in?
-        = navbar_dropdown "Главное меню:" do
-          = navbar_dropdown "Аэро:", class: "dropdown-submenu" do
-            = navbar_dropdown "Поиск и расстояние", class: "dropdown-submenu" do
-              = navbar_item "Поиск городов"
-              = navbar_item "Поиск аэропортов"
-              = navbar_dropdown "Поиск рейсов", class: "dropdown-submenu pull-left" do
-                = navbar_item "Поиск рейсов прямых по аэропртам", timetableaps_path
-                = navbar_item "Поиск рейсов прямых по городам", search_tt_path
-              = navbar_item "Расстояния между а/п", ap_dist_airports_path
-              = navbar_item "Поиск трансфертных рейсов",search_ap_circle_airports_path
-            = navbar_dropdown "В мире", class: "dropdown-submenu" do
-              = navbar_item "Страны", countries_path
-              = navbar_item "Города", towns_path
-              = navbar_item "Аэропорты", airports_path
-              = navbar_item "Авиакомпании", aircompanies_path
-              = navbar_item "Кодшеринговые соглашения", airline_codeshares_path
-              = navbar_item "Рейсы", timetableaps_path
-              = navbar_item "ВПП аэропортов", runway_aps_path
-              = navbar_dropdown_divider
-              = navbar_dropdown "Добавить", class: "dropdown-submenu pull-left" do
-                = navbar_item "Добавить страну", new_country_path
-                = navbar_item "Добавить город", new_town_path
-                = navbar_item "Добавить аэропорт", new_airport_path
-                = navbar_item "Добавить Авиакомпанию", new_aircompany_path
-                = navbar_item "Добавить Рейс", new_timetableap_path
-            = navbar_dropdown "В Вашей стране:", class: "dropdown-submenu" do
-              %li= link_to "Города", controller: "/countries", action: "tw_show", id: 528
-              %li= link_to "Аэропорты", controller: "/countries", action: "ap_show", id: 528
-              %li= link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528
-              = navbar_item "Рейсы", timetableaps_path
-              = navbar_item "Терминалы", airport_terminals_path
-              = navbar_item "Гейты", airport_terminal_gates_path
-              = navbar_item "ВПП аэропортов", runway_aps_path
-              = navbar_item "Общая карта",ap_maps_airports_path
-              = navbar_dropdown_divider
-              = navbar_item "Добавить город", new_town_path
-              = navbar_item "Добавить аэропорт", new_airport_path
-              = navbar_item "Добавить Авиакомпанию", new_aircompany_path
-              = navbar_item "Добавить Рейс", new_timetableap_path
-          = navbar_dropdown "ЖД:", class: "dropdown-submenu" do
-            = navbar_item "ЖД станции и вокзалы", stations_path
-            = navbar_item "ЖД станции, их зоны", station_zones_path
-            = navbar_item "ЖД станции, их направления", rw_routes_path
-    = navbar_group align: 'right', class: 'right-userpanel', id: 'menu' do
+        .dropdown
+          = link_to 'Главное меню', '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
+          .dropdown-menu.dropright
+            = link_to "Аэро:", '#', class: "btn dropdown-item submenu"
+            .dropdown-menu
+              = link_to "Поиск и расстояние", '#', class: "btn dropdown-item submenu"
+              .dropdown-menu
+                = link_to "Поиск городов", '#', class: "btn dropdown-item"
+                = link_to "Поиск аэропортов", '#', class: "btn dropdown-item"
+                .dropleft
+                  = link_to "Поиск рейсов", '#', class: "btn dropdown-item dropleft submenu pull-left"
+                  .dropdown-menu
+                    = link_to "Поиск рейсов прямых по аэропртам", timetableaps_path, class: "btn dropdown-item"
+                    = link_to "Поиск рейсов прямых по городам", search_tt_path, class: "btn dropdown-item"
+                = link_to "Расстояния между а/п", ap_dist_airports_path, class: "btn dropdown-item"
+                = link_to "Поиск трансфертных рейсов",search_ap_circle_airports_path, class: "btn dropdown-item"
+              = link_to "В мире", '#', class: "btn dropdown-item submenu"
+              .dropdown-menu
+                = link_to "Страны", countries_path, class: "btn dropdown-item"
+                = link_to "Города", towns_path, class: "btn dropdown-item"
+                = link_to "Аэропорты", airports_path, class: "btn dropdown-item"
+                = link_to "Авиакомпании", aircompanies_path, class: "btn dropdown-item"
+                = link_to "Кодшеринговые соглашения", airline_codeshares_path, class: "btn dropdown-item"
+                = link_to "Рейсы", timetableaps_path, class: "btn dropdown-item"
+                = link_to "ВПП аэропортов", runway_aps_path, class: "btn dropdown-item"
+                .dropleft
+                  = link_to "Добавить", '#', class: "btn dropdown-item submenu dropleft"
+                  .dropdown-menu
+                    = link_to "Добавить страну", new_country_path, class: "btn dropdown-item"
+                    = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
+                    = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
+                    = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
+                    = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
+              = link_to "В Вашей стране:", '#', class: "btn dropdown-item submenu"
+              .dropdown-menu
+                = link_to "Города", controller: "/countries", action: "tw_show", id: 528, class: "dropdown-item"
+                = link_to "Аэропорты", controller: "/countries", action: "ap_show", id: 528, class: "dropdown-item"
+                = link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528, class: "dropdown-item"
+                = link_to "Рейсы", timetableaps_path, class: "btn dropdown-item"
+                = link_to "Терминалы", airport_terminals_path, class: "btn dropdown-item"
+                = link_to "Гейты", airport_terminal_gates_path, class: "btn dropdown-item"
+                = link_to "ВПП аэропортов", runway_aps_path, class: "btn dropdown-item"
+                .dropdown-divider
+                = link_to "Общая карта",ap_maps_airports_path, class: "btn dropdown-item"
+                .dropdown-divider
+                = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
+                = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
+                = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
+                = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
+            = link_to "ЖД:", '#', class: "btn dropdown-item submenu"
+            .dropdown-menu
+              = link_to "ЖД станции и вокзалы", stations_path, class: "btn dropdown-item"
+              = link_to "ЖД станции, их зоны", station_zones_path, class: "btn dropdown-item"
+              = link_to "ЖД станции, их направления", rw_routes_path, class: "btn dropdown-item"
+    = navbar_group do
       - if user_signed_in? && current_user.admin?
-        = navbar_dropdown "Админпанель" do
-          = navbar_item "Аэропорты", admin_ap_airports_path
-          = navbar_item "Авиакомпании", admin_al_aircompanies_path
-          = navbar_item "Хабы а-компаний", admin_aphub_aphubs_path
-          = navbar_item "Рейсы", admin_tt_timetableaps_path
-          = navbar_item "Пользователи"
-          = navbar_item "ЖД станции", admin_stations_stations_path
-          = navbar_item "Переводы", translations_path
-        = navbar_dropdown "твой профиль: #{current_user.username}" do
-          %li= image_tag current_user.avatar.url(:size_200), class: "img-circle"
-          %li= link_to "My profile", current_user, class: "btn active"
-          %li= link_to 'Edir my profile', edit_user_registration_path, class:"btn active"
-          - if policy(current_user).index?
-            %li= link_to "Users", users_path, class: "btn active"
-          = navbar_dropdown "Настроить язык", class: "dropdown-submenu pull-left" do
-            - @langs.each do |lang|
-              = navbar_item lang.lang.capitalize
-          = navbar_dropdown_divider
-          %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete, class: "btn active" if user_signed_in?
-        %li= link_to image_tag("#{current_user.avatar.url(:thumb_50)}", :class => 'img-circle'), current_user
+        .dropdown
+          = link_to "Админпанель", '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
+          .dropdown-menu
+            = link_to "Аэропорты", admin_ap_airports_path, class: "btn dropdown-item"
+            = link_to "Авиакомпании", admin_al_aircompanies_path, class: "btn dropdown-item"
+            = link_to "Хабы а-компаний", admin_aphub_aphubs_path, class: "btn dropdown-item"
+            = link_to "Рейсы", admin_tt_timetableaps_path, class: "btn dropdown-item"
+            = link_to "Пользователи", users_path, class: "btn dropdown-item"
+            = link_to "ЖД станции", admin_stations_stations_path, class: "btn dropdown-item"
+            = link_to "Переводы", translations_path, class: "btn dropdown-item"
+        .dropdown
+          = link_to "твой профиль: #{current_user.username}", '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
+          .dropdown-menu.dropleft
+            = image_tag current_user.avatar.url(:size_200), class: "rounded-circle dropdown-item"
+            = link_to "My profile", current_user, class: "btn active dropdown-item"
+            = link_to 'Edir my profile', edit_user_registration_path, class:"btn active dropdown-item"
+            - if policy(current_user).index?
+              = link_to "Users", users_path, class: "btn active dropdown-item"
+            = link_to "Настроить язык", '#', class: "btn dropdown-item submenu"
+            .dropdown-menu
+              - @langs.each do |lang|
+                = link_to lang.lang.capitalize
+            .dropdown-divider
+            = link_to 'Sign Out', destroy_user_session_path, :method => :delete, class: "btn active dropdown-item" if user_signed_in?
+        = link_to image_tag("#{current_user.avatar.url(:thumb_50)}", :class => 'rounded-circle'), current_user

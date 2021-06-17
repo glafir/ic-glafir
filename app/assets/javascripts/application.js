@@ -10,8 +10,8 @@
 //= require bootstrap/clockpicker
 //= require bootstrap
 //= require bootstrap3-typeahead.min
-//= require bootstrap3-autocomplete-input
-//= require bootstrap3-autocomplete-input-init
+//= require bootstrap-autocomplete-input
+//= require bootstrap-autocomplete-input-init-turbolinks
 //= require dataTables/jquery.dataTables
 //= require_tree .
 //= require_self

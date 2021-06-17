@@ -6,7 +6,7 @@
   = @timetableaps.distinct.pluck(:aircompany_id).count
 
 = render "timetableaps/paginate_top"
-%table#tt.table-striped.table-hover.table-condensed
+%table.tt.table-striped.table-hover.table-condensed
   %thead
     %tr
       %th Flight number
@@ -115,7 +115,7 @@
     }
   } );
 
-  var table = $('#tt').DataTable({
+  var table = $('table.tt').DataTable({
     paging:   false,
     autoWidth: false,
     ordering: true,

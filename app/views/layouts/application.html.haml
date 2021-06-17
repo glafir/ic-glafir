@@ -2,17 +2,12 @@
 %html(lang="ru")
   = render "layouts/head.html"
   %body
-    .container
+    .container-fluid
       - if user_signed_in?
         = render "layouts/header.html"
-        .row
-          .col
-            = yield
+        = yield
       -else
-        .row
-          .col 
-            = yield
+        = yield
       %footer#footer.footer
-        .row
-          .col
-            = render "layouts/footer.html"
+        .row.justify-content-center
+          = render "layouts/footer.html"

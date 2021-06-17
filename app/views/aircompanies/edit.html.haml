@@ -1,6 +1,11 @@
-%h1 Editing aircompany
+.col-12
+  %h1.display-5 Editing aircompany #{@aircompany}
+.col-12
+  = link_to 'Show', @aircompany, :class => 'btn btn-default'
+  ||
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
 = render 'form'
-= link_to 'Show', @aircompany, :class => 'btn btn-default'
-|
-= link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
-
+.col-12
+  = link_to 'Show', @aircompany, :class => 'btn btn-default'
+  ||
+  = link_to t('.back', :default => t("helpers.links.back")), :back, :class => 'btn btn-default'
