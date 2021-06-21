@@ -34,90 +34,90 @@
           %li= msg
   .form-group.col-12.col-md-6
     = f.label :iata_code, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :iata_code, class: 'form-control col col-md-6'
+    = f.text_field :iata_code, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :icao_code, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :icao_code, class: 'form-control col col-md-6'
+    = f.text_field :icao_code, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :name_rus, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :name_rus, class: 'form-control col col-md-6'
+    = f.text_field :name_rus, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :name_eng, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :name_eng, class: 'form-control col col-md-6'
+    = f.text_field :name_eng, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :city_rus, class: "col col-md-6 col-form-label d-flex justify-content-start"
     - if params[:city_rus].blank?
-      = f.text_field :city_rus, class: 'form-control col col-md-6'
+      = f.text_field :city_rus, class: 'form-control col col-sm-8 col-md-6'
     - else
-      = f.text_field :city_rus, value: params[:city_rus], class: 'form-control', disabled: true
+      = f.text_field :city_rus, value: params[:city_rus], class: 'form-control col-sm-8 col-md-6', disabled: true
       = f.hidden_field :city_rus, :value => params[:city_rus]
   .form-group.col-12.col-md-6
     = f.label :city_eng, class: "col col-md-6 col-form-label d-flex justify-content-start"
     - if params[:city_eng].blank?
-      = f.text_field :city_eng, class: 'form-control col col-md-6'
+      = f.text_field :city_eng, class: 'form-control col col-sm-8 col-md-6'
     - else
-      = f.text_field :city_eng, value: params[:city_eng], class: 'form-control col col-md-6', disabled: true
+      = f.text_field :city_eng, value: params[:city_eng], class: 'form-control col col-sm-8 col-md-6', disabled: true
       = f.hidden_field :city_eng, :value => params[:city_eng]
   - if params[:town_id].blank?
     = f.input :town, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path, :input_html => {:class => 'dropdown col col-md-6'}
   - else
     .form-group.col-12.col-md-6
       = f.label :town_id, class: "col col-md-6 col-form-label d-flex justify-content-start"
-      = text_field_tag 'city', params[:city_eng], class: 'form-control col col-md-6', disabled: true
+      = text_field_tag 'city', params[:city_eng], class: 'form-control col col-sm-8 col-md-6', disabled: true
       = f.hidden_field :town_id, value: params[:town_id]
   .form-group.col-12.col-md-6
     = f.label :gmt_offset, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :gmt_offset, class: 'form-control col col-md-6'
+    = f.text_field :gmt_offset, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :time_zone, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = time_zone_select "airport", "time_zone", ActiveSupport::TimeZone.all, {}, class: 'form-control col col-md-6'
+    = time_zone_select "airport", "time_zone", ActiveSupport::TimeZone.all, {}, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :iso_code, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :iso_code, class: 'form-control col col-md-6'
+    = f.text_field :iso_code, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :country_id, class: "col col-md-6 col-form-label d-flex justify-content-start"
     - if params[:country_id].blank?
-      = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {}, class: 'form-control col col-md-6'
+      = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {}, class: 'form-control col col-sm-8 col-md-6'
     - else
-      = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {:selected => params[:country_id]}, {class: 'form-control col col-md-6'}
+      = f.select :country_id, Country.order(:country_name).collect{|item| [item.country_name, item.id]}, {:selected => params[:country_id]}, {class: 'form-control col col-sm-8 col-md-6'}
   .form-group.col-12.col-md-6
     = f.label :latitude, class: "col col-md-6 col-form-label d-flex justify-content-start"
     - if @lat
-      = f.text_field :latitude, value: @lat, class: 'form-control col col-md-6'
+      = f.text_field :latitude, value: @lat, class: 'form-control col col-sm-8 col-md-6'
     - else
-      = f.text_field :latitude, class: 'form-control col col-md-6'
+      = f.text_field :latitude, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :longitude, class: "col col-md-6 col-form-label d-flex justify-content-start"
     - if @lon
-      = f.text_field :longitude, value: @lon, class: 'form-control col col-md-6'
+      = f.text_field :longitude, value: @lon, class: 'form-control col col-sm-8 col-md-6'
     - else
-      = f.text_field :longitude, class: 'form-control col col-md-6'
+      = f.text_field :longitude, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :runway_length, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :runway_length, class: 'form-control col col-md-6'
+    = f.text_field :runway_length, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :runway_elevation, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :runway_elevation, class: 'form-control col col-md-6'
+    = f.text_field :runway_elevation, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :runnway_coll, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :runnway_coll, class: 'form-control col col-md-6'
+    = f.text_field :runnway_coll, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :phone, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :phone, class: 'form-control col col-md-6'
+    = f.text_field :phone, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :fax, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :fax, class: 'form-control col col-md-6'
+    = f.text_field :fax, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :email, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :email, class: 'form-control col col-md-6'
+    = f.text_field :email, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :website, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :website, class: 'form-control col col-md-6'
+    = f.text_field :website, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :TerminalsColl, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :TerminalsColl, class: 'form-control col col-md-6'
+    = f.text_field :TerminalsColl, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.label :Terminals, class: "col col-md-6 col-form-label d-flex justify-content-start"
-    = f.text_field :Terminals, class: 'form-control col col-md-6'
+    = f.text_field :Terminals, class: 'form-control col col-sm-8 col-md-6'
   .form-group.col-12.col-md-6
     = f.submit nil, class: 'btn btn-primary'
