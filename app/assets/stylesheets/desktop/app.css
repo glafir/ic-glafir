@@ -20,10 +20,6 @@ body {
     margin: 1% 1% 1% 1% !important
 }
 
-.sidebar-nav {
-     padding: 3px 1px;
-}
-
 @media (max-width: 980px) {
 /* Enable use of floated navbar text */
     .navbar-text.pull-right {
@@ -80,6 +76,12 @@ body {
 
 
 .marginBottom-0 {margin-bottom:0;}
+
+.navbar {
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+}
 
 .dropdown-menu{
         position:relative;

@@ -5,22 +5,22 @@
       - if user_signed_in?
         .dropdown
           = link_to 'Главное меню', '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
-          .dropdown-menu.dropright
+          .dropdown-menu.dropright.shadow-lg
             = link_to "Аэро:", '#', class: "btn dropdown-item submenu"
-            .dropdown-menu
+            .dropdown-menu.shadow-lg
               = link_to "Поиск и расстояние", '#', class: "btn dropdown-item submenu"
-              .dropdown-menu
+              .dropdown-menu.shadow-lg
                 = link_to "Поиск городов", '#', class: "btn dropdown-item"
                 = link_to "Поиск аэропортов", '#', class: "btn dropdown-item"
                 .dropleft
                   = link_to "Поиск рейсов", '#', class: "btn dropdown-item dropleft submenu pull-left"
-                  .dropdown-menu
+                  .dropdown-menu.shadow-lg
                     = link_to "Поиск рейсов прямых по аэропртам", timetableaps_path, class: "btn dropdown-item"
                     = link_to "Поиск рейсов прямых по городам", search_tt_path, class: "btn dropdown-item"
                 = link_to "Расстояния между а/п", ap_dist_airports_path, class: "btn dropdown-item"
                 = link_to "Поиск трансфертных рейсов",search_ap_circle_airports_path, class: "btn dropdown-item"
               = link_to "В мире", '#', class: "btn dropdown-item submenu"
-              .dropdown-menu
+              .dropdown-menu.shadow-lg
                 = link_to "Страны", countries_path, class: "btn dropdown-item"
                 = link_to "Города", towns_path, class: "btn dropdown-item"
                 = link_to "Аэропорты", airports_path, class: "btn dropdown-item"
@@ -28,19 +28,20 @@
                 = link_to "Кодшеринговые соглашения", airline_codeshares_path, class: "btn dropdown-item"
                 = link_to "Рейсы", timetableaps_path, class: "btn dropdown-item"
                 = link_to "ВПП аэропортов", runway_aps_path, class: "btn dropdown-item"
+                .dropdown-divider
                 .dropleft
                   = link_to "Добавить", '#', class: "btn dropdown-item submenu dropleft"
-                  .dropdown-menu
+                  .dropdown-menu.shadow-lg
                     = link_to "Добавить страну", new_country_path, class: "btn dropdown-item"
                     = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
                     = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
                     = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
                     = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
               = link_to "В Вашей стране:", '#', class: "btn dropdown-item submenu"
-              .dropdown-menu
-                = link_to "Города", controller: "/countries", action: "tw_show", id: 528, class: "dropdown-item"
-                = link_to "Аэропорты", controller: "/countries", action: "ap_show", id: 528, class: "dropdown-item"
-                = link_to "Авиакомпании", controller: "/countries", action: "al_show", id: 528, class: "dropdown-item"
+              .dropdown-menu.shadow-lg
+                = link_to "Города", {controller: "/countries", action: "tw_show", id: 528}, class: "btn dropdown-item"
+                = link_to "Аэропорты", {controller: "/countries", action: "ap_show", id: 528}, class: "btn dropdown-item"
+                = link_to "Авиакомпании", {controller: "/countries", action: "al_show", id: 528}, class: "btn dropdown-item"
                 = link_to "Рейсы", timetableaps_path, class: "btn dropdown-item"
                 = link_to "Терминалы", airport_terminals_path, class: "btn dropdown-item"
                 = link_to "Гейты", airport_terminal_gates_path, class: "btn dropdown-item"
@@ -48,12 +49,15 @@
                 .dropdown-divider
                 = link_to "Общая карта",ap_maps_airports_path, class: "btn dropdown-item"
                 .dropdown-divider
-                = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
-                = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
-                = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
-                = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
+                .dropleft
+                  = link_to "Добавить", '#', class: "btn dropdown-item submenu dropleft"
+                  .dropdown-menu.shadow-lg
+                    = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
+                    = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
+                    = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
+                    = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
             = link_to "ЖД:", '#', class: "btn dropdown-item submenu"
-            .dropdown-menu
+            .dropdown-menu.shadow-lg
               = link_to "ЖД станции и вокзалы", stations_path, class: "btn dropdown-item"
               = link_to "ЖД станции, их зоны", station_zones_path, class: "btn dropdown-item"
               = link_to "ЖД станции, их направления", rw_routes_path, class: "btn dropdown-item"
@@ -61,7 +65,7 @@
       - if user_signed_in? && current_user.admin?
         .dropdown
           = link_to "Админпанель", '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
-          .dropdown-menu
+          .dropdown-menu.shadow-lg
             = link_to "Аэропорты", admin_ap_airports_path, class: "btn dropdown-item"
             = link_to "Авиакомпании", admin_al_aircompanies_path, class: "btn dropdown-item"
             = link_to "Хабы а-компаний", admin_aphub_aphubs_path, class: "btn dropdown-item"
@@ -71,14 +75,14 @@
             = link_to "Переводы", translations_path, class: "btn dropdown-item"
         .dropdown
           = link_to "твой профиль: #{current_user.username}", '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
-          .dropdown-menu.dropleft
+          .dropdown-menu.dropleft.shadow-lg
             = image_tag current_user.avatar.url(:size_200), class: "rounded-circle dropdown-item"
             = link_to "My profile", current_user, class: "btn active dropdown-item"
             = link_to 'Edir my profile', edit_user_registration_path, class:"btn active dropdown-item"
             - if policy(current_user).index?
               = link_to "Users", users_path, class: "btn active dropdown-item"
             = link_to "Настроить язык", '#', class: "btn dropdown-item submenu"
-            .dropdown-menu
+            .dropdown-menu.shadow-lg
               - @langs.each do |lang|
                 = link_to lang.lang.capitalize
             .dropdown-divider

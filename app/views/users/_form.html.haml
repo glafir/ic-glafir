@@ -1,15 +1,15 @@
-= form_for @user, validate: true do |f|
+= simple_form_for @user, validate: true do |f|
   - if @user.errors.any?
     #error_explanation
       %h2
         = pluralize(@user.errors.count, "error")
-        prohibited this user from being saved:
+        This user from being saved:
       %ul
         - @user.errors.full_messages.each do |msg|
           %li= msg
   .field
     = f.label "Изменить avatar"
-    = f.file_field :avatar, :class => "jqbutton"
+    = f.file_field :avatar
   .field
     = f.label :username
     = f.text_field :username
@@ -26,9 +26,7 @@
     = f.label :time_zone
     = f.time_zone_select :time_zone
   .field
-    = f.label :town_id
-    = autocomplete_field_tag 'town', '', autocomplete_town_accent_city_towns_path, :size => 30, 'data-auto-focus' => true, :update_elements => {:id => '#user_town_id'}, :value => params[:town]
-    = f.hidden_field :town_id
+    = f.input :town, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
   %div
     = f.label :user_theme
     = f.select :user_theme_id, UserTheme.order(:theme).collect{|item| [item.theme, item.id]}
