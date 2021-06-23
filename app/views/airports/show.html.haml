@@ -1,21 +1,22 @@
 - cache @airport do
-  %h1 Аэропорт #{@airport.name_rus} (г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?})
+  %h1.display-5 Аэропорт #{@airport.name_rus}
+  %h3.display-5 г. #{link_to @airport.town.city_rus, country_town_path(@airport.country,@airport.town) unless @airport.town.blank?}
   = render "airports/tablo_links"
-  %ul.nav.nav-tabs
-    %li= link_to 'Об аэропорте', "#panel1", 'data-toggle' => "tab"
-    %li= link_to 'Авиакомпании и направления', "#panel2", 'data-toggle' => "tab"
-    %li= link_to 'Карта направлений', "#panel3", 'data-toggle' => "tab"
-    %li= link_to 'Поиск рейсов', "#panel4", 'data-toggle' => "tab"
-    %li= link_to 'История погоды', "#panel5", 'data-toggle' => "tab"
-  .tab-content
-    #panel1.tab-pane.fade.in.active
+  %ul.nav.nav-pills.flex-column.flex-sm-row.nav-tabs
+    %li.nav-item.flex-fill.text-center= link_to 'Об аэропорте', "#panel1", 'data-toggle' => "tab", class: 'nav-link active'
+    %li.nav-item.flex-fill.text-center= link_to 'Авиакомпании и направления', "#panel2", 'data-toggle' => "tab", class: 'nav-link'
+    %li.nav-item.flex-fill.text-center= link_to 'Карта направлений', "#panel3", 'data-toggle' => "tab", class: 'nav-link'
+    %li.nav-item.flex-fill.text-center= link_to 'Поиск рейсов', "#panel4", 'data-toggle' => "tab", class: 'nav-link'
+    %li.nav-item.flex-fill.text-center= link_to 'История погоды', "#panel5", 'data-toggle' => "tab", class: 'nav-link'
+  .tab-content#pills-tabContent
+    #panel1.tab-pane.fade.show.active
       = render "airports/info"
-    #panel2.tab-pane.fade
+    #panel2.tab-pane.fade.show
       = render "airports/direction_info"
-    #panel3.tab-pane.fade.in
+    #panel3.tab-pane.fade.show
       = render "airports/direction_map"
-    #panel4.tab-pane.fade.in
-    #panel5.tab-pane.fade.in
+    #panel4.tab-pane.fade.show
+    #panel5.tab-pane.fade.show
       = render "airports/weather_history"
 
 = link_to "Редактировать данные", edit_airport_path(@airport), class: "btn btn-primary"

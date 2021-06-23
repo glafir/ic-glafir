@@ -1,36 +1,36 @@
 #al_info_section.al_info_section
   %p
-    %b Iata code:
+    %b.badge.badge-secondary Iata code:
     = @aircompany.iata_code
   %p
-    %b Icao code:
+    %b.badge.badge-secondary Icao code:
     = @aircompany.icao_code
   %p
-    %b Airline name eng:
+    %b.badge.badge-secondary Airline name eng:
     = @aircompany.airline_name_eng
   %p
-    %b Airline name rus:
+    %b.badge.badge-secondary Airline name rus:
     = @aircompany.airline_name_rus if @aircompany.airline_name_rus
   %p
-    %b Base airport:
+    %b.badge.badge-secondary Base airport:
     = link_to @aircompany.airport.name_rus, @aircompany.airport if @aircompany.airport
     (г.#{link_to @aircompany.airport.city_rus, country_town_path(@aircompany.airport.country,@aircompany.airport.town) unless @aircompany.airport.nil?})
   %p
-    %b Общее количество рейсов в день (среднее)
+    %b.badge.badge-secondary Общее количество рейсов в день (среднее)
     = @aircompany.timetableaps_count
   %p
-    %b Country:
+    %b.badge.badge-secondary Country:
     = @aircompany.country.country_name if @aircompany.country
   %p
-    %b Start:
+    %b.badge.badge-secondary Start:
     = @aircompany.al_start
   - if @aircompany.al_finish != nil
     %p
-      %b Finish:
+      %b.badge.badge-secondary Finish:
       = @aircompany.al_finish
   - if @aircompany.childs != nil
     %p
-      %b Дочерние компании:
+      %b.badge.badge-secondary Дочерние компании:
       %br
       - @aircompany.childs.each do |aa|
         #{link_to aa.airline_name_rus, aa} базируется в а/п #{link_to aa.airport.name_rus, aa.airport} (г.#{link_to aa.airport.city_rus, country_town_path(aa.airport.country,aa.airport.town) unless aa.airport.town.blank?})

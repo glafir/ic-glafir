@@ -4,7 +4,7 @@
     = navbar_group class: 'mr-auto' do
       - if user_signed_in?
         .dropdown
-          = link_to 'Главное меню', '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
+          = link_to 'Главное меню', '#', class: "btn btn-outline-primary btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
           .dropdown-menu.dropright.shadow-lg
             = link_to "Аэро:", '#', class: "btn dropdown-item submenu"
             .dropdown-menu.shadow-lg
@@ -64,7 +64,7 @@
     = navbar_group do
       - if user_signed_in? && current_user.admin?
         .dropdown
-          = link_to "Админпанель", '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
+          = link_to "Админпанель", '#', class: "btn btn-outline-primary btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
           .dropdown-menu.shadow-lg
             = link_to "Аэропорты", admin_ap_airports_path, class: "btn dropdown-item"
             = link_to "Авиакомпании", admin_al_aircompanies_path, class: "btn dropdown-item"
@@ -74,7 +74,7 @@
             = link_to "ЖД станции", admin_stations_stations_path, class: "btn dropdown-item"
             = link_to "Переводы", translations_path, class: "btn dropdown-item"
         .dropdown
-          = link_to "твой профиль: #{current_user.username}", '#', class: "btn btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
+          = link_to "твой профиль: #{current_user.username}", '#', class: "btn btn-outline-primary btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
           .dropdown-menu.dropleft.shadow-lg
             = image_tag current_user.avatar.url(:size_200), class: "rounded-circle dropdown-item"
             = link_to "My profile", current_user, class: "btn active dropdown-item"
