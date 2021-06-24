@@ -1,4 +1,4 @@
-= form_for @user, validate: true do |f|
+= simple_form_for @user, validate: true do |f|
   - if @user.errors.any?
     #error_explanation
       %h2
@@ -23,8 +23,7 @@
     = f.label :password_confirmation
     = f.password_field :password_confirmation
   %div
-    = f.label :time_zone
-    = f.time_zone_select :time_zone
+    = f.input :town, :as => :autocomplete, :source_query => autocomplete_town_city_rus_towns_path
   .field
   %div
     = f.label :user_theme

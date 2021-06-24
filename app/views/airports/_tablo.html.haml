@@ -24,7 +24,18 @@
               %td{:width => 160}
                 .flight-parent
                   = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus
-                  = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax'})"
+                  = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), :remote => true, 'data-toggle' => "modal", 'data-target' => "#modal-#{timetableap.id}", 'data-keyboard' => "true"
+                  .modal.fade{:id => "modal-#{timetableap.id}", :role => "dialog", :aria-labelledby => "timetableapModalLabel", :aria-hidden => "true", :tabindex => '-1'}
+                    .modal-dialog{:role => "document"}
+                      .modal-content
+                        .modal-header
+                          %button.close{'data-dismiss' => "modal", 'aria-label' => "Close"}
+                            %span{'aria-hidden' => "true"} &times;
+                          %h4.modal-title Info about #{timetableap.flight}
+                        .modal-body
+                          .flight-state{:id => "#{timetableap.id}"} FLIGHT!!!
+                        .modal-footer
+                          %button.btn.btn-info{'data-dismiss'=> "modal", :onclick => "$('.message-body').empty();"} Close
             %tr
               - timetableap.childs.each do |child|
                 %td
@@ -60,7 +71,8 @@
         ordering: true,
         info:     false,
         stateSave: true,
-        "order": [[ 0, "asc" ]]
+        searching: false,
+        order: [[ 0, "asc" ]]
       });
     });}
   });

@@ -1,4 +1,4 @@
 #apple_pagination.apple_pagination
-  = paginate @timetableaps, :theme => 'mobile'
+  = paginate @timetableaps, :remote => true, :theme => 'mobile'
 .page_info
   = page_entries_info @timetableaps

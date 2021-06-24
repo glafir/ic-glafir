@@ -1,0 +1,65 @@
+%h1.display-1.text-center.text-uppercase
+  Рейс: #{@timetableap.flight}
+  .small
+    - unless @timetableap.parent_id.blank?
+      (Совмещён с рейсом #{link_to @timetableap.parent.flight, flight_state_timetableap_path(@timetableap.parent)})
+.raw
+  .col-lg-4.col-md-4.col-sm-4.col-xs-4
+    %h5.display-5.text-center.text-uppercase Отправление:
+    .display-4.font-weight-bold.text-center
+      %mark= @timetableap.time_start.in_time_zone(@timetableap.airport_start.time_zone).to_s(:time)
+    .font-weight-bold.text-center= link_to @timetableap.airport_start.town.city_rus, @timetableap.airport_start.town
+    .text-center.small= link_to @timetableap.airport_start.name_rus, @timetableap.airport_start
+    %h3.text-center
+      - @wheather_airport_start.main.each do |w|
+        %i(class="wi wi-owm-#{w['id']} wi-fw")
+        #{sprintf("%.2f", @wheather_airport_start.temperature - 273.15).to_f}C &nbsp;
+
+  .col-lg-4.col-md-4.col-sm-4.col-xs-4
+
+  .col-lg-4.col-md-4.col-sm-4.col-xs-4
+    %h5.display-5.text-center.text-uppercase Прибытие:
+    .display-4.font-weight-bold.text-center.font-size-100
+      %mark= @timetableap.time_finish.in_time_zone(@timetableap.airport_finish.time_zone).to_s(:time)
+    .font-weight-bold.text-center= link_to @timetableap.airport_finish.town.city_rus, @timetableap.airport_finish.town
+    .text-center.small= link_to @timetableap.airport_finish.name_rus, @timetableap.airport_finish
+    %h3.text-center
+      - @wheather_airport_finish.main.each do |w|
+        %i(class="wi wi-owm-#{w['id']} wi-fw")
+        #{sprintf("%.2f", @wheather_airport_finish.temperature - 273.15).to_f}C &nbsp;
+
+
+.raw
+  .col-lg-4.col-md-4.col-sm-6.col-xs-12
+    %h4.display-4 Время в пути:
+    - if @timetableap.timeStart < @timetableap.timeEnd
+      = Time.diff(Time.parse(@timetableap.timeStart.to_s), Time.parse(@timetableap.timeEnd.to_s), '%H %N')[:diff]
+    - else
+      - @timetableap.timeEnd = @timetableap.timeEnd + 24.hour
+      = Time.diff(Time.parse(@timetableap.timeStart.to_s), Time.parse(@timetableap.timeEnd.to_s), '%H %N')[:diff]
+    %h4.display-4 Статус:
+    - if @timetableap.time_start < Time.zone.now and @timetableap.time_finish < Time.zone.now
+      Прибыл в #{@timetableap.airport_finish.town.city_rus}
+    - elsif @timetableap.time_start < Time.zone.now and @timetableap.time_finish > Time.zone.now  
+      В полёте
+    - else
+      Ожидает.
+
+  .col-lg-8.col-md-8.col-sm-6.col-xs-12
+    %h4.display-4 Перевозчик:
+    %p
+      = link_to @timetableap.aircompany.airline_name_rus, @timetableap.aircompany
+      (базовый аэропорт #{link_to @timetableap.aircompany.airport.name_rus, @timetableap.aircompany})
+
+    %h4.display-4 Type of plane:
+    %p= @timetableap.aircraft.aircraft_model if @timetableap.aircraft
+
+    %b Выполняется самолётом авиакомпании
+    = (@timetableap.parent_id.blank?) ? (link_to @timetableap.aircompany.airline_name_rus, @timetableap.aircompany) : (link_to @timetableap.parent.aircompany.airline_name_rus, @timetableap.parent.aircompany)
+
+%p
+  %a{:href => "/search_tt?utf8=%E2%9C%93&search_tt%5Btown_start_id%5D=#{@timetableap.airport_start.town.id}&search_tt%5Btown_start%5D=#{@timetableap.airport_start.town.city_rus}&search_tt%5Btown_finish_id%5D=#{@timetableap.airport_finish.town.id}&search_tt%5Btown_finish%5D=#{@timetableap.airport_finish.town.city_rus}&aircraft=#{@timetableap.aircraft.nil? ? 18 : @timetableap.aircraft.id}&commit=Search+Flights"} Другие рейсы по данному направлению
+  
+%p
+  - if policy(@timetableap).edit?
+    = link_to "Редактировать рейс", edit_timetableap_path(@timetableap)

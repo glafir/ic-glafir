@@ -12,7 +12,7 @@
         - @aircompany.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id: @aircompany.id).each do |tt|
           - cache tt do
             %tr
-              %td
+              %td.col-4
                 - @aircompany.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                   #{fl.flight_number},
               %td
@@ -38,7 +38,7 @@
           - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
             - cache tt do
               %tr
-                %td
+                %td.col-4
                   - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                     #{fl.flight_number},
                 %td
@@ -60,7 +60,7 @@
             %th Направления
           - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
             %tr
-              %td
+              %td.col-4
                 - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                   #{fl.flight_number},
               %td
@@ -84,7 +84,7 @@
             %th Направления
           - aphub.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id:@aircompany.id).each do |tt|
             %tr
-              %td
+              %td.col-4
                 - aphub.airport.timetableaps_out.where(aircompany_id: @aircompany.id).where(airport_finish_id: tt.airport_finish_id).order("flight_number").each do |fl|
                   #{fl.flight_number},
               %td

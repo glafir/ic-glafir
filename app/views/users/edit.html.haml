@@ -3,7 +3,7 @@
 .field-form
   .field-form-section
     .round-image-250
-      = image_tag @user.avatar.size_300
+      = image_tag @user.avatar.size_300.url
   .field-form-section
     = render 'form'
     = link_to 'Show', @user, class: "btn btn-primary"

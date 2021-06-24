@@ -3,11 +3,9 @@
   = render "layouts/head.mobile"
   %body
     - if user_signed_in?
-      = bootstrap_flash
       = render "layouts/left.mobile"
       = yield
     -else
-      = bootstrap_flash
       = yield
 
     %footer#footer.footer

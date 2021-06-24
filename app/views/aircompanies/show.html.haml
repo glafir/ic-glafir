@@ -1,34 +1,40 @@
 - cache @aircompany do
-  %h1
-    Авиакомпания #{@aircompany.airline_name_rus}
+  %h1.display-5
+    Авиакомпания #{@aircompany}
   - if @aircompany.manager_id != nil
-    %h3
+    %h3.text-muted
       (является дочерней авиакомпанией #{link_to @aircompany.manager.airline_name_rus, @aircompany.manager}.)
   .row
-    %ul.nav.nav-tabs
-      %li= link_to 'Информация об авикомпании', "#panel1", 'data-toggle' => "tab"
-      %li= link_to 'Хабы и направления', "#panel2", 'data-toggle' => "tab"
-      %li= link_to 'Рейсы на собственных самолётах', "#panel3", 'data-toggle' => "tab"
-      %li= link_to 'Рейсы на компаниях-партнёрах', "#panel4", 'data-toggle' => "tab"
-  .tab-content
-    #panel1.tab-pane.fade.in.active
-      .col-lg-6.col-md-6.col-sm-6.col-xs-12
-        = render "aircompanies/al_logo"
-      .col-lg-6.col-md-6.col-sm-6.col-xs-12
-        = render "aircompanies/al_info"
-      = render "aircompanies/ap_maps"
-    #panel2.tab-pane.fade.in.col-lg-12.col-md-12.col-sm-12.col-xs-12
-      =render "al_hubs"
-    #panel3.tab-pane.fade.in.col-lg-12.col-md-12.col-sm-12.col-xs-12
-      %fieldset
-        %legend
-          %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
-        #timetableaps= render "timetableaps/timetableaps"
-    #panel4.tab-pane.fade.in.col-lg-12.col-md-12.col-sm-12.col-xs-12
-      %fielset
-        %legend
-          %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
-        - @timetableaps = @aircompany.timetableaps.where('parent_id is not NULL').order(:Flight_Number).page(params[:page]).per(params[:per_page])
-        #timetableaps= render "timetableaps/timetableaps"
-  - if policy(@aircompany).edit?
-    = link_to 'Edit', edit_aircompany_path(@aircompany), class: "btn btn-primary"
+    .col-12
+      %ul.nav.nav-pills.flex-column.flex-sm-row.nav-tabs
+        %li.nav-item.flex-fill.text-center= link_to 'Информация об авикомпании', "#panel1", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link active'
+        %li.nav-item.flex-fill.text-center= link_to 'Хабы и направления', "#panel2", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+        %li.nav-item.flex-fill.text-center= link_to 'Рейсы на собственных самолётах', "#panel3", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+        %li.nav-item.flex-fill.text-center= link_to 'Рейсы на компаниях-партнёрах', "#panel4", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+        %li.nav-item.flex-fill.text-center= link_to 'Карта полётов', "#panel5", 'data-toggle' => "pill", 'role' => "tab", class: 'nav-link'
+      .tab-content#pills-tabContent
+        #panel1.tab-pane.fade.show.active
+          .row
+            .col-12.col-sm-12.col-md-7.col-lg-7.col-xl-7
+              = render "aircompanies/al_logo"
+            .col-12.col-sm-12.col-md-5.col-lg-5.col-xl-5
+              = render "aircompanies/al_info"
+        #panel2.tab-pane.fade.in
+          =render "al_hubs"
+        #panel3.tab-pane.fade.in
+          %fieldset
+            %legend
+              %h3 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на собственных самолётах.
+            #timetableaps= render "timetableaps/timetableaps"
+        #panel4.tab-pane.fade.in
+          %fielset
+            %legend
+              %h2 Рейсы #{@aircompany.airline_name_rus} (#{@aircompany.airline_name_eng}), выполняемые на самолётах других авиакомпаний.
+            - @timetableaps = @aircompany.timetableaps.where('parent_id is not NULL').order(:Flight_Number).page(params[:page]).per(params[:per_page])
+            #timetableaps= render "timetableaps/timetableaps"
+        #panel5.tab-pane.fade.in 
+          = render "aircompanies/ap_maps"
+  .row
+    .col-12
+      - if policy(@aircompany).edit?
+        = link_to 'Edit', edit_aircompany_path(@aircompany), class: "btn btn-primary"

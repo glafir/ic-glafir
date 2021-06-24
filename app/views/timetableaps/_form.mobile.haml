@@ -1,185 +1,157 @@
-= simple_form_for @timetableap, html: { class: "form-horizontal" }, validate: true do |f|
+= simple_form_for @timetableap, html: { class: "form-inline" }, validate: true do |f|
   = f.error_notification
-  .form-inputs
-    .col-lg-6.col-md-6.col-sm-6.col-xs-12
-      .form-group
-        .controls.col-lg-3.col-md-3.col-xs-4
-          - if params[:flight_number].blank?
-            = f.input :flight_number, input_html: {autofocus: true}
-          - else
-            = f.input :flight_number, input_html: {:value => ((params[:flight_number]).to_i + 1).to_s, autofocus: true}
-      - if current_user.alclient?
-        = f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s
-        .form-group
-          .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-            = text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true, class: 'form-control'
+  .row
+    - if params[:flight_number].blank?
+      = f.input :flight_number, input_html: {autofocus: true}, :input_html => {:class => 'dropdown col col-md-6'}
+    - else
+      = f.input :flight_number, input_html: {:value => ((params[:flight_number]).to_i + 1).to_s, autofocus: true}, :input_html => {:class => 'dropdown col col-md-6'}
+    - if current_user.alclient?
+      = f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s
+      = text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true, class: 'col col-md-6'
+    - else
+      - if params[:aircompany_id].blank?
+        = f.input :aircompany, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path, :input_html => {:class => 'form-control typeahead border-primary col col-md-6'}
       - else
-        .form-group
-          .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-            - if params[:aircompany_id].blank?
-              = f.input :aircompany, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path
-            - else
-              = f.input :aircompany, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path, :value => params[:aircompany_id]
-      - if params[:parent_id] != nil
-        .form-group
-          .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-            = f.text_field :parent_id, value: params[:parent_id], class: 'form-control'
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:parent_id] != nil
-            = f.text_field :airport_start_id, :value => params[:airport_start_id], class: 'form-control'
-          - else
-            - if params[:airport_finish_id].nil?
-              = f.input :airport_start, :as => :autocomplete, :source_query =>  autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :items => 20
-            - else
-              = f.input :airport_start, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:airport_finish_id]
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:parent_id] != nil
-            = f.text_field :airport_finish_id, value: params[:airport_finish_id], class: 'form-control'
-          - else
-            - if params[:airport_start_id].nil?
-              = f.input :airport_finish, :as => :autocomplete, :source_query =>  autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, class: 'form-control', :items => 20
-            - else
-              = f.input :airport_finish, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:airport_start_id]
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          = f.input :TermStart, class: 'form-control'
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          = f.input :GateStart, class: 'form-control'
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          = f.input :TermEnd, class: 'form-control'
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          = f.input :GateEnd, class: 'form-control'
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:dateOfStartNav].blank?
-            = f.input :dateOfStartNav, as: :string, input_html: {size: 8, class: 'form-control datepicker'}
-          - else
-            = f.input :dateOfStartNav, as: :string, input_html: {size: 8, value: params[:dateOfStartNav], class: 'datepicker'}
-      .form-group
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:dateOfEndNav].blank?
-            = f.input :dateOfEndNav, as: :string, input_html: {size: 8, class: 'datepicker'}
-          - else
-            = f.input :dateOfEndNav, as: :string, input_html: {size: 8, value: params[:dateOfEndNav], class: 'datepicker'}
+        = f.input :aircompany, :as => :autocomplete, :source_query => autocomplete_aircompany_airline_name_rus_aircompanies_path, :value => params[:aircompany_id], :input_html => {:class => 'form-control typeahead border-primary col col-md-6'}
+    - if params[:parent_id] != nil
+      = f.text_field :parent_id, value: params[:parent_id], class: 'form-control col col-md-6'
+    - if params[:parent_id] != nil
+      = f.text_field :airport_start_id, :value => params[:airport_start_id], class: 'form-control col col-md-6'
+    - else
+      - if params[:airport_finish_id].nil?
+        = f.input :airport_start, :as => :autocomplete, :source_query =>  autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, :items => 20, :input_html => {:class => 'dropdown col col-md-6'}
+      - else
+        = f.input :airport_start, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:airport_finish_id], :input_html => {:class => 'dropdown col col-md-6'}
+    - if params[:parent_id] != nil
+      = f.text_field :airport_finish_id, value: params[:airport_finish_id], class: 'form-control col col-md-6'
+    - else
+      - if params[:airport_start_id].nil?
+        = f.input :airport_finish, :as => :autocomplete, :source_query =>  autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, class: 'form-control', :items => 20, :input_html => {:class => 'dropdown col col-md-6'}
+      - else
+        = f.input :airport_finish, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:airport_start_id], :input_html => {:class => 'dropdown col col-md-6'}
+    = f.input :TermStart, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
+    = f.input :GateStart, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
+    = f.input :TermEnd, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
+    = f.input :GateEnd, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
+    - if params[:dateOfStartNav].blank?
+      = f.input :dateOfStartNav, as: :string, input_html: { class: 'form-control datepicker col col-md-6'}
+    - else
+      = f.input :dateOfStartNav, as: :string, input_html: { value: params[:dateOfStartNav], class: 'form-control datepicker col col-md-6'}
+    - if params[:dateOfEndNav].blank?
+      = f.input :dateOfEndNav, as: :string, input_html: { class: 'form-control datepicker col col-md-6'}
+    - else
+      = f.input :dateOfEndNav, as: :string, input_html: { class: 'form-control datepicker col col-md-6'}
+    .form-group.col-12.col-md-6
+      = f.label :timeStart, class: 'col col-sm-4 col-md-6 col-form-label d-flex justify-content-start'
+      .controls.col.col-md-6.input-group.clockpicker{:data => {:autoclose => "true"}}
+        - if params[:parent_id].blank?
+          %span.glyphicon.glyphicon-time.gi-2x
+          = f.text_field :timeStart, class: 'form-control col'
+          %span.glyphicon.glyphicon-time.gi-2x
+        - else
+          = f.text_field :timeStart, value: params[:timeStart], class: 'form-control'
+    .form-group.col-12.col-md-6
+      = f.label :timeEnd, class: 'col col-sm-4 col-md-6 col-form-label d-flex justify-content-start'
+      .controls.col.col-md-6.input-group.clockpicker{:data => {:autoclose => "true"}}
+        - if params[:parent_id].blank?
+          %span.glyphicon.glyphicon-time.gi-2x
+          = f.text_field :timeEnd, class: 'form-control'
+          %span.glyphicon.glyphicon-time.gi-2x
+        - else
+          = f.text_field :timeEnd, value: params[:timeEnd], class: 'form-control'
+    .form-group.col-12.col-md-6
+      = f.label :aircraft_id, class: 'col col-sm-4 col-md-6 col-form-label d-flex justify-content-start'
+      - if params[:aircraft_id].blank?
+        = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, {}, class: 'form-control col col-sm-8 col-md-6'
+      - else
+        = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, {:selected => params[:aircraft_id]}, class: 'form-control'
 
-    .col-lg-6.col-md-6.col-sm-6.col-xs-12
-      .form-group
-        = f.label :aircraft_id, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:aircraft_id].blank?
-            = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, {}, class: 'form-control'
-          - else
-            = f.collection_select :aircraft_id, Aircraft.order(:aircraft_company_id).order(:aircraft_model), :id, :aircraft_model, {:selected => params[:aircraft_id]}, class: 'form-control'
-      .form-group
-        = f.label :timeStart, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8.input-group.clockpicker{:data => {:placement => "right", :align => "top", :autoclose => "true"}}
-          - if params[:parent_id].blank?
-            = f.text_field :timeStart, class: 'form-control'
-            %span.input-group-addon
-              %span.glyphicon.glyphicon-time
-          - else
-            = f.text_field :timeStart, value: params[:timeStart], class: 'form-control'
-      .form-group
-        = f.label :timeEnd, class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8.input-group.clockpicker{:data => {:placement => "right", :align => "top", :autoclose => "true"}}
-          - if params[:parent_id].blank?
-            = f.text_field :timeEnd, class: 'form-control'
-            %span.input-group-addon
-              %span.glyphicon.glyphicon-time
-          - else
-            = f.text_field :timeEnd, value: params[:timeEnd], class: 'form-control'
-      .form-group
-        = f.label "Mon", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s1] != "1"
-            = f.check_box(:s1,{},1,0)
-          - else
-            = f.check_box(:s1,{checked: "checked"},1,0)
-          - if params[:e1] != "1"
-            = f.check_box(:e1,{},1,0)
-          - else
-            = f.check_box(:e1,{checked: "checked"},1,0)
-      .form-group
-        = f.label "Tue", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s2] != "1"
-            = f.check_box(:s2,{},1,0)
-          - else
-            = f.check_box(:s2,{checked: "checked"},1,0)
-          - if params[:e2] != "1"
-            = f.check_box(:e2,{},1,0)
-          - else
-            = f.check_box(:e2,{checked: "checked"},1,0)
-      .form-group
-        = f.label "Wen", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s3] != "1"
-            = f.check_box(:s3,{},1,0)
-          - else
-            = f.check_box(:s3,{checked: "checked"},1,0)
-          - if params[:e3] != "1"
-            = f.check_box(:e3,{},1,0)
-          - else
-            = f.check_box(:e3,{checked: "checked"},1,0)
-      .form-group
-        = f.label "The", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s4] != "1"
-            = f.check_box(:s4,{},1,0)
-          - else
-            = f.check_box(:s4,{checked: "checked"},1,0)
-          - if params[:e4] != "1"
-            = f.check_box(:e4,{},1,0)
-          - else
-            = f.check_box(:e4,{checked: "checked"},1,0)
-      .form-group
-        = f.label "Fri", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s5] != "1"
-            = f.check_box(:s5,{},1,0)
-          - else
-            = f.check_box(:s5,{checked: "checked"},1,0)
-          - if params[:e5] != "1"
-            = f.check_box(:e5,{},1,0)
-          - else
-            = f.check_box(:e5,{checked: "checked"},1,0)
-      .form-group
-        = f.label "Sat", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s6] != "1"
-            = f.check_box(:s6,{},1,0)
-          - else
-            = f.check_box(:s6,{checked: "checked"},1,0)
-          - if params[:e6] != "1"
-            = f.check_box(:e6,{},1,0)
-          - else
-            = f.check_box(:e6,{checked: "checked"},1,0)
-      .form-group
-        = f.label "Sun", class: 'col-lg-2 col-md-2 col-sm-2 col-xs-4 control-label'
-        .controls.col-lg-4.col-md-4.col-sm-4.col-xs-8
-          - if params[:s0] != "1"
-            = f.check_box(:s0,{},1,0)
-          - else
-            = f.check_box(:s0,{checked: "checked"},1,0)
-          - if params[:e0] != "1"
-            = f.check_box(:e0,{},1,0)
-          - else
-            = f.check_box(:e0,{checked: "checked"},1,0)
-    .form-group
-      .controls.col-xs-offset-6.col-xs-6
-        = f.submit nil, class: 'btn btn-primary'
-    :javascript
-      var elems = Array.prototype.slice.call(document.querySelectorAll("input[type=checkbox]"));
-          elems.forEach(function(elem) {
-          var switchery = new Switchery(elem,{
-      //	  color: '#00a1d2',
-      //	  jackColor: '#22c3f3',
-      //        secondaryColor: '#505050',
-      //	  jackSecondaryColor: '#606060'
-        });
-      });
+    .form-row.col-12.col-md-6
+      = f.label "Days", class: 'col-12 col-form-label d-flex justify-content-start'
+      .form-group.col-6
+        = f.label "Mon", class: 'col-4 col-sm-7 col-md-4 d-flex justify-content-end'
+        - if params[:s1] != "1"
+          = f.check_box(:s1,{},1,0)
+        - else
+          = f.check_box(:s1,{checked: "checked"},1,0)
+        - if params[:e1] != "1"
+          = f.check_box(:e1,{},1,0)
+        - else
+          = f.check_box(:e1,{checked: "checked"},1,0)
+      .form-group.col-6
+        = f.label "Tue", class: 'col-4 d-flex justify-content-end'
+        - if params[:s2] != "1"
+          = f.check_box(:s2,{},1,0)
+        - else
+          = f.check_box(:s2,{checked: "checked"},1,0)
+        - if params[:e2] != "1"
+          = f.check_box(:e2,{},1,0)
+        - else
+          = f.check_box(:e2,{checked: "checked"},1,0)
+      .form-group.col-6
+        = f.label "Wen", class: 'col-4 col-sm-7 col-md-4 d-flex justify-content-end'
+        - if params[:s3] != "1"
+          = f.check_box(:s3,{},1,0)
+        - else
+          = f.check_box(:s3,{checked: "checked"},1,0)
+        - if params[:e3] != "1"
+          = f.check_box(:e3,{},1,0)
+        - else
+          = f.check_box(:e3,{checked: "checked"},1,0)
+      .form-group.col-6
+        = f.label "The", class: 'col-4 d-flex justify-content-end'
+        - if params[:s4] != "1"
+          = f.check_box(:s4,{},1,0)
+        - else
+          = f.check_box(:s4,{checked: "checked"},1,0)
+        - if params[:e4] != "1"
+          = f.check_box(:e4,{},1,0)
+        - else
+          = f.check_box(:e4,{checked: "checked"},1,0)
+      .form-group.col-6
+        = f.label "Fri", class: 'col-4 col-sm-7 col-md-4 d-flex justify-content-end'
+        - if params[:s5] != "1"
+          = f.check_box(:s5,{},1,0)
+        - else
+          = f.check_box(:s5,{checked: "checked"},1,0)
+        - if params[:e5] != "1"
+          = f.check_box(:e5,{},1,0)
+        - else
+          = f.check_box(:e5,{checked: "checked"},1,0)
+      .form-group.col-6
+        = f.label "Sat", class: 'col-4 d-flex justify-content-end'
+        - if params[:s6] != "1"
+          = f.check_box(:s6,{},1,0)
+        - else
+          = f.check_box(:s6,{checked: "checked"},1,0)
+        - if params[:e6] != "1"
+          = f.check_box(:e6,{},1,0)
+        - else
+          = f.check_box(:e6,{checked: "checked"},1,0)
+      .form-group.col-6
+        = f.label "Sun", class: 'col-4 col-sm-7 col-md-4 d-flex justify-content-end'
+        - if params[:s0] != "1"
+          = f.check_box(:s0,{},1,0)
+        - else
+          = f.check_box(:s0,{checked: "checked"},1,0)
+        - if params[:e0] != "1"
+          = f.check_box(:e0,{},1,0)
+        - else
+          = f.check_box(:e0,{checked: "checked"},1,0)
+    .form-group.col-12
+      = f.submit nil, class: 'btn btn-primary'
+:javascript
+  var elems = Array.prototype.slice.call(document.querySelectorAll("input[type=checkbox]"));
+      elems.forEach(function(elem) {
+      var switchery = new Switchery(elem,{
+      color: '#00a1d2',
+      jackColor: '#22c3f3',
+      secondaryColor: '#505050',
+      jackSecondaryColor: '#606060'
+    });
+  });
+
+//  $('.clockpicker').clockpicker({
+//    placement: 'top',
+//    align: 'left'
+//  });

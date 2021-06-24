@@ -36,11 +36,16 @@
           %td= link_to 'Edit', edit_aircompany_path(aircompany), class: 'btn btn-info'
         - if policy(aircompany).destroy?
           %td= link_to 'Destroy', aircompany, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
-
 :javascript
   $(document).ready(function(){
-    $("#aircompany").tablesorter({
-      widgets: ["zebra"],
-      sortList:[[4,0]]
+      $('#aircompany').DataTable( {
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        searching: false,
+        order: [[ 0, "asc" ]]
       });
+      $('.dataTables_length').addClass('bs-select');
   });
