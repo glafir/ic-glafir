@@ -5,22 +5,22 @@
       - if user_signed_in?
         .dropdown
           = link_to 'Главное меню', '#', class: "btn btn-outline-primary btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
-          .dropdown-menu.dropright.shadow-lg
+          .dropdown-menu.dropdown-submenu.dropright.shadow-lg
             = link_to "Аэро:", '#', class: "btn dropdown-item submenu"
-            .dropdown-menu.shadow-lg
+            .dropdown-menu.dropdown-submenu.shadow-lg
               = link_to "Поиск и расстояние", '#', class: "btn dropdown-item submenu"
-              .dropdown-menu.shadow-lg
+              .dropdown-menu.dropdown-submenu.shadow-lg
                 = link_to "Поиск городов", '#', class: "btn dropdown-item"
                 = link_to "Поиск аэропортов", '#', class: "btn dropdown-item"
                 .dropleft
                   = link_to "Поиск рейсов", '#', class: "btn dropdown-item dropleft submenu pull-left"
-                  .dropdown-menu.shadow-lg
+                  .dropdown-menu.dropdown-submenu.shadow-lg
                     = link_to "Поиск рейсов прямых по аэропртам", timetableaps_path, class: "btn dropdown-item"
                     = link_to "Поиск рейсов прямых по городам", search_tt_path, class: "btn dropdown-item"
                 = link_to "Расстояния между а/п", ap_dist_airports_path, class: "btn dropdown-item"
                 = link_to "Поиск трансфертных рейсов",search_ap_circle_airports_path, class: "btn dropdown-item"
               = link_to "В мире", '#', class: "btn dropdown-item submenu"
-              .dropdown-menu.shadow-lg
+              .dropdown-menu.dropdown-submenu.shadow-lg
                 = link_to "Страны", countries_path, class: "btn dropdown-item"
                 = link_to "Города", towns_path, class: "btn dropdown-item"
                 = link_to "Аэропорты", airports_path, class: "btn dropdown-item"
@@ -31,14 +31,14 @@
                 .dropdown-divider
                 .dropleft
                   = link_to "Добавить", '#', class: "btn dropdown-item submenu dropleft"
-                  .dropdown-menu.shadow-lg
+                  .dropdown-menu.dropdown-submenu.shadow-lg
                     = link_to "Добавить страну", new_country_path, class: "btn dropdown-item"
                     = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
                     = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
                     = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
                     = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
               = link_to "В Вашей стране:", '#', class: "btn dropdown-item submenu"
-              .dropdown-menu.shadow-lg
+              .dropdown-menu.dropdown-submenu.shadow-lg
                 = link_to "Города", {controller: "/countries", action: "tw_show", id: 528}, class: "btn dropdown-item"
                 = link_to "Аэропорты", {controller: "/countries", action: "ap_show", id: 528}, class: "btn dropdown-item"
                 = link_to "Авиакомпании", {controller: "/countries", action: "al_show", id: 528}, class: "btn dropdown-item"
@@ -51,13 +51,13 @@
                 .dropdown-divider
                 .dropleft
                   = link_to "Добавить", '#', class: "btn dropdown-item submenu dropleft"
-                  .dropdown-menu.shadow-lg
+                  .dropdown-menu.dropdown-submenu.shadow-lg
                     = link_to "Добавить город", new_town_path, class: "btn dropdown-item"
                     = link_to "Добавить аэропорт", new_airport_path, class: "btn dropdown-item"
                     = link_to "Добавить Авиакомпанию", new_aircompany_path, class: "btn dropdown-item"
                     = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
             = link_to "ЖД:", '#', class: "btn dropdown-item submenu"
-            .dropdown-menu.shadow-lg
+            .dropdown-menu.dropdown-submenu.shadow-lg
               = link_to "ЖД станции и вокзалы", stations_path, class: "btn dropdown-item"
               = link_to "ЖД станции, их зоны", station_zones_path, class: "btn dropdown-item"
               = link_to "ЖД станции, их направления", rw_routes_path, class: "btn dropdown-item"

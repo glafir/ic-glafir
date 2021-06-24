@@ -14,7 +14,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'col-4 col-md-6 col-form-label d-flex justify-content-start'
 
-    b.use :input, class: 'form-control'
+    b.use :input, class: 'form-control dropdown'
     b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end

@@ -83,10 +83,10 @@ body {
     box-shadow: 0 8px 6px -6px #999;
 }
 
-.dropdown-menu{
+.dropdown-submenu{
         position:relative;
 }
-.dropdown-menu .dropdown-menu {
+.dropdown-submenu .dropdown-submenu {
         top: auto;
         transform: translateY(-2rem);
         margin-top:-6px;
@@ -95,7 +95,7 @@ body {
         -moz-border-radius:0 6px 6px 6px;
         border-radius:0 6px 6px 6px;
 }
-.dropdown-item + .dropdown-menu {
+.dropdown-item + .dropdown-submenu {
         display: none;
 }
 .dropdown-item.submenu::after {
@@ -103,7 +103,7 @@ body {
         margin-left: 0.5rem;
 }
 .dropdown-item:hover + .dropdown-menu,
-.dropdown-menu:hover {
+.dropdown-submenu:hover {
         display: block;
 }
 
@@ -126,3 +126,13 @@ body {
 .btn-tt span.text {
     padding: 2px;
 }
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+.gi-6x{font-size: 6em;}
+.gi-7x{font-size: 7em;}
+.gi-8x{font-size: 8em;}
+.gi-9x{font-size: 9em;}
+
