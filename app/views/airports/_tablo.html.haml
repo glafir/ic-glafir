@@ -29,11 +29,13 @@
                     .modal-dialog{:role => "document"}
                       .modal-content
                         .modal-header
+                          %h4.modal-title Info about #{timetableap.flight}
                           %button.close{'data-dismiss' => "modal", 'aria-label' => "Close"}
                             %span{'aria-hidden' => "true"} &times;
-                          %h4.modal-title Info about #{timetableap.flight}
                         .modal-body
-                          .flight-state{:id => "#{timetableap.id}"} FLIGHT!!!
+                          .flight-state{:id => "#{timetableap.id}"}
+                            -#= render "timetableaps/flight_state"
+                            %h1 hello!
                         .modal-footer
                           %button.btn.btn-info{'data-dismiss'=> "modal", :onclick => "$('.message-body').empty();"} Close
             %tr

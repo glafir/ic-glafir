@@ -108,23 +108,23 @@ body {
 }
 
 .wi-table {
-	font-size:50px;
+	font-size:4em;
 }
 
 .wi-show {
-        font-size:70px;
+        font-size:6em;
 }
 
 .btn-tt {
 	display: block;
-	padding: 0px;
+	padding: 0;
 	margin: 0;
 	border: 1px solid #000;
 	border-radius: 15px;
 }
 
 .btn-tt span.text {
-    padding: 2px;
+    padding: 0.5rem;
 }
 
 .gi-2x{font-size: 2em;}
@@ -135,4 +135,3 @@ body {
 .gi-7x{font-size: 7em;}
 .gi-8x{font-size: 8em;}
 .gi-9x{font-size: 9em;}
-
