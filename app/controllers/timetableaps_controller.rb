@@ -1,7 +1,7 @@
 class TimetableapsController < ApplicationController
-#  layout "application_empty_1", :only => [:flight_state, :ttair_admin]
+  layout "application_empty_1", :only => [:flight_state]
   before_action :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
-  layout "without_html", :only => [:flight_state,]
+  layout "application_netzke", :only => [:admin_tt]
 
   def index
     params[:fc_start] == nil ? @fc_start = Date.current : @fc_start = Date.civil(params[:fc_start][:year].to_i, params[:fc_start][:month].to_i,params[:fc_start][:day].to_i)

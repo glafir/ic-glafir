@@ -1,4 +1,8 @@
 Rails.application.configure do
+  # Compress JavaScripts and CSS.
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -6,14 +10,15 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 #  config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 60.minutes }
-  config.cache_store = :redis_cache_store, { expires_in: 60.minutes }
+#  config.cache_store = :redis_cache_store, { expires_in: 60.minutes }
+  config.cache_store = :null_store
 
   # Do not eager load code on boot.
-  config.eager_load = true
-  config.action_dispatch.rack_cache = {
-    metastore:   'redis://localhost:6379/1/metastore',
-    entitystore: 'redis://localhost:6379/1/entitystore'
-  }
+  config.eager_load = false
+#  config.action_dispatch.rack_cache = {
+#    metastore:   'redis://localhost:6379/1/metastore',
+#    entitystore: 'redis://localhost:6379/1/entitystore'
+#  }
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
@@ -31,13 +36,10 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = false
-  config.assets.unknown_asset_fallback = true
-  config.assets.check_precompiled_asset = false
-
-  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
-  # yet still be able to expire them through the digest params.
-  config.assets.digest = true
+  config.assets.debug = true
+  config.assets.quiet = true
+  config.serve_static_assets = false
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.

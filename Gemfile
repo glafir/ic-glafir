@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
 
+group :development do
+  gem 'listen'
+  gem 'web-console'
+end
+
 gem 'rails', '~> 5'
 gem 'puma'
 gem 'turbolinks'
@@ -9,7 +14,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'jbuilder'
 gem 'bootstrap', '~> 4'
-gem 'bootswatch'
+#gem 'bootswatch'
 #gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 #gem 'bootstrap-sass-extras'
