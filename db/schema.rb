@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_05_30_144518) do
 
-  create_table "aircompanies", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aircompanies", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "airline_name_eng", null: false
     t.string "alias", default: "", null: false
     t.string "iata_code", limit: 2, null: false
@@ -40,26 +40,26 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["manager_id"], name: "manager_id"
   end
 
-  create_table "aircraft_companies", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aircraft_companies", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "aircraft_company", null: false
     t.integer "country_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "aircraft_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aircraft_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "atype"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "aircraft_wake_categories", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aircraft_wake_categories", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "aircrafts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aircrafts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "aircraft_model"
     t.string "aircraft_icao_code"
     t.string "aircraft_iata_code"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "airline_codeshares", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airline_codeshares", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "aircompany_id"
     t.integer "codeshare_id"
     t.date "code_share_start"
@@ -82,13 +82,13 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "airpor_size_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airpor_size_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "airport_air_traffics", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airport_air_traffics", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "klass", null: false
     t.integer "max_pass"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "airport_distances", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airport_distances", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "airport_start_id"
     t.integer "airport_finish_id"
     t.float "distance"
@@ -107,27 +107,27 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["airport_start_id"], name: "airport_start_id"
   end
 
-  create_table "airport_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airport_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "airport_terminal_gates", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airport_terminal_gates", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "airport_terminal_id"
     t.string "gate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "airport_terminals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airport_terminals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "airport_id"
     t.string "terminal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "airports", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "airports", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "iata_code", limit: 3, null: false
     t.string "icao_code", limit: 4, null: false
     t.string "name_rus"
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["weather_state"], name: "weather_state"
   end
 
-  create_table "aphubs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aphubs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "airport_id", null: false
     t.integer "aircompany_id", null: false
     t.integer "hub_type", default: 0, null: false
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["airport_id"], name: "airport_id"
   end
 
-  create_table "countries", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "countries", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "country_name"
     t.string "country_iata_code"
     t.string "country_icao_code"
@@ -198,13 +198,13 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "flash_message_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "flash_message_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "flash_messages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "flash_messages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "message", null: false
     t.string "request_url", null: false
@@ -217,13 +217,13 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.integer "flash_message_state_id"
   end
 
-  create_table "flight_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "flight_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "flight_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "languages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "languages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "lang"
     t.string "lang_iso"
     t.string "lang_iata"
@@ -231,7 +231,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "old_passwords", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "old_passwords", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "encrypted_password", null: false
     t.string "password_salt"
     t.string "password_history_type", null: false
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "created_at"
   end
 
-  create_table "regions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "regions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name_rus"
     t.string "name_eng"
     t.integer "country_id"
@@ -250,18 +250,18 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "roles", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "roles_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "role_id"
     t.integer "user_id"
   end
 
-  create_table "runway_aps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "runway_aps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "airport_id"
     t.string "runway_name", limit: 5
     t.integer "runway_elevation"
@@ -271,14 +271,14 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "rw_routes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "rw_routes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "start_route"
     t.integer "end_route"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "sessions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sessions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at"
@@ -287,7 +287,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "sign_in_failures", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sign_in_failures", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "email"
     t.string "ip_address"
     t.string "user_agent"
@@ -295,20 +295,20 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "station_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "station_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "typename", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "station_zones", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "station_zones", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "station_id"
     t.string "zone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "stations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "stations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "station_zone_id", limit: 4, default: "0000", null: false
     t.string "name_eng", null: false
     t.string "name_rus", null: false
@@ -318,13 +318,13 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "statuses", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "statuses", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "terminals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "terminals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "marking"
     t.integer "floor"
@@ -338,7 +338,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "timetableaps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "timetableaps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "flight_number", null: false
     t.integer "aircompany_id", null: false
     t.integer "parent_id"
@@ -380,7 +380,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["timeStart"], name: "timeStart"
   end
 
-  create_table "timetablesap_flights", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "timetablesap_flights", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "Flight_Number", default: 0, null: false
     t.integer "aircompany_id", null: false
     t.integer "way_start", null: false
@@ -399,7 +399,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "towns", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "towns", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "country_iso", limit: 3, default: "", null: false
     t.integer "country_id"
     t.string "city", default: "", null: false
@@ -423,7 +423,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["longitude", "latitude"], name: "longitude"
   end
 
-  create_table "translations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "translations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "locale"
     t.string "key"
     t.text "value"
@@ -433,14 +433,14 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_themes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "user_themes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "theme", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["theme"], name: "theme", unique: true
   end
 
-  create_table "user_tracings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "user_tracings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address", limit: 15
     t.text "useragent"
@@ -450,7 +450,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["user_id"], name: "index_user_tracings_on_user_id"
   end
 
-  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -482,7 +482,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "weather_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "weather_states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "weather_id"
     t.string "main"
     t.string "description"
@@ -497,7 +497,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["weather_id"], name: "weather_id"
   end
 
-  create_table "weathers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "weathers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "place_id"
     t.float "temperature"
     t.float "min_temperature"

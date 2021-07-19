@@ -4,6 +4,10 @@
   %meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes")
   %title= content_for?(:title) ? yield(:title) : "IcApp"
   = csrf_meta_tags
-  = stylesheet_link_tag "mobile/application", :media => "all", 'data-turbolinks-track': 'reload'
+  - if user_signed_in?
+    = stylesheet_link_tag "/#{current_user.user_theme.theme}/mobile/application", :media => "all", 'data-turbolinks-track': 'reload'
+  - else
+    = stylesheet_link_tag "/default/mobile/application", :media => "all", 'data-turbolinks-track': 'reload'
+
   = javascript_include_tag "application", 'data-turbolinks-track': 'reload'
 

@@ -2,7 +2,7 @@
 //= require jquery3
 //= require jquery_ujs
 //= require popper
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require bootstrap/clockpicker
 //= require bootstrap3-typeahead.min
 //= require bootstrap-autocomplete-input

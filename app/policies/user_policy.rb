@@ -32,6 +32,10 @@ class UserPolicy < ApplicationPolicy
     @record.id != 0
   end
 
+  def select_theme?
+    readers
+  end
+
   def destroy?
     return false unless @user.admin?
     admin

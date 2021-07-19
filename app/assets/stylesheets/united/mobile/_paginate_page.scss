@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+.apple_pagination {
+  background: #010101;
+  border: 1px solid #79a;
+  text-align: center;
+  padding: 1em;
+  cursor: default;
+
+  a, span {
+    padding: 0.2em 0.3em;
+  }
+
+  .disabled {
+    color: #aaaaaa;
+  }
+
+  .current {
+    font-style: normal;
+    font-weight: bold;
+    background-color: #999;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    line-height: 1.5;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+    text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #00a1d2;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+      color: #98CCEC;
+    }
+
+    &:hover#pages, &:focus#pages {
+      font-style: normal;
+      font-weight: bold;
+      background-color: #a30;
+      display: inline-block;
+      width: 1.3em;
+      height: 1.3em;
+      line-height: 1.2;
+      -moz-border-radius: 1em;
+      -webkit-border-radius: 1em;
+      border-radius: 1em;
+      text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px;
+    }
+  }
+}
+
+.page_info {
+  background: #000000;
+  color: white;
+  padding: 0.4em 0.6em;
+  width: 22em;
+  margin-bottom: 0.3em;
+  text-align: center;
+
+  b {
+    color: #000033;
+    background: #6aa6ed;
+    padding: 0.1em 0.25em;
+  }
+}

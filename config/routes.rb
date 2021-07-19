@@ -111,7 +111,11 @@ IcApp::Application.routes.draw do
     root "users/sessions#new"
   end
   scope "/admin" do
-    resources :users
+    resources :users do
+      member do
+        patch "select_theme"
+      end
+    end
   end
   resources :zones_stations
   resources :regions

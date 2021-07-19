@@ -42,9 +42,9 @@
             <b>Количество рейсов в день:</b> #{@aptt_all}||#{@aptt_out}/#{@aptt_in} <br><br>
             <b>Расстояние до ближайшего города:</b> #{airport.distance_from(airport.town, :units=>:kms) if airport.town} kms
           EOF
-        %td= link_to airport.name, airport, :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => tooltip_maket
+        %td= link_to airport.name, airport, :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => tooltip_maket, :class => "link-primary"
         %td
-          = link_to city, country_town_path(airport.country, airport.town_id), :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => "#{airport.town.latitude if airport.town}, #{airport.town.longitude if airport.town}" unless airport.town.blank?
+          = link_to city, country_town_path(airport.country, airport.town_id), :data => {:html => true, :delay => 150, :placement => "right", :toggle => "tooltip"}, :title => "#{airport.town.latitude if airport.town}, #{airport.town.longitude if airport.town}", :class => "link-primary" unless airport.town.blank?
         %td= airport.latitude
         %td= eval(sprintf("%8.2f", weather_current.temperature.to_f - 273.15)) unless weather_current.nil?
         %td= weather_current.clouds unless weather_current.nil?

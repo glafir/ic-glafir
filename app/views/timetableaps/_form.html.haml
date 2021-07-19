@@ -29,10 +29,10 @@
         = f.input :airport_finish, :as => :autocomplete, :source_query =>  autocomplete_airport_city_rus_airports_path,  'data-auto-focus' => true, class: 'form-control', :items => 20, :input_html => {:class => 'dropdown col col-md-6'}
       - else
         = f.input :airport_finish, :as => :autocomplete, :source_query => autocomplete_airport_city_rus_airports_path, 'data-auto-focus' => true, :items => 20, :value => params[:airport_start_id], :input_html => {:class => 'dropdown col col-md-6'}
-    = f.input :TermStart, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
-    = f.input :GateStart, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
-    = f.input :TermEnd, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
-    = f.input :GateEnd, class: 'form-control', :input_html => {:class => 'dropdown col col-md-6'}
+    = f.input :TermStart, :input_html => {:class => 'form-control dropdown col col-md-6'}
+    = f.input :GateStart, :input_html => {:class => 'form-control dropdown col col-md-6'}
+    = f.input :TermEnd, :input_html => {:class => 'form-control dropdown col col-md-6'}
+    = f.input :GateEnd, :input_html => {:class => 'form-control dropdown col col-md-6'}
     - if params[:dateOfStartNav].blank?
       = f.input :dateOfStartNav, as: :string, input_html: { class: 'form-control datepicker col col-md-6'}
     - else
@@ -46,19 +46,19 @@
       .controls.col.col-md-6.input-group.clockpicker{:data => {:autoclose => "true"}}
         - if params[:parent_id].blank?
           %span.glyphicon.glyphicon-time.gi-2x
-          = f.text_field :timeStart, class: 'form-control col'
+          = f.text_field :timeStart, class: "col col-md-6 form-control"
           %span.glyphicon.glyphicon-time.gi-2x
         - else
-          = f.text_field :timeStart, value: params[:timeStart], class: 'form-control'
+          = f.text_field :timeStart, value: params[:timeStart], class: 'col col-md-11 form-control'
     .form-group.col-12.col-md-6
       = f.label :timeEnd, class: 'col col-sm-4 col-md-6 col-form-label d-flex justify-content-start'
       .controls.col.col-md-6.input-group.clockpicker{:data => {:autoclose => "true"}}
         - if params[:parent_id].blank?
           %span.glyphicon.glyphicon-time.gi-2x
-          = f.text_field :timeEnd, class: 'form-control'
+          = f.text_field :timeEnd, class: 'form-control col col-md-6 form-control'
           %span.glyphicon.glyphicon-time.gi-2x
         - else
-          = f.text_field :timeEnd, value: params[:timeEnd], class: 'form-control'
+          = f.text_field :timeEnd, value: params[:timeEnd], class: 'col col-md-6 form-control'
     .form-group.col-12.col-md-6
       = f.label :aircraft_id, class: 'col col-sm-4 col-md-6 col-form-label d-flex justify-content-start'
       - if params[:aircraft_id].blank?

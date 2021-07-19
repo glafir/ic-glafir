@@ -32,8 +32,8 @@ Rails.application.configure do
   config.assets.enabled = true
   config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif application.css application.js)
   config.assets.precompile += %w( jquery-ui/* )
-  config.assets.precompile += %w( desktop/* )
-  config.assets.precompile += %w( mobile/* )
+#  config.assets.precompile += %w( desktop/* )
+#  config.assets.precompile += %w( mobile/* )
 
 
   # Compress JavaScripts and CSS.

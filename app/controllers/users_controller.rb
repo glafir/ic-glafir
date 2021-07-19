@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 #  force_ssl
   before_action :set_country
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :select_theme, :destroy]
   after_action :verify_authorized
   def index
     @users = User.all
@@ -44,6 +44,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def select_theme
+    authorize @user
+    if @user.update_attributes(user_theme_params)
+      redirect_to @user, :notice => "User theme for #{@user.username} updated."
+    else
+      render :show, :notice => "Unable to update user #{@user.username}."
+    end
+  end
+
   def destroy
     user = User.find(params[:id])
     @user_d = user.username
@@ -64,5 +73,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :username, :time_zone, :town_id, :user_theme_id, :role, :avatar, :aircompany_id, :country_id, :login)
+  end
+
+  def user_theme_params
+    params.require(:user).permit(:user_theme_id)
   end
 end
