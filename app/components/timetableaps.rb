@@ -13,8 +13,8 @@ class Timetableaps < Application
       {name: :parent__aircompany__airline_name_rus, header: "Parrent а/к", width: 80},
       {name: :airport_start__name_rus, header: "п. отпр", width: 80},
       {name: :airport_finish__name_rus, header: "п.назнач", width: 80},
-#      {name: :dateOfStartNav, header: "Старт навигации", width: 50},
-#      {name: :dateOfEndNav, header: "Конец навигации", width: 50},
+      {name: :dateOfStartNav, header: "Старт навигации", width: 50},
+      {name: :dateOfEndNav, header: "Конец навигации", width: 50},
       {name: :timeStart, date_format: "%H:%M", header: "время отпр", width: 50},
       {name: :timeEnd, date_format: "%H:%M", header: "время приб", width: 50}
     ]

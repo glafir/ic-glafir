@@ -1,5 +1,4 @@
 class TimetableapsController < ApplicationController
-  layout "application_empty_1", :only => [:flight_state, :ttair_admin]
   before_action :set_timetableap, only: [:show, :edit, :update, :destroy, :update_dateoffinishdate, :flight_state]
 
   def index
@@ -165,7 +164,7 @@ class TimetableapsController < ApplicationController
     @wheather_airport_start = Openweather2.get_weather(lat: @timetableap.airport_start.latitude, lon: @timetableap.airport_start.longitude)
     @wheather_airport_finish = Openweather2.get_weather(lat: @timetableap.airport_finish.latitude, lon: @timetableap.airport_finish.longitude)
     authorize @timetableap
-    respond_with(@timetableap)
+    render layout: "application_empty_1"
   end
 
 private

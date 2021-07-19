@@ -4,7 +4,7 @@
     - if params[:flight_number].blank?
       = f.input :flight_number, input_html: {autofocus: true}, :input_html => {:class => 'dropdown col col-md-6'}
     - else
-      = f.input :flight_number, input_html: {:value => ((params[:flight_number]).to_i + 1).to_s, autofocus: true}, :input_html => {:class => 'dropdown col col-md-6'}
+      = f.input :flight_number, input_html: {:value => ((params[:flight_number]).to_i + 1).to_s, autofocus: true, :class => 'dropdown col col-md-6'}
     - if current_user.alclient?
       = f.hidden_field :aircompany_id, :value => current_user.aircompany_id.to_s
       = text_field_tag "aircompany", current_user.aircompany.airline_name_rus, disabled: true, class: 'col col-md-6'
@@ -40,7 +40,7 @@
     - if params[:dateOfEndNav].blank?
       = f.input :dateOfEndNav, as: :string, input_html: { class: 'form-control datepicker col col-md-6'}
     - else
-      = f.input :dateOfEndNav, as: :string, input_html: { class: 'form-control datepicker col col-md-6'}
+      = f.input :dateOfEndNav, as: :string, input_html: { value: params[:dateOfEndNav], class: 'form-control datepicker col col-md-6'}
     .form-group.col-12.col-md-6
       = f.label :timeStart, class: 'col col-sm-4 col-md-6 col-form-label d-flex justify-content-start'
       .controls.col.col-md-6.input-group.clockpicker{:data => {:autoclose => "true"}}

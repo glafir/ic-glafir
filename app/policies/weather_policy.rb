@@ -1,1 +1,2 @@
-class WeatherPolicy < ApplicationPolicy; end
+class WeatherPolicy < ApplicationPolicy
+end
