@@ -1,6 +1,7 @@
 !!! 5
 %html(lang="ru")
   = render "layouts/head.html"
+  -#-= yield :head
   %body
     .container-fluid
       - if user_signed_in?

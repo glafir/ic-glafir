@@ -2,6 +2,8 @@ Rails.application.configure do
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :sass
+  config.assets.compile = true
+  config.assets.digest = false
 
   # Settings specified here will take precedence over those in config/application.rb.
 

@@ -1,0 +1,96 @@
+// Yellow 4.6.0
+// Bootswatch
+
+//
+// Color system
+//
+
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+$yellow-100:  #fdfad4  !default;
+$yellow-200:  #fef9aa  !default;
+$yellow-300:  #fef906 !default;
+$yellow-400:  #d9d8a2 !default;
+$yellow-500:  #d5d25d !default;
+$yellow-600:  #cfcb08 !default;
+$yellow-700:  #a1a065 !default;
+$yellow-800:  #878636 !default;
+$yellow-900:  #868305 !default;
+$orange-100:  #fcefd3 !default;
+$orange-200:  #fdd783 !default;
+$orange-300:  #f9ad04 !default;
+$orange-400:  #bca980 !default;
+$orange-500:  #c09943 !default;
+$orange-600:  #c18706 !default;
+$orange-700:  #8e7d57 !default;
+$orange-800:  #967733 !default;
+$orange-900:  #8a6105 !default;
+
+$blue:    #033c73 !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #c71c22 !default;
+$orange:  #fd7e14 !default;
+$green:   #73a839 !default;
+$teal:    #20c997 !default;
+$cyan:    #2fa4e7 !default;
+
+$primary:       #e6e907 !default;
+$secondary:     #e7e95d !default;
+$success:       #9be95d !default;
+$info:          #5dcfe9 !default;
+$warning:       #f99f06 !default;
+$danger:        #f91806 !default;
+$light:         #f5f2ab !default;
+$dark:          #99a704 !default;
+
+// Body
+
+$body-bg:       $yellow-200 !default;
+$body-color:    $red !default;
+
+// Fonts
+
+$headings-color:         $orange-300 !default;
+
+// Dropdowns
+$dropdown-bg:                   $yellow-200 !default;
+$dropdown-border-color:         $yellow-700 !default;
+$dropdown-divider-bg:           $yellow-700 !default;
+$dropdown-link-color:           $body-color !default;
+$dropdown-link-hover-color:     $red !default;
+$dropdown-link-hover-bg:        $primary !default;
+
+// Navbar
+
+$navbar-dark-color:             $yellow-700 !default;
+$navbar-dark-hover-color:       $yellow-900 !default;
+
+// Links
+
+$link-color:                $orange-600 !default;
+$link-hover-color:          $red !default;
+
+// Components
+
+$component-active-color:      $yellow-100 !default;
+$component-active-bg:         $orange-600 !default;
+
+// Forms
+
+$input-bg:                              $yellow-100 !default;
+$input-disabled-bg:                     #yellow-300 !default;
+$input-border-color:                    rgba($black, .15) !default;
+$input-placeholder-color:               #657b83 !default;
+$input-group-addon-color:               $yellow-600 !default;
+$input-group-addon-bg:                  $yellow-800 !default;

@@ -5,5 +5,9 @@
 
   %title= content_for?(:title) ? yield(:title) : "IcApp"
   = csrf_meta_tags
-  = stylesheet_link_tag "desktop/application", :media => "all", 'data-turbolinks-track': 'reload'
+  - if user_signed_in?
+    = stylesheet_link_tag "#{current_user.user_theme.theme}/desktop/application", :media => "all", 'data-turbolinks-track': 'reload'
+  - else
+    = stylesheet_link_tag "default/desktop/application", :media => "all", 'data-turbolinks-track': 'reload'
+
   = javascript_include_tag "application", 'data-turbolinks-track': 'reload'

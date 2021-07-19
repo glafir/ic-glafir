@@ -2,7 +2,7 @@
 %h3.center-block
   #{t '.title', :default => model_class.model_name.human.titleize} #{@user.username} (#{@user.email})
 .row.field-form
-  .col-12.col-sm-12.col-md-12.col-lg-7.col-xl-6
+  .col-12.col-lg-7.col-xl-6
     .d-none.d-xl-block
       = image_tag @user.avatar.size_500.url, :class => 'rounded-circle' unless @user.avatar.size_500.nil?
     .d-none.d-md-block.d-lg-none
@@ -13,35 +13,42 @@
       = image_tag @user.avatar.size_400.url, :class => 'rounded-circle' unless @user.avatar.size_400.nil?
     .d-block.d-sm-none
       = image_tag @user.avatar.size_300.url, :class => 'rounded-circle' unless @user.avatar.size_300.nil?
-  .col-12.col-sm-12.col-md-12.col-lg-5.col-xl-6
-    %p
+  .col-12.col-lg-5.col-xl-6
+    .p
       %b Имя:
       = @user.username
-    %p
+    .p
       %b Email:
       = @user.email
-    %p
+    .p
       %b Time_zone:
       = @user.time_zone
       = ActiveSupport::TimeZone.new(@user.time_zone).formatted_offset
-    %p
+    .p
       %b Town:
       = @user.town.accent_city
-    %p
+    .p
       %b Статус:
       = @user.role
       = link_to @user.aircompany.airline_name_rus, @user.aircompany unless @user.aircompany_id == 1
-    %p
+    .p
       %b Текущий адрес:
       = @user.current_sign_in_ip
-    %p
+    .p
       %b Адрес предыдущего захода:
       = @user.last_sign_in_ip
-    %p
+    .p
       %b Время предыдущего захода:
       = @user.last_sign_in_at
+    = form_for @user, :url =>{:action => :select_theme}, html: {class: "form form-inline"}, validate: true do |f|
+      = f.label :user_theme, class: "col-form-label col-6 d-flex justify-content-start"
+      = f.select :user_theme_id, UserTheme.order(:theme).collect{|item| [item.theme, item.id]}, {}, class: 'form-control col-6'
     - if policy(@user).index?
       = link_to "Все пользователи", users_path, class: "btn btn-primary"
     ||
     - if policy(@user).edit?
       = link_to "Редактировать пользователя", edit_user_path(@user), class: "btn btn-primary"
+:javascript
+  $('select').on('change', function(e){
+    this.form.submit()
+  });
