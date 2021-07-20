@@ -55,3 +55,18 @@ $dropdown-link-hover-bg:        $primary !default;
 
 $navbar-dark-color:             rgba($white, .8) !default;
 $navbar-dark-hover-color:       $white !default;
+
+// Pagination
+
+$pagination-color:                  $white !default;
+$pagination-bg:                     $cyan !default;
+$pagination-border-width:           0 !default;
+$pagination-border-color:           transparent !default;
+$pagination-hover-color:            $white !default;
+$pagination-hover-bg:               lighten($cyan, 10%) !default;
+$pagination-hover-border-color:     transparent !default;
+$pagination-active-bg:              $pagination-hover-bg !default;
+$pagination-active-border-color:    transparent !default;
+$pagination-disabled-color:         $white !default;
+$pagination-disabled-bg:            darken($gray-600, 15%) !default;
+$pagination-disabled-border-color:  transparent !default;
