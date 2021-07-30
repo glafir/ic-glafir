@@ -75,7 +75,7 @@
 
   .col-lg-6.col-md-6.col-sm-6.col-xs-12
     .wheather
-      - if @airport.weathers.blank? 
+      - if @weathers.blank? 
         - airport_wheather = Openweather2.get_weather(lat: @airport.latitude, lon: @airport.longitude)
         %p.wi-show.badge.badge-info
           - airport_wheather.main.each do |w|
@@ -85,7 +85,7 @@
             %b.badge.badge-secondary Видимость
             #{airport_wheather.visibility}м &nbsp;
       - else
-        - airport_wheather = @airport.weathers.order("created_at").last
+        - airport_wheather = @weathers.last
         %p.wi-show.badge.badge-info
           - airport_wheather.weather_states.each do |w|
             %i(class="wi wi-owm-#{w.weather_icon_id} wi-fw")

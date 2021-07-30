@@ -2,11 +2,11 @@
 %hr
 .col-12.col-md-7
   %li This a Desktop Version
-  %li Страница загружена за #{Benchmark.ms { yield }} сек
+  %li Страница загружена за #{Benchmark.measure { yield }} сек
   %li Использовано памяти: #{mem.mb} МБ
 .col-12.col-md-5
   %li © 2011 - #{Date.current.year}
-  %li v5.1.1 release from 19-07-2021
+  %li v5.1.1 release from 30-07-2021
 .w-100
 .col-12.col-md-7
   %li ICQ: 277823912

@@ -1,10 +1,9 @@
-- weathers = @airport.weathers.where("created_at >= ?", "#{Time.now - 120.hours}").order(:created_at)
-- wcount = weathers.count*1.25
-- unless weathers.count < 3
+- wcount = @weathers.count*1.25
+- unless @weathers.count < 3
   .w_info
-    %p= tmax = weathers.map { |d| d[:temperature] }.max - 273.15
-    %p= tmin = weathers.map { |d| d[:temperature] }.min - 273.15
-    %p= tamp = tmax - tmin
+    %p= tmax = @weathers.map { |d| d[:temperature] }.max - 273.15
+    %p= tmin = @weathers.map { |d| d[:temperature] }.min - 273.15
+    - tamp = tmax - tmin
     - ycorr = 0 - tmin
   %canvas#weather{width:"#{wcount}",height:"#{tamp*11}"}
   :javascript
@@ -21,7 +20,7 @@
   - t=0
   - n=0
   %hr
-  - weathers.each do |weather|
+  - @weathers.each do |weather|
     - cache weather do
       - temp = weather.temperature
       - temp_next = weathers.where("id > ?", weather.id).first.temperature unless weathers.where("id > ?", weather.id).first.nil?
