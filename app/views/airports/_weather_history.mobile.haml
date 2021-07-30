@@ -23,7 +23,7 @@
   - @weathers.each do |weather|
     - cache weather do
       - temp = weather.temperature
-      - temp_next = weathers.where("id > ?", weather.id).first.temperature unless weathers.where("id > ?", weather.id).first.nil?
+      - temp_next = @weathers.where("id > ?", weather.id).first.temperature unless @weathers.where("id > ?", weather.id).first.nil?
       :javascript
         var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
         ctx.moveTo(t, temp);
