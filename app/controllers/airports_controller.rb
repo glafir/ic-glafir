@@ -69,6 +69,7 @@ before_action :check_permissions, only: :autocomplete_airport_city_rus
 
   def show
     @aircompanies = @airport.aircompanies.page(params[:page]).per(params[:per_page])
+    @weathers = @airport.weathers.where("created_at >= ?", "#{Time.now - 120.hours}").order(:created_at)
     authorize @airport
     respond_with(@airport)
   end

@@ -34,6 +34,16 @@ $orange-600:  #c18706 !default;
 $orange-700:  #8e7d57 !default;
 $orange-800:  #967733 !default;
 $orange-900:  #8a6105 !default;
+$red-100:   #f9d0d4 !default;
+$red-200:   #fb7d88 !default;
+$red-300:   #fb0319 !default;
+$red-400:   #d17e85 !default;
+$red-500:   #d1505c !default;
+$red-600:   #cc0517 !default;
+$red-700:   #a94951 !default;
+$red-800:   #a80614 !default;
+$red-900:   #6d030c !default;
+
 
 $blue:    #033c73 !default;
 $indigo:  #6610f2 !default;
@@ -57,7 +67,7 @@ $dark:          #99a704 !default;
 // Body
 
 $body-bg:       $yellow-200 !default;
-$body-color:    $red !default;
+$body-color:    $yellow-900 !default;
 
 // Fonts
 
@@ -78,7 +88,7 @@ $navbar-dark-hover-color:       $yellow-900 !default;
 
 // Links
 
-$link-color:                $orange-600 !default;
+$link-color:                $red-700 !default;
 $link-hover-color:          $red !default;
 
 // Components
