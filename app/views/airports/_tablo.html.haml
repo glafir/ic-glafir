@@ -24,7 +24,7 @@
               .col-xl-4.col-lg-5.col-12
                 - if child.aircompany.avatar.thumb_50.url
                   = image_tag child.aircompany.avatar.thumb_50.url
-              .col-lg-7.col-12.gi-x-08.text-uppercase.text-nowrap
+              .col-lg-7.col-12.gi-1x-01.text-uppercase.text-nowrap
                 = link_to child.aircompany.iata_code, child.aircompany, :title => child.aircompany.airline_name_rus
                 = link_to child.flight_number, flight_state_timetableap_path(child), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax', contentId: 'highslide-html', cacheAjax: false, headingText: 'Flight #{child.flight} (by parent #{timetableap.flight})', minHeight: 1100,  width: 800})"
         %td
