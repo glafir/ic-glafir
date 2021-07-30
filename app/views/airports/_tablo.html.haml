@@ -13,24 +13,24 @@
           = timetableap.timeIN.in_time_zone(@airport.time_zone).to_s(:time)
         %td.tt_flight.align-middle.align.align-text-middle
           .flight-parent.row
-            .col-lg-4.col-12
+            .col-xl-4.col-lg-5.col-12
               - if timetableap.aircompany.avatar.thumb_80.url
                 = image_tag timetableap.aircompany.avatar.thumb_80.url
-            .col-lg-8.col-12.gi-x-09.text-uppercase.text-nowrap.align-middle
+            .col-lg-7.col-12.gi-1x-03.text-uppercase.text-nowrap.align-middle
               = link_to timetableap.aircompany.iata_code, timetableap.aircompany, :title => timetableap.aircompany.airline_name_rus
               = link_to timetableap.flight_number, flight_state_timetableap_path(timetableap), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax', contentId: 'highslide-html', cacheAjax: false, headingText: 'Flight #{timetableap.flight}', minHeight: 1100,  width: 800})"
           - timetableap.childs.each do |child|
             .flight-child.row
-              .col-lg-4.col-12
+              .col-xl-4.col-lg-5.col-12
                 - if child.aircompany.avatar.thumb_50.url
                   = image_tag child.aircompany.avatar.thumb_50.url
-              .col-lg-8.col-12.gi-x-08.text-uppercase.text-nowrap
+              .col-lg-7.col-12.gi-x-08.text-uppercase.text-nowrap
                 = link_to child.aircompany.iata_code, child.aircompany, :title => child.aircompany.airline_name_rus
                 = link_to child.flight_number, flight_state_timetableap_path(child), data: { no_turbolink: true }, :onclick => "return hs.htmlExpand(this, {objectType: 'ajax', contentId: 'highslide-html', cacheAjax: false, headingText: 'Flight #{child.flight} (by parent #{timetableap.flight})', minHeight: 1100,  width: 800})"
         %td
-          .twrus.gi-x-09.text-uppercase.font-weight-bold #{timetableap.airport_start.town.city_rus} - #{timetableap.airport_finish.town.city_rus}
-          .aprus.gi-x-06 #{link_to timetableap.airport_start.name_rus, timetableap.airport_start} - #{link_to timetableap.airport_finish.name_rus, timetableap.airport_finish}
-          .tt_al_info.gi-x-05.align-text-bottom
+          .twrus.gi-2x.text-uppercase.font-weight-bold #{timetableap.airport_start.town.city_rus} - #{timetableap.airport_finish.town.city_rus}
+          .aprus.gi-1x-04 #{link_to timetableap.airport_start.name_rus, timetableap.airport_start} - #{link_to timetableap.airport_finish.name_rus, timetableap.airport_finish}
+          .tt_al_info.gi-x-09.align-text-bottom
             Выполняется самолётом:
             %strong
               = (timetableap.parent_id.blank?) ? (link_to timetableap.aircompany.airline_name_rus, timetableap.aircompany) : (link_to timetableap.parent.aircompany.airline_name_rus, timetableap.parent.aircompany)
