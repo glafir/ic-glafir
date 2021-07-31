@@ -1,11 +1,19 @@
 %h4= @tablo.html_safe
 = render "airports/tablo_links"
-= bootstrap_form_tag :url => '#', :remote => 'true', :method => 'get', :id => "timetableaps_search"  do |f|
-  = f.select "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name, params[:country]), prompt: "to all countries"
-  = f.select "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus, params[:search_tw]), prompt: "All towns"
-  = f.select "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus, params[:search_al]), prompt: "All Airlines"
-  = f.select "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:start_time])
-  = f.select "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:end_time])
+= simple_form_for :tablo_airport, :method => 'get', html: { class: "form-inline", :id => "timetableaps_search"} do |f|
+  -if params[:tablo_airport]
+    = f.select "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name, params[:tablo_airport][:country]), prompt: "to all countries"
+    = f.select "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus, params[:tablo_airport][:search_tw]), prompt: "All towns"
+    = f.select "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus, params[:tablo_airport][:search_al]), prompt: "All Airlines"
+    = f.select "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:tablo_airport][:start_time])
+    = f.select "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] }, params[:tablo_airport][:end_time])
+  -else
+    = f.select "country", options_from_collection_for_select(@countries.where.not(id: @airport.country_id).order("country_name"), :id, :country_name), prompt: "to all countries"
+    = f.select "search_tw", options_from_collection_for_select(@towns.order("city_rus"), :id, :city_rus), prompt: "All towns"
+    = f.select "search_al", options_from_collection_for_select(@airlines.order("airline_name_rus"), :id, :airline_name_rus), prompt: "All Airlines"
+    = f.select "start_time", options_for_select((Time.zone.now.beginning_of_day.to_i..(Time.zone.now.end_of_day).to_i).step(1.hour).collect{|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] })
+    = f.select "end_time", options_for_select(((Time.zone.now.beginning_of_day+1.hour).to_i..(Time.zone.now.beginning_of_day+1.day).to_i).step(1.hour).collect {|x| [Time.zone.at(x).to_s(:time), Time.zone.at(x).utc] })
+
 #tda.table-responsive= render "airports/tablo"
 :javascript
   $('select').on('change', function(e){
