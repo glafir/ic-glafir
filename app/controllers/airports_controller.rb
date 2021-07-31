@@ -148,11 +148,11 @@ private
   def tbody_tablo_out
     Time.zone = @airport.time_zone
     @timetableaps = @airport.timetableaps_out.stoday
-    @timetableaps = @timetableaps.search_al(params[:search_al])
+    @timetableaps = @timetableaps.search_al(params[:tablo_airport][:search_al]) if params[:tablo_airport]
 #    @timetableaps1 = @timetableaps.childs.search_al(params[:search_al])
     @timetableaps = @timetableaps.where(parent_id:nil)
-    @timetableaps = @timetableaps.search_endtw(params[:search_tw])
-    @timetableaps = @timetableaps.search_endcountry(params[:country])
+    @timetableaps = @timetableaps.search_endtw(params[:tablo_airport][:search_tw]) if params[:tablo_airport]
+    @timetableaps = @timetableaps.search_endcountry(params[:tablo_airport][:country]) if params[:tablo_airport]
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
     @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:airport_finish_id)))
     @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_finish_id)))
@@ -188,10 +188,10 @@ private
   def tbody_tablo_in
     Time.zone = @airport.time_zone
     @timetableaps = @airport.timetableaps_in.etoday.where(parent_id:nil)
+    @timetableaps = @timetableaps.search_starttw(params[:tablo_airport][:search_tw]) if params[:tablo_airport]
+    @timetableaps = @timetableaps.search_al(params[:tablo_airport][:search_al]) if params[:tablo_airport]
+    @timetableaps = @timetableaps.search_startcountry(params[:tablo_airport][:country]) if params[:tablo_airport]
     @airlines = Aircompany.where(:id => @timetableaps.select(:aircompany_id).group(:aircompany_id))
-    @timetableaps = @timetableaps.search_starttw(params[:search_tw])
-    @timetableaps = @timetableaps.search_al(params[:search_al])
-    @timetableaps = @timetableaps.search_startcountry(params[:country])
     @towns = Town.where(:id => Airport.select(:town_id).where(:id => @timetableaps.select(:airport_start_id)))
     @countries = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_start_id)))
     @timetableaps.each do |tt|
