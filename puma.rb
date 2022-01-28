@@ -1,11 +1,17 @@
 require 'puma'
-workers 2
+require 'fileutils'
+workers 4
 threads 4,16
 app_dir = File.expand_path("/home/glafir/RoR/ic-glafir", __FILE__)
 log_dir = "#{app_dir}/log"
-shared_dir = "#{app_dir}/tmp"
+shared_dir = "/var/cache/RoR/ic-glafir/"
+FileUtils.mkdir_p "#{shared_dir}"
+FileUtils.mkdir_p "#{shared_dir}/sockets"
+FileUtils.mkdir_p "#{shared_dir}/pids"
+FileUtils.mkdir_p "#{shared_dir}/cache"
+FileUtils.mkdir_p "#{shared_dir}/sessions"
 # Default to production
-rails_env = ENV['RAILS_ENV'] || "development"
+rails_env = ENV['RAILS_ENV'] || "production"
 environment rails_env
 
 # Set up socket location

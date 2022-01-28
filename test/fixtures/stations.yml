@@ -3,9 +3,9 @@
 one:
   name_rus: MyString
   name_eng: MyString
-  zone_station_id: MyString
+  station_zone_id: 1
 
 two:
   name_rus: MyString
   name_eng: MyString
-  zone_station_id: MyString
+  station_zone_id: 2

@@ -1,10 +1,14 @@
 %h1 Страны мира
 %p Выьерете страну, с которой будете работать.
 
-= render "layouts/per_page"
-
-= form_tag countries_path, :method => 'get', :remote => "true", :id => "countries_search" do
-  = text_field_tag :search, params[:search], autofocus: true 
+= form_tag '#', :method => 'get', :remote => "true", :id => "countries_search" do
+  .form-group
+    .controls.col-lg-8.col-md-8.col-sm-10.col-xs-10
+      = text_field_tag :search, params[:search], autofocus: true, class: 'form-control xl-col-3' 
+  .form-group
+    .per-page.controls.col-lg-12.col-md-12.col-sm-12.col-xs-12
+      %label.col-xs-3.control-label Отобразить на странице:
+      .col-xs-2
+        = select_tag :limit, options_for_select([10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "$('#countries_search').submit();", class: 'form-control'
   = submit_tag "Search", :name => nil
-  %div(id="countries") 
-    =render "countries"
+#countries= render "countries"

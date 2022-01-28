@@ -11,4 +11,3 @@
         = select_tag :limit, options_for_select([10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "$('#airports_search').submit();", class: 'form-control'
       %label.col-xs-2.control-label элементов.
 #airports= render "airports/airports"
-

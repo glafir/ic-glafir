@@ -6,4 +6,3 @@
   :plain
     $("#timetableaps").html("#{escape_javascript(render("timetableaps/timetableaps"))}");
     $('.pagination').html('#{escape_javascript(paginate(@timetableaps, :theme => 'twitter-bootstrap-4', :remote => true).to_s)}');
-  = render :file => Rails.root + 'app/assets/javascripts/tooltip.js'

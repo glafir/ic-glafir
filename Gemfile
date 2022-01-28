@@ -5,7 +5,7 @@ group :development do
   gem 'web-console'
 end
 
-gem 'rails', '~> 5'
+gem 'rails', '~> 6'
 gem 'puma'
 gem 'turbolinks'
 gem 'turbolinks-redirect'
@@ -111,3 +111,6 @@ gem 'redis-rack-cache'
 gem 'redis-store'
 
 gem 'jquery-datatables-rails'
+gem "net-smtp", require: false
+gem "net-pop", require: false
+gem "net-imap", require: false

@@ -3,4 +3,4 @@ ulimit -s 16384
 cd /home/glafir/RoR/ic-glafir/
 #unicorn -c /home/glafir/RoR/ic-glafir/unicorn.rb -E production -D
 #unicorn -c /home/glafir/RoR/ic-glafir/unicorn.rb -D
-rm -rf public/assets &&rake assets:precompile RAILS_ENV=production &&puma -C /home/glafir/RoR/ic-glafir/puma.rb -d -e production
+rm -rf public/assets &&rake assets:precompile RAILS_ENV=production &&puma -C /home/glafir/RoR/ic-glafir/puma.rb

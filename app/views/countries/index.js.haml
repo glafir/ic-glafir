@@ -1,0 +1,2 @@
+$("#countries").html("#{ escape_javascript(render("countries/countries")) }");
+$('.pagination').html("#{ escape_javascript(paginate(@countries, :theme => 'twitter-bootstrap-4', :remote => true).to_s) }");

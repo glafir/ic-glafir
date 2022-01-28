@@ -1,6 +1,6 @@
-- if is_mobile_device?
+- if is_mobile_device?   
   $("#airports").html("#{ escape_javascript(render("airports/airports.mobile")) }");
   $('.pagination').html("#{ escape_javascript(paginate(@airports, :theme => 'mobile' , :remote => true).to_s) }");
 - else
   $("#airports").html("#{ escape_javascript(render("airports/airports")) }");
-  $('.pagination').html("#{ escape_javascript(paginate(@airports, :theme => 'twitter-bootstrap-4', :remote => true).to_s) }");
+  $('.pagination').html("#{ escape_javascript(paginate(@airports,  :theme => 'twitter-bootstrap-4', :remote => true).to_s) }");

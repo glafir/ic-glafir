@@ -6,5 +6,3 @@
   :plain
     $("#aircompanies").html("#{escape_javascript(render("aircompanies/aircompanies"))}");
     $('.pagination').html('#{escape_javascript(paginate(@aircompanies, :theme => 'twitter-bootstrap-4', :remote => true).to_s)}');
-  = render :file => Rails.root + 'app/assets/javascripts/tooltip.js'
-

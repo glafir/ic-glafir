@@ -2,26 +2,26 @@
 
 one:
   place_id: 1
-  temp: 1.5
-  temp_min: 1.5
-  temp_max: 1.5
+  temperature: 1.5
+  min_temperature: 1.5
+  max_temperature: 1.5
   pressure: 1.5
   pressure_sea_level: 1.5
   pressure_grnd_level: 1.5
   wind_speed: 1.5
-  wind_deg: 1.5
+  wind_angle: 1.5
   clouds: 1
   dt: 1
 
 two:
   place_id: 1
-  temp: 1.5
-  temp_min: 1.5
-  temp_max: 1.5
+  temperature: 1.5
+  min_temperature: 1.5
+  max_temperature: 1.5
   pressure: 1.5
   pressure_sea_level: 1.5
   pressure_grnd_level: 1.5
   wind_speed: 1.5
-  wind_deg: 1.5
+  wind_angle: 1.5
   clouds: 1
   dt: 1

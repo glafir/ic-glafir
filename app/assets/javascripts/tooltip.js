@@ -1,4 +1,4 @@
-$(function(){
-  $("[data-toggle='tooltip']").bstooltip();
+document.addEventListener("turbolinks:load", () => {
+  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="popover"]').popover()
 })
-$.fn.bstooltip = $.fn.tooltip;

@@ -12,11 +12,11 @@ class CountriesController < ApplicationController
 
   def ap_show
     authorize @country
-  respond_to do |format|
-    format.html 
-    format.json
-    format.js
-   end
+    respond_to do |format|
+      format.html 
+      format.json
+      format.js
+     end
 #    respond_with(@country,@airports) && !request.xhr?
   end
 

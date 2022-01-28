@@ -1,6 +1,7 @@
-//dont= require turbolinks
+//= require rails-ujs
 //= require jquery3
 //= require jquery_ujs
+//dont= require turbolinks
 //= require popper
 //= require bootstrap-sprockets
 //= require bootstrap/clockpicker
@@ -10,3 +11,4 @@
 //= require dataTables/jquery.dataTables
 //= require_tree .
 //= require_self
+

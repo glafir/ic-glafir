@@ -4,7 +4,7 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 #  config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 60.minutes }
-  config.cache_store = :redis_cache_store, { expires_in: 60.minutes }
+#  config.cache_store = :redis_cache_store, { expires_in: 60.minutes }
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -37,7 +37,8 @@ Rails.application.configure do
 
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+#  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
   config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -94,5 +95,8 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
+  config.assets.configure do |env|
+    env.cache = ActiveSupport::Cache.lookup_store(:memory_store, { size: 512.megabytes })
   end
 end
