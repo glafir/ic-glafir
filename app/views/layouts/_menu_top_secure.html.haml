@@ -43,7 +43,7 @@
                 = link_to "Аэропорты", {controller: "/countries", action: "ap_show", id: 528}, class: "btn dropdown-item"
                 = link_to "Авиакомпании", {controller: "/countries", action: "al_show", id: 528}, class: "btn dropdown-item"
                 = link_to "Рейсы", timetableaps_path, class: "btn dropdown-item"
-                = link_to "Терминалы", airport_terminals_path, class: "btn dropdown-item"
+                = link_to "Терминалы", airport_all_terminals_path, class: "btn dropdown-item"
                 = link_to "Гейты", airport_terminal_gates_path, class: "btn dropdown-item"
                 = link_to "ВПП аэропортов", runway_aps_path, class: "btn dropdown-item"
                 .dropdown-divider
@@ -70,6 +70,10 @@
             = link_to "Авиакомпании", admin_al_aircompanies_path, class: "btn dropdown-item"
             = link_to "Хабы а-компаний", admin_aphub_aphubs_path, class: "btn dropdown-item"
             = link_to "Рейсы", admin_tt_timetableaps_path, class: "btn dropdown-item"
+            = link_to "Терминалы", admin_tt_timetableaps_path, class: "btn dropdown-item"
+            = link_to "Гейты", admin_tt_timetableaps_path, class: "btn dropdown-item"
+            = link_to "ВПП`ы", admin_tt_timetableaps_path, class: "btn dropdown-item"
+
             = link_to "Пользователи", users_path, class: "btn dropdown-item"
             = link_to "ЖД станции", admin_stations_stations_path, class: "btn dropdown-item"
             = link_to "Переводы", translations_path, class: "btn dropdown-item"

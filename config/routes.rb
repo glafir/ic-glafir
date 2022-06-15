@@ -7,10 +7,9 @@ IcApp::Application.routes.draw do
     resources :weather_states
   end
   resources :airport_terminal_gates
-  resources :airport_terminals
+  get '/airport_terminals', :to => 'airport_terminals#index', :as => "airport_all_terminals"
   resources :airline_codeshares
   resources :statuses
-  resources :terminals
   get 'api/getAirports'
 
   get 'api/getCountries'
@@ -145,6 +144,11 @@ IcApp::Application.routes.draw do
     end
   end
   resources :airports, :concerns => :paginatable do
+    resources :terminals, :concerns => :paginatable do
+      collection do
+        get "admin_terminals"
+      end
+    end
     get :autocomplete_airport_city_rus, :on => :collection
     collection do
       get "admin_ap"

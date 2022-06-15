@@ -115,7 +115,7 @@ class TimetableapsController < ApplicationController
 
   def update
     authorize @timetableap
-    flash[:notice] = "The flight #{@timetableap.id} was updated!" if @timetableap.update_attributes(timetableap_params) && !request.xhr?
+    flash[:notice] = "The flight #{@timetableap.id} was updated!" if @timetableap.update(timetableap_params) && !request.xhr?
     if @timetableap.childs.count != 0
       @timetableap.childs.each do |c|
         c.update!( :dateOfEndNav => @timetableap.dateOfEndNav,

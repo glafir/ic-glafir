@@ -34,7 +34,7 @@ class AphubsController < ApplicationController
   end
 
   def update
-    flash[:notice] = "The aphub was updated!" if @aphub.update_attributes(params[:aphub]) && !request.xhr?
+    flash[:notice] = "The aphub was updated!" if @aphub.updates(params[:aphub]) && !request.xhr?
     authorize @aphub
     respond_with(@aphub)
   end
