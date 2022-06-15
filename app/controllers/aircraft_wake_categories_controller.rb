@@ -31,8 +31,8 @@ class AircraftWakeCategoriesController < ApplicationController
   end
 
   def update
-    @aircraft_wake_category.update_attributes(params[:aircraft_wake_category])
-    flash[:notice] = "The aircraft_wake_category was updated!" if @aircraft_wake_category.update_attributes(params[:aircraft_wake_category]) && !request.xhr?
+    @aircraft_wake_category.update(params[:aircraft_wake_category])
+    flash[:notice] = "The aircraft_wake_category was updated!" if @aircraft_wake_category.update(params[:aircraft_wake_category]) && !request.xhr?
     authorize @aircraft_wake_category
     respond_with(@aircraft_wake_category)
   end

@@ -1,29 +1,3 @@
-:javascript
-  jQuery(document).ready(function(){
-  //  setInterval("jQuery('#timeA').load('# span#timeB');",1000);
-    $("#accordion").accordion({
-  	    autoHeight: true,
-  //	    active: 0,
-  	    collapsible: true,
-  	    animate: 1000,
-  	    icons: { "header": "ui-icon-circle-plus", "activeHeader": "ui-icon-circle-arrow-s" }
-    });
-  });
-         function show()
-          {
-              $.ajax({
-                  url: "/general/timenow",
-                  cache: false,
-                  success: function(html){
-                      $("#dtime").html(html);
-                  }
-              });
-          }
-  
-  //        $(document).ready(function(){
-  //            show();
-  //            setInterval('show()',1000);
-  //        });
 #accordion
   = render "layouts/usermenu.mobile"
   %h3 Сегодня:

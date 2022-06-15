@@ -45,7 +45,7 @@ class AircompaniesController < ApplicationController
 
   def update
     authorize @aircompany
-    @aircompany.update_attributes(aircompany_params)
+    @aircompany.update(aircompany_params)
     flash[:notice] = "The aircompany #{@aircompany.id} was updated!" if @aircompany.save && !request.xhr?
     respond_with @aircompany
   end

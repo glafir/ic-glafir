@@ -32,8 +32,8 @@ class AircraftCompaniesController < ApplicationController
   end
 
   def update
-    @aircraft_company.update_attributes(params[:aircraft_company])
-    flash[:notice] = "The aircraft_company was updated!" if @aircraft_company.update_attributes(params[:aircraft_company]) && !request.xhr?
+    @aircraft_company.update(params[:aircraft_company])
+    flash[:notice] = "The aircraft_company was updated!" if @aircraft_company.update(params[:aircraft_company]) && !request.xhr?
     authorize @aircraft_company
     respond_with(@aircraft_company)
   end

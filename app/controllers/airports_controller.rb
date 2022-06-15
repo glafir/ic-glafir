@@ -98,7 +98,7 @@ before_action :check_permissions, only: :autocomplete_airport_city_rus
 
   def update
     authorize @airport
-    flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.update_attributes(airport_params) && !request.xhr?
+    flash[:notice] = "The airport  #{@airport.id} was updated!" if @airport.updates(airport_params) && !request.xhr?
     respond_with(@airport)
   end
 
