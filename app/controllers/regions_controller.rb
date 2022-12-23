@@ -63,7 +63,7 @@ class RegionsController < ApplicationController
     authorize @region
 
     respond_to do |format|
-      if @region.update_attributes(params[:region])
+      if @region.update(params[:region])
         format.html { redirect_to @region, notice: 'Regions was successfully updated.' }
         format.json { head :no_content }
       else

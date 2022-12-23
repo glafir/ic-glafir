@@ -31,7 +31,7 @@ class RunwayApsController < ApplicationController
 
   def update
     authorize @runway_ap
-    @runway_ap.update_attributes(params[:runway_ap])
+    @runway_ap.update(params[:runway_ap])
     respond_with(@runway_ap)
   end
 

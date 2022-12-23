@@ -42,7 +42,7 @@ end
   def update
     @timetablesap_flight = TimetablesapFlight.find(params[:id])
     authorize @timetablesap_flight 
-    if @timetablesap_flight.update_attributes(params[:timetablesap_flight])
+    if @timetablesap_flight.update(params[:timetablesap_flight])
       redirect_to(@timetablesap_flight, :notice => 'Изменения внесены')
     else
       render :action, '"edit"'

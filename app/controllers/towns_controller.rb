@@ -56,8 +56,8 @@ class TownsController < ApplicationController
 
   def update
     authorize @town
-    @town.update_attributes(town_params)
-    flash[:notice] = "The town  #{@town.id} was updated!" if @town.update_attributes(town_params) && !request.xhr?
+    @town.update(town_params)
+    flash[:notice] = "The town  #{@town.id} was updated!" if @town.update(town_params) && !request.xhr?
     @flash_message_state_id = 402
     respond_with(@country, @town)
   end

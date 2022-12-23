@@ -31,8 +31,8 @@ class FlightTypesController < ApplicationController
   end
 
   def update
-    @flight_type.update_attributes(params[:flight_type])
-    flash[:notice] = 'The Flight_type was successfully updated!' if @flight_type.update_attributes(params[:flight_type]) && !request.xhr?
+    @flight_type.update(params[:flight_type])
+    flash[:notice] = 'The Flight_type was successfully updated!' if @flight_type.update(params[:flight_type]) && !request.xhr?
     authorize @flight_type
     respond_with(@flight_type)
   end

@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
   def update
     authorize @user
-    if @user.update_attributes(user_params)
+    if @user.update(user_params)
       redirect_to @user, :notice => "User #{@user.username} updated."
     else
       render :edit, :notice => "Unable to update user #{@user.username}."
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   def select_theme
     authorize @user
-    if @user.update_attributes(user_theme_params)
+    if @user.update(user_theme_params)
       redirect_to @user, :notice => "User theme for #{@user.username} updated."
     else
       render :show, :notice => "Unable to update user #{@user.username}."

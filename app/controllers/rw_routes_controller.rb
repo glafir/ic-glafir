@@ -29,7 +29,7 @@ before_action :set_rw_route, only: [:show, :edit, :update, :destroy]
 
   def update
     authorize @rw_route
-    if @rw_route.update_attributes(rw_route_params)
+    if @rw_route.update(rw_route_params)
       redirect_to(@rw_route, :notice => 'Обновлено.')
     else
       render :action, '"edit"'

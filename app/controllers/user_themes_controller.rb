@@ -31,7 +31,7 @@ class UserThemesController < ApplicationController
 
   def update
     authorize :user_theme
-    @user_theme.update_attributes(user_theme_params)
+    @user_theme.update(user_theme_params)
     respond_with(@user_theme)
   end
 

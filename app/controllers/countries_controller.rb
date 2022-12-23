@@ -52,8 +52,8 @@ class CountriesController < ApplicationController
   end
 
   def update
-    @country.update_attributes(params[:country])
-    flash[:notice] = 'The Country was successfully updated!' if @country.update_attributes(params[:country]) && !request.xhr?
+    @country.update(params[:country])
+    flash[:notice] = 'The Country was successfully updated!' if @country.update(params[:country]) && !request.xhr?
     authorize @country
     respond_with(@country)
   end
