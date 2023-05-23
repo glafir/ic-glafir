@@ -11,3 +11,18 @@
     = stylesheet_link_tag "default/desktop/application", :media => "all", 'data-turbolinks-track': 'reload'
 
   = javascript_include_tag "application", 'data-turbolinks-track': 'reload'
+  %script{type: "module"}
+    :plain
+      import * as Snow from '/uploads/snow.js'
+      window.onload = function () {
+        var snow = new Snow.default({
+          id: 'snow',
+          theme: 'pastel',
+          min_size: 1,
+          max_size: 7
+        });
+        snow.start();
+        document.querySelector("body").onclick = function () {
+          snow.toggle();
+        }
+      }

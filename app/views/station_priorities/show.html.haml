@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Station:
+  = @station_priority.station_id
+%p
+  %b Rw route:
+  = @station_priority.rw_route_id
+%p
+  %b Priority:
+  = @station_priority.priority
+
+= link_to 'Edit', edit_station_priority_path(@station_priority)
+\|
+= link_to 'Back', station_priorities_path

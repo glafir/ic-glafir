@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_144518) do
+ActiveRecord::Schema.define(version: 2023_02_10_193500) do
 
   create_table "aircompanies", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "airline_name_eng", null: false
@@ -278,6 +278,15 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "rw_timetables", charset: "utf8", force: :cascade do |t|
+    t.integer "train_id"
+    t.integer "station_id"
+    t.datetime "time_arr"
+    t.datetime "time_dep"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sessions", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -293,6 +302,14 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "station_priorities", charset: "utf8", force: :cascade do |t|
+    t.integer "station_id"
+    t.integer "rw_route_id"
+    t.integer "priority"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "station_types", id: :integer, charset: "utf8", force: :cascade do |t|
@@ -421,6 +438,14 @@ ActiveRecord::Schema.define(version: 2021_05_30_144518) do
     t.index ["id"], name: "id", unique: true
     t.index ["latitude"], name: "latitude"
     t.index ["longitude", "latitude"], name: "longitude"
+  end
+
+  create_table "trains", charset: "utf8", force: :cascade do |t|
+    t.integer "station_start"
+    t.integer "station_finish"
+    t.integer "train_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "translations", id: :integer, charset: "utf8", force: :cascade do |t|

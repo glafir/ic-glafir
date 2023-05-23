@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Train:
+  = @rw_timetable.train_id
+%p
+  %b Station:
+  = @rw_timetable.station_id
+%p
+  %b Time arr:
+  = @rw_timetable.time_arr
+%p
+  %b Time dep:
+  = @rw_timetable.time_dep
+
+= link_to 'Edit', edit_rw_timetable_path(@rw_timetable)
+\|
+= link_to 'Back', rw_timetables_path

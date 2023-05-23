@@ -1,4 +1,7 @@
 IcApp::Application.routes.draw do
+  resources :rw_timetables
+  resources :trains
+  resources :station_priorities
   resources :airport_distances
   resources :weathers do
     collection do
@@ -22,7 +25,12 @@ IcApp::Application.routes.draw do
   end
   resources :airport_air_traffics
   resources :airport_states
-  resources :station_zones
+  resources :station_zones do
+    collection do
+      get "admin_station_zones"
+    end
+  end
+
 
   resources :stations do
     collection do
@@ -97,8 +105,11 @@ IcApp::Application.routes.draw do
   get "/some" => "timetablesap_flights#some"
   post "/timetablesap_flight/form" => "timetablesap_flights#form_enter"
   resources :rw_typestations
-  resources :rw_routes
-  resources :rw_stations
+  resources :rw_routes do
+    collection do
+      get "admin_rw_routes"
+    end
+  end
   devise_for :users, :controllers => {
     :sessions => "users/sessions",
     :registrations => "users/registrations"
@@ -116,7 +127,6 @@ IcApp::Application.routes.draw do
       end
     end
   end
-  resources :zones_stations
   resources :regions
   resources :timetableaps, :concerns => :paginatable do
     collection do

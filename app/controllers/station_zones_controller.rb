@@ -1,6 +1,10 @@
 class StationZonesController < ApplicationController
   before_action :set_station_zone, only: [:show, :edit, :update, :destroy]
 
+  def admin_station_zones
+    authorize :station_zone
+  end
+
   # GET /station_zones
   def index
     @station_zones = StationZone.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:per_page])

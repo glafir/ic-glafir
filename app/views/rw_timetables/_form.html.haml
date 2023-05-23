@@ -1,0 +1,11 @@
+= simple_form_for(@rw_timetable) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :train_id
+    = f.input :station_id
+    = f.input :time_arr
+    = f.input :time_dep
+
+  .form-actions
+    = f.button :submit

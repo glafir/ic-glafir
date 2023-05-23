@@ -1,0 +1,10 @@
+= simple_form_for(@station_priority) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :station_id
+    = f.input :rw_route_id
+    = f.input :priority
+
+  .form-actions
+    = f.button :submit

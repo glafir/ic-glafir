@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Station start:
+  = @train.station_start
+%p
+  %b Station finish:
+  = @train.station_finish
+%p
+  %b Train number:
+  = @train.train_number
+
+= link_to 'Edit', edit_train_path(@train)
+\|
+= link_to 'Back', trains_path

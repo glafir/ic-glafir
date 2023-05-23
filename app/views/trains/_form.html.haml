@@ -1,0 +1,10 @@
+= simple_form_for(@train) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :station_start
+    = f.input :station_finish
+    = f.input :train_number
+
+  .form-actions
+    = f.button :submit

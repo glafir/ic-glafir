@@ -5,6 +5,10 @@ before_action :set_rw_route, only: [:show, :edit, :update, :destroy]
     authorize @rw_routes
   end
 
+  def admin_rw_routes
+    authorize :rw_route
+  end
+
   def show
     authorize @rw_route
   end

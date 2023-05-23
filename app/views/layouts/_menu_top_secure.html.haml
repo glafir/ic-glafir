@@ -73,10 +73,10 @@
             = link_to "Терминалы", admin_tt_timetableaps_path, class: "btn dropdown-item"
             = link_to "Гейты", admin_tt_timetableaps_path, class: "btn dropdown-item"
             = link_to "ВПП`ы", admin_tt_timetableaps_path, class: "btn dropdown-item"
-
             = link_to "Пользователи", users_path, class: "btn dropdown-item"
             = link_to "ЖД станции", admin_stations_stations_path, class: "btn dropdown-item"
-            = link_to "Переводы", translations_path, class: "btn dropdown-item"
+            = link_to "ЖД Зоны", admin_station_zones_station_zones_path, class: "btn dropdown-item"
+            = link_to "ЖД Маршруты", admin_rw_routes_rw_routes_path, class: "btn dropdown-item"
         .dropdown
           = link_to "твой профиль: #{current_user.username}", '#', class: "btn btn-outline-primary btn-lg dropdown-toggle", :data => {:toggle => "dropdown"}
           .dropdown-menu.dropleft.shadow-lg

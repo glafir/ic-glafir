@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  station_start: 1
+  station_finish: 1
+  train_number: 1
+
+two:
+  station_start: 1
+  station_finish: 1
+  train_number: 1

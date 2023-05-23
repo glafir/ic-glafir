@@ -11,3 +11,20 @@
 
   = javascript_include_tag "application", 'data-turbolinks-track': 'reload'
 
+:javascript
+  import * as Snow from 'snow.js'
+
+  window.onload = function () {
+    //create new snow
+    var snow = new Snow.default({
+        id: 'snow',
+        theme: 'berry',
+        min_size: 3,
+        max_size: 10
+    });
+    snow.start();
+
+    document.querySelector("body").onclick = function () {
+        snow.toggle();
+    }
+  }
