@@ -12,9 +12,6 @@
       - @aptt_all = @aptt_in + @aptt_out or 0
       #{@aptt_all} / #{@aptt_out}
     %p
-      %b.badge.badge-secondary Кол-во направлений:
-      = @airport.timetableaps_out.select(:airport_finish_id).pluck(:airport_finish_id).uniq.count
-    %p
       %b.badge.badge-secondary из них международных:
     -#-  = Country.where(:id => Airport.select(:country_id).where(:id => @timetableaps.select(:airport_finish_id))).each
     %p
@@ -35,6 +32,75 @@
     %p
       %b.badge.badge-secondary Количество полос:
       = @airport.runway_aps.count
+    %p
+      %b.badge.badge-secondary Расстояние до Ежинска а/п Ежово-1:
+      - @ap1 = Airport.find(25832)
+      - @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
+      - @p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
+      - @dist = @p1.distance_to(@p2)
+      - @fbear = @p2.bearing_to(@p1)
+      = @dist
+      km
+    %b.badge.badge-secondary Азимут Ежинска а/п Ежово-1:
+    %p
+      = @fbear
+    %p
+      %b.badge.badge-secondary Кол-во направлений:
+      = @airport.timetableaps_out.pluck(:airport_finish_id).uniq.count
+    %p
+      %b.badge.badge-secondary Направления:
+      %table#ttinfo.tablesorter.table.table-striped.table-hover
+        %thead
+          %tr
+            %th.text-center Города
+            %th.text-center Кол-во рейсов
+            %th.text-center кол-во в/к
+        %tbody
+          - Town.where(id: Airport.where(id: @airport.timetableaps_out.pluck(:airport_finish_id).uniq).pluck(:town_id).uniq).order(:city_rus).each do |t|
+            %tr
+              %td= t.city_rus
+              %td= @airport.timetableaps_out.where(airport_finish_id: Airport.where(town_id: t.id).pluck(:id)).count
+              %td= @airport.timetableaps_out.where(airport_finish_id: Airport.where(town_id: t.id).pluck(:id)).pluck(:aircompany_id).uniq.count
+
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12
+    %h4 Погода
+    .wheather
+      - if @weathers.blank? 
+        - airport_wheather = Openweather2.get_weather(lat: @airport.latitude, lon: @airport.longitude)
+        %p.wi-show.badge.badge-info
+          - airport_wheather.main.each do |w|
+            %i(class="wi wi-owm-#{w['id']} wi-fw")
+            #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+          %p
+            %b.badge.badge-secondary Видимость
+            #{airport_wheather.visibility}м &nbsp;
+      - else
+        - airport_wheather = @weathers.last
+        %p.wi-show.badge.badge-info
+          - airport_wheather.weather_states.each do |w|
+            %i(class="wi wi-owm-#{w.weather_icon_id} wi-fw")
+            #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+      %p
+        %b.badge.badge-secondary Температура
+        Текущая #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+        Максимальная #{sprintf("%.2f", airport_wheather.max_temperature - 273.15).to_f}C  &nbsp;
+        Минимальная  #{sprintf("%.2f", airport_wheather.min_temperature - 273.15).to_f}C &nbsp;
+      %p
+        %b.badge.badge-secondary Облачность
+        #{airport_wheather.clouds}% &nbsp;
+      %p
+        %b.badge.badge-secondary Влажность
+        #{airport_wheather.humidity}% &nbsp;
+      %p
+        %b.badge.badge-secondary Давление
+        #{airport_wheather.pressure}ГПа (мбар) &nbsp;
+      %p
+        %b.badge.badge-secondary Ветер
+        Скорость #{airport_wheather.wind_speed}м/с &nbsp;, Направление #{airport_wheather.wind_angle} &nbsp;
+      %p
+        %b.badge.badge-secondary Последнее время измерение данных
+        #{DateTime.strptime(airport_wheather.dt.to_s,'%s')} &nbsp;
+    %h4 Астрономические данные
     %p
       %b.badge.badge-secondary Восход Солнца:
       = sr = sss.sunrise.to_s(:time) if sss.sunrise.is_a?(DateTime)
@@ -59,54 +125,16 @@
         = sss.solNoon.to_s(:time)
       %p
         %b.badge.badge-secondary Долгота дня:
-        = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff] 
-    %p
-      %b.badge.badge-secondary Расстояние до Ежинска а/п Ежово-1:
-      - @ap1 = Airport.find(25832)
-      - @p1 = GeoPoint.new  @ap1.latitude.to_f, @ap1.longitude.to_f
-      - @p2 = GeoPoint.new  @airport.latitude.to_f, @airport.longitude.to_f
-      - @dist = @p1.distance_to(@p2)
-      - @fbear = @p2.bearing_to(@p1)
-      = @dist
-      km
-    %b.badge.badge-secondary Азимут Ежинска а/п Ежово-1:
-    %p
-      = @fbear
-
-  .col-lg-6.col-md-6.col-sm-6.col-xs-12
-    .wheather
-      - if @weathers.blank? 
-        - airport_wheather = Openweather2.get_weather(lat: @airport.latitude, lon: @airport.longitude)
-        %p.wi-show.badge.badge-info
-          - airport_wheather.main.each do |w|
-            %i(class="wi wi-owm-#{w['id']} wi-fw")
-            #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
-          %p
-            %b.badge.badge-secondary Видимость
-            #{airport_wheather.visibility}м &nbsp;
-      - else
-        - airport_wheather = @weathers.last
-        %p.wi-show.badge.badge-info
-          - airport_wheather.weather_states.each do |w|
-            %i(class="wi wi-owm-#{w.weather_icon_id} wi-fw")
-            #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
-      %p
-        %b.badge.badge-secondary Температура
-        Текущая #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
-        Максимальная #{sprintf("%.2f", airport_wheather.max_temperature - 273.15).to_f}C  &nbsp;
-        Минимальная  #{sprintf("%.2f", airport_wheather.min_temperature - 273.15).to_f}C &nbsp;
-      %p
-        %b.badge.badge-secondary Облачность
-        #{airport_wheather.clouds} &nbsp;
-      %p
-        %b.badge.badge-secondary Влажность
-        #{airport_wheather.humidity}% &nbsp;
-      %p
-        %b.badge.badge-secondary Давление
-        #{airport_wheather.pressure}ГПа (мбар) &nbsp;
-      %p
-        %b.badge.badge-secondary Ветер
-        Скорость #{airport_wheather.wind_speed}м/с &nbsp;, Направление #{airport_wheather.wind_angle} &nbsp;
-      %p
-        %b.badge.badge-secondary Последнее время измерение данных
-        #{DateTime.strptime(airport_wheather.dt.to_s,'%s')} &nbsp;
+        = Time.diff(Time.parse(sr.to_s), Time.parse(ss.to_s), '%H %N')[:diff]
+:javascript
+  $(document).ready(function(){
+      $('#ttinfo').DataTable( {
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        searching: false,
+        order: [[ 0, "asc" ]]
+      });
+  });

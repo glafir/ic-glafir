@@ -8,7 +8,7 @@
           %th(colspan=2)
             %h4= link_to @aircompany.airport.town.city_rus, @aircompany.airport.town
             %h6 (#{link_to @aircompany.airport.name_rus, @aircompany.airport})
-            #{@aircompany.airport.timetableaps_out.pluck(:airport_finish_id).uniq.count} направлений
+            #{@aircompany.airport.timetableaps_out.where(aircompany_id: @aircompany.id).pluck(:airport_finish_id).uniq.count} направлений
         - @aircompany.airport.timetableaps_out.group("airport_finish_id").ordered_by_airport_finish_city_rus.where(aircompany_id: @aircompany.id).each do |tt|
           - cache tt do
             %tr

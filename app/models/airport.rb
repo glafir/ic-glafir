@@ -25,7 +25,7 @@ acts_as_mappable :default_units => :kms,
   validates  :icao_code, presence: true, length: { is: 4 }
   validates  :name_eng, presence: true, length: { minimum: 2 }
   validates  :name_rus, presence: true, length: { minimum: 2 }
-  validates  :iso_code, presence: true, length: { is: 2 }
+#  validates  :iso_code, presence: true, length: { is: 2 }
   validates  :country_id, presence: true, numericality: { only_integer: true }
 
 #  def name end

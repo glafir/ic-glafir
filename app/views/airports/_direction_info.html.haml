@@ -4,13 +4,13 @@
     %td Направления
   %tr
     %td Основные авиакомпании
-  - @airport.aircompanies.order("airline_name_eng").each do |aircompany|
+  - @airport.aircompanies.order("airline_name_rus").each do |aircompany|
     - cache aircompany do
       %tr
         %td
-          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+          = image_tag aircompany.avatar.size_200.url if aircompany.avatar?
           %br
-          = link_to aircompany.airline_name_eng, aircompany
+          = link_to aircompany.airline_name_rus, aircompany
           (#{link_to aircompany.iata_code, aircompany})
         %td
           - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
@@ -23,9 +23,9 @@
       - aircompany = aphub.aircompany
       %tr
         %td
-          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+          = image_tag aircompany.avatar.size_200.url if aircompany.avatar?
           %br
-          = link_to aircompany.airline_name_eng, aircompany
+          = link_to aircompany.airline_name_rus, aircompany
           (#{link_to aircompany.iata_code, aircompany})
         %td
           - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|
@@ -38,9 +38,9 @@
       - aircompany = aphub.aircompany
       %tr
         %td
-          = image_tag aircompany.avatar.thumb_80.url if aircompany.avatar?
+          = image_tag aircompany.avatar.size_200.url if aircompany.avatar?
           %br
-          = link_to aircompany.airline_name_eng, aircompany
+          = link_to aircompany.airline_name_rus, aircompany
           (#{link_to aircompany.iata_code, aircompany})
         %td
           - @airport.timetableaps_out.where(aircompany_id: aircompany.id).group("airport_finish_id").ordered_by_airport_finish_city_rus.each do |tt|

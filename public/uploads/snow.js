@@ -29,9 +29,15 @@ var Snow = function (options) {
         max = options.max_size;
     }
 
+    //define msx snow
+    var max_snow = 40
+    if (!isNaN(options.max_snow)) {
+        max_snow = options.max_snow;
+    }
+
     //snowflake list
     this.snowflakes = []
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < max_snow; i++) {
         this.snowflakes[i] = new Snowflake(this.canvas, theme, min, max);
         this.snowflakes[i].show();
     }
@@ -51,7 +57,7 @@ var Snow = function (options) {
             context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
             //update snowflakes
-            for (var i = 0; i < 250; i++) {
+            for (var i = 0; i < max_snow; i++) {
                 this.snowflakes[i].update();
                 this.snowflakes[i].show();
 
