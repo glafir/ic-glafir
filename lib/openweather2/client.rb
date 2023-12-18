@@ -53,8 +53,11 @@ module Openweather2
 
   def send_request(uri)
     req = Net::HTTP::Get.new(uri.request_uri)
-    http_params = [uri.hostname, uri.port, read_timeout: 150, open_timeout: 150, use_ssl: uri.scheme == 'https']
-    Net::HTTP.start(*http_params) {|http| http.request(req)}
+    http_params = [uri.hostname, uri.port, read_timeout: 300, open_timeout: 300, use_ssl: uri.scheme == 'https']
+    Net::HTTP.start(*http_params) {|http|
+      http.request(req)
+#      http.ssl_version = 'SSLv3'
+    }
   end
 
   def set_params(options)

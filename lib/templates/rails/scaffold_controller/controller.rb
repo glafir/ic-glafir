@@ -50,7 +50,12 @@ class <%= controller_class_name %>Controller < ApplicationController
   # DELETE <%= route_url %>/1
   def destroy
     authorize @<%= singular_table_name %>
-    redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully destroyed.'" %>  if @<%= orm_instance.destroy %> && !request.xhr?
+    if @<%= orm_instance.destroy %> && !request.xhr?
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: root_path) }
+        format.json { head :no_content }
+      end
+    end
   end
 
   private

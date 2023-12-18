@@ -150,7 +150,10 @@ class TimetableapsController < ApplicationController
     authorize @timetableap
     @timetableap.destroy
     @flash_message_state_id = 405
-    respond_with(@timetableap)
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.json { head :no_content }
+    end
   end
 
   def flight_state
