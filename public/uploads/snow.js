@@ -30,7 +30,7 @@ var Snow = function (options) {
     }
 
     //define msx snow
-    var max_snow = 40
+    var max_snow = 20
     if (!isNaN(options.max_snow)) {
         max_snow = options.max_snow;
     }
