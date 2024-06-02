@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
-include Pundit
+include Pundit::Authorization
 require "active_support/all"
 require "openweather2.rb"
 require "sunriseset"
