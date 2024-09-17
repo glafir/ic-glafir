@@ -103,33 +103,34 @@
             = link_to timetableap, method: :delete, data: { confirm: 'Are you sure?' } do
               %span.glyphicon.glyphicon-remove-circle
               
-= render "timetableaps/paginate_bottom"
-= link_to 'Добавить основной авиарейс', new_timetableap_path
-
 :javascript
   jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     "first-id-pre": function ( a ) {
         return parseInt($(a).text().split(' ')[1]);
     },
- 
+
     "first-id-asc": function ( a, b ) {
         return ((a < b) ? -1 : ((a > b) ? 1 : 0));
     },
- 
+
     "fist-id-desc": function ( a, b ) {
         return ((a < b) ? 1 : ((a > b) ? -1 : 0));
     }
   } );
 
   var table = $('table.tt').DataTable({
+    retrieve: true,
     paging:   false,
-    autoWidth: false,
+    autoWidth: true,
     ordering: true,
     info:     false,
-    stateSave: true,
+    stateSave: false,
     searching: false,
     order: [[ 3, "asc" ]],
     columnDefs : [
       { type: 'first-id', targets: 0 }
     ]
   })
+
+= render "timetableaps/paginate_bottom"
+= link_to 'Добавить основной авиарейс', new_timetableap_path
