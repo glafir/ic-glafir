@@ -5,7 +5,7 @@ acts_as_mappable :default_units => :kms,
                    :distance_field_name => :distance,
                    :lat_column_name => :latitude,
                    :lng_column_name => :longitude
-  paginates_per 50
+  paginates_per 200
   has_many :airport_terminals
   has_many :aircompanies, dependent: :destroy
   belongs_to :town

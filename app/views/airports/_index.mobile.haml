@@ -1,6 +1,6 @@
 = form_tag  "#", :remote => false, :method => 'get',  :id => "airports_search" do
   .form-group
-    .controls.col-lg-8.col-md-8.col-sm-10.col-xs-10
+    .col-xs-10
       = text_field_tag :search, params[:search], autofocus: true, class: 'form-control xl-col-3'
   .form-group
     = submit_tag "Search", :name => nil, class: 'btn btn-primary'
@@ -8,7 +8,7 @@
     .per-page.controls.col-lg-12.col-md-12.col-sm-12.col-xs-12
       %label.col-xs-3.control-label Отобразить на странице:
       .col-xs-2
-        = select_tag :limit, options_for_select([10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "$('#airports_search').submit();", class: 'form-control'
+        = select_tag :limit, options_for_select([50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "$('#airports_search').submit();", class: 'form-control'
       %label.col-xs-2.control-label элементов.
 #airports= render "airports/airports"
 

@@ -8,7 +8,7 @@
     .per-page.controls.col-lg-12.col-md-12.col-sm-12.col-xs-12
       %label.col-xs-3.control-label Отобразить на странице:
       .col-xs-2
-        = select_tag :limit, options_for_select([10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "$('#aircompanies_search').submit();", class: 'form-control'
+        = select_tag :limit, options_for_select([50, 75, 100, 150, 200, 500, 750, 1000], selected: params[:limit]), :onchange => "$('#aircompanies_search').submit();", class: 'form-control'
       %label.col-xs-2.control-label элементов.
 
 #aircompanies.col-xs-12= render 'aircompanies/aircompanies'

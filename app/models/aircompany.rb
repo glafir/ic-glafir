@@ -1,7 +1,7 @@
 class Aircompany < ActiveRecord::Base
 include ActiveModel::Validations
 mount_uploader :avatar, AvatarUploader
-  paginates_per 30
+  paginates_per 100
   has_many :users
   has_many :airline_codeshares
   has_many :codeshares, class_name: "AirlineCodeshare", foreign_key: "codeshare_id"
