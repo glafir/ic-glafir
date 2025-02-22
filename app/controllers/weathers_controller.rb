@@ -10,7 +10,7 @@ class WeathersController < ApplicationController
 
   def weather_grub
     airport = Airport.where(country_id:528).where("updated_at < ?", Time.now.utc-15.minute).order("updated_at").first
-    if airport.count == 1
+    unless airport.blank?
       airport_wheather = Openweather2.get_weather(lat: airport.latitude, lon: airport.longitude)
       weather = Weather.new
       weather.place_id = airport.id
