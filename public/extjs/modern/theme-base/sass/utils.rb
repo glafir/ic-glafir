@@ -15,7 +15,7 @@ module SenchaTouch
 
           where_to_look = File.join(directory.value, path.value)
 
-          if where_to_look && FileTest.exists?("#{where_to_look}")
+          if where_to_look && FileTest.exist?("#{where_to_look}")
             result = true
           end
 

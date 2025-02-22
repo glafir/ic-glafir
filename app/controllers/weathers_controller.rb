@@ -10,7 +10,7 @@ class WeathersController < ApplicationController
 
   def weather_grub
     airport = Airport.where(country_id:528).where("updated_at < ?", Time.now.utc-15.minute).order("updated_at").first
-#    @airports.each {|airport|
+    if airport.count == 1
       airport_wheather = Openweather2.get_weather(lat: airport.latitude, lon: airport.longitude)
       weather = Weather.new
       weather.place_id = airport.id
@@ -36,9 +36,11 @@ class WeathersController < ApplicationController
         weather_state.save
       }
       airport.updated_at = Time.now.utc
-    airport.save
-#    }
-    render json: airport
+      airport.save
+      render json: airport
+    else
+      render plain: "All Updates Was Finished! :)"
+    end
   end
 
   # GET /weathers/1

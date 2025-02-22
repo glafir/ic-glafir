@@ -113,3 +113,5 @@ gem 'jquery-datatables-rails'
 gem "net-smtp", require: false
 gem "net-pop", require: false
 gem "net-imap", require: false
+gem 'sassc-rails'
+gem 'concurrent-ruby', '1.3.4'
