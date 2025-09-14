@@ -4,7 +4,7 @@ workers 4
 threads 4,16
 app_dir = File.expand_path("/home/glafir/RoR/ic-glafir", __FILE__)
 log_dir = "#{app_dir}/log"
-shared_dir = "/var/cache/RoR/ic-glafir/"
+shared_dir = "/home/glafir/RoR/ic-glafir/tmp"
 FileUtils.mkdir_p "#{shared_dir}"
 FileUtils.mkdir_p "#{shared_dir}/sockets"
 FileUtils.mkdir_p "#{shared_dir}/pids"
