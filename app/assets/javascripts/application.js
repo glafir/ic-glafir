@@ -12,3 +12,5 @@
 //= require_tree .
 //= require_self
 
+//= require echarts.min.js
+//= require echarts/theme/vintage.js

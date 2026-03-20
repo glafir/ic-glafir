@@ -1,33 +1,9 @@
 - wcount = @weathers.count*1.25
 - unless @weathers.count < 3
   .w_info
-    %p= tmax = @weathers.map { |d| d[:temperature] }.max - 273.15
-    %p= tmin = @weathers.map { |d| d[:temperature] }.min - 273.15
+    %p= tmax = (@weathers.map { |d|d.temperature}.max - 273.15).to_f.round(1)
+    %p= tmin = (@weathers.map { |d|d.temperature}.min - 273.15).to_f.round(1)
     - tamp = tmax - tmin
     - ycorr = 0 - tmin
-  %canvas#weather{width:"#{wcount}",height:"#{tamp*11}"}
-  :javascript
-    var canvas = document.getElementById('weather'), ctx = canvas.getContext('2d'), tmin = #{tmin};
-    ctx.transform(1, 0, 0, -1, 0, #{tamp*11});
-    ctx.strokeRect(0,0,#{wcount},#{tamp*11});
-    ctx.beginPath();
-    if (tmin < 0){
-      ctx.moveTo(0, #{tmin.abs}*10);
-      ctx.lineTo(#{wcount}, #{tmin.abs }*10);
-      ctx.strokeStyle  = 'red';
-      ctx.stroke();}
-
-  - t=0
-  - n=0
-  %hr
-  - @weathers.each do |weather|
-    - cache weather do
-      - temp = weather.temperature
-      - temp_next = @weathers.where("id > ?", weather.id).first.temperature unless @weathers.where("id > ?", weather.id).first.nil?
-      :javascript
-        var temp = (#{temp}+#{ycorr}+1-273.15)*10, temp_next = (#{temp_next}+#{ycorr}+1-273.15)*10, t = #{t};
-        ctx.moveTo(t, temp);
-        ctx.lineTo(t+1.25, temp_next);
-        ctx.strokeStyle = "#ff0000";
-        ctx.stroke();
-      - t = t+1.25
+  #weather-chart
+    =line_chart @weathers_graph, {width: '1100px', height: '500px'}

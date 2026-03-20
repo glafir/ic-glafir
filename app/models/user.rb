@@ -38,7 +38,7 @@ mount_uploader :avatar, AvatarUploader
   validates :username,
     :uniqueness => {:case_sensitive => false}
   validates :email, :presence => true, 
-                    :length => {:minimum => 3, :maximum => 70},
+                    :length => {:minimum => 8, :maximum => 70},
                     :uniqueness => {:case_sensitive => false },
                     :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
 #  has_attached_file :avatar, :styles => { :big => "600x600>", :medium_400 => "400x400>", :medium_300 => "300x300>", :small => "200x200>", :thumb => "100x100>" }, :thumb_50 => "50x50>", :default_url => "/images/:style/missing.png"

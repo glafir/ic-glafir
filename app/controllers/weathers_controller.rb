@@ -96,6 +96,6 @@ class WeathersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def weather_params
-      params.require(:weather).permit(:place_id, :temperature, :min_temperature, :max_temperature, :pressure, :pressure_sea_level, :pressure_grnd_level, :wind_speed, :wind_angle, :clouds, :dt, :humidity)
+      params.require(:weather).permit(:place_id, :temperature, :min_temperature, :max_temperature, :pressure, :pressure_sea_level, :pressure_grnd_level, :wind_speed, :wind_angle, :clouds, :dt, :humidity, :created_at_short)
     end
 end

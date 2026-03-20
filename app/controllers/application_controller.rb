@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
+
 include Pundit::Authorization
 require "active_support/all"
 require "openweather2.rb"
@@ -144,7 +145,7 @@ end
     response.headers["P3P"]='CP="CAO PSA OUR"'
   end 
 
-  private 
+private
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end

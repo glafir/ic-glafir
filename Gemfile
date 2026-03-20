@@ -115,3 +115,5 @@ gem "net-pop", require: false
 gem "net-imap", require: false
 gem 'sassc-rails'
 gem 'concurrent-ruby', '1.3.4'
+gem "rails_charts"
+gem 'groupdate'
