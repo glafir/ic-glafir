@@ -13,4 +13,4 @@
 //= require_self
 
 //= require echarts.min.js
-//= require echarts/theme/vintage.js
+//= require echarts/theme/blue.js
