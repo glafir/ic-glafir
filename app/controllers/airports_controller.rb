@@ -70,7 +70,7 @@ before_action :check_permissions, only: :autocomplete_airport_city_rus
   def show
     @aircompanies = @airport.aircompanies.page(params[:page]).per(params[:per_page])
     @weathers = @airport.weathers.where("created_at >= ?", "#{Time.now - 2.weeks}").order(:created_at)
-    @weathers_graph = @weathers.map{|d|d.created_at_short}.zip(@weathers.map {|d|(d.temperature-273.15).to_f.round(1)})
+    @weathers_graph = @weathers.map{|d|d.created_at.in_time_zone(@airport.time_zone).to_s(:short)}.zip(@weathers.map {|d|(d.temperature-273.15).to_f.round(1)})
     authorize @airport
     respond_with(@airport)
   end
