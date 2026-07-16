@@ -4,7 +4,7 @@ class StationZones < Application
     c.title = "Station_zones"
     c.model = "StationZone"
     c.columns = [
-      {name: :zone, header: "Зонв ствнции"},
+      {name: :zone, header: "Зонв ствнции"}
     ]
   end
 end

@@ -1,0 +1,94 @@
+%h4 Погода
+.wheather
+  - if @weathers.blank?
+    - airport_wheather = Openweather2.get_weather(lat: @airport.latitude, lon: @airport.longitude)
+    %p.wi-show.badge.badge-info
+      - airport_wheather.main.each do |w|
+        %i(class="wi wi-owm-#{w['id']} wi-fw")
+        #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+      %p
+        %b.badge.badge-secondary Видимость
+        #{airport_wheather.visibility}м &nbsp;
+  - else
+    - airport_wheather = @weathers.last
+    %p.wi-show.badge.badge-info
+      - airport_wheather.weather_states.each do |w|
+        %i(class="wi wi-owm-#{w.weather_icon_id} wi-fw")
+        #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+  %p
+    %b.badge.badge-secondary Температура
+    Текущая #{sprintf("%.2f", airport_wheather.temperature - 273.15).to_f}C &nbsp;
+    Максимальная #{sprintf("%.2f", airport_wheather.max_temperature - 273.15).to_f}C  &nbsp;
+    Минимальная  #{sprintf("%.2f", airport_wheather.min_temperature - 273.15).to_f}C &nbsp;
+  %p
+    %b.badge.badge-secondary Облачность
+    #{airport_wheather.clouds}% &nbsp;
+  %p
+    %b.badge.badge-secondary Влажность
+    %canvas#humandity
+    #{airport_wheather.humidity}% &nbsp;
+  %p
+    %b.badge.badge-secondary Давление
+    -gauge_data = [{value: airport_wheather.pressure.to_i, name: 'GPa'}]
+    =gauge_data
+    -#-=gauge_chart gauge_data, 
+      class: 'box',
+      height: '400px',
+      options: {title: {text: 'Атмосферное давление', left: 'center'}}
+  %p
+    %b.badge.badge-secondary Ветер
+    Скорость #{airport_wheather.wind_speed}м/с &nbsp;, Направление #{airport_wheather.wind_angle} &nbsp;
+  %p
+    %b.badge.badge-secondary Последнее время измерение данных
+    #{DateTime.strptime(airport_wheather.dt.to_s,'%s')} &nbsp;
+.w_info
+  %p= tmax = (@weathers.map { |d|d.temperature}.max - 273.15).to_f.round(1)
+  %p= tmin = (@weathers.map { |d|d.temperature}.min - 273.15).to_f.round(1)
+#weather-chart
+  =line_chart @weathers_graph,
+    class: 'box',
+      theme: 'sakura',
+      width: '600px',
+      height: '500px',
+      options: {title: {text: "Weather log for #{@airport.name_rus}", left: 'center'},
+        series: {coordinateSystem: 'cartesian2d',symbol: 'circle', symbolSize: 10, triggerLineEvent: true,  lineStyle: {width: '1' }, smooth: 0.4},
+        visualMap: {show: false, dimension: 1,
+          pieces: [{gt: 30, color: 'DarkRed'},
+            {gt: 25, lte: 30, color: 'FireBrick'},
+            {gt: 20, lte: 25, color: 'red'},
+            {gt: 15, lte: 20, color: 'OrangeRed'},
+            {gt: 10, lte: 15, color: 'Gold'},
+            {gt: 5, lte: 10, color: 'Khaki'},
+            {gt: 0, lte: 5, color: 'PapayaWhip'},
+            {gt: -5, lte: 0, color: 'PowderBlue'},
+            {gt: -10, lte: -5, color: 'SkyBlue'},
+            {gt: -15, lte: -10, color: 'DeepSkyBlue'},
+            {gt: -20, lte: -15, color: 'DodgerBlue'},
+            {gt: -25, lte: -20, color: 'MediumSlateBlue'},
+            {gt: -30, lte: -25, color: 'Blue'},
+            {gt: -40, lte: -30, color: 'MediumBlue'},
+            {lte: -40, color: 'DarkBlue'}]}}
+
+:javascript
+    const canvas = document.getElementById("humandity");
+    const ctx = canvas.getContext("2d");
+    const centerX = 0, centerY = 60, radius = 30;
+    const startAngle = -0.15 * Math.PI;
+    const endAngle = 1.15 * Math.PI;
+    const startX = centerX + radius * Math.cos(startAngle);
+    const startY = centerY + radius * Math.sin(startAngle);
+    const endX = centerX + radius * Math.cos(endAngle);
+    const endY = centerY + radius * Math.sin(endAngle);
+
+    ctx.strokeStyle = 'RoyalBlue';
+    ctx.translate(50, 10);
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(0, 0);
+    ctx.lineTo(endX, endY);
+
+    //ctx.fillStyle = 'RoyalBlue';
+    //ctx.fill();
+
+    ctx.stroke();

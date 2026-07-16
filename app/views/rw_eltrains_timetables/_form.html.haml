@@ -1,0 +1,18 @@
+= simple_form_for(@rw_eltrains_timetable) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :station_id
+    = f.input :direction
+    = f.input :time_start
+    = f.input :time_finish
+    = f.input :w1
+    = f.input :w2
+    = f.input :w3
+    = f.input :w4
+    = f.input :w5
+    = f.input :w6
+    = f.input :w0
+
+  .form-actions
+    = f.button :submit

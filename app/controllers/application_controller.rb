@@ -5,7 +5,7 @@ include Pundit::Authorization
 require "active_support/all"
 require "openweather2.rb"
 require "sunriseset"
-layout "application_netzke", only: [:admin_al, :admin_aphub, :admin_ap, :admin_tt, :admin_stations, :admin_station_zones, :admin_rw_routes]
+layout "application_netzke", only: [:admin_al, :admin_aphub, :admin_ap, :admin_tt, :admin_stations, :admin_station_zones, :admin_rw_routes, :admin_rw_eltrains_routes, :admin_rw_eltrains_timetables]
 protect_from_forgery with: :exception, unless: -> { request.format.json? }
 protect_from_forgery prepend: true
 skip_before_action :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }

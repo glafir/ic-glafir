@@ -1,4 +1,14 @@
 IcApp::Application.routes.draw do
+  resources :rw_eltrains_timetables do
+    collection do
+      get "admin_rw_eltrains_timetables"
+    end
+  end
+  resources :rw_eltrains_routes do
+    collection do
+      get "admin_rw_eltrains_routes"
+    end
+  end
   resources :rw_timetables
   resources :trains
   resources :station_priorities

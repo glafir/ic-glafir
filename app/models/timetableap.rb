@@ -11,7 +11,6 @@ include ActiveModel::Validations
   has_many :childs, class_name: "Timetableap", foreign_key: "parent_id"
   belongs_to :parent, class_name: "Timetableap"
 
-
   attr_accessor :f_tw, :f_ap, :s_tw, :s_ap, :timeIN, :bgcolor, :fstatus, :airline, :bgcolor_apload, :flight
 
   validates  :aircompany_id, presence: true, numericality: { only_integer: true }

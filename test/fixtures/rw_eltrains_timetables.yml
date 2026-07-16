@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  station_id: 1
+  direction: 1
+  time_start: 2026-07-15 12:31:55
+  time_finish: 2026-07-15 12:31:55
+  w1: 1
+  w2: 1
+  w3: 1
+  w4: 1
+  w5: 1
+  w6: 1
+  w0: 1
+
+two:
+  station_id: 1
+  direction: 1
+  time_start: 2026-07-15 12:31:55
+  time_finish: 2026-07-15 12:31:55
+  w1: 1
+  w2: 1
+  w3: 1
+  w4: 1
+  w5: 1
+  w6: 1
+  w0: 1

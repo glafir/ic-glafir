@@ -1,0 +1,28 @@
+- model_class = RwEltrainsRoute
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing rw_eltrains_routes
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Station
+      %th Priority direct
+      %th Route Number
+      %th
+      %th
+      %th
+
+  %tbody
+    - @rw_eltrains_routes.each do |rw_eltrains_route|
+      %tr
+        %td= rw_eltrains_route.station_id
+        %td= rw_eltrains_route.priority_direct
+        %td= rw_eltrains_route.number
+        %td= link_to 'Show', rw_eltrains_route
+        %td= link_to 'Edit', edit_rw_eltrains_route_path(rw_eltrains_route)
+        %td= link_to 'Destroy', rw_eltrains_route, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_rw_eltrains_route_path, :class => 'btn btn-primary'
+

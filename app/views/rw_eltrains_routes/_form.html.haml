@@ -1,0 +1,10 @@
+= simple_form_for(@rw_eltrains_route) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :number
+    = f.input :station_id
+    = f.input :priority_direct
+
+  .form-actions
+    = f.button :submit
