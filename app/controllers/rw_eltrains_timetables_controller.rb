@@ -70,6 +70,6 @@ class RwEltrainsTimetablesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def rw_eltrains_timetable_params
-      params.require(:rw_eltrains_timetable).permit(:station_id, :direction, :time_start, :time_finish, :w1, :w2, :w3, :w4, :w5, :w6, :w0)
+      params.require(:rw_eltrains_timetable).permit(:rw_eltrains_route_id, :direction, :time_start, :time_finish, :w1, :w2, :w3, :w4, :w5, :w6, :w0, :eltrains_number)
     end
 end

@@ -1,11 +1,21 @@
-class RwRoutes < Application
+class RwEltrainsTimetables < Application
   def configure(c)
     super
-    c.title = "RW_routes"
-    c.model = "RwRoute"
+    c.title = "Eltrains Timetables"
+    c.model = "RwEltrainsTimetable"
     c.columns = [
-      {name: :rw_start_route__name_rus, header: "Начало маршрута"},
-      {name: :rw_end_route__name_rus, header: "Конец маршрута"},
+      {name: :eltrains_number, header: "Номер Э/П"},
+      {name: :rw_eltrains_route__station__name_rus, header: "Привязанный маршрут"},
+      {name: :direction, header: "Направление"},
+      {name: :time_start, header: "Вр приб."},
+      {name: :time_finish, header: "Вр отпр."},
+      {name: :w1, header: "Пн"},
+      {name: :w2, header: "Вт"},
+      {name: :w3, header: "Ср"},
+      {name: :w4, header: "Чт"},
+      {name: :w5, header: "Пт"},
+      {name: :w6, header: "Сб"},
+      {name: :w0, header: "Вс"}
     ]
   end
 end

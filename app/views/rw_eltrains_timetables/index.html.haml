@@ -7,7 +7,8 @@
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
-      %th Station
+      %th Trains_Number
+      %th rw_eltrains_route
       %th Direction
       %th Time start
       %th Time finish
@@ -25,7 +26,8 @@
   %tbody
     - @rw_eltrains_timetables.each do |rw_eltrains_timetable|
       %tr
-        %td= rw_eltrains_timetable.station_id
+        %td= rw_eltrains_timetable.eltrains_number
+        %td= rw_eltrains_timetable.rw_eltrains_route_id
         %td= rw_eltrains_timetable.direction
         %td= rw_eltrains_timetable.time_start
         %td= rw_eltrains_timetable.time_finish

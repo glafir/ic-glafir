@@ -1,8 +1,11 @@
 %p#notice= notice
 
 %p
-  %b Station:
-  = @rw_eltrains_timetable.station_id
+  %b trains number
+  = @rw_eltrains_timetable.eltrains_number
+%p
+  %b rw_eltrains_route:
+  = @rw_eltrains_timetable.rw_eltrains_route_id
 %p
   %b Direction:
   = @rw_eltrains_timetable.direction
