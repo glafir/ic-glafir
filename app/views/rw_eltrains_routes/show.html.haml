@@ -2,13 +2,13 @@
 
 %p
   %b Station:
-  = @rw_eltrains_route.station_id
+  = @rw_eltrains_route.station.name_rus
 %p
   %b Priority direct:
   = @rw_eltrains_route.priority_direct
 %p
   %b Route Number:
-  = @rw_eltrains_route.number
+  #{@rw_eltrains_route.rw_route.rw_start_route.name_rus} - #{@rw_eltrains_route.rw_route.rw_end_route.name_rus}
 
 = link_to 'Edit', edit_rw_eltrains_route_path(@rw_eltrains_route)
 \|

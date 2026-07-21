@@ -1,6 +1,10 @@
 class StationsController < ApplicationController
   before_action :set_station, only: [:show, :edit, :update, :destroy]
 
+  autocomplete :station, :name_rus, :limit => 50
+  before_action :check_permissions, only: :autocomplete_station_name_rus
+
+
   def admin_stations
     authorize :station
   end
@@ -59,5 +63,10 @@ class StationsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def station_params
       params.require(:station).permit(:name_rus, :name_eng, :station_zone_id, :station_type_id, :rw_route_id)
+    end
+
+  protected
+    def check_permissions
+      authorize :station
     end
 end

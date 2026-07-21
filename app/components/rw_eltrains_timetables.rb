@@ -5,7 +5,7 @@ class RwEltrainsTimetables < Application
     c.model = "RwEltrainsTimetable"
     c.columns = [
       {name: :eltrains_number, header: "Номер Э/П"},
-      {name: :rw_eltrains_route__station__name_rus, header: "Привязанный маршрут"},
+      {name: :station__name_rus, header: "Привязанный маршрут"},
       {name: :direction, header: "Направление"},
       {name: :time_start, header: "Вр приб."},
       {name: :time_finish, header: "Вр отпр."},

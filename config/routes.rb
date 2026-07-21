@@ -43,6 +43,7 @@ IcApp::Application.routes.draw do
 
 
   resources :stations do
+    get :autocomplete_station_name_rus, :on => :collection
     collection do
       get "admin_stations"
     end

@@ -61,6 +61,8 @@
               = link_to "ЖД станции и вокзалы", stations_path, class: "btn dropdown-item"
               = link_to "ЖД станции, их зоны", station_zones_path, class: "btn dropdown-item"
               = link_to "ЖД станции, их направления", rw_routes_path, class: "btn dropdown-item"
+              = link_to "ЖД, маршруты Э/П", rw_eltrains_routes_path, class: "btn dropdown-item"
+
     = navbar_group do
       - if user_signed_in? && current_user.admin?
         .dropdown

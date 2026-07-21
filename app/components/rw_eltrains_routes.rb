@@ -5,7 +5,7 @@ class RwEltrainsRoutes < Application
     c.columns = [
       {name: :station__name_rus, header: "Начало маршрута"},
       {name: :priority_direct, header: "Приоритет"},
-      {name: :number, header: "Номер маршрута"}
+      {name: :rw_route_id, header: "Номер маршрута"}
     ]
   end
 end

@@ -8,8 +8,8 @@ class RwEltrainsRoutesController < ApplicationController
 
   # GET /rw_eltrains_routes
   def index
-    @rw_eltrains_routes = RwEltrainsRoute.all.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
-    authorize @rw_eltrains_routes
+    @rw_routes = RwRoute.all
+    authorize @rw_routes
     respond_with @rw_eltrains_routes
   end
 
@@ -71,6 +71,6 @@ class RwEltrainsRoutesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def rw_eltrains_route_params
-      params.require(:rw_eltrains_route).permit(:station_id, :priority_direct, :number)
+      params.require(:rw_eltrains_route).permit(:station_id, :priority_direct, :rw_route_id)
     end
 end
