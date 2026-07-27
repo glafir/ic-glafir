@@ -1,8 +1,23 @@
 class RwEltrainsTimetablesController < ApplicationController
   before_action :set_rw_eltrains_timetable, only: [:show, :edit, :update, :destroy]
+  before_action :set_authorize, nly: [:admin_rw_eltrains_timetables, :add_eltrain, :create_bulk, :edit_bulk, :update_bulk, :destroy_bulk]
 
   def admin_rw_eltrains_timetables
-    authorize :rw_eltrains_timetable
+  end
+
+  def add_eltrain
+    @rw_route = RwRoute.find(params[:id])
+  end
+
+  def create_bulk
+    @rw_route = RwRoute.find(params[:rw_route_id])
+    @rw_eltrains_route_count = @rw_route.rw_eltrains_routes.count
+    rw_eltrains_timetables = rw_eltrains_timetable_params.map { |attrs| RwEltrainsTimetable.new(attrs) }
+#    @rw_eltrains_route_count.times do |i|
+#      rw_eltrains_timetables << RwEltrainsTimetable.new(name: "rw_eltrains_timetable #{i}")
+#    end
+    RwEltrainsTimetable.import rw_eltrains_timetables
+    respond_with @rw_route
   end
 
   # GET /rw_eltrains_timetables
@@ -67,9 +82,12 @@ class RwEltrainsTimetablesController < ApplicationController
       RwEltrainsTimetable.all.column_names.include?(params[:sort]) ? params[:sort] : "id"
     end
 
+    def set_authorize
+      authorize :rw_eltrains_timetable
+    end
 
     # Only allow a trusted parameter "white list" through.
     def rw_eltrains_timetable_params
-      params.require(:rw_eltrains_timetable).permit(:rw_eltrains_route_id, :direction, :time_start, :time_finish, :w1, :w2, :w3, :w4, :w5, :w6, :w0, :eltrains_number)
+      params.require(:rw_eltrains_timetable).permit(:rw_eltrains_route_id, :direction, :time_start, :time_finish, :w1, :w2, :w3, :w4, :w5, :w6, :w0, :eltrains_number, :station_id)
     end
 end

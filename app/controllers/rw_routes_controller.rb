@@ -19,6 +19,7 @@ before_action :set_rw_route, only: [:show, :edit, :update, :destroy]
   end
 
   def edit
+    authorize @rw_route
   end
 
   def create

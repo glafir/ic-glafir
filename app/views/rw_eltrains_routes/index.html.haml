@@ -3,7 +3,7 @@
   %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
 
 - @rw_routes.each do |rw_route|
-  %p #{rw_route.rw_start_route.name_rus} - #{rw_route.rw_end_route.name_rus}
+  %p #{rw_route.rw_start_route.name_rus} - #{rw_route.rw_end_route.name_rus} #{link_to 'Добавить поезд', "/rw_eltrains_timetables/add_eltrain/#{rw_route.id}" }
   %table.table.table-striped.table-hover.table-condensed
     %thead
       %tr
@@ -23,4 +23,3 @@
           %td= link_to 'Destroy', rw_eltrains_route, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 = link_to t('.new', :default => t("helpers.links.new")), new_rw_eltrains_route_path, :class => 'btn btn-primary'
-
