@@ -11,12 +11,15 @@ class RwEltrainsTimetablesController < ApplicationController
 
   def create_bulk
     @rw_route = RwRoute.find(params[:rw_route_id])
-    @rw_eltrains_route_count = @rw_route.rw_eltrains_routes.count
-    rw_eltrains_timetables = rw_eltrains_timetable_params.map { |attrs| RwEltrainsTimetable.new(attrs) }
+   @rw_eltrains_route_count = @rw_route.rw_eltrains_routes.count
+#    rw_eltrains_timetables = params[:rw_eltrainrs_timetables]
+    rw_eltrains_timetables = bulk_params.map { |attrs| RwEltrainsTimetable.new(attrs) }
 #    @rw_eltrains_route_count.times do |i|
 #      rw_eltrains_timetables << RwEltrainsTimetable.new(name: "rw_eltrains_timetable #{i}")
 #    end
-    RwEltrainsTimetable.import rw_eltrains_timetables
+    RwEltrainsTimetable.import rw_eltrains_timetables, validate: true
+     #p params.require(:rw_eltrainrs_timetables).permit(tags: []).
+#    RwEltrainsTimetable.insert_all(bulk_params) 
     respond_with @rw_route
   end
 
@@ -90,4 +93,8 @@ class RwEltrainsTimetablesController < ApplicationController
     def rw_eltrains_timetable_params
       params.require(:rw_eltrains_timetable).permit(:rw_eltrains_route_id, :direction, :time_start, :time_finish, :w1, :w2, :w3, :w4, :w5, :w6, :w0, :eltrains_number, :station_id)
     end
+
+  def bulk_params
+    params.require(:rw_eltrains_timetables).permit(:rw_eltrains_route_id, :direction, :time_start, :time_finish, :w1, :w2, :w3, :w4, :w5, :w6, :w0, :eltrains_number, :station_id, tags: []).fetch(:rw_eltrains_timetables, [])
+  end
 end

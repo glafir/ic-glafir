@@ -6,6 +6,7 @@
   = f.check_box(:priority,{id: "priority_checkbox", data: {checkbox_toggle_target: "checkbox", action: "change->checkbox-toggle#toggle"}},1,0)
   = f.label :eltrains_number
   = f.number_field :eltrains_number, id: 'eltrains_number', data: {action: "change->form-updater#updateFields keyup->form-updater#updateFields", form_updater_target: "source" }
+  = f.hidden_field :rw_route_id, :value => @rw_route.id
 
   %table.table.table-striped.table-hover.table-condensed
     %thead
@@ -16,7 +17,7 @@
         %th Day Of Week
     %tbody
       - @rw_route.rw_eltrains_routes.each_with_index do |rw_el, i|
-        = f.fields_for :rw_eltrainrs_timetables, index: i do |pf|
+        = f.fields_for :rw_eltrains_timetables, index: i do |pf|
           %tr
             %td
               = rw_el.station.name_rus
