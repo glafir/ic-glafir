@@ -2,8 +2,8 @@
 %h3 #{@rw_route.rw_start_route.name_rus} - #{@rw_route.rw_end_route.name_rus}
 
 = form_with url: create_bulk_rw_eltrains_timetables_path, method: :post, local: true do |f| 
-  = f.label :priority
-  = f.check_box(:priority,{id: "priority_checkbox", data: {checkbox_toggle_target: "checkbox", action: "change->checkbox-toggle#toggle"}},1,0)
+  = f.label :direction
+  = f.check_box(:direction,{id: "direction_checkbox", data: {checkbox_toggle_target: "checkbox", action: "change->checkbox-toggle#toggle"}},1,0)
   = f.label :eltrains_number
   = f.number_field :eltrains_number, id: 'eltrains_number', data: {action: "change->form-updater#updateFields keyup->form-updater#updateFields", form_updater_target: "source" }
   = f.hidden_field :rw_route_id, :value => @rw_route.id
@@ -23,8 +23,7 @@
               = rw_el.station.name_rus
               = pf.hidden_field :station_id, :value => rw_el.station.id
               = pf.hidden_field :rw_eltrains_route_id, :value => rw_el.id
-              = pf.hidden_field :rw_route_id, :value => rw_el.rw_route_id
-              = pf.hidden_field :priority, :class => 'rw_eltrains_timetables_priority', data: {checkbox_toggle_target: "field", checked_value: "1", unchecked_value: "0" }
+              = pf.hidden_field :direction, :class => 'rw_eltrains_timetables_direction', data: {checkbox_toggle_target: "field", checked_value: "1", unchecked_value: "0" }
               = pf.hidden_field :eltrains_number, :class => 'rw_eltrains_timetables_eltrains_number', data: { form_updater_target: "rw_eltrains_timetables_eltrains_number" }
 
             %td= pf.time_field :time_start
@@ -51,9 +50,9 @@
   });
 
 :javascript
-  document.getElementById("priority_checkbox").addEventListener("change", function() {
+  document.getElementById("direction_checkbox").addEventListener("change", function() {
     const isChecked = this.checked;
-    document.querySelectorAll(".rw_eltrains_timetables_priority").forEach(input => {
+    document.querySelectorAll(".rw_eltrains_timetables_direction").forEach(input => {
       input.value = isChecked ? 1 : 0;
     });
   });
