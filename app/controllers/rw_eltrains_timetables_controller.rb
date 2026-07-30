@@ -19,8 +19,7 @@ class RwEltrainsTimetablesController < ApplicationController
   # GET /rw_eltrains_timetables
   def index
     @rw_routes = RwRoute.all
-    @rw_eltrains_timetables = RwEltrainsTimetable.all.order(sort_column + " " + sort_direction).page(params[:page]).per(params[:limit])
-    authorize @rw_eltrains_timetables
+    authorize @rw_routes
     respond_with @rw_eltrains_timetables
   end
 

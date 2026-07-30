@@ -2,45 +2,24 @@
 .page-header
   %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
 
-%table.table.table-striped.table-hover.table-condensed
-  %thead
-    %tr
-      %th Trains_Number
-      %th Station
-      %th rw_eltrains_route
-      %th Direction
-      %th Time start
-      %th Time finish
-      %th W1
-      %th W2
-      %th W3
-      %th W4
-      %th W5
-      %th W6
-      %th W0
-      %th
-      %th
-      %th
-
-  %tbody
-    - @rw_eltrains_timetables.each do |rw_eltrains_timetable|
+- @rw_routes.each do |rw_route|
+  %p #{rw_route.rw_start_route.name_rus} - #{rw_route.rw_end_route.name_rus} #{link_to 'Добавить поезд', "/rw_eltrains_timetables/add_eltrain/#{rw_route.id}" }
+  %table.table.table-striped.table-hover.table-condensed
+    %thead
       %tr
-        %td= rw_eltrains_timetable.eltrains_number
-        %td= rw_eltrains_timetable.station.name_rus
-        %td= rw_eltrains_timetable.rw_eltrains_route_id
-        %td= rw_eltrains_timetable.direction
-        %td= rw_eltrains_timetable.time_start
-        %td= rw_eltrains_timetable.time_finish
-        %td= rw_eltrains_timetable.w1
-        %td= rw_eltrains_timetable.w2
-        %td= rw_eltrains_timetable.w3
-        %td= rw_eltrains_timetable.w4
-        %td= rw_eltrains_timetable.w5
-        %td= rw_eltrains_timetable.w6
-        %td= rw_eltrains_timetable.w0
-        %td= link_to 'Show', rw_eltrains_timetable
-        %td= link_to 'Edit', edit_rw_eltrains_timetable_path(rw_eltrains_timetable)
-        %td= link_to 'Destroy', rw_eltrains_timetable, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+        %th Trains_Number
+        - rw_route.rw_eltrains_routes.each do |rw_eltrains_route|
+          %th= rw_eltrains_route.station.name_rus
+    %tbody
+      - rw_route.rw_eltrains_routes.where(station_id: rw_route.rw_start_route.id).each do |r|
+        - r.rw_eltrains_timetables.order(:time_finish).each do |t|
+          %tr
+            %td= t.eltrains_number
+            - @tt = RwEltrainsTimetable.where(eltrains_number: t.eltrains_number)
+            - @tt.each do |tt|
+              %td
+                = tt.time_finish.to_time.utc.to_s(:time) if tt.time_finish?
+                - if tt.time_finish.nil?
+                  = tt.time_start.to_time.utc.to_s(:time) if tt.time_start?
 = link_to t('.new', :default => t("helpers.links.new")), new_rw_eltrains_timetable_path, :class => 'btn btn-primary'
 
