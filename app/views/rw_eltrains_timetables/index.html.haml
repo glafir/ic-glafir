@@ -8,10 +8,10 @@
     %thead
       %tr
         %th Trains_Number
-        - rw_route.rw_eltrains_routes.each do |rw_eltrains_route|
-          %th= rw_eltrains_route.station.name_rus
+        - rw_route.rw_eltrains_routes.order(:priority_direct).each do |rw_eltrains_route|
+          %th= link_to rw_eltrains_route.station.name_rus, rw_eltrains_route.station
     %tbody
-      - rw_route.rw_eltrains_routes.where(station_id: rw_route.rw_start_route.id).each do |r|
+      - rw_route.rw_eltrains_routes.order(:priority_direct).where(station_id: rw_route.rw_start_route.id).each do |r|
         - r.rw_eltrains_timetables.order(:time_finish).each do |t|
           %tr
             %td= t.eltrains_number

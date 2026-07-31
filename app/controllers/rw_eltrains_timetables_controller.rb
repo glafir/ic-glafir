@@ -12,7 +12,7 @@ class RwEltrainsTimetablesController < ApplicationController
   def create_bulk
     @rw_route = RwRoute.find(params[:rw_route_id])
     rw_eltrains_timetables = params.require(:rw_eltrains_timetables).values().map { |attrs| RwEltrainsTimetable.new(attrs) }
-    RwEltrainsTimetable.import rw_eltrains_timetables, validate: true
+    RwEltrainsTimetable.import rw_eltrains_timetables, valodate: true
     respond_with @rw_route
   end
 

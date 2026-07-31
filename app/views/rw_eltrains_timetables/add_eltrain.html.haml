@@ -16,7 +16,7 @@
         %th Time End
         %th Day Of Week
     %tbody
-      - @rw_route.rw_eltrains_routes.each_with_index do |rw_el, i|
+      - @rw_route.rw_eltrains_routes.order(:priority_direct).each_with_index do |rw_el, i|
         = f.fields_for :rw_eltrains_timetables, index: i do |pf|
           %tr
             %td
