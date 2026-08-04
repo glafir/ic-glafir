@@ -1,0 +1,10 @@
+= simple_form_for(@rw_eltrains_route) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :rw_route_id
+    = f.input :station, :as => :autocomplete, :source_query => autocomplete_station_name_rus_stations_path, :input_html => {:class => 'form-control typeahead border-primary'}
+    = f.input :priority_direct
+
+  .form-actions
+    = f.button :submit

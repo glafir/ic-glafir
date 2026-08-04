@@ -4,6 +4,7 @@ IcApp::Application.routes.draw do
       get "admin_rw_eltrains_timetables"
       post "create_bulk"
       get "add_eltrain/:id", :action => :add_eltrain
+      get "show_eltrain/:id", :action => :show_eltrain
     end
   end
   resources :rw_eltrains_routes do

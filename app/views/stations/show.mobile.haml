@@ -1,19 +1,20 @@
+%h1 Station #{@station.name_rus}
 %p#notice= notice
-
-%p
-  %b Name rus:
-  = @station.name_rus
-%p
-  %b Name eng:
-  = @station.name_eng
-%p
-  %b Zone station:
-  = @station.station_zone_id
-%p
-  %b Type station:
-  = @station.station_type_id
-
-
+.col-6.col-md-6
+  %table.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th Направление
+        %th Время
+    %tbody
+      - @rw_eltrains_timetables.order(:time_start).order(:time_finish).where.not(time_start: nil, time_finish: nil).each do |ett|
+        %tr
+          %td= link_to ett.rw_eltrains_route.rw_route.rw_end_route.name_rus, "/rw_eltrains_timetables/show_eltrain/#{ett.eltrains_number}"
+          %td
+            = ett.time_finish.to_time.utc.to_s(:time) if ett.time_finish?
+            - if ett.time_finish.nil?
+              = ett.time_start.to_time.utc.to_s(:time) if ett.time_start?
+              (нет посадки)
 = link_to 'Edit', edit_station_path(@station)
 \|
 = link_to 'Back', stations_path

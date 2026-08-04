@@ -1,6 +1,6 @@
 class RwEltrainsTimetablesController < ApplicationController
   before_action :set_rw_eltrains_timetable, only: [:show, :edit, :update, :destroy]
-  before_action :set_authorize, nly: [:admin_rw_eltrains_timetables, :add_eltrain, :create_bulk, :edit_bulk, :update_bulk, :destroy_bulk]
+  before_action :set_authorize, nly: [:admin_rw_eltrains_timetables, :add_eltrain, :create_bulk, :edit_bulk, :update_bulk, :destroy_bulk, :show_eltrain]
 
   def admin_rw_eltrains_timetables
   end
@@ -9,9 +9,14 @@ class RwEltrainsTimetablesController < ApplicationController
     @rw_route = RwRoute.find(params[:id])
   end
 
+  def show_eltrain
+    @eltrain = RwEltrainsTimetable.where(eltrains_number: params[:id]).order_by_priority_direct
+  end
+
   def create_bulk
     @rw_route = RwRoute.find(params[:rw_route_id])
     rw_eltrains_timetables = params.require(:rw_eltrains_timetables).values().map { |attrs| RwEltrainsTimetable.new(attrs) }
+    p xxx
     RwEltrainsTimetable.import rw_eltrains_timetables, valodate: true
     respond_with @rw_route
   end

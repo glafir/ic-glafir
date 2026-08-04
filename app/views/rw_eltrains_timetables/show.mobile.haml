@@ -1,0 +1,42 @@
+%p#notice= notice
+
+%p
+  %b trains number
+  = @rw_eltrains_timetable.eltrains_number
+%p
+  %b rw_eltrains_route:
+  = @rw_eltrains_timetable.rw_eltrains_route_id
+%p
+  %b Direction:
+  = @rw_eltrains_timetable.direction
+%p
+  %b Time start:
+  = @rw_eltrains_timetable.time_start
+%p
+  %b Time finish:
+  = @rw_eltrains_timetable.time_finish
+%p
+  %b W1:
+  = @rw_eltrains_timetable.w1
+%p
+  %b W2:
+  = @rw_eltrains_timetable.w2
+%p
+  %b W3:
+  = @rw_eltrains_timetable.w3
+%p
+  %b W4:
+  = @rw_eltrains_timetable.w4
+%p
+  %b W5:
+  = @rw_eltrains_timetable.w5
+%p
+  %b W6:
+  = @rw_eltrains_timetable.w6
+%p
+  %b W0:
+  = @rw_eltrains_timetable.w0
+
+= link_to 'Edit', edit_rw_eltrains_timetable_path(@rw_eltrains_timetable)
+\|
+= link_to 'Back', rw_eltrains_timetables_path

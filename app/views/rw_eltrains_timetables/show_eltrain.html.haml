@@ -1,0 +1,17 @@
+%h1 Train info #{params[:id]}
+
+.col-6
+  %table.table
+    %thead
+      %tr
+        %th Stations
+        %th Time Arrived
+        %th Time State
+        %th Time Departure
+    %tbody
+      - @eltrain.each do |eltrain_station|
+        %tr
+          %td= link_to eltrain_station.rw_eltrains_route.station.name_rus, eltrain_station.rw_eltrains_route.station
+          %td= eltrain_station.time_start.to_time.utc.to_s(:time) if eltrain_station.time_start?
+          %td
+          %td= eltrain_station.time_finish.to_time.utc.to_s(:time) if eltrain_station.time_finish?

@@ -16,6 +16,7 @@ class StationsController < ApplicationController
   end
 
   def show
+    @rw_eltrains_timetables = @station.rw_eltrains_timetables
     authorize @station
     respond_with @station
   end

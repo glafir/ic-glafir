@@ -9,6 +9,7 @@ class RwEltrainsTimetables < Application
       {name: :direction, header: "Направление"},
       {name: :time_start, header: "Вр приб."},
       {name: :time_finish, header: "Вр отпр."},
+      {name: :rw_eltrains_route_id, header: "маршрут"},
       {name: :w1, header: "Пн"},
       {name: :w2, header: "Вт"},
       {name: :w3, header: "Ср"},

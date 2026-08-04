@@ -7,6 +7,10 @@ class RwEltrainsTimetablePolicy < ApplicationPolicy
     admin
   end
 
+  def show_eltrain?
+    admin
+  end
+
   def edit_eltrain?
     admin
   end
