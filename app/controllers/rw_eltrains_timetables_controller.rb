@@ -10,7 +10,9 @@ class RwEltrainsTimetablesController < ApplicationController
   end
 
   def show_eltrain
-    @eltrain = RwEltrainsTimetable.where(eltrains_number: params[:id]).order_by_priority_direct
+    @eltrain = RwEltrainsTimetable.where(eltrains_number: params[:id])
+    @eltrain = @eltrain.order_by_priority_direct_asc if @eltrain[0].rw_eltrains_route.priority_direct == 0
+    @eltrain = @eltrain.order_by_priority_direct_desc if @eltrain[0].rw_eltrains_route.priority_direct == 1
   end
 
   def create_bulk

@@ -18,3 +18,19 @@
 = link_to 'Edit', edit_station_path(@station)
 \|
 = link_to 'Back', stations_path
+
+>
+:javascript
+  $(document).ready(function(){
+      $('#aircompany').DataTable( {
+        retrieve: true,
+        paging:   false,
+        autoWidth: false,
+        ordering: true,
+        info:     false,
+        stateSave: true,
+        searching: false,
+        order: [[ 1, "asc" ]]
+      });
+      $('.dataTables_length').addClass('bs-select');
+  });

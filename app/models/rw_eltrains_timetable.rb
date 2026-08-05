@@ -8,5 +8,6 @@ class RwEltrainsTimetable < ApplicationRecord
   validates  :eltrains_number, presence: true, numericality: {only_integer: true}, length: { in: 3..4 },
                              uniqueness: { scope: :station_id, message: "This Train is exist om this station!" }
   paginates_per 100
-  scope :order_by_priority_direct, -> { joins(:rw_eltrains_route).merge(RwEltrainsRoute.order(:priority_direct)) }
+  scope :order_by_priority_direct_asc, -> { joins(:rw_eltrains_route).merge(RwEltrainsRoute.order(:priority_direct)) }
+  scope :order_by_priority_direct_desc, -> { joins(:rw_eltrains_route).merge(RwEltrainsRoute.order(:priority_direct, desc)) }
 end
