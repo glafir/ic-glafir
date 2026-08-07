@@ -1,4 +1,9 @@
 IcApp::Application.routes.draw do
+  resources :rw_directions do
+    collection do
+      get "admin_rw_directions"
+    end
+  end
   resources :rw_eltrains_timetables do
     collection do
       get "admin_rw_eltrains_timetables"

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Station:
+  = @rw_direction.station_id
+%p
+  %b Direction station:
+  = @rw_direction.direction_station_id
+
+= link_to 'Edit', edit_rw_direction_path(@rw_direction)
+\|
+= link_to 'Back', rw_directions_path

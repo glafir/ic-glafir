@@ -1,0 +1,9 @@
+= simple_form_for(@rw_direction) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :station_id
+    = f.input :direction_station_id
+
+  .form-actions
+    = f.button :submit

@@ -26,7 +26,7 @@ class RwEltrainsTimetablesController < ApplicationController
   def index
     @rw_routes = RwRoute.all
     authorize @rw_routes
-    respond_with @rw_eltrains_timetables
+    respond_with @rw_routes
   end
 
   # GET /rw_eltrains_timetables/1

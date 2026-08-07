@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_21_154533) do
+ActiveRecord::Schema.define(version: 2026_08_06_214203) do
 
   create_table "aircompanies", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "airline_name_eng", null: false
@@ -269,6 +269,13 @@ ActiveRecord::Schema.define(version: 2026_07_21_154533) do
     t.datetime "created_at", null: false
     t.integer "runway_length"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rw_directions", charset: "utf8", force: :cascade do |t|
+    t.integer "station_id"
+    t.integer "direction_station_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "rw_eltrains_routes", charset: "utf8", force: :cascade do |t|

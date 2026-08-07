@@ -1,0 +1,26 @@
+- model_class = RwDirection
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%h1 Listing rw_directions
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Station
+      %th Direction station
+      %th
+      %th
+      %th
+
+  %tbody
+    - @rw_directions.each do |rw_direction|
+      %tr
+        %td= rw_direction.station_id
+        %td= rw_direction.direction_station_id
+        %td= link_to 'Show', rw_direction
+        %td= link_to 'Edit', edit_rw_direction_path(rw_direction)
+        %td= link_to 'Destroy', rw_direction, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to t('.new', :default => t("helpers.links.new")), new_rw_direction_path, :class => 'btn btn-primary'
+
