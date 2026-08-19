@@ -3,7 +3,7 @@
   %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
 
 - @rw_routes.each do |rw_route|
-  %p #{rw_route.rw_start_route.name_rus} - #{rw_route.rw_end_route.name_rus} #{link_to 'Добавить поезд', "/rw_eltrains_timetables/add_eltrain/#{rw_route.id}" }
+  %h5 #{rw_route.rw_start_route.name_rus} - #{rw_route.rw_end_route.name_rus} #{link_to 'Добавить поезд', "/rw_eltrains_timetables/add_eltrain/#{rw_route.id}" }
   %table.table.table-striped.table-hover.table-condensed
     %thead
       %tr
@@ -14,7 +14,7 @@
       - rw_route.rw_eltrains_routes.order(:priority_direct).where(station_id: rw_route.rw_start_route.id).each do |r|
         - r.rw_eltrains_timetables.where(station_id: rw_route.rw_start_route.id).where(direction: 0).order(:time_finish).each do |t|
           %tr
-            %td= t.eltrains_number
+            %td= link_to t.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{t.eltrains_number}"
             - tt1 = RwEltrainsTimetable.where(eltrains_number: t.eltrains_number)
             - tt1.each do |tt|
               %td
@@ -22,7 +22,7 @@
                 - if tt.time_finish.nil?
                   = tt.time_start.to_time.utc.to_s(:time) if tt.time_start?
 
-  %p #{rw_route.rw_end_route.name_rus} - #{rw_route.rw_start_route.name_rus} #{link_to 'Добавить поезд', "/rw_eltrains_timetables/add_eltrain/#{rw_route.id}" }
+  %h5 #{rw_route.rw_end_route.name_rus} - #{rw_route.rw_start_route.name_rus} #{link_to 'Добавить поезд', "/rw_eltrains_timetables/add_eltrain/#{rw_route.id}" }
   %table.table.table-striped.table-hover.table-condensed
     %thead
       %tr
@@ -33,7 +33,7 @@
       - rw_route.rw_eltrains_routes.order(priority_direct: :desc).where(station_id: rw_route.rw_end_route.id).each do |r|
         - r.rw_eltrains_timetables.where(station_id: rw_route.rw_end_route.id).where(direction: 1).order(:time_finish).each do |t|
           %tr
-            %td= t.eltrains_number
+            %td= link_to t.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{t.eltrains_number}"
             - @tt = RwEltrainsTimetable.where(eltrains_number: t.eltrains_number)
             - @tt.each do |tt|
               %td
