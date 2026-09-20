@@ -1,6 +1,18 @@
 class RwEltrainsTimetablesController < ApplicationController
   before_action :set_rw_eltrains_timetable, only: [:show, :edit, :update, :destroy]
-  before_action :set_authorize, nly: [:admin_rw_eltrains_timetables, :add_eltrain, :create_bulk, :edit_bulk, :update_bulk, :destroy_bulk, :show_eltrain]
+  before_action :set_authorize, nly: [:admin_rw_eltrains_timetables, :add_eltrain, :create_bulk, :edit_bulk, :update_bulk, :destroy_bulk, :show_eltrain, :search_eltrains]
+
+  def search_eltrains
+    if params[:search_eltrains]
+      @station_start = Station.find(params[:search_eltrains][:station_start_id])
+      @station_finish = Station.find(params[:search_eltrains][:station_finish_id])
+      rw_eltrains_routes = RwEltrainsRoute.select(:id).where("station_id = ? OR station_id = ?", "#{@station_start.id}", "#{@station_finish.id}").group(:rw_route_id)
+#.having("count(rw_route_id) > 1")
+      @rw_eltrains_timetables = RwEltrainsTimetable.where(:rw_eltrains_route_id => rw_eltrains_routes).where.not(time_start: nil).where.not(time_finish: nil).group(:eltrains_number).order(:time_finish)
+      p rw_eltrains_routes
+      @rw_eltrains_timetables.each {|tt|p tt.eltrains_number; p tt.station_id}
+    end
+  end
 
   def admin_rw_eltrains_timetables
   end

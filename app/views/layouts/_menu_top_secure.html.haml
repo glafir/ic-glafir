@@ -58,11 +58,12 @@
                     = link_to "Добавить Рейс", new_timetableap_path, class: "btn dropdown-item"
             = link_to "ЖД:", '#', class: "btn dropdown-item submenu"
             .dropdown-menu.dropdown-submenu.shadow-lg
-              = link_to "ЖД станции и вокзалы", stations_path, class: "btn dropdown-item"
-              = link_to "ЖД станции, их зоны", station_zones_path, class: "btn dropdown-item"
-              = link_to "ЖД станции, их направления", rw_routes_path, class: "btn dropdown-item"
-              = link_to "ЖД, маршруты Э/П", rw_eltrains_routes_path, class: "btn dropdown-item"
-              = link_to "ЖД, расписание Э/П", rw_eltrains_timetables_path, class: "btn dropdown-item"
+              = link_to "ЖД: поиск оейсов", search_eltrains_rw_eltrains_timetables_path
+              = link_to "ЖД: станции и вокзалы", stations_path, class: "btn dropdown-item"
+              = link_to "ЖД: станции, их зоны", station_zones_path, class: "btn dropdown-item"
+              = link_to "ЖД: станции, их направления", rw_routes_path, class: "btn dropdown-item"
+              = link_to "ЖД:, маршруты Э/П", rw_eltrains_routes_path, class: "btn dropdown-item"
+              = link_to "ЖД: расписание Э/П", rw_eltrains_timetables_path, class: "btn dropdown-item"
 
     = navbar_group do
       - if user_signed_in? && current_user.admin?

@@ -1,0 +1,27 @@
+= simple_form_for :search_eltrains, :method => 'get' do |f|
+  .form-inputs
+    - if  params[:search_eltrains].nil?
+      = f.input :station_start, :as => :autocomplete, :source_query => autocomplete_station_name_rus_stations_path, 'data-auto-focus' =>true, :items => 20
+      = f.input :station_finish, :as => :autocomplete, :source_query => autocomplete_station_name_rus_stations_path, 'data-auto-focus' => true, :items => 20
+    - else
+      = f.input :station_start, :as => :autocomplete, :source_query => autocomplete_station_name_rus_stations_path, 'data-auto-focus' =>true, :items => 20, :value => params[:search_eltrains][:station_start_id]
+      = f.input :station_finish, :as => :autocomplete, :source_query => autocomplete_station_name_rus_stations_path, 'data-auto-focus' => true, :items => 20, :value => params[:search_eltrains][:station_finish_id]
+  .form-actions
+    = f.button :submit, "Search ElTrains", class: "btn btn-info"
+-if @rw_eltrains_timetables
+  .col-6.col-md-6
+    %table.table.table-striped.table-hover.table-condensed
+      %thead
+        %tr
+          %th Train Number
+          %th From - To
+          %th= @station_start.name_rus
+          %th= @station_finish.name_rus
+      %tbody
+        - @rw_eltrains_timetables.each do |rw_eltrains_timetable|
+          %tr
+            - @el_train = @rw_eltrains_timetables.where(eltrains_number: rw_eltrains_timetable.eltrains_number)
+            %td=link_to rw_eltrains_timetable.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{rw_eltrains_timetable.eltrains_number}"
+            %td #{rw_eltrains_timetable.rw_eltrains_route.rw_route.rw_start_route.name_rus} - #{rw_eltrains_timetable.rw_eltrains_route.rw_route.rw_end_route.name_rus}
+            -#-%td= @el_train.find_by(station_id: @station_start.id).time_finish.to_time.utc.to_s(:time)
+            -#-%td= @el_train.find_by(station_id: @station_finish.id).time_start.to_time.utc.to_s(:time)

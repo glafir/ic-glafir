@@ -1,4 +1,8 @@
 class RwEltrainsTimetablePolicy < ApplicationPolicy
+  def search_eltrains?
+    admin
+  end
+
   def admin_rw_eltrains_timetables?
     admin
   end

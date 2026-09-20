@@ -5,4 +5,13 @@ belongs_to :station_zone
 has_many :rw_routes, dependent: :destroy, class_name: "RwRoute", inverse_of: :rw_start_route, foreign_key: "start_route"
 has_many :rw_eltrains_routes
 has_many :rw_eltrains_timetables
+has_many :rw_directions
+
+  def self.search(search)
+    if search
+      where('name_rus LIKE ? or name_eng LIKE ?', "%#{search}%", "%#{search}%")
+    else
+      all
+    end
+  end
 end
