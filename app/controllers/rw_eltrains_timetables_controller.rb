@@ -6,60 +6,32 @@ class RwEltrainsTimetablesController < ApplicationController
     if params[:search_eltrains]
       @station_start = Station.find(params[:search_eltrains][:station_start_id])
       @station_finish = Station.find(params[:search_eltrains][:station_finish_id])
-      rw_eltrains_routes = RwEltrainsRoute.select(:id).where("station_id = ? OR station_id = ?", "#{@station_start.id}", "#{@station_finish.id}").group(:rw_route_id)
-#.having("count(rw_route_id) > 1")
-      @rw_eltrains_timetables = RwEltrainsTimetable.where(:rw_eltrains_route_id => rw_eltrains_routes).where.not(time_start: nil).where.not(time_finish: nil).group(:eltrains_number).order(:time_finish)
-      p rw_eltrains_routes
-      @rw_eltrains_timetables.each {|tt|p tt.eltrains_number; p tt.station_id}
+      @rw_routes = RwEltrainsRoute.select(:rw_route_id).where("station_id = ? OR station_id = ?", "#{@station_start.id}", "#{@station_finish.id}").group(:rw_route_id).having("count(rw_route_id) > 1").count.keys
+      @search_eltrains_all = []
+      @rw_routes.each do |rw_r|
+        rw_route = RwRoute.find(rw_r)
+        rw_eltrains_route_start = rw_route.rw_eltrains_routes.find_by(station_id: @station_start.id)
+        rw_eltrains_route_finish = rw_route.rw_eltrains_routes.find_by(station_id: @station_finish.id)
+        rw_priority = rw_eltrains_route_start.priority_direct < rw_eltrains_route_finish.priority_direct ? 0 : 1
+        rw_eltrains_routes = rw_route.rw_eltrains_routes.select(:id).where("station_id = ? OR station_id = ?", "#{@station_start.id}", "#{@station_finish.id}")
+        eltrains_numbers = rw_route.rw_eltrains_timetables.select(:eltrains_number).where(direction: rw_priority).where("0 = CASE WHEN rw_eltrains_timetables.station_id = #{@station_start.id} AND rw_eltrains_timetables.time_finish IS NOT NULL THEN 1  WHEN rw_eltrains_timetables.station_id = #{@station_finish.id} AND rw_eltrains_timetables.time_start IS NOT NULL THEN 1 ELSE 0 END ").group(:eltrains_number).pluck(:eltrains_number)
+#        p eltrains_numbers
+        @rw_eltrains_timetables = rw_route.rw_eltrains_timetables.where(eltrains_number: eltrains_numbers).where(station_id: @station_start.id).or(rw_route.rw_eltrains_timetables.where(eltrains_number: eltrains_numbers).where(station_id: @station_finish.id))
+        eltrains_numbers.each do |e|
+          rw_search_eltrains = SearchEltrains.new
+          rw_search_eltrains.eltrains_number = e
+          rw_search_eltrains.station_start_id = @station_start.id
+          rw_search_eltrains.station_finish_id = @station_finish.id
+          rw_search_eltrains.station_start_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_start.id).pluck(:time_finish)
+          rw_search_eltrains.station_finish_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_finish.id).pluck(:time_start)
+          @search_eltrains_all = @search_eltrains_all.push(rw_search_eltrains)
+          p @search_eltrains_all
+        end
+        p @search_eltrains
+      end
     end
   end
 
-  def admin_rw_eltrains_timetables
-  end
-
-  def add_eltrain
-    @rw_route = RwRoute.find(params[:id])
-  end
-
-  def show_eltrain
-    @eltrain = RwEltrainsTimetable.where(eltrains_number: params[:id])
-    @eltrain = @eltrain.order_by_priority_direct_asc if @eltrain[0].direction == 0
-    @eltrain = @eltrain.order_by_priority_direct_desc if @eltrain[0].direction == 1
-  end
-
-  def create_bulk
-    @rw_route = RwRoute.find(params[:rw_route_id])
-    rw_eltrains_timetables = params.require(:rw_eltrains_timetables).values().map { |attrs| RwEltrainsTimetable.new(attrs) }
-    RwEltrainsTimetable.import rw_eltrains_timetables, valodate: true
-    respond_with @rw_route
-  end
-
-  # GET /rw_eltrains_timetables
-  def index
-    @rw_routes = RwRoute.all
-    authorize @rw_routes
-    respond_with @rw_routes
-  end
-
-  # GET /rw_eltrains_timetables/1
-  def show
-    authorize @rw_eltrains_timetable
-    respond_with @rw_eltrains_timetable
-  end
-
-  # GET /rw_eltrains_timetables/new
-  def new
-    @rw_eltrains_timetable = RwEltrainsTimetable.new
-    authorize @rw_eltrains_timetable
-    respond_with @rw_eltrains_timetable
-  end
-
-  # GET /rw_eltrains_timetables/1/edit
-  def edit
-    authorize @rw_eltrains_timetable
-  end
-
-  # POST /rw_eltrains_timetables
   def create
     @rw_eltrains_timetable = RwEltrainsTimetable.new(rw_eltrains_timetable_params)
     authorize @rw_eltrains_timetable

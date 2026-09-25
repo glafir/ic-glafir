@@ -10,6 +10,8 @@
     = f.button :submit, "Search ElTrains", class: "btn btn-info"
 -if @rw_eltrains_timetables
   .col-6.col-md-6
+    %h4 Результаты поиска по маршруту 
+    %h5 #{@station_start.name_rus} - #{@station_finish.name_rus}
     %table.table.table-striped.table-hover.table-condensed
       %thead
         %tr
@@ -18,10 +20,9 @@
           %th= @station_start.name_rus
           %th= @station_finish.name_rus
       %tbody
-        - @rw_eltrains_timetables.each do |rw_eltrains_timetable|
+        - @search_eltrains_all.each do |s|
           %tr
-            - @el_train = @rw_eltrains_timetables.where(eltrains_number: rw_eltrains_timetable.eltrains_number)
-            %td=link_to rw_eltrains_timetable.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{rw_eltrains_timetable.eltrains_number}"
-            %td #{rw_eltrains_timetable.rw_eltrains_route.rw_route.rw_start_route.name_rus} - #{rw_eltrains_timetable.rw_eltrains_route.rw_route.rw_end_route.name_rus}
-            -#-%td= @el_train.find_by(station_id: @station_start.id).time_finish.to_time.utc.to_s(:time)
-            -#-%td= @el_train.find_by(station_id: @station_finish.id).time_start.to_time.utc.to_s(:time)
+            -#-%td=link_to s.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{rw_eltrains_timetable.eltrains_number}"
+            -#-%td #{s.rw_eltrains_route.rw_route.rw_start_route.name_rus} - #{rw_eltrains_timetable.rw_eltrains_route.rw_route.rw_end_route.name_rus}
+            %td= s.station_start_time
+            %td= s.station_finish_time

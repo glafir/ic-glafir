@@ -1,6 +1,7 @@
 class RwEltrainsTimetable < ApplicationRecord
   include ActiveModel::Validations
   belongs_to :rw_eltrains_route
+  has_one :rw_route, through: :rw_eltrains_route
   belongs_to :station
   validates  :direction, presence: true, numericality: {only_integer: true}, length: { is: 1 }
   validates  :station_id, presence: true, numericality: {only_integer: true}
