@@ -21,9 +21,10 @@ class RwEltrainsTimetablesController < ApplicationController
           rw_search_eltrains = SearchEltrains.new
           rw_search_eltrains.eltrains_number = e
           rw_search_eltrains.station_start_id = @station_start.id
+          rw_search_eltrains.rw_route_id = rw_route.id
           rw_search_eltrains.station_finish_id = @station_finish.id
-          rw_search_eltrains.station_start_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_start.id).pluck(:time_finish)
-          rw_search_eltrains.station_finish_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_finish.id).pluck(:time_start)
+          rw_search_eltrains.station_start_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_start.id).pluck(:time_finish).first
+          rw_search_eltrains.station_finish_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_finish.id).pluck(:time_start).first
           @search_eltrains_all = @search_eltrains_all.push(rw_search_eltrains)
           p @search_eltrains_all
         end
