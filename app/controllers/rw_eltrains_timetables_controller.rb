@@ -31,6 +31,53 @@ class RwEltrainsTimetablesController < ApplicationController
     end
   end
 
+
+  def admin_rw_eltrains_timetables
+  end
+
+  def add_eltrain
+    @rw_route = RwRoute.find(params[:id])
+  end
+
+  def show_eltrain
+    @eltrain = RwEltrainsTimetable.where(eltrains_number: params[:id])
+    @eltrain = @eltrain.order_by_priority_direct_asc if @eltrain[0].direction == 0
+    @eltrain = @eltrain.order_by_priority_direct_desc if @eltrain[0].direction == 1
+  end
+
+  def create_bulk
+    @rw_route = RwRoute.find(params[:rw_route_id])
+    rw_eltrains_timetables = params.require(:rw_eltrains_timetables).values().map { |attrs| RwEltrainsTimetable.new(attrs) }
+    RwEltrainsTimetable.import rw_eltrains_timetables, valodate: true
+    respond_with @rw_route
+  end
+
+  # GET /rw_eltrains_timetables
+  def index
+    @rw_routes = RwRoute.all
+    authorize @rw_routes
+    respond_with @rw_routes
+  end
+
+  # GET /rw_eltrains_timetables/1
+  def show
+    authorize @rw_eltrains_timetable
+    respond_with @rw_eltrains_timetable
+  end
+
+  # GET /rw_eltrains_timetables/new
+  def new
+    @rw_eltrains_timetable = RwEltrainsTimetable.new
+    authorize @rw_eltrains_timetable
+    respond_with @rw_eltrains_timetable
+  end
+
+  # GET /rw_eltrains_timetables/1/edit
+  def edit
+    authorize @rw_eltrains_timetable
+  end
+
+  # POST /rw_eltrains_timetables
   def create
     @rw_eltrains_timetable = RwEltrainsTimetable.new(rw_eltrains_timetable_params)
     authorize @rw_eltrains_timetable
