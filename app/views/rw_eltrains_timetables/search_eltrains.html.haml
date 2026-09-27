@@ -20,9 +20,9 @@
           %th= @station_start.name_rus
           %th= @station_finish.name_rus
       %tbody
-        - @search_eltrains_all.each do |s|
+        - @search_eltrains_all.sort_by(&:station_start_time).each do |s|
           %tr
             %td=link_to s.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{s.eltrains_number}"
             %td #{s.rw_route.rw_start_route.name_rus} - #{s.rw_route.rw_end_route.name_rus}
-            %td= s.station_start_time.to_time.utc.to_s(:time)
-            %td= s.station_finish_time.to_time.utc.to_s(:time)
+            %td= s.station_start_time.to_time.utc.to_s(:time) if s.station_start_time
+            %td= s.station_finish_time.to_time.utc.to_s(:time) if s.station_finish_time

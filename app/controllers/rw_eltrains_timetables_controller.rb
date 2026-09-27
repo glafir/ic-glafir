@@ -14,7 +14,7 @@ class RwEltrainsTimetablesController < ApplicationController
         rw_eltrains_route_finish = rw_route.rw_eltrains_routes.find_by(station_id: @station_finish.id)
         rw_priority = rw_eltrains_route_start.priority_direct < rw_eltrains_route_finish.priority_direct ? 0 : 1
         rw_eltrains_routes = rw_route.rw_eltrains_routes.select(:id).where("station_id = ? OR station_id = ?", "#{@station_start.id}", "#{@station_finish.id}")
-        eltrains_numbers = rw_route.rw_eltrains_timetables.select(:eltrains_number).where(direction: rw_priority).where("0 = CASE WHEN rw_eltrains_timetables.station_id = #{@station_start.id} AND rw_eltrains_timetables.time_finish IS NOT NULL THEN 1  WHEN rw_eltrains_timetables.station_id = #{@station_finish.id} AND rw_eltrains_timetables.time_start IS NOT NULL THEN 1 ELSE 0 END ").group(:eltrains_number).pluck(:eltrains_number)
+        eltrains_numbers = rw_route.rw_eltrains_timetables.select(:eltrains_number).where.not(time_start: nil).where.not(time_finish: nil).where(direction: rw_priority).where("0 = CASE WHEN rw_eltrains_timetables.station_id = #{@station_start.id} AND rw_eltrains_timetables.time_finish IS NOT NULL THEN 1  WHEN rw_eltrains_timetables.station_id = #{@station_finish.id} AND rw_eltrains_timetables.time_start IS NOT NULL THEN 1 ELSE 0 END ").group(:eltrains_number).pluck(:eltrains_number)
 #        p eltrains_numbers
         @rw_eltrains_timetables = rw_route.rw_eltrains_timetables.where(eltrains_number: eltrains_numbers).where(station_id: @station_start.id).or(rw_route.rw_eltrains_timetables.where(eltrains_number: eltrains_numbers).where(station_id: @station_finish.id))
         eltrains_numbers.each do |e|
@@ -25,10 +25,8 @@ class RwEltrainsTimetablesController < ApplicationController
           rw_search_eltrains.station_finish_id = @station_finish.id
           rw_search_eltrains.station_start_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_start.id).pluck(:time_finish).first
           rw_search_eltrains.station_finish_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_finish.id).pluck(:time_start).first
-          @search_eltrains_all = @search_eltrains_all.push(rw_search_eltrains)
-          p @search_eltrains_all
+          @search_eltrains_all = @search_eltrains_all.push(rw_search_eltrains) unless rw_search_eltrains.station_start_time.nil? and unless rw_search_eltrains.station_finish_time.nil?
         end
-        p @search_eltrains
       end
     end
   end
