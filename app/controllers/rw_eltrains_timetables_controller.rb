@@ -25,7 +25,7 @@ class RwEltrainsTimetablesController < ApplicationController
           rw_search_eltrains.station_finish_id = @station_finish.id
           rw_search_eltrains.station_start_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_start.id).pluck(:time_finish).first
           rw_search_eltrains.station_finish_time = @rw_eltrains_timetables.where(eltrains_number: e).where(station_id: @station_finish.id).pluck(:time_start).first
-          @search_eltrains_all = @search_eltrains_all.push(rw_search_eltrains) unless rw_search_eltrains.station_start_time.nil? and unless rw_search_eltrains.station_finish_time.nil?
+          @search_eltrains_all = @search_eltrains_all.push(rw_search_eltrains) unless rw_search_eltrains.station_start_time.nil? or rw_search_eltrains.station_finish_time.nil?
         end
       end
     end
