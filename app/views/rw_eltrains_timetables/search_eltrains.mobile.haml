@@ -30,4 +30,4 @@
             %td= s.station_start_time.to_time.utc.to_s(:time)
             %td= s.station_finish_time.to_time.utc.to_s(:time)
             %td.text-nowrap.fs-10.text-info
-              #{Time.diff(Time.parse(s.station_start_time.to_s), Time.parse(s.station_finish_time.to_s), '%h час %m мин')[:diff]}
+              #{Time.diff(Time.parse(s.station_start_time.to_s), Time.parse(s.station_finish_time.to_s), '%h ч. %m мин')[:diff]}
