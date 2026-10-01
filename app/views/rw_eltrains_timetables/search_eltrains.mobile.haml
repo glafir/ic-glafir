@@ -9,7 +9,8 @@
   .form-actions
     = f.button :submit, "Search ElTrains", class: "btn btn-info"
 -if @search_eltrains_all
-  .col-6.col-md-6
+  = link_to  "Поискать обратные рейсы", "/rw_eltrains_timetables/search_eltrains?utf8=%E2%9C%93&search_eltrains%5Bstation_start_id%5D=#{@station_finish.id}&search_eltrains%5Bstation_start%5D=#{ERB::Util.url_encode(@station_finish.name_rus)}&search_eltrains%5Bstation_finish_id%5D=#{@station_start.id}&search_eltrains%5Bstation_finish%5D=#{ERB::Util.url_encode(@station_start.name_rus)}&commit=Search+ElTrains", :class => "btn btn-info"
+  .col-12.col-md-12
     %h4 Результаты поиска по маршруту 
     %h5 #{@station_start.name_rus} - #{@station_finish.name_rus}
     %table.table.table-striped.table-hover.table-condensed
@@ -23,11 +24,11 @@
       %tbody
         - @search_eltrains_all.sort_by(&:station_start_time).each do |s|
           %tr
-            %td=link_to s.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{s.eltrains_number}"
-            %td
-              %p #{s.rw_route.rw_start_route.name_rus} - 
-              %p #{s.rw_route.rw_end_route.name_rus}
-            %td= s.station_start_time.to_time.utc.to_s(:time)
-            %td= s.station_finish_time.to_time.utc.to_s(:time)
+            %td.col-1=link_to s.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{s.eltrains_number}"
+            %td.text-nowrap
+              #{s.rw_route.rw_start_route.name_rus} - 
+              #{s.rw_route.rw_end_route.name_rus}
+            %td.col-1= s.station_start_time.to_time.utc.to_s(:time)
+            %td.col-1= s.station_finish_time.to_time.utc.to_s(:time)
             %td.text-nowrap.fs-10.text-info
               #{Time.diff(Time.parse(s.station_start_time.to_s), Time.parse(s.station_finish_time.to_s), '%h ч. %m мин')[:diff]}

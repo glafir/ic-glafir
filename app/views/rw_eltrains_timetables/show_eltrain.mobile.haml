@@ -14,4 +14,6 @@
           %td= link_to eltrain_station.rw_eltrains_route.station.name_rus, eltrain_station.rw_eltrains_route.station
           %td= eltrain_station.time_start.to_time.utc.to_s(:time) if eltrain_station.time_start?
           %td
+            - if eltrain_station.time_start? and eltrain_station.time_finish?
+              #{Time.diff(Time.parse(eltrain_station.time_start.to_s), Time.parse(eltrain_station.time_finish.to_s), '%m')[:diff]} мин
           %td= eltrain_station.time_finish.to_time.utc.to_s(:time) if eltrain_station.time_finish?
