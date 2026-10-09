@@ -19,6 +19,7 @@ class RwEltrainsTimetablesController < ApplicationController
         @rw_eltrains_timetables = rw_route.rw_eltrains_timetables.where(eltrains_number: eltrains_numbers).where(station_id: @station_start.id).or(rw_route.rw_eltrains_timetables.where(eltrains_number: eltrains_numbers).where(station_id: @station_finish.id))
         eltrains_numbers.each do |e|
           rw_search_eltrains = SearchEltrains.new
+          rw_search_eltrains.direction = rw_priority
           rw_search_eltrains.eltrains_number = e
           rw_search_eltrains.station_start_id = @station_start.id
           rw_search_eltrains.rw_route_id = rw_route.id

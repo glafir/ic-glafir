@@ -9,6 +9,7 @@ class SearchEltrains
   attribute :station_finish_id, :integer
   attribute :station_start_time, :time
   attribute :station_finish_time, :time
+  attribute :direction, :integer
 
   # Симулируем связь belongs_to :rw_route
   def rw_route

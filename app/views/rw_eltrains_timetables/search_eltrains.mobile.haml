@@ -26,8 +26,11 @@
           %tr
             %td.col-1=link_to s.eltrains_number, "/rw_eltrains_timetables/show_eltrain/#{s.eltrains_number}"
             %td.text-nowrap
-              #{s.rw_route.rw_start_route.name_rus} - 
-              #{s.rw_route.rw_end_route.name_rus}
+              = s.rw_route.rw_start_route.name_rus if s.direction == 0
+              = s.rw_route.rw_end_route.name_rus if s.direction == 1
+              = p '-'
+              = s.rw_route.rw_end_route.name_rus if s.direction == 0
+              = s.rw_route.rw_start_route.name_rus if s.direction == 1
             %td.col-1= s.station_start_time.to_time.utc.to_s(:time)
             %td.col-1= s.station_finish_time.to_time.utc.to_s(:time)
             %td.text-nowrap.fs-10.text-info
